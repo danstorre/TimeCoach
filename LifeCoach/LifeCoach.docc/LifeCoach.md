@@ -17,3 +17,22 @@ So that I can start tracking my time while I'm doing any task.
 Given a customer
 When the customer starts a timer
 Then the app should show the timer countdown.
+
+## Start Timer Use Case
+
+Data:
+- No Data
+
+Primary Course (happy path):
+
+- System execute "Start timer" command.
+- System executes start.
+- System delivers time progress.
+
+Start Timer Course (sad path):
+
+- System delivers start time error.
+
+Start Time Progress (sad path):
+
+- System delivers time progress error. 
