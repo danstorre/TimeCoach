@@ -12,10 +12,10 @@ class TimerStarter {
 }
 
 class TimerSpy {
-    var messageCount = 0
+    var startMessageCount = 0
     
     func start() {
-        messageCount += 1
+        startMessageCount += 1
     }
 }
 
@@ -25,7 +25,7 @@ final class StartTimerUseCase: XCTestCase {
         let timer = TimerSpy()
         let _ = TimerStarter(timer: timer)
         
-        XCTAssertEqual(timer.messageCount, 0)
+        XCTAssertEqual(timer.startMessageCount, 0)
     }
     
     func test_start_sendsStartMessageToTimer() {
@@ -34,6 +34,6 @@ final class StartTimerUseCase: XCTestCase {
         
         sut.startTimer()
         
-        XCTAssertEqual(timer.messageCount, 1)
+        XCTAssertEqual(timer.startMessageCount, 1)
     }
 }
