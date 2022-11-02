@@ -26,7 +26,7 @@ Data:
 Primary Course (happy path):
 
 - System execute "Start timer" command.
-- System executes start.
+- System executes timer start.
 - System delivers time progress.
 
 Start Timer Course (sad path):
