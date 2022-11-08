@@ -21,13 +21,13 @@ class TimerSpy {
 }
 
 final class StartTimerUseCase: XCTestCase {
-    func test_init_doesNotSendAnyMessageToInfra() {
+    func test_init_doesNotSendAnyMessageToTimer() {
         let (_, spy) = makeSUT()
         
         XCTAssertEqual(spy.callCount, 0)
     }
     
-    func test_startTimer_sendsMessageToInfra() {
+    func test_startTimer_sendsMessageToTimer() {
         let (sut, spy) = makeSUT()
         sut.startTimer()
         
