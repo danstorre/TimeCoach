@@ -10,7 +10,7 @@
 		FBAD475528FC8BB0003D2F7A /* LifeCoach.docc in Sources */ = {isa = PBXBuildFile; fileRef = FBAD475428FC8BB0003D2F7A /* LifeCoach.docc */; };
 		FBAD475B28FC8BB0003D2F7A /* LifeCoach.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBAD475028FC8BB0003D2F7A /* LifeCoach.framework */; };
 		FBAD476128FC8BB0003D2F7A /* LifeCoach.h in Headers */ = {isa = PBXBuildFile; fileRef = FBAD475328FC8BB0003D2F7A /* LifeCoach.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		FBAD476B28FC9899003D2F7A /* StartTimerUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBAD476A28FC9899003D2F7A /* StartTimerUseCase.swift */; };
+		FBC9ADAC2919E31200E0BEFC /* StartTimerUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC9ADAB2919E31200E0BEFC /* StartTimerUseCase.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -28,7 +28,7 @@
 		FBAD475328FC8BB0003D2F7A /* LifeCoach.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LifeCoach.h; sourceTree = "<group>"; };
 		FBAD475428FC8BB0003D2F7A /* LifeCoach.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = LifeCoach.docc; sourceTree = "<group>"; };
 		FBAD475A28FC8BB0003D2F7A /* LifeCoachTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LifeCoachTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		FBAD476A28FC9899003D2F7A /* StartTimerUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartTimerUseCase.swift; sourceTree = "<group>"; };
+		FBC9ADAB2919E31200E0BEFC /* StartTimerUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartTimerUseCase.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,7 +80,7 @@
 		FBAD475E28FC8BB0003D2F7A /* LifeCoachTests */ = {
 			isa = PBXGroup;
 			children = (
-				FBAD476A28FC9899003D2F7A /* StartTimerUseCase.swift */,
+				FBC9ADAB2919E31200E0BEFC /* StartTimerUseCase.swift */,
 			);
 			path = LifeCoachTests;
 			sourceTree = "<group>";
@@ -203,7 +203,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FBAD476B28FC9899003D2F7A /* StartTimerUseCase.swift in Sources */,
+				FBC9ADAC2919E31200E0BEFC /* StartTimerUseCase.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
