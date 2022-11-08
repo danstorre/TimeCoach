@@ -22,17 +22,24 @@ class TimerSpy {
 
 final class StartTimerUseCase: XCTestCase {
     func test_init_doesNotSendAnyMessageToInfra() {
-        let infrastructure = TimerSpy()
-        let _ = StarTimer(timer: infrastructure)
+        let (_, spy) = makeSUT()
         
-        XCTAssertEqual(infrastructure.callCount, 0)
+        XCTAssertEqual(spy.callCount, 0)
     }
     
     func test_startTimer_sendsMessageToInfra() {
-        let infrastructure = TimerSpy()
-        let sut = StarTimer(timer: infrastructure)
+        let (sut, spy) = makeSUT()
         sut.startTimer()
         
-        XCTAssertEqual(infrastructure.callCount, 1)
+        XCTAssertEqual(spy.callCount, 1)
+    }
+    
+    // MARK: - helpers
+    private func makeSUT() -> (sut: StarTimer,
+                               spy: TimerSpy) {
+        let spy = TimerSpy()
+        let sut = StarTimer(timer: spy)
+        
+        return (sut, spy)
     }
 }
