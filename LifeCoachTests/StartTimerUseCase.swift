@@ -35,10 +35,13 @@ final class StartTimerUseCase: XCTestCase {
     }
     
     // MARK: - helpers
-    private func makeSUT() -> (sut: StarTimer,
-                               spy: TimerSpy) {
+    private func makeSUT(file: StaticString = #filePath,
+                         line: UInt = #line) -> (sut: StarTimer, spy: TimerSpy) {
         let spy = TimerSpy()
         let sut = StarTimer(timer: spy)
+        
+        trackForMemoryLeak(instance: sut, file: file, line: line)
+        trackForMemoryLeak(instance: spy, file: file, line: line)
         
         return (sut, spy)
     }
