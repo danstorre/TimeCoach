@@ -1,18 +1,18 @@
 import XCTest
 
 class StarTimer {
-    private let infrastructure: InfraSpy
+    private let timer: TimerSpy
     
-    init(infrastructure: InfraSpy) {
-        self.infrastructure = infrastructure
+    init(timer: TimerSpy) {
+        self.timer = timer
     }
     
     func startTimer() {
-        infrastructure.startCountdown()
+        timer.startCountdown()
     }
 }
 
-class InfraSpy {
+class TimerSpy {
     private(set) var callCount = 0
     
     func startCountdown() {
@@ -22,15 +22,15 @@ class InfraSpy {
 
 final class StartTimerUseCase: XCTestCase {
     func test_init_doesNotSendAnyMessageToInfra() {
-        let infrastructure = InfraSpy()
-        let _ = StarTimer(infrastructure: infrastructure)
+        let infrastructure = TimerSpy()
+        let _ = StarTimer(timer: infrastructure)
         
         XCTAssertEqual(infrastructure.callCount, 0)
     }
     
     func test_startTimer_sendsMessageToInfra() {
-        let infrastructure = InfraSpy()
-        let sut = StarTimer(infrastructure: infrastructure)
+        let infrastructure = TimerSpy()
+        let sut = StarTimer(timer: infrastructure)
         sut.startTimer()
         
         XCTAssertEqual(infrastructure.callCount, 1)
