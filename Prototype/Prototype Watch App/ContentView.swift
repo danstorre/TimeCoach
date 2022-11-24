@@ -13,17 +13,41 @@ struct ContentView: View {
     @State var isPause: Bool = true
     @State var timeInterval: TimeInterval = .pomodoroInSeconds
     @Environment(\.isLuminanceReduced) var isLuminanceReduced
+    @Environment(\.scenePhase) private var scenePhase
+    
+    @State var lastTime: CFAbsoluteTime?
     
     private let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
     var body: some View {
         VStack {
-            Text(Formatter
-                .makeTimerFormatter()
-                .string(from: timeInterval)!)
-            .font(.timerFont)
-            .foregroundColor(.red)
-            .opacity(isLuminanceReduced ? 0.5 : 1.0)
+            
+            TimelineView(PeriodicTimelineSchedule(from: Date.now, by: 1)) { context in
+                switch context.cadence {
+                case .seconds:
+                    Text(Formatter
+                        .makeTimerFormatter()
+                        .string(from: timeInterval)!)
+                    .font(.timerFont)
+                    .foregroundColor(.red)
+                    .opacity(isLuminanceReduced ? 0.75 : 1.0)
+                case .minutes:
+                    Text(Formatter
+                        .makeMinuteTimerFormatter()
+                        .string(from: timeInterval)!)
+                    .font(.timerFont)
+                    .foregroundColor(.red)
+                    .opacity(isLuminanceReduced ? 0.5 : 1.0)
+                case .live:
+                    Text(Formatter
+                        .makeTimerFormatter()
+                        .string(from: timeInterval)!)
+                    .font(.timerFont)
+                    .foregroundColor(.red)
+                @unknown default:
+                    fatalError("*** Received an unknown cadence: \(context.cadence) ***")
+                }
+            }
             
             HStack {
                 Button.init(action: stopButton) {
@@ -43,6 +67,36 @@ struct ContentView: View {
                 }
             }
             .opacity(isLuminanceReduced ? 0.0 : 1.0)
+        }
+        .onChange(of: scenePhase) { phase in
+            switch phase {
+            case .active:
+                if timeInterval < 0 {
+                    timeInterval = 0
+                    stopButton()
+                }
+                
+                print("The app has become active.")
+                break
+            case .inactive:
+                if let lastTime = lastTime {
+                    let difference = CFAbsoluteTimeGetCurrent() - lastTime
+                    
+                    if !isPause {
+                        timeInterval = timeInterval - difference
+                    }
+                    
+                    self.lastTime = nil
+                }
+                print("The app has become inactive.")
+                break
+            case .background:
+                lastTime = CFAbsoluteTimeGetCurrent()
+                print("The app has moved to the background.")
+                break
+            @unknown default:
+                fatalError("The app has entered an unknown state.")
+            }
         }
         .onChange(of: isPomodoro, perform: { [isPomodoro] newState in
             timeInterval = newState ? TimeInterval.pomodoroInSeconds : TimeInterval.breakInSeconds
@@ -85,7 +139,13 @@ extension ContentView {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        Group {
+            ContentView()
+            ContentView()
+                .environment(\.isLuminanceReduced, true)
+            ContentView()
+                .environment(\.scenePhase, .background)
+        }
     }
 }
 
@@ -128,6 +188,14 @@ extension Formatter {
         let dateFormatter = DateComponentsFormatter()
         dateFormatter.zeroFormattingBehavior = .pad
         dateFormatter.allowedUnits = [.minute, .second]
+        
+        return dateFormatter
+    }
+    
+    static func makeMinuteTimerFormatter() -> DateComponentsFormatter {
+        let dateFormatter = DateComponentsFormatter()
+        dateFormatter.zeroFormattingBehavior = .pad
+        dateFormatter.allowedUnits = [.minute]
         
         return dateFormatter
     }
