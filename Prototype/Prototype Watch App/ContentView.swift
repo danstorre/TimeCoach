@@ -12,6 +12,7 @@ struct ContentView: View {
     @State var started: Bool = false
     @State var isPause: Bool = true
     @State var timeInterval: TimeInterval = .pomodoroInSeconds
+    @Environment(\.isLuminanceReduced) var isLuminanceReduced
     
     private let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
@@ -22,7 +23,7 @@ struct ContentView: View {
                 .string(from: timeInterval)!)
             .font(.timerFont)
             .foregroundColor(.red)
-            .padding([.top], 24)
+            .opacity(isLuminanceReduced ? 0.5 : 1.0)
             
             HStack {
                 Button.init(action: stopButton) {
@@ -41,6 +42,7 @@ struct ContentView: View {
                     }
                 }
             }
+            .opacity(isLuminanceReduced ? 0.0 : 1.0)
         }
         .onChange(of: isPomodoro, perform: { [isPomodoro] newState in
             timeInterval = newState ? TimeInterval.pomodoroInSeconds : TimeInterval.breakInSeconds
