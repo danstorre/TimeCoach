@@ -1,8 +1,12 @@
 import XCTest
 import LifeCoach
 
-class StarTimer {
-    private let timer: TimerSpy
+protocol StartTimer {
+    func startCountdown(from date: Date, endDate: Date)
+}
+
+class LocalTimer {
+    private let timer: StartTimer
     private var mode: TimerMode = .pomodoroTime
     private var isPomodoro = true
     
@@ -11,7 +15,7 @@ class StarTimer {
         case breakTime
     }
     
-    init(timer: TimerSpy) {
+    init(timer: StartTimer) {
         self.timer = timer
     }
     
@@ -27,19 +31,6 @@ class StarTimer {
         
         timer.startCountdown(from: startDate,
                              endDate: endTime)
-    }
-}
-
-class TimerSpy {
-    private(set) var startDatesReceived = [Date]()
-    private(set) var endDatesReceived = [Date]()
-    var callCount: Int {
-        startDatesReceived.count
-    }
-    
-    func startCountdown(from date: Date, endDate: Date) {
-        startDatesReceived.append(date)
-        endDatesReceived.append(endDate)
     }
 }
 
@@ -81,13 +72,26 @@ final class StartTimerUseCase: XCTestCase {
     
     // MARK: - helpers
     private func makeSUT(file: StaticString = #filePath,
-                         line: UInt = #line) -> (sut: StarTimer, spy: TimerSpy) {
+                         line: UInt = #line) -> (sut: LocalTimer, spy: TimerSpy) {
         let spy = TimerSpy()
-        let sut = StarTimer(timer: spy)
+        let sut = LocalTimer(timer: spy)
         
         trackForMemoryLeak(instance: sut, file: file, line: line)
         trackForMemoryLeak(instance: spy, file: file, line: line)
         
         return (sut, spy)
+    }
+    
+    private class TimerSpy: StartTimer {
+        private(set) var startDatesReceived = [Date]()
+        private(set) var endDatesReceived = [Date]()
+        var callCount: Int {
+            startDatesReceived.count
+        }
+        
+        func startCountdown(from date: Date, endDate: Date) {
+            startDatesReceived.append(date)
+            endDatesReceived.append(endDate)
+        }
     }
 }
