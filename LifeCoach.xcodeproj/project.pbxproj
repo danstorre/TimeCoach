@@ -31,6 +31,8 @@
 		FB4AA1662937D1680076FED9 /* SkipTimerUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4AA1652937D1680076FED9 /* SkipTimerUseCaseTests.swift */; };
 		FB4AA1682937D2E40076FED9 /* FactoryHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4AA1672937D2E40076FED9 /* FactoryHelpers.swift */; };
 		FB4AA16A2937D36D0076FED9 /* StopTimerUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4AA1692937D36D0076FED9 /* StopTimerUseCaseTests.swift */; };
+		FB4AA16D2937D7340076FED9 /* LocalElapsedSeconds.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4AA16C2937D7340076FED9 /* LocalElapsedSeconds.swift */; };
+		FB4AA16F2937D75A0076FED9 /* TimerCountdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4AA16E2937D75A0076FED9 /* TimerCountdown.swift */; };
 		FBAD475528FC8BB0003D2F7A /* LifeCoach.docc in Sources */ = {isa = PBXBuildFile; fileRef = FBAD475428FC8BB0003D2F7A /* LifeCoach.docc */; };
 		FBAD475B28FC8BB0003D2F7A /* LifeCoach.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBAD475028FC8BB0003D2F7A /* LifeCoach.framework */; };
 		FBAD476128FC8BB0003D2F7A /* LifeCoach.h in Headers */ = {isa = PBXBuildFile; fileRef = FBAD475328FC8BB0003D2F7A /* LifeCoach.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -79,6 +81,8 @@
 		FB4AA1652937D1680076FED9 /* SkipTimerUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkipTimerUseCaseTests.swift; sourceTree = "<group>"; };
 		FB4AA1672937D2E40076FED9 /* FactoryHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactoryHelpers.swift; sourceTree = "<group>"; };
 		FB4AA1692937D36D0076FED9 /* StopTimerUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopTimerUseCaseTests.swift; sourceTree = "<group>"; };
+		FB4AA16C2937D7340076FED9 /* LocalElapsedSeconds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalElapsedSeconds.swift; sourceTree = "<group>"; };
+		FB4AA16E2937D75A0076FED9 /* TimerCountdown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerCountdown.swift; sourceTree = "<group>"; };
 		FBAD475028FC8BB0003D2F7A /* LifeCoach.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LifeCoach.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FBAD475328FC8BB0003D2F7A /* LifeCoach.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LifeCoach.h; sourceTree = "<group>"; };
 		FBAD475428FC8BB0003D2F7A /* LifeCoach.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = LifeCoach.docc; sourceTree = "<group>"; };
@@ -208,10 +212,20 @@
 		FB4AA15C2937C6D70076FED9 /* Timer Feature */ = {
 			isa = PBXGroup;
 			children = (
+				FB4AA16B2937D7290076FED9 /* infra */,
 				FB4AA15D2937C6E10076FED9 /* LocalTimer.swift */,
 				FB4AA1632937CD000076FED9 /* ElapsedSeconds.swift */,
 			);
 			path = "Timer Feature";
+			sourceTree = "<group>";
+		};
+		FB4AA16B2937D7290076FED9 /* infra */ = {
+			isa = PBXGroup;
+			children = (
+				FB4AA16C2937D7340076FED9 /* LocalElapsedSeconds.swift */,
+				FB4AA16E2937D75A0076FED9 /* TimerCountdown.swift */,
+			);
+			path = infra;
 			sourceTree = "<group>";
 		};
 		FBAD474628FC8BB0003D2F7A = {
@@ -478,10 +492,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FB4AA16D2937D7340076FED9 /* LocalElapsedSeconds.swift in Sources */,
 				FB4AA1642937CD000076FED9 /* ElapsedSeconds.swift in Sources */,
 				FBAD475528FC8BB0003D2F7A /* LifeCoach.docc in Sources */,
 				FB4AA15E2937C6E10076FED9 /* LocalTimer.swift in Sources */,
 				FB4AA1542937C0F30076FED9 /* ExtensionHelpers.swift in Sources */,
+				FB4AA16F2937D75A0076FED9 /* TimerCountdown.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
