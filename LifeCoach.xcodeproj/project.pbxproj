@@ -34,6 +34,7 @@
 		FB4AA16D2937D7340076FED9 /* LocalElapsedSeconds.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4AA16C2937D7340076FED9 /* LocalElapsedSeconds.swift */; };
 		FB4AA16F2937D75A0076FED9 /* TimerCountdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4AA16E2937D75A0076FED9 /* TimerCountdown.swift */; };
 		FB4AA1722937DE810076FED9 /* PomodoroLocalTimerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4AA1712937DE810076FED9 /* PomodoroLocalTimerTests.swift */; };
+		FB4AA17B293808360076FED9 /* LifeCoachWatchOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB06B52D292BF71C00AE6079 /* LifeCoachWatchOS.framework */; };
 		FBAD475528FC8BB0003D2F7A /* LifeCoach.docc in Sources */ = {isa = PBXBuildFile; fileRef = FBAD475428FC8BB0003D2F7A /* LifeCoach.docc */; };
 		FBAD475B28FC8BB0003D2F7A /* LifeCoach.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBAD475028FC8BB0003D2F7A /* LifeCoach.framework */; };
 		FBAD476128FC8BB0003D2F7A /* LifeCoach.h in Headers */ = {isa = PBXBuildFile; fileRef = FBAD475328FC8BB0003D2F7A /* LifeCoach.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -43,6 +44,13 @@
 
 /* Begin PBXContainerItemProxy section */
 		FB06B538292BF71C00AE6079 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FBAD474728FC8BB0003D2F7A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FB06B52C292BF71C00AE6079;
+			remoteInfo = LifeCoachWatchOS;
+		};
+		FB4AA17C293808360076FED9 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = FBAD474728FC8BB0003D2F7A /* Project object */;
 			proxyType = 1;
@@ -85,6 +93,7 @@
 		FB4AA16C2937D7340076FED9 /* LocalElapsedSeconds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalElapsedSeconds.swift; sourceTree = "<group>"; };
 		FB4AA16E2937D75A0076FED9 /* TimerCountdown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerCountdown.swift; sourceTree = "<group>"; };
 		FB4AA1712937DE810076FED9 /* PomodoroLocalTimerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PomodoroLocalTimerTests.swift; sourceTree = "<group>"; };
+		FB4AA177293808360076FED9 /* LocalTimerInfrastructureTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LocalTimerInfrastructureTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FBAD475028FC8BB0003D2F7A /* LifeCoach.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LifeCoach.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FBAD475328FC8BB0003D2F7A /* LifeCoach.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LifeCoach.h; sourceTree = "<group>"; };
 		FBAD475428FC8BB0003D2F7A /* LifeCoach.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = LifeCoach.docc; sourceTree = "<group>"; };
@@ -107,6 +116,14 @@
 			files = (
 				FB06B537292BF71C00AE6079 /* LifeCoachWatchOS.framework in Frameworks */,
 				FB4AA1362936ECD10076FED9 /* ViewInspector in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FB4AA174293808360076FED9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FB4AA17B293808360076FED9 /* LifeCoachWatchOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -238,6 +255,14 @@
 			path = Infra;
 			sourceTree = "<group>";
 		};
+		FB4AA178293808360076FED9 /* LocalTimerInfrastructureTests */ = {
+			isa = PBXGroup;
+			children = (
+				FB4AA1702937DDED0076FED9 /* Infra */,
+			);
+			path = LocalTimerInfrastructureTests;
+			sourceTree = "<group>";
+		};
 		FBAD474628FC8BB0003D2F7A = {
 			isa = PBXGroup;
 			children = (
@@ -245,6 +270,7 @@
 				FBAD475E28FC8BB0003D2F7A /* LifeCoachTests */,
 				FB06B52E292BF71C00AE6079 /* LifeCoachWatchOS */,
 				FB06B53A292BF71C00AE6079 /* LifeCoachWatchOSTests */,
+				FB4AA178293808360076FED9 /* LocalTimerInfrastructureTests */,
 				FBAD475128FC8BB0003D2F7A /* Products */,
 			);
 			sourceTree = "<group>";
@@ -256,6 +282,7 @@
 				FBAD475A28FC8BB0003D2F7A /* LifeCoachTests.xctest */,
 				FB06B52D292BF71C00AE6079 /* LifeCoachWatchOS.framework */,
 				FB06B536292BF71C00AE6079 /* LifeCoachWatchOSTests.xctest */,
+				FB4AA177293808360076FED9 /* LocalTimerInfrastructureTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -274,7 +301,6 @@
 		FBAD475E28FC8BB0003D2F7A /* LifeCoachTests */ = {
 			isa = PBXGroup;
 			children = (
-				FB4AA1702937DDED0076FED9 /* Infra */,
 				FBC9ADAD2919E8A700E0BEFC /* Helpers */,
 				FBC9ADAB2919E31200E0BEFC /* StartTimerUseCasesTests.swift */,
 				FB4AA15F2937CA200076FED9 /* PauseTimerUseCaseTests.swift */,
@@ -355,6 +381,24 @@
 			productReference = FB06B536292BF71C00AE6079 /* LifeCoachWatchOSTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		FB4AA176293808360076FED9 /* LocalTimerInfrastructureTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FB4AA17E293808360076FED9 /* Build configuration list for PBXNativeTarget "LocalTimerInfrastructureTests" */;
+			buildPhases = (
+				FB4AA173293808360076FED9 /* Sources */,
+				FB4AA174293808360076FED9 /* Frameworks */,
+				FB4AA175293808360076FED9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				FB4AA17D293808360076FED9 /* PBXTargetDependency */,
+			);
+			name = LocalTimerInfrastructureTests;
+			productName = LocalTimerInfrastructureTests;
+			productReference = FB4AA177293808360076FED9 /* LocalTimerInfrastructureTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		FBAD474F28FC8BB0003D2F7A /* LifeCoach */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = FBAD476428FC8BB0003D2F7A /* Build configuration list for PBXNativeTarget "LifeCoach" */;
@@ -407,6 +451,9 @@
 					FB06B535292BF71C00AE6079 = {
 						CreatedOnToolsVersion = 14.0;
 					};
+					FB4AA176293808360076FED9 = {
+						CreatedOnToolsVersion = 14.0;
+					};
 					FBAD474F28FC8BB0003D2F7A = {
 						CreatedOnToolsVersion = 14.0;
 					};
@@ -436,6 +483,7 @@
 				FBAD475928FC8BB0003D2F7A /* LifeCoachTests */,
 				FB06B52C292BF71C00AE6079 /* LifeCoachWatchOS */,
 				FB06B535292BF71C00AE6079 /* LifeCoachWatchOSTests */,
+				FB4AA176293808360076FED9 /* LocalTimerInfrastructureTests */,
 			);
 		};
 /* End PBXProject section */
@@ -449,6 +497,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		FB06B534292BF71C00AE6079 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FB4AA175293808360076FED9 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -499,6 +554,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		FB4AA173293808360076FED9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		FBAD474C28FC8BB0003D2F7A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -534,6 +596,11 @@
 			isa = PBXTargetDependency;
 			target = FB06B52C292BF71C00AE6079 /* LifeCoachWatchOS */;
 			targetProxy = FB06B538292BF71C00AE6079 /* PBXContainerItemProxy */;
+		};
+		FB4AA17D293808360076FED9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FB06B52C292BF71C00AE6079 /* LifeCoachWatchOS */;
+			targetProxy = FB4AA17C293808360076FED9 /* PBXContainerItemProxy */;
 		};
 		FBAD475D28FC8BB0003D2F7A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -633,6 +700,43 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.TimeCoach.LifeCoachWatchOSTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				VALIDATE_PRODUCT = YES;
+				WATCHOS_DEPLOYMENT_TARGET = 9.0;
+			};
+			name = Release;
+		};
+		FB4AA17F293808360076FED9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = AEWQUX8MPM;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.timeCoach.LocalTimerInfrastructureTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 9.0;
+			};
+			name = Debug;
+		};
+		FB4AA180293808360076FED9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = AEWQUX8MPM;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.timeCoach.LocalTimerInfrastructureTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
 				SWIFT_EMIT_LOC_STRINGS = NO;
@@ -880,6 +984,15 @@
 			buildConfigurations = (
 				FB06B540292BF71C00AE6079 /* Debug */,
 				FB06B541292BF71C00AE6079 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FB4AA17E293808360076FED9 /* Build configuration list for PBXNativeTarget "LocalTimerInfrastructureTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FB4AA17F293808360076FED9 /* Debug */,
+				FB4AA180293808360076FED9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

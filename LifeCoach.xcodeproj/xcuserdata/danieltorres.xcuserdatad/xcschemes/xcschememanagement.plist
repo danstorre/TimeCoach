@@ -19,6 +19,11 @@
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
+		<key>LocalTimerInfrastructureTests.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>3</integer>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
@@ -28,6 +33,16 @@
 			<true/>
 		</dict>
 		<key>FB06B535292BF71C00AE6079</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>FBAD474F28FC8BB0003D2F7A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>FBAD475928FC8BB0003D2F7A</key>
 		<dict>
 			<key>primary</key>
 			<true/>

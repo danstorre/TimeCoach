@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "FB06B52C292BF71C00AE6079"
-               BuildableName = "LifeCoachWatchOS.framework"
-               BlueprintName = "LifeCoachWatchOS"
+               BlueprintIdentifier = "FBAD474F28FC8BB0003D2F7A"
+               BuildableName = "LifeCoach.framework"
+               BlueprintName = "LifeCoach"
                ReferencedContainer = "container:LifeCoach.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -26,56 +26,16 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      shouldUseLaunchSchemeArgsEnv = "YES"
-      codeCoverageEnabled = "YES"
-      onlyGenerateCoverageForSpecifiedTargets = "YES">
-      <CodeCoverageTargets>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "FB06B52C292BF71C00AE6079"
-            BuildableName = "LifeCoachWatchOS.framework"
-            BlueprintName = "LifeCoachWatchOS"
-            ReferencedContainer = "container:LifeCoach.xcodeproj">
-         </BuildableReference>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "FBAD474F28FC8BB0003D2F7A"
-            BuildableName = "LifeCoach.framework"
-            BlueprintName = "LifeCoach"
-            ReferencedContainer = "container:LifeCoach.xcodeproj">
-         </BuildableReference>
-      </CodeCoverageTargets>
+      shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
          <TestableReference
             skipped = "NO"
-            testExecutionOrdering = "random">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "FB06B535292BF71C00AE6079"
-               BuildableName = "LifeCoachWatchOSTests.xctest"
-               BlueprintName = "LifeCoachWatchOSTests"
-               ReferencedContainer = "container:LifeCoach.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO"
-            testExecutionOrdering = "random">
+            parallelizable = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "FBAD475928FC8BB0003D2F7A"
                BuildableName = "LifeCoachTests.xctest"
                BlueprintName = "LifeCoachTests"
-               ReferencedContainer = "container:LifeCoach.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO"
-            testExecutionOrdering = "random">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "FB4AA176293808360076FED9"
-               BuildableName = "LocalTimerInfrastructureTests.xctest"
-               BlueprintName = "LocalTimerInfrastructureTests"
                ReferencedContainer = "container:LifeCoach.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -101,9 +61,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "FB06B52C292BF71C00AE6079"
-            BuildableName = "LifeCoachWatchOS.framework"
-            BlueprintName = "LifeCoachWatchOS"
+            BlueprintIdentifier = "FBAD474F28FC8BB0003D2F7A"
+            BuildableName = "LifeCoach.framework"
+            BlueprintName = "LifeCoach"
             ReferencedContainer = "container:LifeCoach.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
