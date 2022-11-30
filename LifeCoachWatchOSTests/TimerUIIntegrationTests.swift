@@ -100,7 +100,7 @@ final class TimerUIIntegrationTests: XCTestCase {
         return (timerView, timeLoader)
     }
     
-    class TimerPublisherSpy {
+    private class TimerPublisherSpy {
         private var timerElapsedSeconds = [PassthroughSubject<ElapsedSeconds, Error>]()
         
         func loadTimer() -> AnyPublisher<ElapsedSeconds, Error> {
@@ -113,7 +113,6 @@ final class TimerUIIntegrationTests: XCTestCase {
             timerElapsedSeconds[index].send(timeElapsed)
         }
     }
-    
 }
 
 fileprivate extension TimerView {
