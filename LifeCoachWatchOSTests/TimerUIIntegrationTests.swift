@@ -66,6 +66,8 @@ final class TimerUIIntegrationTests: XCTestCase {
         let timeElapsed = makeElapsedSeconds(1, from: now)
         let (sut, spy) = makeSUT()
         
+        XCTAssertEqual(sut.timerLabelString(), "25:00")
+        
         sut.simulatePlayTimerUserInteraction()
         
         XCTAssertEqual(sut.timerLabelString(), "25:00")
