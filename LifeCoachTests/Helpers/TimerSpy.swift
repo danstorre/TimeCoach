@@ -36,6 +36,4 @@ class TimerSpy: LocalTimer.TimerCountdown {
     func finishSkipWith(date: LocalElapsedSeconds, at index: Int = 0) {
         skipTimerCompletions[index](date)
     }
-    
-    
 }
