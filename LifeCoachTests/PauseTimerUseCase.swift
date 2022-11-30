@@ -10,9 +10,23 @@ final class PauseTimerUseCase: XCTestCase {
     
     func test_pauseTimer_sendsMessageToTimer() {
         let (sut, spy) = makeSUT()
-        sut.pauseTimer()
+        sut.pauseTimer() { _ in }
         
         XCTAssertEqual(spy.pauseCountCallCount, 1)
+    }
+    
+    func test_pauseTimer_returnsCorrectElapsedSeconds() {
+        let (sut, spy) = makeSUT()
+        var received: ElapsedSeconds?
+        sut.pauseTimer() { elapsedTime in
+            received = elapsedTime
+        }
+    
+        let expectedElapsedTime = makeElapsedSeconds()
+        
+        spy.finishPauseWith(date: expectedElapsedTime.local)
+        
+        XCTAssertEqual(received, expectedElapsedTime.model)
     }
     
     // MARK: - helpers
@@ -25,5 +39,13 @@ final class PauseTimerUseCase: XCTestCase {
         trackForMemoryLeak(instance: spy, file: file, line: line)
         
         return (sut, spy)
+    }
+    
+    private func makeElapsedSeconds(
+        _ seconds: TimeInterval = 0,
+        startDate: Date = .now,
+        endDate: Date = .now
+    ) -> (model: ElapsedSeconds, local: LocalElapsedSeconds) {
+        (ElapsedSeconds(seconds, startDate: startDate, endDate: endDate), LocalElapsedSeconds(seconds, startDate: startDate, endDate: endDate))
     }
 }
