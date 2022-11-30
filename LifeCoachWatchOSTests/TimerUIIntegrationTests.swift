@@ -15,14 +15,21 @@ final class TimerUIIntegrationTests: XCTestCase {
     }
 }
 
-extension TimerView {
+fileprivate extension TimerView {
     static let pomodoroTimerString = "25:00"
     
     func timerLabelString() -> String {
+        inspectTextWith(id: "b")
+    }
+    
+    private func inspectTextWith(id: String) -> String{
         do {
-            return try inspect().text().string()
+            return try inspect()
+                .find(viewWithAccessibilityIdentifier: id)
+                .text()
+                .string()
         } catch {
-            fatalError("couldn't find inspect text")
+            fatalError("couldn't inspect `timerLabelString`")
         }
     }
 }
