@@ -17,6 +17,7 @@
 		FB4AA13A29378A460076FED9 /* TimerLoaderPresentationAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4AA13929378A460076FED9 /* TimerLoaderPresentationAdapter.swift */; };
 		FB4AA13D29379D140076FED9 /* TimerView+Simulations.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4AA13C29379D140076FED9 /* TimerView+Simulations.swift */; };
 		FB4AA14029379DA80076FED9 /* ElapsedSeconds.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4AA13F29379DA80076FED9 /* ElapsedSeconds.swift */; };
+		FB4AA14329379DC90076FED9 /* TimerViewComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4AA14229379DC90076FED9 /* TimerViewComposer.swift */; };
 		FBAD475528FC8BB0003D2F7A /* LifeCoach.docc in Sources */ = {isa = PBXBuildFile; fileRef = FBAD475428FC8BB0003D2F7A /* LifeCoach.docc */; };
 		FBAD475B28FC8BB0003D2F7A /* LifeCoach.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBAD475028FC8BB0003D2F7A /* LifeCoach.framework */; };
 		FBAD476128FC8BB0003D2F7A /* LifeCoach.h in Headers */ = {isa = PBXBuildFile; fileRef = FBAD475328FC8BB0003D2F7A /* LifeCoach.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -52,6 +53,7 @@
 		FB4AA13929378A460076FED9 /* TimerLoaderPresentationAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerLoaderPresentationAdapter.swift; sourceTree = "<group>"; };
 		FB4AA13C29379D140076FED9 /* TimerView+Simulations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimerView+Simulations.swift"; sourceTree = "<group>"; };
 		FB4AA13F29379DA80076FED9 /* ElapsedSeconds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElapsedSeconds.swift; sourceTree = "<group>"; };
+		FB4AA14229379DC90076FED9 /* TimerViewComposer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerViewComposer.swift; sourceTree = "<group>"; };
 		FBAD475028FC8BB0003D2F7A /* LifeCoach.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LifeCoach.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FBAD475328FC8BB0003D2F7A /* LifeCoach.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LifeCoach.h; sourceTree = "<group>"; };
 		FBAD475428FC8BB0003D2F7A /* LifeCoach.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = LifeCoach.docc; sourceTree = "<group>"; };
@@ -98,6 +100,7 @@
 		FB06B52E292BF71C00AE6079 /* LifeCoachWatchOS */ = {
 			isa = PBXGroup;
 			children = (
+				FB4AA14129379DC20076FED9 /* Composers */,
 				FB4AA13E29379D9F0076FED9 /* Timer Feature */,
 				FB06B52F292BF71C00AE6079 /* LifeCoachWatchOS.h */,
 				FB06B530292BF71C00AE6079 /* LifeCoachWatchOS.docc */,
@@ -131,6 +134,14 @@
 				FB4AA13F29379DA80076FED9 /* ElapsedSeconds.swift */,
 			);
 			path = "Timer Feature";
+			sourceTree = "<group>";
+		};
+		FB4AA14129379DC20076FED9 /* Composers */ = {
+			isa = PBXGroup;
+			children = (
+				FB4AA14229379DC90076FED9 /* TimerViewComposer.swift */,
+			);
+			path = Composers;
 			sourceTree = "<group>";
 		};
 		FBAD474628FC8BB0003D2F7A = {
@@ -363,6 +374,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FB4AA14329379DC90076FED9 /* TimerViewComposer.swift in Sources */,
 				FB4AA13A29378A460076FED9 /* TimerLoaderPresentationAdapter.swift in Sources */,
 				FB4AA1382936F1730076FED9 /* TimerView.swift in Sources */,
 				FB06B545292BF77400AE6079 /* HomeUI.swift in Sources */,
