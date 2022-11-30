@@ -2,13 +2,16 @@ import Foundation
 
 public struct ElapsedSeconds {
     let elapsedSeconds: TimeInterval
-    let startingFrom: Date
+    let startDate: Date
+    let endDate: Date
 
     public init(
         _ elapsedSeconds: TimeInterval,
-        from: Date
+        startDate: Date,
+        endDate: Date
     ) {
         self.elapsedSeconds = elapsedSeconds
-        self.startingFrom = from
+        self.startDate = startDate
+        self.endDate = endDate
     }
 }

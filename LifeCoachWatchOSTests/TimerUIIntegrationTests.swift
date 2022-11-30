@@ -63,7 +63,8 @@ final class TimerUIIntegrationTests: XCTestCase {
     
     func test_onPLayUserInteraction_showsCorrectFormattedElapsedTime() {
         let now = Date.now
-        let timeElapsed = makeElapsedSeconds(1, from: now)
+        let pomodoroElapsedTime = makeElapsedSeconds(1, startDate: now, endDate: now.adding(seconds: .pomodoroInSeconds))
+        let breakElapsedTime = makeElapsedSeconds(1, startDate: now, endDate: now.adding(seconds: .breakInSeconds))
         let (sut, spy) = makeSUT()
         
         XCTAssertEqual(sut.timerLabelString(), "25:00")
@@ -72,33 +73,22 @@ final class TimerUIIntegrationTests: XCTestCase {
         
         XCTAssertEqual(sut.timerLabelString(), "25:00")
         
-        spy.completesSuccessfullyWith(timeElapsed: timeElapsed)
+        spy.completesSuccessfullyWith(timeElapsed: pomodoroElapsedTime)
         
         XCTAssertEqual(sut.timerLabelString(), "24:59")
-    }
-    
-    func test_onPauseInteraction_doesNotContinueTimer() {
-        let now = Date.now
-        let timeElapsed = makeElapsedSeconds(1, from: now)
-        let (sut, spy) = makeSUT()
         
-        XCTAssertEqual(sut.timerLabelString(), "25:00")
+        spy.completesSuccessfullyWith(timeElapsed: breakElapsedTime)
         
-        sut.simulateToggleTimerUserInteractionTwice()
-        
-        XCTAssertEqual(sut.timerLabelString(), "25:00")
-        
-        spy.completesSuccessfullyWith(timeElapsed: timeElapsed)
-        
-        XCTAssertEqual(sut.timerLabelString(), "25:00")
+        XCTAssertEqual(sut.timerLabelString(), "04:59")
     }
     
     // MARK: - Helpers
     private func makeElapsedSeconds(
         _ seconds: TimeInterval,
-        from date: Date
+        startDate: Date,
+        endDate: Date
     ) -> ElapsedSeconds {
-        ElapsedSeconds(seconds, from: date)
+        ElapsedSeconds(seconds, startDate: startDate, endDate: endDate)
     }
     
     private func makeSUT(

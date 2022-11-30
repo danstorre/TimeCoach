@@ -9,8 +9,8 @@ class TimerViewModel: ObservableObject {
     
     func delivered(elapsedTime: ElapsedSeconds) {
         let formatter = makeTimerFormatter()
-        let startDate = elapsedTime.startingFrom
-        let endDate = startDate.adding(seconds: TimeInterval.pomodoroInSeconds - elapsedTime.elapsedSeconds)
+        let startDate = elapsedTime.startDate
+        let endDate = elapsedTime.endDate.adding(seconds: -elapsedTime.elapsedSeconds)
         
         timerString = formatter.string(from: startDate, to: endDate)!
     }
@@ -21,13 +21,17 @@ extension String {
 }
 
 extension TimeInterval {
-    static var pomodoroInSeconds: TimeInterval {
+    public static var pomodoroInSeconds: TimeInterval {
         1500
+    }
+    
+    public static var breakInSeconds: TimeInterval {
+        300
     }
 }
 
 extension Date {
-    func adding(seconds: TimeInterval) -> Date {
+    public func adding(seconds: TimeInterval) -> Date {
         return self + seconds
     }
 }
