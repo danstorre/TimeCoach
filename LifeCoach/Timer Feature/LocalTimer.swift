@@ -2,26 +2,15 @@ import Foundation
 
 public class LocalTimer {
     private let timer: TimerCountdown
-    private var isPomodoro = true
+    private let primaryTime: TimeInterval
     
-    private enum TimerMode {
-        case pomodoroTime
-        case breakTime
-    }
-    
-    public init(timer: TimerCountdown) {
+    public init(timer: TimerCountdown, primaryTime: TimeInterval = .pomodoroInSeconds) {
         self.timer = timer
+        self.primaryTime = primaryTime
     }
     
     public func startTimer(from startDate: Date = .now, completion: @escaping (ElapsedSeconds) -> Void) {
-        let endTime: Date
-        if isPomodoro {
-            endTime = startDate.adding(seconds: .pomodoroInSeconds)
-        } else {
-            endTime = startDate.adding(seconds: .breakInSeconds)
-        }
-        
-        isPomodoro = !isPomodoro
+        let endTime = startDate.adding(seconds: primaryTime)
         
         timer.startCountdown(from: startDate,
                              endDate: endTime) {
