@@ -1,7 +1,8 @@
 import Foundation
 
 public protocol StartTimer {
-    func startCountdown(from date: Date, endDate: Date)
+    typealias TimerCompletion = (LocalElapsedSeconds) -> Void
+    func startCountdown(from date: Date, endDate: Date, completion: @escaping TimerCompletion)
 }
 
 public protocol PauseTimer {
@@ -55,7 +56,7 @@ public class LocalTimer {
         self.timer = timer
     }
     
-    public func startTimer(from startDate: Date = .now) {
+    public func startTimer(from startDate: Date = .now, completion: @escaping (ElapsedSeconds) -> Void) {
         let endTime: Date
         if isPomodoro {
             endTime = startDate.adding(seconds: .pomodoroInSeconds)
@@ -66,7 +67,9 @@ public class LocalTimer {
         isPomodoro = !isPomodoro
         
         timer.startCountdown(from: startDate,
-                             endDate: endTime)
+                             endDate: endTime) {
+            completion($0.timeElapsed)
+        }
     }
     
     public func pauseTimer(completion: @escaping (ElapsedSeconds) -> Void) {

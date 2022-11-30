@@ -11,7 +11,7 @@ final class StartTimerUseCase: XCTestCase {
     
     func test_startTimer_sendsMessageToTimer() {
         let (sut, spy) = makeSUT()
-        sut.startTimer()
+        sut.startTimer() { _ in }
         
         XCTAssertEqual(spy.callCount, 1)
     }
@@ -20,7 +20,7 @@ final class StartTimerUseCase: XCTestCase {
         let now = Date.now
         let pomodoroTime = Date.now.adding(seconds: .pomodoroInSeconds)
         let (sut, spy) = makeSUT()
-        sut.startTimer(from: now)
+        sut.startTimer(from: now) { _ in }
         
         XCTAssertEqual(spy.startDatesReceived, [now])
         XCTAssertEqual(spy.endDatesReceived, [pomodoroTime])
@@ -31,11 +31,38 @@ final class StartTimerUseCase: XCTestCase {
         let pomodoroTime = Date.now.adding(seconds: .pomodoroInSeconds)
         let breakTime = Date.now.adding(seconds: .breakInSeconds)
         let (sut, spy) = makeSUT()
-        sut.startTimer(from: now)
-        sut.startTimer(from: now)
+        sut.startTimer(from: now) { _ in }
+        sut.startTimer(from: now) { _ in }
         
         XCTAssertEqual(spy.startDatesReceived, [now, now])
         XCTAssertEqual(spy.endDatesReceived, [pomodoroTime, breakTime])
+    }
+    
+    func test_starTimer_receivesCorrectElapsedTime() {
+        let (sut, spy) = makeSUT()
+        let now = Date.now
+        let pomodoroTime = Date.now.adding(seconds: .pomodoroInSeconds)
+        
+        var received: ElapsedSeconds?
+        sut.startTimer() { elapsedTime in
+            received = elapsedTime
+        }
+
+        let expectedElapsedTime = makeElapsedSeconds(1,
+                                                     startDate: now,
+                                                     endDate: pomodoroTime)
+        
+        spy.deliversTime(with: expectedElapsedTime.local)
+        
+        XCTAssertEqual(received, expectedElapsedTime.model)
+        
+        let expectedElapsedTime2 = makeElapsedSeconds(2,
+                                                     startDate: now,
+                                                     endDate: pomodoroTime)
+        
+        spy.deliversTime(with: expectedElapsedTime2.local)
+        
+        XCTAssertEqual(received, expectedElapsedTime2.model)
     }
     
     // MARK: - helpers
