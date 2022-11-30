@@ -11,7 +11,7 @@ extension TimerView {
     }
     
     func simulateToggleTimerUserInteraction() {
-        tapButton(id: Self.playButtonIdentifier)
+        tapButton(id: Self.togglePlaybackButtonIdentifier)
     }
     
     func simulateSkipTimerUserInteraction() {

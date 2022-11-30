@@ -110,7 +110,7 @@ final class TimerUIIntegrationTests: XCTestCase {
         
         let timerView = TimerViewComposer.createTimer(
             timerLoader: timeLoader.loadTimer,
-            playHandler: playHandler,
+                    togglePlayback: playHandler,
             skipHandler: skipHandler,
             stopHandler: stopHandler
         )

@@ -4,17 +4,17 @@ import Combine
 public struct TimerView: View {
     @ObservedObject var timerViewModel: TimerViewModel
     
-    var playHandler: (() -> Void)?
+    var togglePlayback: (() -> Void)?
     var skipHandler: (() -> Void)?
     var stopHandler: (() -> Void)?
     
     init(timerViewModel: TimerViewModel,
-         playHandler: (() -> Void)? = nil,
+         togglePlayback: (() -> Void)? = nil,
          skipHandler: (() -> Void)? = nil,
          stopHandler: (() -> Void)? = nil
     ) {
         self.timerViewModel = timerViewModel
-        self.playHandler = playHandler
+        self.togglePlayback = togglePlayback
         self.skipHandler = skipHandler
         self.stopHandler = stopHandler
     }
@@ -24,8 +24,8 @@ public struct TimerView: View {
             Text(timerViewModel.timerString)
                 .accessibilityIdentifier(Self.timerLabelIdentifier)
             
-            Button.init(action: playHandler ?? {}) {
-            }.accessibilityIdentifier(Self.playButtonIdentifier)
+            Button.init(action: togglePlayback ?? {}) {
+            }.accessibilityIdentifier(Self.togglePlaybackButtonIdentifier)
             
             Button.init(action: skipHandler ?? {}) {
             }.accessibilityIdentifier(Self.skipButtonIdentifier)

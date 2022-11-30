@@ -3,14 +3,14 @@ import Combine
 public final class TimerViewComposer {
     public static func createTimer(
         timerLoader: @escaping () -> AnyPublisher<ElapsedSeconds, Error>,
-        playHandler: (() -> Void)? = nil,
+        togglePlayback: (() -> Void)? = nil,
         skipHandler: (() -> Void)? = nil,
         stopHandler: (() -> Void)? = nil
     ) -> TimerView {
         let presentationAdapter = TimerLoaderPresentationAdapter(loader: timerLoader)
      
-        let didPlay = {
-            playHandler?()
+        let didToggle = {
+            togglePlayback?()
             presentationAdapter.startTimer()
         }
         
@@ -20,7 +20,7 @@ public final class TimerViewComposer {
         
         let timer = TimerView(
             timerViewModel: viewModel,
-            playHandler: didPlay,
+            togglePlayback: didToggle,
             skipHandler: skipHandler,
             stopHandler: stopHandler
         )
