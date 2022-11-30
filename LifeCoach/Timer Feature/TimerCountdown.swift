@@ -4,7 +4,7 @@ public typealias TimerCountdown = StartTimer & PauseTimer & SkipTimer & StopTime
 
 public protocol StartTimer {
     typealias TimerCompletion = (LocalElapsedSeconds) -> Void
-    func startCountdown(from date: Date, endDate: Date, completion: @escaping TimerCompletion)
+    func startCountdown(completion: @escaping TimerCompletion)
 }
 
 public protocol PauseTimer {

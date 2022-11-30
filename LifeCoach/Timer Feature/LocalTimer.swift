@@ -9,11 +9,8 @@ public class LocalTimer {
         self.primaryTime = primaryTime
     }
     
-    public func startTimer(from startDate: Date = .now, completion: @escaping (ElapsedSeconds) -> Void) {
-        let endTime = startDate.adding(seconds: primaryTime)
-        
-        timer.startCountdown(from: startDate,
-                             endDate: endTime) {
+    public func startTimer(completion: @escaping (ElapsedSeconds) -> Void) {
+        timer.startCountdown() {
             completion($0.timeElapsed)
         }
     }

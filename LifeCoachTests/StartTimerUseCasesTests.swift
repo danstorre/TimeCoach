@@ -16,27 +16,6 @@ final class StartTimerUseCase: XCTestCase {
         XCTAssertEqual(spy.callCount, 1)
     }
     
-    func test_startTimer_sendsCorrectPomodoroTimes() {
-        let now = Date.now
-        let pomodoroTime = now.adding(seconds: .pomodoroInSeconds)
-        let (sut, spy) = makeSUT()
-        sut.startTimer(from: now) { _ in }
-        
-        XCTAssertEqual(spy.startDatesReceived, [now])
-        XCTAssertEqual(spy.endDatesReceived, [pomodoroTime])
-    }
-    
-    func test_startTimer_twice_sendsCorrectPomodoroTimes() {
-        let now = Date.now
-        let pomodoroTime = now.adding(seconds: .pomodoroInSeconds)
-        let (sut, spy) = makeSUT(primaryTime: .pomodoroInSeconds)
-        sut.startTimer(from: now) { _ in }
-        sut.startTimer(from: now) { _ in }
-        
-        XCTAssertEqual(spy.startDatesReceived, [now, now])
-        XCTAssertEqual(spy.endDatesReceived, [pomodoroTime, pomodoroTime])
-    }
-    
     func test_starTimer_receivesCorrectElapsedTime() {
         let (sut, spy) = makeSUT()
         let now = Date.now
@@ -69,7 +48,7 @@ final class StartTimerUseCase: XCTestCase {
                          file: StaticString = #filePath,
                          line: UInt = #line) -> (sut: LocalTimer, spy: TimerSpy) {
         let spy = TimerSpy()
-        let sut = LocalTimer(timer: spy, primaryTime: primaryTime)
+        let sut = LocalTimer(timer: spy)
         
         trackForMemoryLeak(instance: sut, file: file, line: line)
         trackForMemoryLeak(instance: spy, file: file, line: line)
