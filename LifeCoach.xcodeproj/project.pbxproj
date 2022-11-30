@@ -104,10 +104,8 @@
 		FB06B52E292BF71C00AE6079 /* LifeCoachWatchOS */ = {
 			isa = PBXGroup;
 			children = (
-				FB4AA14829379ED40076FED9 /* Timer Presentation */,
-				FB4AA14429379E1F0076FED9 /* Timer UI */,
-				FB4AA14129379DC20076FED9 /* Composition */,
 				FB4AA13E29379D9F0076FED9 /* Timer Feature */,
+				FB4AA14129379DC20076FED9 /* Composition */,
 				FB06B52F292BF71C00AE6079 /* LifeCoachWatchOS.h */,
 				FB06B530292BF71C00AE6079 /* LifeCoachWatchOS.docc */,
 				FB06B544292BF77400AE6079 /* HomeUI.swift */,
@@ -135,6 +133,7 @@
 		FB4AA13E29379D9F0076FED9 /* Timer Feature */ = {
 			isa = PBXGroup;
 			children = (
+				FB4AA14429379E1F0076FED9 /* Timer UI */,
 				FB4AA13F29379DA80076FED9 /* ElapsedSeconds.swift */,
 			);
 			path = "Timer Feature";
@@ -153,6 +152,7 @@
 			isa = PBXGroup;
 			children = (
 				FB4AA14529379E460076FED9 /* Helpers */,
+				FB4AA14929379EDF0076FED9 /* TimerViewModel.swift */,
 				FB4AA1372936F1730076FED9 /* TimerView.swift */,
 			);
 			path = "Timer UI";
@@ -164,14 +164,6 @@
 				FB4AA14629379E520076FED9 /* TimerView+Extensions.swift */,
 			);
 			path = Helpers;
-			sourceTree = "<group>";
-		};
-		FB4AA14829379ED40076FED9 /* Timer Presentation */ = {
-			isa = PBXGroup;
-			children = (
-				FB4AA14929379EDF0076FED9 /* TimerViewModel.swift */,
-			);
-			path = "Timer Presentation";
 			sourceTree = "<group>";
 		};
 		FBAD474628FC8BB0003D2F7A = {
