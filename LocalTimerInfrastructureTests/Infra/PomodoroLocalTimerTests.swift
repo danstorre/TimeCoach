@@ -10,9 +10,9 @@ class PomodoroLocalTimer {
     private var startDate: Date
     private var finishDate: Date
     
-    init(startDate: Date, finishDate: Date) {
+    init(startDate: Date, primaryInterval: TimeInterval) {
         self.startDate = startDate
-        self.finishDate = finishDate
+        self.finishDate = startDate.adding(seconds: primaryInterval)
     }
     
     func startCountdown(completion: @escaping (LocalElapsedSeconds) -> Void) {
@@ -71,9 +71,11 @@ final class PomodoroLocalTimerTests: XCTestCase {
         var received = [LocalElapsedSeconds]()
         let expectation = expectation(description: "waits for timer to finish twice")
         expectation.expectedFulfillmentCount = 2
+        
+        let primary: TimeInterval = 3.0
         let now = Date.now
-        let end = now.adding(seconds: 3)
-        let sut = PomodoroLocalTimer(startDate: now, finishDate: end)
+        let end = now.adding(seconds: primary)
+        let sut = PomodoroLocalTimer(startDate: now, primaryInterval: primary)
         
         sut.startCountdown() { elapsed in
             received.append(elapsed)
@@ -86,9 +88,10 @@ final class PomodoroLocalTimerTests: XCTestCase {
     }
     
     func test_pauseCountdown_stopsDeliveringTime() {
+        let primary: TimeInterval = 10.0
         let now = Date.now
-        let end = now.adding(seconds: 10)
-        let sut = PomodoroLocalTimer(startDate: now, finishDate: end)
+        let end = now.adding(seconds: primary)
+        let sut = PomodoroLocalTimer(startDate: now, primaryInterval: primary)
         
         var receivedTime = [LocalElapsedSeconds]()
         let expectation = expectation(description: "waits for timer to finish twice")
