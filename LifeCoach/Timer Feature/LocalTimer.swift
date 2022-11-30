@@ -4,9 +4,13 @@ public protocol StartTimer {
     func startCountdown(from date: Date, endDate: Date)
 }
 
+public protocol PauseTimer {
+    func pauseCountdown()
+}
+
 public class LocalTimer {
-    private let timer: StartTimer
-    private var mode: TimerMode = .pomodoroTime
+    public typealias TimerCountdown = StartTimer & PauseTimer
+    private let timer: TimerCountdown
     private var isPomodoro = true
     
     private enum TimerMode {
@@ -14,7 +18,7 @@ public class LocalTimer {
         case breakTime
     }
     
-    public init(timer: StartTimer) {
+    public init(timer: TimerCountdown) {
         self.timer = timer
     }
     
@@ -30,5 +34,9 @@ public class LocalTimer {
         
         timer.startCountdown(from: startDate,
                              endDate: endTime)
+    }
+    
+    public func pauseTimer() {
+        timer.pauseCountdown()
     }
 }
