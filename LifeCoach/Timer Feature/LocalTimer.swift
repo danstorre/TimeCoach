@@ -5,11 +5,39 @@ public protocol StartTimer {
 }
 
 public protocol PauseTimer {
-    func pauseCountdown()
+    typealias TimerCompletion = (LocalElapsedSeconds) -> Void
+    func pauseCountdown(completion: @escaping TimerCompletion)
+}
+
+public protocol SkipTimer {
+    typealias TimerCompletion = (LocalElapsedSeconds) -> Void
+    func skipCountdown(completion: @escaping TimerCompletion)
+}
+
+public struct LocalElapsedSeconds {
+    public let elapsedSeconds: TimeInterval
+    public let startDate: Date
+    public let endDate: Date
+
+    public init(
+        _ elapsedSeconds: TimeInterval,
+        startDate: Date,
+        endDate: Date
+    ) {
+        self.elapsedSeconds = elapsedSeconds
+        self.startDate = startDate
+        self.endDate = endDate
+    }
+    
+    var timeElapsed: ElapsedSeconds {
+        ElapsedSeconds.init(elapsedSeconds,
+                            startDate: startDate,
+                            endDate: endDate)
+    }
 }
 
 public class LocalTimer {
-    public typealias TimerCountdown = StartTimer & PauseTimer
+    public typealias TimerCountdown = StartTimer & PauseTimer & SkipTimer
     private let timer: TimerCountdown
     private var isPomodoro = true
     
@@ -36,7 +64,15 @@ public class LocalTimer {
                              endDate: endTime)
     }
     
-    public func pauseTimer() {
-        timer.pauseCountdown()
+    public func pauseTimer(completion: @escaping (ElapsedSeconds) -> Void) {
+        timer.pauseCountdown() {
+            completion($0.timeElapsed)
+        }
+    }
+    
+    public func skipTimer(completion: @escaping (ElapsedSeconds) -> Void) {
+        timer.skipCountdown() {
+            completion($0.timeElapsed)
+        }
     }
 }
