@@ -1,7 +1,7 @@
 import LifeCoach
 import XCTest
 
-final class SkipTimerUseCase: XCTestCase {
+final class SkipTimerUseCaseTests: XCTestCase {
     func test_init_doesNotSendAnyMessageToTimer() {
         let (_, spy) = makeSUT()
         
