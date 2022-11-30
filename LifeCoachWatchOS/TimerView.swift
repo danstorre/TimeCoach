@@ -1,19 +1,6 @@
 import SwiftUI
 import Combine
 
-public struct ElapsedSeconds {
-    let elapsedSeconds: TimeInterval
-    let startingFrom: Date
-
-    public init(
-        _ elapsedSeconds: TimeInterval,
-        from: Date
-    ) {
-        self.elapsedSeconds = elapsedSeconds
-        self.startingFrom = from
-    }
-}
-
 public final class TimerViewComposer {
     public static func createTimer(
         timerLoader: @escaping () -> AnyPublisher<ElapsedSeconds, Error>,
