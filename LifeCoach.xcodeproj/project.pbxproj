@@ -12,6 +12,7 @@
 		FB06B53D292BF71C00AE6079 /* LifeCoachWatchOS.h in Headers */ = {isa = PBXBuildFile; fileRef = FB06B52F292BF71C00AE6079 /* LifeCoachWatchOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FB06B545292BF77400AE6079 /* HomeUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB06B544292BF77400AE6079 /* HomeUI.swift */; };
 		FB4AA1332936EB9A0076FED9 /* TimerUIIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4AA1322936EB9A0076FED9 /* TimerUIIntegrationTests.swift */; };
+		FB4AA1362936ECD10076FED9 /* ViewInspector in Frameworks */ = {isa = PBXBuildFile; productRef = FB4AA1352936ECD10076FED9 /* ViewInspector */; };
 		FBAD475528FC8BB0003D2F7A /* LifeCoach.docc in Sources */ = {isa = PBXBuildFile; fileRef = FBAD475428FC8BB0003D2F7A /* LifeCoach.docc */; };
 		FBAD475B28FC8BB0003D2F7A /* LifeCoach.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBAD475028FC8BB0003D2F7A /* LifeCoach.framework */; };
 		FBAD476128FC8BB0003D2F7A /* LifeCoach.h in Headers */ = {isa = PBXBuildFile; fileRef = FBAD475328FC8BB0003D2F7A /* LifeCoach.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -64,6 +65,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FB06B537292BF71C00AE6079 /* LifeCoachWatchOS.framework in Frameworks */,
+				FB4AA1362936ECD10076FED9 /* ViewInspector in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -205,6 +207,9 @@
 				FB06B539292BF71C00AE6079 /* PBXTargetDependency */,
 			);
 			name = LifeCoachWatchOSTests;
+			packageProductDependencies = (
+				FB4AA1352936ECD10076FED9 /* ViewInspector */,
+			);
 			productName = LifeCoachWatchOSTests;
 			productReference = FB06B536292BF71C00AE6079 /* LifeCoachWatchOSTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -279,6 +284,9 @@
 				Base,
 			);
 			mainGroup = FBAD474628FC8BB0003D2F7A;
+			packageReferences = (
+				FB4AA1342936ECD10076FED9 /* XCRemoteSwiftPackageReference "ViewInspector" */,
+			);
 			productRefGroup = FBAD475128FC8BB0003D2F7A /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -740,6 +748,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		FB4AA1342936ECD10076FED9 /* XCRemoteSwiftPackageReference "ViewInspector" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/nalexn/ViewInspector";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		FB4AA1352936ECD10076FED9 /* ViewInspector */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FB4AA1342936ECD10076FED9 /* XCRemoteSwiftPackageReference "ViewInspector" */;
+			productName = ViewInspector;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = FBAD474728FC8BB0003D2F7A /* Project object */;
 }
