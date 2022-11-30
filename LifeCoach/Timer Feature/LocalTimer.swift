@@ -9,6 +9,11 @@ public protocol PauseTimer {
     func pauseCountdown(completion: @escaping TimerCompletion)
 }
 
+public protocol SkipTimer {
+    typealias TimerCompletion = (LocalElapsedSeconds) -> Void
+    func skipCountdown(completion: @escaping TimerCompletion)
+}
+
 public struct LocalElapsedSeconds {
     public let elapsedSeconds: TimeInterval
     public let startDate: Date
@@ -32,7 +37,7 @@ public struct LocalElapsedSeconds {
 }
 
 public class LocalTimer {
-    public typealias TimerCountdown = StartTimer & PauseTimer
+    public typealias TimerCountdown = StartTimer & PauseTimer & SkipTimer
     private let timer: TimerCountdown
     private var isPomodoro = true
     
@@ -61,6 +66,12 @@ public class LocalTimer {
     
     public func pauseTimer(completion: @escaping (ElapsedSeconds) -> Void) {
         timer.pauseCountdown() {
+            completion($0.timeElapsed)
+        }
+    }
+    
+    public func skipTimer(completion: @escaping (ElapsedSeconds) -> Void) {
+        timer.skipCountdown() {
             completion($0.timeElapsed)
         }
     }
