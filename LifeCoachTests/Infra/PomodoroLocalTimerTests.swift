@@ -21,6 +21,14 @@ class PomodoroLocalTimer {
         RunLoop.current.add(invalidationTimer!, forMode: .default)
     }
     
+    func pauseCountdown(completion: @escaping (LocalElapsedSeconds) -> Void) {
+        invalidateTimers()
+        let elapsed = LocalElapsedSeconds(elapsedTimeInterval,
+                                          startDate: startDate ?? Date(),
+                                          endDate: finishDate ?? Date())
+        completion(elapsed)
+    }
+    
     private func createTimer() -> Timer {
         Timer.scheduledTimer(timeInterval: 1.0,
                              target: self,
@@ -36,7 +44,7 @@ class PomodoroLocalTimer {
             repeats: false,
             block: { [weak self] timer in
                 self?.invalidateTimers()
-        })
+            })
     }
     
     @objc
@@ -73,22 +81,53 @@ final class PomodoroLocalTimerTests: XCTestCase {
         
         wait(for: [expectation], timeout: 3)
         
-        assertsThatStartCoutdownDeliverTimeAfterOneSecond(of: received, from: now, to: end)
+        assertsThatStartCoutdownDeliverTimeAfterOneSecond(of: received, from: now, to: end, count: 2)
+    }
+    
+    func test_pauseCountdown_stopsDeliveringTime() {
+        let sut = PomodoroLocalTimer()
+        let now = Date.now
+        let end = now.adding(seconds: 10)
+        
+        var receivedTime = [LocalElapsedSeconds]()
+        let expectation = expectation(description: "waits for timer to finish twice")
+        expectation.expectedFulfillmentCount = 3
+        sut.startCountdown(from: now,
+                           endDate: end) { elapsed in
+            receivedTime.append(elapsed)
+            expectation.fulfill()
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
+            sut.pauseCountdown { elapsed in
+                receivedTime.append(elapsed)
+                expectation.fulfill()
+            }
+        })
+        
+        wait(for: [expectation], timeout: 3)
+        
+        assertsThatStartCoutdownDeliverTimeAfterOneSecond(of: receivedTime, from: now, to: end, count: 3)
+        
+        let expectedLocal = LocalElapsedSeconds(2, startDate: now, endDate: end)
+        XCTAssertEqual(receivedTime[2], expectedLocal)
     }
     
     // MARK: - helpers
-    private func assertsThatStartCoutdownDeliverTimeAfterOneSecond(of received: [LocalElapsedSeconds],
-                                                                   from now: Date,
-                                                                   to end: Date) {
-        XCTAssertEqual(received.count, 2)
+    
+    private func assertsThatStartCoutdownDeliverTimeAfterOneSecond(
+        of received: [LocalElapsedSeconds], from now: Date, to end: Date, count: Int,
+        file: StaticString = #filePath, line: UInt = #line)
+    {
+        XCTAssertEqual(received.count, count, file: file, line: line)
         
-        XCTAssertEqual(received[0].elapsedSeconds, 1)
-        XCTAssertEqual(received[1].elapsedSeconds, 2)
-
-        XCTAssertEqual(received[0].startDate, now)
-        XCTAssertEqual(received[1].startDate, now)
+        XCTAssertEqual(received[0].elapsedSeconds, 1, file: file, line: line)
+        XCTAssertEqual(received[1].elapsedSeconds, 2, file: file, line: line)
         
-        XCTAssertEqual(received[0].endDate, end)
-        XCTAssertEqual(received[1].endDate, end)
+        XCTAssertEqual(received[0].startDate, now, file: file, line: line)
+        XCTAssertEqual(received[1].startDate, now, file: file, line: line)
+        
+        XCTAssertEqual(received[0].endDate, end, file: file, line: line)
+        XCTAssertEqual(received[1].endDate, end, file: file, line: line)
     }
 }
