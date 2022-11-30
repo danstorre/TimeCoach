@@ -4,9 +4,9 @@ import Combine
 public struct TimerView: View {
     @ObservedObject var timerViewModel: TimerViewModel
     
-    var togglePlayback: (() -> Void)?
-    var skipHandler: (() -> Void)?
-    var stopHandler: (() -> Void)?
+    private var togglePlayback: (() -> Void)?
+    private var skipHandler: (() -> Void)?
+    private var stopHandler: (() -> Void)?
     
     init(timerViewModel: TimerViewModel,
          togglePlayback: (() -> Void)? = nil,
