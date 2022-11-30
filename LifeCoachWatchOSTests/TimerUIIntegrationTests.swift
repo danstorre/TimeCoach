@@ -28,6 +28,21 @@ final class TimerUIIntegrationTests: XCTestCase {
     
         XCTAssertEqual(playHandlerCount, 2, "Should execute playHandler twice.")
     }
+    
+    func test_onSkip_sendsMessageToSkipHandler() {
+        var skipHandlerCount = 0
+        let sut = TimerView(skipHandler: {
+            skipHandlerCount += 1
+        })
+    
+        sut.simulateSkipTimerUserInteraction()
+    
+        XCTAssertEqual(skipHandlerCount, 1, "Should execute skipHandler once.")
+        
+        sut.simulateSkipTimerUserInteraction()
+    
+        XCTAssertEqual(skipHandlerCount, 2, "Should execute skipHandler twice.")
+    }
 }
 
 fileprivate extension TimerView {
@@ -39,6 +54,10 @@ fileprivate extension TimerView {
     
     func simulatePlayTimerUserInteraction() {
         tapButton(id: Self.playButtonIdentifier)
+    }
+    
+    func simulateSkipTimerUserInteraction() {
+        tapButton(id: Self.skipButtonIdentifier)
     }
     
     private func tapButton(id: String) {
