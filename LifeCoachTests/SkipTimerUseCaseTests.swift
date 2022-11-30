@@ -1,30 +1,30 @@
 import LifeCoach
 import XCTest
 
-final class StopTimerUseCase: XCTestCase {
+final class SkipTimerUseCaseTests: XCTestCase {
     func test_init_doesNotSendAnyMessageToTimer() {
         let (_, spy) = makeSUT()
         
-        XCTAssertEqual(spy.stopCallCount, 0)
+        XCTAssertEqual(spy.skipCallCount, 0)
     }
     
-    func test_stopTimer_sendsMessageToTimer() {
+    func test_skipTimer_sendsMessageToTimer() {
         let (sut, spy) = makeSUT()
-        sut.stopTimer() { _ in }
+        sut.skipTimer() { _ in }
         
-        XCTAssertEqual(spy.stopCallCount, 1)
+        XCTAssertEqual(spy.skipCallCount, 1)
     }
     
-    func test_stopTimer_returnsCorrectElapsedSeconds() {
+    func test_skipTimer_returnsCorrectElapsedSeconds() {
         let (sut, spy) = makeSUT()
         var received: ElapsedSeconds?
-        sut.stopTimer() { elapsedTime in
+        sut.skipTimer() { elapsedTime in
             received = elapsedTime
         }
     
         let expectedElapsedTime = makeElapsedSeconds()
         
-        spy.finishStopWith(date: expectedElapsedTime.local)
+        spy.finishSkipWith(date: expectedElapsedTime.local)
         
         XCTAssertEqual(received, expectedElapsedTime.model)
     }
