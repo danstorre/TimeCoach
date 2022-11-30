@@ -18,10 +18,11 @@ class StarTimer {
 class TimerSpy {
     private(set) var startDatesReceived = [Date]()
     private(set) var endDatesReceived = [Date]()
-    private(set) var callCount = 0
+    var callCount: Int {
+        startDatesReceived.count
+    }
     
     func startCountdown(from date: Date, endDate: Date) {
-        callCount += 1
         startDatesReceived.append(date)
         endDatesReceived.append(endDate)
     }
