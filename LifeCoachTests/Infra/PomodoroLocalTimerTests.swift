@@ -15,21 +15,28 @@ class PomodoroLocalTimer {
         self.finishDate = endDate
         
         handler = completion
-        timer = Timer.scheduledTimer(timeInterval: 1.0,
-                                     target: self,
-                                     selector: #selector(elapsedCompletion),
-                                     userInfo: nil,
-                                     repeats: true)
+        timer = createTimer()
+        invalidationTimer = createInvalidationTimer(endDate: endDate)
         
-        invalidationTimer = Timer(
+        RunLoop.current.add(invalidationTimer!, forMode: .default)
+    }
+    
+    private func createTimer() -> Timer {
+        Timer.scheduledTimer(timeInterval: 1.0,
+                             target: self,
+                             selector: #selector(elapsedCompletion),
+                             userInfo: nil,
+                             repeats: true)
+    }
+    
+    private func createInvalidationTimer(endDate: Date) -> Timer {
+        Timer(
             fire: endDate,
             interval: 0,
             repeats: false,
             block: { [weak self] timer in
                 self?.invalidateTimers()
         })
-        
-        RunLoop.current.add(invalidationTimer!, forMode: .default)
     }
     
     @objc
