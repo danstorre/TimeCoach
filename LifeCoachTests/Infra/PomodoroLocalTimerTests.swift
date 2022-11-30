@@ -66,13 +66,20 @@ final class PomodoroLocalTimerTests: XCTestCase {
         let end = now.adding(seconds: 3)
         
         sut.startCountdown(from: now,
-                           endDate: now.adding(seconds: 3)) { elapsed in
+                           endDate: end) { elapsed in
             received.append(elapsed)
             expectation.fulfill()
         }
         
         wait(for: [expectation], timeout: 3)
         
+        assertsThatStartCoutdownDeliverTimeAfterOneSecond(of: received, from: now, to: end)
+    }
+    
+    // MARK: - helpers
+    private func assertsThatStartCoutdownDeliverTimeAfterOneSecond(of received: [LocalElapsedSeconds],
+                                                                   from now: Date,
+                                                                   to end: Date) {
         XCTAssertEqual(received.count, 2)
         
         XCTAssertEqual(received[0].elapsedSeconds, 1)
