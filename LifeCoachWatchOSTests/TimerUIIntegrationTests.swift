@@ -1,12 +1,34 @@
-@testable import LifeCoachWatchOS
+import ViewInspector
+import SwiftUI
 import XCTest
 
-final class TimerUIIntegrationTests: XCTestCase {
-    func test_zero() throws {
-        XCTFail("Tests not yet implemented in TimerUIIntegrationTests")
+struct TimerView: View {
+    var body: some View {
+        Text("25:00")
     }
 }
 
+extension TimerView: Inspectable { }
 
+final class TimerUIIntegrationTests: XCTestCase {
+    func test_onInitialLoad_shouldPresentPomodoroTimerAsDefault() {
+        let sut = TimerView()
+        
+        let timerString = sut.timerLabelString()
+        
+        XCTAssertEqual(timerString, TimerView.pomodoroTimerString, "Should present pomodoro Timer on view load.")
+    }
+}
 
+extension TimerView {
+    static let pomodoroTimerString = "25:00"
+    
+    func timerLabelString() -> String {
+        do {
+            return try inspect().text().string()
+        } catch {
+            fatalError("couldn't find inspect text")
+        }
+    }
+}
 
