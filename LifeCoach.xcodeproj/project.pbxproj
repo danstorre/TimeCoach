@@ -9,9 +9,9 @@
 /* Begin PBXBuildFile section */
 		FB06B531292BF71C00AE6079 /* LifeCoachWatchOS.docc in Sources */ = {isa = PBXBuildFile; fileRef = FB06B530292BF71C00AE6079 /* LifeCoachWatchOS.docc */; };
 		FB06B537292BF71C00AE6079 /* LifeCoachWatchOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB06B52D292BF71C00AE6079 /* LifeCoachWatchOS.framework */; };
-		FB06B53C292BF71C00AE6079 /* LifeCoachWatchOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB06B53B292BF71C00AE6079 /* LifeCoachWatchOSTests.swift */; };
 		FB06B53D292BF71C00AE6079 /* LifeCoachWatchOS.h in Headers */ = {isa = PBXBuildFile; fileRef = FB06B52F292BF71C00AE6079 /* LifeCoachWatchOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FB06B545292BF77400AE6079 /* HomeUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB06B544292BF77400AE6079 /* HomeUI.swift */; };
+		FB4AA1332936EB9A0076FED9 /* TimerUIIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4AA1322936EB9A0076FED9 /* TimerUIIntegrationTests.swift */; };
 		FBAD475528FC8BB0003D2F7A /* LifeCoach.docc in Sources */ = {isa = PBXBuildFile; fileRef = FBAD475428FC8BB0003D2F7A /* LifeCoach.docc */; };
 		FBAD475B28FC8BB0003D2F7A /* LifeCoach.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBAD475028FC8BB0003D2F7A /* LifeCoach.framework */; };
 		FBAD476128FC8BB0003D2F7A /* LifeCoach.h in Headers */ = {isa = PBXBuildFile; fileRef = FBAD475328FC8BB0003D2F7A /* LifeCoach.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -41,8 +41,8 @@
 		FB06B52F292BF71C00AE6079 /* LifeCoachWatchOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LifeCoachWatchOS.h; sourceTree = "<group>"; };
 		FB06B530292BF71C00AE6079 /* LifeCoachWatchOS.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = LifeCoachWatchOS.docc; sourceTree = "<group>"; };
 		FB06B536292BF71C00AE6079 /* LifeCoachWatchOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LifeCoachWatchOSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		FB06B53B292BF71C00AE6079 /* LifeCoachWatchOSTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LifeCoachWatchOSTests.swift; sourceTree = "<group>"; };
 		FB06B544292BF77400AE6079 /* HomeUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeUI.swift; sourceTree = "<group>"; };
+		FB4AA1322936EB9A0076FED9 /* TimerUIIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerUIIntegrationTests.swift; sourceTree = "<group>"; };
 		FBAD475028FC8BB0003D2F7A /* LifeCoach.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LifeCoach.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FBAD475328FC8BB0003D2F7A /* LifeCoach.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LifeCoach.h; sourceTree = "<group>"; };
 		FBAD475428FC8BB0003D2F7A /* LifeCoach.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = LifeCoach.docc; sourceTree = "<group>"; };
@@ -98,7 +98,7 @@
 		FB06B53A292BF71C00AE6079 /* LifeCoachWatchOSTests */ = {
 			isa = PBXGroup;
 			children = (
-				FB06B53B292BF71C00AE6079 /* LifeCoachWatchOSTests.swift */,
+				FB4AA1322936EB9A0076FED9 /* TimerUIIntegrationTests.swift */,
 			);
 			path = LifeCoachWatchOSTests;
 			sourceTree = "<group>";
@@ -336,7 +336,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FB06B53C292BF71C00AE6079 /* LifeCoachWatchOSTests.swift in Sources */,
+				FB4AA1332936EB9A0076FED9 /* TimerUIIntegrationTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
