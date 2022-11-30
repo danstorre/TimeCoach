@@ -36,16 +36,6 @@ public struct TimerView: View {
     }
 }
 
-extension TimerView {
-    public static let timerLabelIdentifier = "timerLabelIdentifier"
-    
-    public static let playButtonIdentifier = "playButtonIdentifier"
-    
-    public static let skipButtonIdentifier = "skipButtonIdentifier"
-    
-    public static let stopButtonIdentifier = "stopButtonIdentifier"
-}
-
 struct TimerView_Previews: PreviewProvider {
     static var previews: some View {
         TimerView(timerViewModel: TimerViewModel())
