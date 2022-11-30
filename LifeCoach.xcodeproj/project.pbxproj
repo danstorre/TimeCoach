@@ -118,8 +118,7 @@
 		FB06B53A292BF71C00AE6079 /* LifeCoachWatchOSTests */ = {
 			isa = PBXGroup;
 			children = (
-				FB4AA13B29379BC10076FED9 /* Helpers */,
-				FB4AA1322936EB9A0076FED9 /* TimerUIIntegrationTests.swift */,
+				FB4AA14E2937BE6F0076FED9 /* UI */,
 			);
 			path = LifeCoachWatchOSTests;
 			sourceTree = "<group>";
@@ -167,6 +166,15 @@
 				FB4AA14B2937B2D90076FED9 /* ExtensionHelpers.swift */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		FB4AA14E2937BE6F0076FED9 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				FB4AA13B29379BC10076FED9 /* Helpers */,
+				FB4AA1322936EB9A0076FED9 /* TimerUIIntegrationTests.swift */,
+			);
+			path = UI;
 			sourceTree = "<group>";
 		};
 		FBAD474628FC8BB0003D2F7A = {
