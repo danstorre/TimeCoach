@@ -49,17 +49,4 @@ final class StartTimerUseCase: XCTestCase {
         
         return (sut, spy)
     }
-    
-    private class TimerSpy: StartTimer {
-        private(set) var startDatesReceived = [Date]()
-        private(set) var endDatesReceived = [Date]()
-        var callCount: Int {
-            startDatesReceived.count
-        }
-        
-        func startCountdown(from date: Date, endDate: Date) {
-            startDatesReceived.append(date)
-            endDatesReceived.append(endDate)
-        }
-    }
 }
