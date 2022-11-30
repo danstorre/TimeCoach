@@ -13,6 +13,21 @@ final class TimerUIIntegrationTests: XCTestCase {
         
         XCTAssertEqual(timerString, TimerView.pomodoroTimerString, "Should present pomodoro Timer on view load.")
     }
+    
+    func test_onPlay_sendsMessageToTimerHandler() {
+        var playHandlerCount = 0
+        let sut = TimerView(playHandler: {
+            playHandlerCount += 1
+        })
+    
+        sut.simulatePlayTimerUserInteraction()
+    
+        XCTAssertEqual(playHandlerCount, 1, "Should execute playHandler once.")
+        
+        sut.simulatePlayTimerUserInteraction()
+    
+        XCTAssertEqual(playHandlerCount, 2, "Should execute playHandler twice.")
+    }
 }
 
 fileprivate extension TimerView {
@@ -22,6 +37,21 @@ fileprivate extension TimerView {
         inspectTextWith(id: "b")
     }
     
+    func simulatePlayTimerUserInteraction() {
+        tapButton(id: Self.playButtonIdentifier)
+    }
+    
+    private func tapButton(id: String) {
+        do {
+            try inspect()
+                .find(viewWithAccessibilityIdentifier: id)
+                .button()
+                .tap()
+        } catch {
+            fatalError("couldn't inspect `simulatePlayUserInteraction`")
+        }
+    }
+
     private func inspectTextWith(id: String) -> String{
         do {
             return try inspect()
@@ -33,4 +63,3 @@ fileprivate extension TimerView {
         }
     }
 }
-
