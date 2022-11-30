@@ -1,4 +1,5 @@
 import XCTest
+import LifeCoach
 
 class StarTimer {
     private let timer: TimerSpy
@@ -7,16 +8,22 @@ class StarTimer {
         self.timer = timer
     }
     
-    func startTimer() {
-        timer.startCountdown()
+    func startTimer(from startDate: Date = .now) {
+        let pomodoroTime = startDate.adding(seconds: .pomodoroInSeconds)
+        timer.startCountdown(from: startDate,
+                             endDate: pomodoroTime)
     }
 }
 
 class TimerSpy {
+    private(set) var startDatesReceived = [Date]()
+    private(set) var endDatesReceived = [Date]()
     private(set) var callCount = 0
     
-    func startCountdown() {
+    func startCountdown(from date: Date, endDate: Date) {
         callCount += 1
+        startDatesReceived.append(date)
+        endDatesReceived.append(endDate)
     }
 }
 
@@ -32,6 +39,16 @@ final class StartTimerUseCase: XCTestCase {
         sut.startTimer()
         
         XCTAssertEqual(spy.callCount, 1)
+    }
+    
+    func test_startTimer_sendsCorrectPomodoroTimes() {
+        let now = Date.now
+        let pomodoroTime = Date.now.adding(seconds: .pomodoroInSeconds)
+        let (sut, spy) = makeSUT()
+        sut.startTimer(from: now)
+        
+        XCTAssertEqual(spy.startDatesReceived, [now])
+        XCTAssertEqual(spy.endDatesReceived, [pomodoroTime])
     }
     
     // MARK: - helpers
