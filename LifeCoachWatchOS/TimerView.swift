@@ -13,7 +13,7 @@ public struct TimerView: View {
     public var body: some View {
         VStack {
             Text("25:00")
-                .accessibilityIdentifier("b")
+                .accessibilityIdentifier(Self.timerLabelIdentifier)
             
             Button.init(action: playHandler ?? {}) {
             }.accessibilityIdentifier(Self.playButtonIdentifier)

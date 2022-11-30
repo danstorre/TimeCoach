@@ -49,7 +49,7 @@ fileprivate extension TimerView {
     static let pomodoroTimerString = "25:00"
     
     func timerLabelString() -> String {
-        inspectTextWith(id: "b")
+        inspectTextWith(id: Self.timerLabelIdentifier)
     }
     
     func simulatePlayTimerUserInteraction() {
