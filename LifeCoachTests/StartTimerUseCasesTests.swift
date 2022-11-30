@@ -18,7 +18,7 @@ final class StartTimerUseCase: XCTestCase {
     
     func test_startTimer_sendsCorrectPomodoroTimes() {
         let now = Date.now
-        let pomodoroTime = Date.now.adding(seconds: .pomodoroInSeconds)
+        let pomodoroTime = now.adding(seconds: .pomodoroInSeconds)
         let (sut, spy) = makeSUT()
         sut.startTimer(from: now) { _ in }
         
@@ -28,8 +28,8 @@ final class StartTimerUseCase: XCTestCase {
     
     func test_startTimer_twice_sendsCorrectBreakTimes() {
         let now = Date.now
-        let pomodoroTime = Date.now.adding(seconds: .pomodoroInSeconds)
-        let breakTime = Date.now.adding(seconds: .breakInSeconds)
+        let pomodoroTime = now.adding(seconds: .pomodoroInSeconds)
+        let breakTime = now.adding(seconds: .breakInSeconds)
         let (sut, spy) = makeSUT()
         sut.startTimer(from: now) { _ in }
         sut.startTimer(from: now) { _ in }
