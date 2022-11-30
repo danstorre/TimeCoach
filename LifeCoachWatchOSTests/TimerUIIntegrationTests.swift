@@ -22,11 +22,11 @@ final class TimerUIIntegrationTests: XCTestCase {
             playHandlerCount += 1
         })
         
-        sut.simulatePlayTimerUserInteraction()
+        sut.simulateToggleTimerUserInteraction()
         
         XCTAssertEqual(playHandlerCount, 1, "Should execute playHandler once.")
         
-        sut.simulatePlayTimerUserInteraction()
+        sut.simulateToggleTimerUserInteraction()
         
         XCTAssertEqual(playHandlerCount, 2, "Should execute playHandler twice.")
     }
@@ -68,13 +68,29 @@ final class TimerUIIntegrationTests: XCTestCase {
         
         XCTAssertEqual(sut.timerLabelString(), "25:00")
         
-        sut.simulatePlayTimerUserInteraction()
+        sut.simulateToggleTimerUserInteraction()
         
         XCTAssertEqual(sut.timerLabelString(), "25:00")
         
         spy.completesSuccessfullyWith(timeElapsed: timeElapsed)
         
         XCTAssertEqual(sut.timerLabelString(), "24:59")
+    }
+    
+    func test_onPauseInteraction_doesNotContinueTimer() {
+        let now = Date.now
+        let timeElapsed = makeElapsedSeconds(1, from: now)
+        let (sut, spy) = makeSUT()
+        
+        XCTAssertEqual(sut.timerLabelString(), "25:00")
+        
+        sut.simulateToggleTimerUserInteractionTwice()
+        
+        XCTAssertEqual(sut.timerLabelString(), "25:00")
+        
+        spy.completesSuccessfullyWith(timeElapsed: timeElapsed)
+        
+        XCTAssertEqual(sut.timerLabelString(), "25:00")
     }
     
     // MARK: - Helpers

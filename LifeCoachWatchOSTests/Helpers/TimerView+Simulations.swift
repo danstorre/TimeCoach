@@ -5,7 +5,12 @@ extension TimerView {
         inspectTextWith(id: Self.timerLabelIdentifier)
     }
     
-    func simulatePlayTimerUserInteraction() {
+    func simulateToggleTimerUserInteractionTwice() {
+        simulateToggleTimerUserInteraction()
+        simulateToggleTimerUserInteraction()
+    }
+    
+    func simulateToggleTimerUserInteraction() {
         tapButton(id: Self.playButtonIdentifier)
     }
     
