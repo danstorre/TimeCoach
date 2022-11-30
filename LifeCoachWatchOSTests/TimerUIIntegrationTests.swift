@@ -1,12 +1,7 @@
 import ViewInspector
 import SwiftUI
 import XCTest
-
-struct TimerView: View {
-    var body: some View {
-        Text("25:00")
-    }
-}
+import LifeCoachWatchOS
 
 extension TimerView: Inspectable { }
 
