@@ -1,7 +1,6 @@
 import Foundation
 
 public class LocalTimer {
-    public typealias TimerCountdown = StartTimer & PauseTimer & SkipTimer & StopTimer
     private let timer: TimerCountdown
     private var isPomodoro = true
     

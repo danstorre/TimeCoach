@@ -1,6 +1,6 @@
 import Foundation
 
-typealias TimerCountdown = StartTimer & PauseTimer & SkipTimer & StopTimer
+public typealias TimerCountdown = StartTimer & PauseTimer & SkipTimer & StopTimer
 
 public protocol StartTimer {
     typealias TimerCompletion = (LocalElapsedSeconds) -> Void

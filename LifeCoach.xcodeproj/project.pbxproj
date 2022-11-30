@@ -214,6 +214,8 @@
 			children = (
 				FB4AA16B2937D7290076FED9 /* infra */,
 				FB4AA15D2937C6E10076FED9 /* LocalTimer.swift */,
+				FB4AA16E2937D75A0076FED9 /* TimerCountdown.swift */,
+				FB4AA16C2937D7340076FED9 /* LocalElapsedSeconds.swift */,
 				FB4AA1632937CD000076FED9 /* ElapsedSeconds.swift */,
 			);
 			path = "Timer Feature";
@@ -222,8 +224,6 @@
 		FB4AA16B2937D7290076FED9 /* infra */ = {
 			isa = PBXGroup;
 			children = (
-				FB4AA16C2937D7340076FED9 /* LocalElapsedSeconds.swift */,
-				FB4AA16E2937D75A0076FED9 /* TimerCountdown.swift */,
 			);
 			path = infra;
 			sourceTree = "<group>";

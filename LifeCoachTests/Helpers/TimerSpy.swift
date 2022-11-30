@@ -1,6 +1,6 @@
 import LifeCoach
 
-class TimerSpy: LocalTimer.TimerCountdown {
+class TimerSpy: TimerCountdown {
     private(set) var startTimerCompletions = [TimerCompletion]()
     private(set) var pauseTimerCompletions = [TimerCompletion]()
     private(set) var skipTimerCompletions = [TimerCompletion]()
