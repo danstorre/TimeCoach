@@ -13,7 +13,7 @@ final class TimerUIIntegrationTests: XCTestCase {
         
         let timerString = sut.timerLabelString()
         
-        XCTAssertEqual(timerString, TimerView.pomodoroTimerString, "Should present pomodoro Timer on view load.")
+        XCTAssertEqual(timerString, .defaultPomodoroTimerString, "Should present pomodoro Timer on view load.")
     }
     
     func test_onPlay_sendsMessageToTimerHandler() {

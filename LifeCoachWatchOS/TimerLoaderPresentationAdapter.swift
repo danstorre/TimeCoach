@@ -44,7 +44,7 @@ class TimerViewModel: ObservableObject {
 }
 
 extension String {
-    static let defaultPomodoroTimerString = "25:00"
+    public static let defaultPomodoroTimerString = "25:00"
 }
 
 extension TimeInterval {
