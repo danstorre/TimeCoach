@@ -76,7 +76,6 @@ final class PomodoroLocalTimerTests: XCTestCase {
         let now = Date.now
         let end = now.adding(seconds: primary)
         let sut = makeSUT(startDate: now, primaryInterval: primary)
-        trackForMemoryLeak(instance: sut)
         
         sut.startCountdown() { elapsed in
             received.append(elapsed)
@@ -95,8 +94,6 @@ final class PomodoroLocalTimerTests: XCTestCase {
         let now = Date.now
         let end = now.adding(seconds: primary)
         let sut = makeSUT(startDate: now, primaryInterval: primary)
-        
-        trackForMemoryLeak(instance: sut)
         
         var receivedTime = [LocalElapsedSeconds]()
         let expectation = expectation(description: "waits for timer to finish three times")
@@ -126,6 +123,7 @@ final class PomodoroLocalTimerTests: XCTestCase {
     // MARK: - helpers
     private func makeSUT(startDate: Date, primaryInterval: TimeInterval) -> PomodoroLocalTimer {
         let sut = PomodoroLocalTimer(startDate: startDate, primaryInterval: primaryInterval)
+        trackForMemoryLeak(instance: sut)
         
         return sut
     }
