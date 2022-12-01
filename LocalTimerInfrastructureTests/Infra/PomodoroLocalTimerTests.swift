@@ -81,7 +81,7 @@ final class PomodoroLocalTimerTests: XCTestCase {
     func test_start_shouldNotDeliverMoreTime_afterReachingThresholdInterval() {
         let sut = makeSUT(primaryInterval: 1)
         var received = [LocalElapsedSeconds]()
-        let expectation = expectation(description: "waits for expectation to be fullfil only once")
+        let expectation = expectation(description: "waits for expectation to be fulfill only once")
         expectation.expectedFulfillmentCount = 1
          
         sut.startCountdown() { elapsed in
@@ -114,7 +114,7 @@ final class PomodoroLocalTimerTests: XCTestCase {
                           primaryInterval: primaryInterval,
                           secondaryTime: secondaryInterval)
         var received = [LocalElapsedSeconds]()
-        let expectation = expectation(description: "waits for expectation to be fullfil only once")
+        let expectation = expectation(description: "waits for expectation to be fulfill only once")
         
         sut.skipCountdown() { elapsed in
             received.append(elapsed)
@@ -138,7 +138,7 @@ final class PomodoroLocalTimerTests: XCTestCase {
                           primaryInterval: primaryInterval,
                           secondaryTime: secondaryInterval)
         var received = [LocalElapsedSeconds]()
-        let expectation = expectation(description: "waits for expectation to be fullfil only once")
+        let expectation = expectation(description: "waits for expectation to be fulfill only once")
         
         sut.skipCountdown() { _ in }
         
@@ -165,7 +165,7 @@ final class PomodoroLocalTimerTests: XCTestCase {
                           primaryInterval: primaryInterval,
                           secondaryTime: secondaryInterval)
         
-        let expectation = expectation(description: "waits for expectation to be fullfil only once")
+        let expectation = expectation(description: "waits for expectation to be fulfill only once")
         var received = [LocalElapsedSeconds]()
         
         sut.startCountdown() { elapsed in
@@ -221,7 +221,7 @@ final class PomodoroLocalTimerTests: XCTestCase {
     ) {
         var received = [LocalElapsedSeconds]()
         
-        let expectation = expectation(description: "waits for interval expectation to be fullfil only once")
+        let expectation = expectation(description: "waits for interval expectation to be fulfill only once")
         expectation.expectedFulfillmentCount = 1
          
         sut.skipCountdown() { _ in
