@@ -48,7 +48,7 @@ final class PomodoroLocalTimerTests: XCTestCase {
         
         assertsThatStartCoutdownDeliverTimeAfterOneSecond(of: receivedTime, from: now, to: end, count: 3)
         
-        let expectedLocal = LocalElapsedSeconds(2, startDate: now, endDate: end)
+        let expectedLocal = makeElapsedSeconds(2, startDate: now, endDate: end)
         assertEqual(receivedTime[2], expectedLocal)
     }
     
@@ -124,7 +124,7 @@ final class PomodoroLocalTimerTests: XCTestCase {
         
         wait(for: [expectation], timeout: 1)
         
-        let expectedLocal = LocalElapsedSeconds(0, startDate: now, endDate: now.adding(seconds: secondaryInterval))
+        let expectedLocal = makeElapsedSeconds(0, startDate: now, endDate: now.adding(seconds: secondaryInterval))
         
         XCTAssertEqual(received.count, 1)
         assertEqual(received[0], expectedLocal)
@@ -150,9 +150,8 @@ final class PomodoroLocalTimerTests: XCTestCase {
         
         wait(for: [expectation], timeout: 1)
         
-        let expectedLocal = LocalElapsedSeconds(1,
-                                                startDate: currentDate(),
-                                                endDate: currentDate().adding(seconds: secondaryInterval))
+        let endDate = currentDate().adding(seconds: secondaryInterval)
+        let expectedLocal = makeElapsedSeconds(1, startDate: currentDate(), endDate: endDate)
         
         XCTAssertEqual(received.count, 1)
         assertEqual(received[0], expectedLocal)
@@ -184,14 +183,23 @@ final class PomodoroLocalTimerTests: XCTestCase {
         
         wait(for: [expectation], timeout: 3)
         
-        let expectedLocal = LocalElapsedSeconds(0,
-                                                startDate: currentDate(),
-                                                endDate: currentDate().adding(seconds: primaryInterval))
+        let endDate = currentDate().adding(seconds: primaryInterval)
+        let expectedLocal = makeElapsedSeconds(0, startDate: currentDate(), endDate: endDate)
         XCTAssertEqual(received.count, 1)
         assertEqual(received[0], expectedLocal)
     }
     
     // MARK: - helpers
+    private func makeElapsedSeconds(
+        _ elapsedSeconds: TimeInterval,
+        startDate: Date,
+        endDate: Date
+    ) -> LocalElapsedSeconds {
+        LocalElapsedSeconds(elapsedSeconds,
+                            startDate: startDate,
+                            endDate: endDate)
+    }
+    
     private func assertEqual(_ lhs: LocalElapsedSeconds, _ rhs: LocalElapsedSeconds, file: StaticString = #filePath, line: UInt = #line) {
         XCTAssertEqual(lhs.elapsedSeconds, rhs.elapsedSeconds, file: file, line: line)
         XCTAssertEqual(lhs.startDate.timeIntervalSince1970,
