@@ -45,14 +45,20 @@ public struct TimerView: View {
                                             customFont: customFont))
                 .accessibilityIdentifier(Self.timerLabelIdentifier)
             
-            Button.init(action: togglePlayback ?? {}) {
-            }.accessibilityIdentifier(Self.togglePlaybackButtonIdentifier)
-            
-            Button.init(action: skipHandler ?? {}) {
-            }.accessibilityIdentifier(Self.skipButtonIdentifier)
-            
-            Button.init(action: stopHandler ?? {}) {
-            }.accessibilityIdentifier(Self.stopButtonIdentifier)
+            HStack {
+                Button.init(action: stopHandler ?? {}) {
+                    Image(systemName: "stop.fill")
+                }.accessibilityIdentifier(Self.stopButtonIdentifier)
+                
+                Button.init(action: skipHandler ?? {}) {
+                    Image(systemName: "forward.end.fill")
+                }.accessibilityIdentifier(Self.skipButtonIdentifier)
+                
+                Button.init(action: togglePlayback ?? {}) {
+                    Image(systemName: "playpause.fill")
+                }.accessibilityIdentifier(Self.togglePlaybackButtonIdentifier)
+            }
+            .opacity(isLuminanceReduced ? 0.0 : 1.0)
         }
     }
 }
