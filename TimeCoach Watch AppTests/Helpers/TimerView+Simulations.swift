@@ -45,15 +45,4 @@ extension TimerView {
             fatalError("couldn't inspect `timerLabelString`")
         }
     }
-
-    private func inspectTextWith(id: String) -> String{
-        do {
-            return try inspect()
-                .find(viewWithAccessibilityIdentifier: id)
-                .text()
-                .string()
-        } catch {
-            fatalError("couldn't inspect `timerLabelString`")
-        }
-    }
 }
