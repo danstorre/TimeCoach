@@ -76,6 +76,7 @@ final class PomodoroLocalTimerTests: XCTestCase {
         let now = Date.now
         let end = now.adding(seconds: primary)
         let sut = PomodoroLocalTimer(startDate: now, primaryInterval: primary)
+        trackForMemoryLeak(instance: sut)
         
         sut.startCountdown() { elapsed in
             received.append(elapsed)
@@ -85,6 +86,8 @@ final class PomodoroLocalTimerTests: XCTestCase {
         wait(for: [expectation], timeout: 3)
         
         assertsThatStartCoutdownDeliverTimeAfterOneSecond(of: received, from: now, to: end, count: 2)
+
+        sut.invalidateTimers()
     }
     
     func test_pauseCountdown_stopsDeliveringTime() {
@@ -93,8 +96,10 @@ final class PomodoroLocalTimerTests: XCTestCase {
         let end = now.adding(seconds: primary)
         let sut = PomodoroLocalTimer(startDate: now, primaryInterval: primary)
         
+        trackForMemoryLeak(instance: sut)
+        
         var receivedTime = [LocalElapsedSeconds]()
-        let expectation = expectation(description: "waits for timer to finish twice")
+        let expectation = expectation(description: "waits for timer to finish three times")
         expectation.expectedFulfillmentCount = 3
         sut.startCountdown() { elapsed in
             receivedTime.append(elapsed)
@@ -114,6 +119,8 @@ final class PomodoroLocalTimerTests: XCTestCase {
         
         let expectedLocal = LocalElapsedSeconds(2, startDate: now, endDate: end)
         XCTAssertEqual(receivedTime[2], expectedLocal)
+        
+        sut.invalidateTimers()
     }
     
     // MARK: - helpers
