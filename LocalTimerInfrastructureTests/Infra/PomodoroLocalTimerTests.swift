@@ -10,12 +10,17 @@ class PomodoroLocalTimer {
     private var startDate: Date
     private var finishDate: Date
     
+    private var primaryInterval: TimeInterval
+    private var secondaryTime: TimeInterval
+    
     private var threshold: TimeInterval = 0
     
-    init(startDate: Date, primaryInterval: TimeInterval) {
+    init(startDate: Date, primaryInterval: TimeInterval, secondaryTime: TimeInterval) {
         self.startDate = startDate
         self.finishDate = startDate.adding(seconds: primaryInterval)
         self.threshold = primaryInterval
+        self.primaryInterval = primaryInterval
+        self.secondaryTime = secondaryTime
     }
     
     func startCountdown(completion: @escaping (LocalElapsedSeconds) -> Void) {
@@ -30,6 +35,20 @@ class PomodoroLocalTimer {
                                           startDate: startDate,
                                           endDate: finishDate)
         completion(elapsed)
+    }
+    
+    func skipCountdown(completion: @escaping (LocalElapsedSeconds) -> Void) {
+        invalidateTimers()
+        elapsedTimeInterval = 0
+        
+        if threshold == primaryInterval {
+            threshold = secondaryTime
+        } else {
+            threshold = primaryInterval
+        }
+        
+        handler = completion
+        timer = createTimer()
     }
     
     private func createTimer() -> Timer {
@@ -165,11 +184,50 @@ final class PomodoroLocalTimerTests: XCTestCase {
         XCTAssertEqual(received.count, 1)
     }
     
+    func test_skip_shouldNotDeliverMoreTime_afterMeetingSecondaryInterval() {
+        let primaryInterval: TimeInterval = 2.0
+        let secondaryInterval: TimeInterval = 1.0
+        let sut = makeSUT(primaryInterval: primaryInterval,
+                          secondaryTime: secondaryInterval)
+
+        sut.startCountdown() { _ in }
+        
+        skipExpecting(interval: secondaryInterval, toReceivedElapsedTimes: 1, sut: sut)
+        skipExpecting(interval: primaryInterval, toReceivedElapsedTimes: 2, sut: sut)
+    }
+    
     // MARK: - helpers
+    private func skipExpecting(interval: TimeInterval,
+                               toReceivedElapsedTimes expectedTimes: Int,
+                               sut: PomodoroLocalTimer,
+                               file: StaticString = #filePath,
+                               line: UInt = #line
+    ) {
+        var received = [LocalElapsedSeconds]()
+        
+        let expectation = expectation(description: "waits for interval expectation to be fullfil only once")
+        expectation.expectedFulfillmentCount = 1
+         
+        sut.skipCountdown() { elapsed in
+            received.append(elapsed)
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + interval, execute: {
+            expectation.fulfill()
+        })
+        
+        wait(for: [expectation], timeout: 5)
+        
+        XCTAssertEqual(received.count, expectedTimes, file: file, line: line)
+    }
+
     private func makeSUT(startDate: Date = .now, primaryInterval: TimeInterval = 1.0,
+                         secondaryTime: TimeInterval = 1.0,
                          file: StaticString = #filePath,
                          line: UInt = #line) -> PomodoroLocalTimer {
-        let sut = PomodoroLocalTimer(startDate: startDate, primaryInterval: primaryInterval)
+        let sut = PomodoroLocalTimer(startDate: startDate,
+                                     primaryInterval: primaryInterval,
+                                     secondaryTime: secondaryTime)
         trackForMemoryLeak(instance: sut, file: file, line: line)
         invalidateTimerOnFinish(sut: sut, file: file, line: line)
         return sut
