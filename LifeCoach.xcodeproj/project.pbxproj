@@ -52,6 +52,7 @@
 		FBE9A9D62939580E00D8BF29 /* DIGITALDREAMFATNARROW.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FBE9A9CD2939580E00D8BF29 /* DIGITALDREAMFATNARROW.ttf */; };
 		FBE9A9D72939580E00D8BF29 /* DIGITALDREAMNARROW.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FBE9A9CE2939580E00D8BF29 /* DIGITALDREAMNARROW.ttf */; };
 		FBE9A9D82939580E00D8BF29 /* DIGITALDREAM.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FBE9A9CF2939580E00D8BF29 /* DIGITALDREAM.ttf */; };
+		FBE9A9DC2939654400D8BF29 /* TimerLabelStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE9A9DB2939654400D8BF29 /* TimerLabelStyle.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -152,6 +153,7 @@
 		FBE9A9CD2939580E00D8BF29 /* DIGITALDREAMFATNARROW.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = DIGITALDREAMFATNARROW.ttf; sourceTree = "<group>"; };
 		FBE9A9CE2939580E00D8BF29 /* DIGITALDREAMNARROW.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = DIGITALDREAMNARROW.ttf; sourceTree = "<group>"; };
 		FBE9A9CF2939580E00D8BF29 /* DIGITALDREAM.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = DIGITALDREAM.ttf; sourceTree = "<group>"; };
+		FBE9A9DB2939654400D8BF29 /* TimerLabelStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerLabelStyle.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -249,6 +251,7 @@
 		FB4AA14429379E1F0076FED9 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				FBE9A9DA2939653B00D8BF29 /* Styles */,
 				FB4AA14529379E460076FED9 /* Helpers */,
 				FB4AA1372936F1730076FED9 /* TimerView.swift */,
 			);
@@ -429,6 +432,14 @@
 				FBE9A9CF2939580E00D8BF29 /* DIGITALDREAM.ttf */,
 			);
 			path = Fonts;
+			sourceTree = "<group>";
+		};
+		FBE9A9DA2939653B00D8BF29 /* Styles */ = {
+			isa = PBXGroup;
+			children = (
+				FBE9A9DB2939654400D8BF29 /* TimerLabelStyle.swift */,
+			);
+			path = Styles;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -711,6 +722,7 @@
 			files = (
 				FB4AA1572937C3970076FED9 /* Date+Formatters.swift in Sources */,
 				FB4AA1382936F1730076FED9 /* TimerView.swift in Sources */,
+				FBE9A9DC2939654400D8BF29 /* TimerLabelStyle.swift in Sources */,
 				FB4AA14A29379EDF0076FED9 /* TimerViewModel.swift in Sources */,
 				FB4AA1592937C3C50076FED9 /* Timer+DefaultStrings.swift in Sources */,
 				FB4AA14729379E520076FED9 /* TimerView+Extensions.swift in Sources */,
