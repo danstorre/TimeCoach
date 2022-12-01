@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "FB06B52C292BF71C00AE6079"
-               BuildableName = "LifeCoachWatchOS.framework"
-               BlueprintName = "LifeCoachWatchOS"
+               BlueprintIdentifier = "FBAD474F28FC8BB0003D2F7A"
+               BuildableName = "LifeCoach.framework"
+               BlueprintName = "LifeCoach"
                ReferencedContainer = "container:LifeCoach.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -51,9 +51,9 @@
             testExecutionOrdering = "random">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "FB06B535292BF71C00AE6079"
-               BuildableName = "LifeCoachWatchOSTests.xctest"
-               BlueprintName = "LifeCoachWatchOSTests"
+               BlueprintIdentifier = "FBAD475928FC8BB0003D2F7A"
+               BuildableName = "LifeCoachTests.xctest"
+               BlueprintName = "LifeCoachTests"
                ReferencedContainer = "container:LifeCoach.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -62,9 +62,9 @@
             testExecutionOrdering = "random">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "FBAD475928FC8BB0003D2F7A"
-               BuildableName = "LifeCoachTests.xctest"
-               BlueprintName = "LifeCoachTests"
+               BlueprintIdentifier = "FB4AA176293808360076FED9"
+               BuildableName = "LocalTimerInfrastructureTests.xctest"
+               BlueprintName = "LocalTimerInfrastructureTests"
                ReferencedContainer = "container:LifeCoach.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -90,9 +90,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "FB06B52C292BF71C00AE6079"
-            BuildableName = "LifeCoachWatchOS.framework"
-            BlueprintName = "LifeCoachWatchOS"
+            BlueprintIdentifier = "FBAD474F28FC8BB0003D2F7A"
+            BuildableName = "LifeCoach.framework"
+            BlueprintName = "LifeCoach"
             ReferencedContainer = "container:LifeCoach.xcodeproj">
          </BuildableReference>
       </MacroExpansion>

@@ -4,6 +4,11 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>CI-MacOS.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>2</integer>
+		</dict>
 		<key>CI-WatchOS.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
@@ -12,7 +17,7 @@
 		<key>LifeCoach.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>2</integer>
+			<integer>3</integer>
 		</dict>
 		<key>LifeCoachWatchOS.xcscheme_^#shared#^_</key>
 		<dict>
@@ -22,7 +27,7 @@
 		<key>LocalTimerInfrastructureTests.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>3</integer>
+			<integer>4</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
