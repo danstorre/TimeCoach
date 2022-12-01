@@ -11,4 +11,18 @@ final class TimeCoachAcceptanceTests: XCTestCase {
         
         XCTAssertEqual(timerLabelString, "25:00")
     }
+    
+    func test_onLaunch_shouldDisplayCorrectCustomFont() {
+        let sut = TimeCoach_Watch_AppApp().timerView
+        
+        let customFont = sut.customFont
+        
+        XCTAssertEqual(customFont, .timerFont)
+    }
+}
+
+extension String {
+    static var timerFont: String {
+        CustomFont.timer.font
+    }
 }
