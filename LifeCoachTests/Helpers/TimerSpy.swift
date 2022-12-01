@@ -1,6 +1,6 @@
 import LifeCoach
 
-class TimerSpy: LocalTimer.TimerCountdown {
+class TimerSpy: TimerCountdown {
     private(set) var startTimerCompletions = [TimerCompletion]()
     private(set) var pauseTimerCompletions = [TimerCompletion]()
     private(set) var skipTimerCompletions = [TimerCompletion]()
@@ -9,15 +9,10 @@ class TimerSpy: LocalTimer.TimerCountdown {
     private(set) var pauseCountCallCount: Int = 0
     private(set) var skipCallCount: Int = 0
     private(set) var stopCallCount: Int = 0
-    private(set) var startDatesReceived = [Date]()
-    private(set) var endDatesReceived = [Date]()
-    var callCount: Int {
-        startDatesReceived.count
-    }
+    private(set) var callCount: Int = 0
     
-    func startCountdown(from date: Date, endDate: Date, completion: @escaping TimerCompletion) {
-        startDatesReceived.append(date)
-        endDatesReceived.append(endDate)
+    func startCountdown(completion: @escaping TimerCompletion) {
+        callCount += 1
         startTimerCompletions.append(completion)
     }
     

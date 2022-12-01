@@ -1,73 +1,16 @@
 import Foundation
 
-public protocol StartTimer {
-    typealias TimerCompletion = (LocalElapsedSeconds) -> Void
-    func startCountdown(from date: Date, endDate: Date, completion: @escaping TimerCompletion)
-}
-
-public protocol PauseTimer {
-    typealias TimerCompletion = (LocalElapsedSeconds) -> Void
-    func pauseCountdown(completion: @escaping TimerCompletion)
-}
-
-public protocol SkipTimer {
-    typealias TimerCompletion = (LocalElapsedSeconds) -> Void
-    func skipCountdown(completion: @escaping TimerCompletion)
-}
-
-public protocol StopTimer {
-    typealias TimerCompletion = (LocalElapsedSeconds) -> Void
-    func stopCountdown(completion: @escaping TimerCompletion)
-}
-
-public struct LocalElapsedSeconds {
-    public let elapsedSeconds: TimeInterval
-    public let startDate: Date
-    public let endDate: Date
-
-    public init(
-        _ elapsedSeconds: TimeInterval,
-        startDate: Date,
-        endDate: Date
-    ) {
-        self.elapsedSeconds = elapsedSeconds
-        self.startDate = startDate
-        self.endDate = endDate
-    }
-    
-    var timeElapsed: ElapsedSeconds {
-        ElapsedSeconds.init(elapsedSeconds,
-                            startDate: startDate,
-                            endDate: endDate)
-    }
-}
-
 public class LocalTimer {
-    public typealias TimerCountdown = StartTimer & PauseTimer & SkipTimer & StopTimer
     private let timer: TimerCountdown
-    private var isPomodoro = true
+    private let primaryTime: TimeInterval
     
-    private enum TimerMode {
-        case pomodoroTime
-        case breakTime
-    }
-    
-    public init(timer: TimerCountdown) {
+    public init(timer: TimerCountdown, primaryTime: TimeInterval = .pomodoroInSeconds) {
         self.timer = timer
+        self.primaryTime = primaryTime
     }
     
-    public func startTimer(from startDate: Date = .now, completion: @escaping (ElapsedSeconds) -> Void) {
-        let endTime: Date
-        if isPomodoro {
-            endTime = startDate.adding(seconds: .pomodoroInSeconds)
-        } else {
-            endTime = startDate.adding(seconds: .breakInSeconds)
-        }
-        
-        isPomodoro = !isPomodoro
-        
-        timer.startCountdown(from: startDate,
-                             endDate: endTime) {
+    public func startTimer(completion: @escaping (ElapsedSeconds) -> Void) {
+        timer.startCountdown() {
             completion($0.timeElapsed)
         }
     }
