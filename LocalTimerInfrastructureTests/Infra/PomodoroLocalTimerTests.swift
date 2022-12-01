@@ -37,7 +37,7 @@ final class PomodoroLocalTimerTests: XCTestCase {
             expectation.fulfill()
         }
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
+        Self.executeAfter(seconds: 2, execute: {
             sut.pauseCountdown { elapsed in
                 receivedTime.append(elapsed)
                 expectation.fulfill()
@@ -58,17 +58,16 @@ final class PomodoroLocalTimerTests: XCTestCase {
         let expectation = expectation(description: "waits for expectation to be fullied twice")
         expectation.expectedFulfillmentCount = 3
         
-        let deadLine = DispatchTime.now()
         sut.startCountdown() { elapsed in
             expectation.fulfill()
         }
         
-        DispatchQueue.main.asyncAfter(deadline: deadLine + 2.1, execute: {
+        Self.executeAfter(seconds: 2.1, execute: {
             sut.pauseCountdown { elapsed in
                 XCTAssertEqual(elapsed.elapsedSeconds, 2)
             }
             
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
+            Self.executeAfter(seconds: 2, execute: {
                 sut.startCountdown() { elapsed in
                     XCTAssertEqual(elapsed.elapsedSeconds, 3)
                     expectation.fulfill()
@@ -89,7 +88,7 @@ final class PomodoroLocalTimerTests: XCTestCase {
             received.append(elapsed)
         }
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 4, execute: {
+        Self.executeAfter(seconds: 4, execute: {
             expectation.fulfill()
         })
         wait(for: [expectation], timeout: 5)
@@ -177,7 +176,7 @@ final class PomodoroLocalTimerTests: XCTestCase {
             received.append(elapsed)
         }
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
+        Self.executeAfter(seconds: 2, execute: {
             expectation.fulfill()
         })
         
@@ -190,6 +189,12 @@ final class PomodoroLocalTimerTests: XCTestCase {
     }
     
     // MARK: - helpers
+    private static func executeAfter(seconds: Double, execute: @escaping () -> Void ){
+        DispatchQueue.main.asyncAfter(deadline: .now() + seconds, execute: {
+            execute()
+        })
+    }
+    
     private func makeElapsedSeconds(
         _ elapsedSeconds: TimeInterval,
         startDate: Date,
