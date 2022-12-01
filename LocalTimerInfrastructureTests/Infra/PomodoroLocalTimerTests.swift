@@ -47,9 +47,7 @@ final class PomodoroLocalTimerTests: XCTestCase {
         wait(for: [expectation], timeout: 3)
         
         assertsThatStartCoutdownDeliverTimeAfterOneSecond(of: receivedTime, from: now, to: end, count: 3)
-        
-        let expectedLocal = makeElapsedSeconds(2, startDate: now, endDate: end)
-        assertEqual(receivedTime[2], expectedLocal)
+        assertEqual(receivedTime[2], makeElapsedSeconds(2, startDate: now, endDate: end))
     }
     
     func test_start_onPause_resumesDeliveringTime() {
