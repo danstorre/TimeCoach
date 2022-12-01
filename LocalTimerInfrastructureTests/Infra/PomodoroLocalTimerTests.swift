@@ -49,7 +49,7 @@ final class PomodoroLocalTimerTests: XCTestCase {
         assertsThatStartCoutdownDeliverTimeAfterOneSecond(of: receivedTime, from: now, to: end, count: 3)
         
         let expectedLocal = LocalElapsedSeconds(2, startDate: now, endDate: end)
-        XCTAssertEqual(receivedTime[2], expectedLocal)
+        assertEqual(receivedTime[2], expectedLocal)
     }
     
     func test_start_onPause_resumesDeliveringTime() {
@@ -127,7 +127,7 @@ final class PomodoroLocalTimerTests: XCTestCase {
         let expectedLocal = LocalElapsedSeconds(0, startDate: now, endDate: now.adding(seconds: secondaryInterval))
         
         XCTAssertEqual(received.count, 1)
-        XCTAssertEqual(received[0], expectedLocal)
+        assertEqual(received[0], expectedLocal)
     }
     
     func test_start_afterSkip_deliversCorrectSecondaryInterval() {
@@ -155,7 +155,7 @@ final class PomodoroLocalTimerTests: XCTestCase {
                                                 endDate: currentDate().adding(seconds: secondaryInterval))
         
         XCTAssertEqual(received.count, 1)
-        XCTAssertEqual(received[0], expectedLocal)
+        assertEqual(received[0], expectedLocal)
     }
     
     func test_stop_shouldStopReceivingTimeUpdates() {
@@ -188,10 +188,18 @@ final class PomodoroLocalTimerTests: XCTestCase {
                                                 startDate: currentDate(),
                                                 endDate: currentDate().adding(seconds: primaryInterval))
         XCTAssertEqual(received.count, 1)
-        XCTAssertEqual(received[0], expectedLocal)
+        assertEqual(received[0], expectedLocal)
     }
     
     // MARK: - helpers
+    private func assertEqual(_ lhs: LocalElapsedSeconds, _ rhs: LocalElapsedSeconds, file: StaticString = #filePath, line: UInt = #line) {
+        XCTAssertEqual(lhs.elapsedSeconds, rhs.elapsedSeconds, file: file, line: line)
+        XCTAssertEqual(lhs.startDate.timeIntervalSince1970,
+                       rhs.startDate.timeIntervalSince1970, accuracy: 0.001, file: file, line: line)
+        XCTAssertEqual(lhs.endDate.timeIntervalSince1970,
+                       rhs.endDate.timeIntervalSince1970, accuracy: 0.001, file: file, line: line)
+    }
+    
     private func skipExpecting(sut: PomodoroLocalTimer,
                                toReceivedElapsedTimes expectedTimes: Int,
                                withInterval interval: TimeInterval,
