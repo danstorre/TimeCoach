@@ -85,8 +85,6 @@ final class PomodoroLocalTimerTests: XCTestCase {
         wait(for: [expectation], timeout: 3)
         
         assertsThatStartCoutdownDeliverTimeAfterOneSecond(of: received, from: now, to: end, count: 2)
-
-        sut.invalidateTimers()
     }
     
     func test_pauseCountdown_stopsDeliveringTime() {
@@ -116,16 +114,24 @@ final class PomodoroLocalTimerTests: XCTestCase {
         
         let expectedLocal = LocalElapsedSeconds(2, startDate: now, endDate: end)
         XCTAssertEqual(receivedTime[2], expectedLocal)
-        
-        sut.invalidateTimers()
     }
     
     // MARK: - helpers
-    private func makeSUT(startDate: Date, primaryInterval: TimeInterval) -> PomodoroLocalTimer {
+    private func makeSUT(startDate: Date, primaryInterval: TimeInterval,
+                         file: StaticString = #filePath,
+                         line: UInt = #line) -> PomodoroLocalTimer {
         let sut = PomodoroLocalTimer(startDate: startDate, primaryInterval: primaryInterval)
-        trackForMemoryLeak(instance: sut)
-        
+        trackForMemoryLeak(instance: sut, file: file, line: line)
+        invalidateTimerOnFinish(sut: sut, file: file, line: line)
         return sut
+    }
+    
+    func invalidateTimerOnFinish(sut: PomodoroLocalTimer,
+                                 file: StaticString = #filePath,
+                                 line: UInt = #line) {
+        addTeardownBlock { [weak sut] in
+            sut?.invalidateTimers()
+        }
     }
     
     private func assertsThatStartCoutdownDeliverTimeAfterOneSecond(
