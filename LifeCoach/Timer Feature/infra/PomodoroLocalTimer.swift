@@ -1,6 +1,6 @@
 import Foundation
 
-public class PomodoroLocalTimer {
+public class PomodoroLocalTimer: TimerCountdown {
     private var handler: ((LocalElapsedSeconds) -> Void)? = nil
     private var timer: Timer? = nil
     private var invalidationTimer: Timer? = nil

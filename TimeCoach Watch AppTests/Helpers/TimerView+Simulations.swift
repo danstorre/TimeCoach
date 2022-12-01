@@ -2,7 +2,7 @@ import LifeCoachWatchOS
 
 extension TimerView {
     func timerLabelString() -> String {
-        inspectTextWith(id: Self.timerLabelIdentifier)
+        inspectLabelWith(id: Self.timerLabelIdentifier)
     }
     
     func simulateToggleTimerUserInteractionTwice() {
@@ -32,12 +32,14 @@ extension TimerView {
             fatalError("couldn't inspect `simulatePlayUserInteraction`")
         }
     }
-
-    private func inspectTextWith(id: String) -> String{
+    
+    private func inspectLabelWith(id: String) -> String{
         do {
             return try inspect()
                 .find(viewWithAccessibilityIdentifier: id)
-                .text()
+                .label()
+                .title()
+                .text(0)
                 .string()
         } catch {
             fatalError("couldn't inspect `timerLabelString`")

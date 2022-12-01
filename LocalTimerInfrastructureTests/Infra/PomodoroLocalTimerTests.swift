@@ -37,7 +37,7 @@ final class PomodoroLocalTimerTests: XCTestCase {
             expectation.fulfill()
         }
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
+        Self.executeAfter(seconds: 2, execute: {
             sut.pauseCountdown { elapsed in
                 receivedTime.append(elapsed)
                 expectation.fulfill()
@@ -47,9 +47,7 @@ final class PomodoroLocalTimerTests: XCTestCase {
         wait(for: [expectation], timeout: 3)
         
         assertsThatStartCoutdownDeliverTimeAfterOneSecond(of: receivedTime, from: now, to: end, count: 3)
-        
-        let expectedLocal = LocalElapsedSeconds(2, startDate: now, endDate: end)
-        XCTAssertEqual(receivedTime[2], expectedLocal)
+        assertEqual(receivedTime[2], makeElapsedSeconds(2, startDate: now, endDate: end))
     }
     
     func test_start_onPause_resumesDeliveringTime() {
@@ -58,17 +56,16 @@ final class PomodoroLocalTimerTests: XCTestCase {
         let expectation = expectation(description: "waits for expectation to be fullied twice")
         expectation.expectedFulfillmentCount = 3
         
-        let deadLine = DispatchTime.now()
         sut.startCountdown() { elapsed in
             expectation.fulfill()
         }
         
-        DispatchQueue.main.asyncAfter(deadline: deadLine + 2.1, execute: {
+        Self.executeAfter(seconds: 2.1, execute: {
             sut.pauseCountdown { elapsed in
                 XCTAssertEqual(elapsed.elapsedSeconds, 2)
             }
             
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
+            Self.executeAfter(seconds: 2, execute: {
                 sut.startCountdown() { elapsed in
                     XCTAssertEqual(elapsed.elapsedSeconds, 3)
                     expectation.fulfill()
@@ -82,14 +79,14 @@ final class PomodoroLocalTimerTests: XCTestCase {
     func test_start_shouldNotDeliverMoreTime_afterReachingThresholdInterval() {
         let sut = makeSUT(primaryInterval: 1)
         var received = [LocalElapsedSeconds]()
-        let expectation = expectation(description: "waits for expectation to be fullfil only once")
+        let expectation = expectation(description: "waits for expectation to be fulfill only once")
         expectation.expectedFulfillmentCount = 1
          
         sut.startCountdown() { elapsed in
             received.append(elapsed)
         }
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 4, execute: {
+        Self.executeAfter(seconds: 4, execute: {
             expectation.fulfill()
         })
         wait(for: [expectation], timeout: 5)
@@ -115,7 +112,7 @@ final class PomodoroLocalTimerTests: XCTestCase {
                           primaryInterval: primaryInterval,
                           secondaryTime: secondaryInterval)
         var received = [LocalElapsedSeconds]()
-        let expectation = expectation(description: "waits for expectation to be fullfil only once")
+        let expectation = expectation(description: "waits for expectation to be fulfill only once")
         
         sut.skipCountdown() { elapsed in
             received.append(elapsed)
@@ -124,10 +121,10 @@ final class PomodoroLocalTimerTests: XCTestCase {
         
         wait(for: [expectation], timeout: 1)
         
-        let expectedLocal = LocalElapsedSeconds(0, startDate: now, endDate: now.adding(seconds: secondaryInterval))
+        let expectedLocal = makeElapsedSeconds(0, startDate: now, endDate: now.adding(seconds: secondaryInterval))
         
         XCTAssertEqual(received.count, 1)
-        XCTAssertEqual(received[0], expectedLocal)
+        assertEqual(received[0], expectedLocal)
     }
     
     func test_start_afterSkip_deliversCorrectSecondaryInterval() {
@@ -139,7 +136,7 @@ final class PomodoroLocalTimerTests: XCTestCase {
                           primaryInterval: primaryInterval,
                           secondaryTime: secondaryInterval)
         var received = [LocalElapsedSeconds]()
-        let expectation = expectation(description: "waits for expectation to be fullfil only once")
+        let expectation = expectation(description: "waits for expectation to be fulfill only once")
         
         sut.skipCountdown() { _ in }
         
@@ -150,12 +147,11 @@ final class PomodoroLocalTimerTests: XCTestCase {
         
         wait(for: [expectation], timeout: 1)
         
-        let expectedLocal = LocalElapsedSeconds(1,
-                                                startDate: currentDate(),
-                                                endDate: currentDate().adding(seconds: secondaryInterval))
+        let endDate = currentDate().adding(seconds: secondaryInterval)
+        let expectedLocal = makeElapsedSeconds(1, startDate: currentDate(), endDate: endDate)
         
         XCTAssertEqual(received.count, 1)
-        XCTAssertEqual(received[0], expectedLocal)
+        assertEqual(received[0], expectedLocal)
     }
     
     func test_stop_shouldStopReceivingTimeUpdates() {
@@ -167,7 +163,7 @@ final class PomodoroLocalTimerTests: XCTestCase {
                           primaryInterval: primaryInterval,
                           secondaryTime: secondaryInterval)
         
-        let expectation = expectation(description: "waits for expectation to be fullfil only once")
+        let expectation = expectation(description: "waits for expectation to be fulfill only once")
         var received = [LocalElapsedSeconds]()
         
         sut.startCountdown() { elapsed in
@@ -178,20 +174,43 @@ final class PomodoroLocalTimerTests: XCTestCase {
             received.append(elapsed)
         }
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
+        Self.executeAfter(seconds: 2, execute: {
             expectation.fulfill()
         })
         
         wait(for: [expectation], timeout: 3)
         
-        let expectedLocal = LocalElapsedSeconds(0,
-                                                startDate: currentDate(),
-                                                endDate: currentDate().adding(seconds: primaryInterval))
+        let endDate = currentDate().adding(seconds: primaryInterval)
+        let expectedLocal = makeElapsedSeconds(0, startDate: currentDate(), endDate: endDate)
         XCTAssertEqual(received.count, 1)
-        XCTAssertEqual(received[0], expectedLocal)
+        assertEqual(received[0], expectedLocal)
     }
     
     // MARK: - helpers
+    private static func executeAfter(seconds: Double, execute: @escaping () -> Void ){
+        DispatchQueue.main.asyncAfter(deadline: .now() + seconds, execute: {
+            execute()
+        })
+    }
+    
+    private func makeElapsedSeconds(
+        _ elapsedSeconds: TimeInterval,
+        startDate: Date,
+        endDate: Date
+    ) -> LocalElapsedSeconds {
+        LocalElapsedSeconds(elapsedSeconds,
+                            startDate: startDate,
+                            endDate: endDate)
+    }
+    
+    private func assertEqual(_ lhs: LocalElapsedSeconds, _ rhs: LocalElapsedSeconds, file: StaticString = #filePath, line: UInt = #line) {
+        XCTAssertEqual(lhs.elapsedSeconds, rhs.elapsedSeconds, file: file, line: line)
+        XCTAssertEqual(lhs.startDate.timeIntervalSince1970,
+                       rhs.startDate.timeIntervalSince1970, accuracy: 0.001, file: file, line: line)
+        XCTAssertEqual(lhs.endDate.timeIntervalSince1970,
+                       rhs.endDate.timeIntervalSince1970, accuracy: 0.001, file: file, line: line)
+    }
+    
     private func skipExpecting(sut: PomodoroLocalTimer,
                                toReceivedElapsedTimes expectedTimes: Int,
                                withInterval interval: TimeInterval,
@@ -200,7 +219,7 @@ final class PomodoroLocalTimerTests: XCTestCase {
     ) {
         var received = [LocalElapsedSeconds]()
         
-        let expectation = expectation(description: "waits for interval expectation to be fullfil only once")
+        let expectation = expectation(description: "waits for interval expectation to be fulfill only once")
         expectation.expectedFulfillmentCount = 1
          
         sut.skipCountdown() { _ in

@@ -14,9 +14,23 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "FB06B52C292BF71C00AE6079"
-               BuildableName = "LifeCoachWatchOS.framework"
-               BlueprintName = "LifeCoachWatchOS"
+               BlueprintIdentifier = "FBE9A9732939527C00D8BF29"
+               BuildableName = "TimeCoach Watch App.app"
+               BlueprintName = "TimeCoach Watch App"
+               ReferencedContainer = "container:LifeCoach.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "FBE9A96E2939527B00D8BF29"
+               BuildableName = "TimeCoach.app"
+               BlueprintName = "TimeCoach"
                ReferencedContainer = "container:LifeCoach.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -26,51 +40,11 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      shouldUseLaunchSchemeArgsEnv = "YES"
-      codeCoverageEnabled = "YES"
-      onlyGenerateCoverageForSpecifiedTargets = "YES">
-      <CodeCoverageTargets>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "FB06B52C292BF71C00AE6079"
-            BuildableName = "LifeCoachWatchOS.framework"
-            BlueprintName = "LifeCoachWatchOS"
-            ReferencedContainer = "container:LifeCoach.xcodeproj">
-         </BuildableReference>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "FBAD474F28FC8BB0003D2F7A"
-            BuildableName = "LifeCoach.framework"
-            BlueprintName = "LifeCoach"
-            ReferencedContainer = "container:LifeCoach.xcodeproj">
-         </BuildableReference>
-      </CodeCoverageTargets>
+      shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
          <TestableReference
             skipped = "NO"
-            testExecutionOrdering = "random">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "FB06B535292BF71C00AE6079"
-               BuildableName = "LifeCoachWatchOSTests.xctest"
-               BlueprintName = "LifeCoachWatchOSTests"
-               ReferencedContainer = "container:LifeCoach.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO"
-            testExecutionOrdering = "random">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "FBAD475928FC8BB0003D2F7A"
-               BuildableName = "LifeCoachTests.xctest"
-               BlueprintName = "LifeCoachTests"
-               ReferencedContainer = "container:LifeCoach.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO"
-            testExecutionOrdering = "random">
+            parallelizable = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "FBE9A9852939527E00D8BF29"
@@ -91,6 +65,16 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "FBE9A9732939527C00D8BF29"
+            BuildableName = "TimeCoach Watch App.app"
+            BlueprintName = "TimeCoach Watch App"
+            ReferencedContainer = "container:LifeCoach.xcodeproj">
+         </BuildableReference>
+      </BuildableProductRunnable>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -98,15 +82,16 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <MacroExpansion>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "FB06B52C292BF71C00AE6079"
-            BuildableName = "LifeCoachWatchOS.framework"
-            BlueprintName = "LifeCoachWatchOS"
+            BlueprintIdentifier = "FBE9A9732939527C00D8BF29"
+            BuildableName = "TimeCoach Watch App.app"
+            BlueprintName = "TimeCoach Watch App"
             ReferencedContainer = "container:LifeCoach.xcodeproj">
          </BuildableReference>
-      </MacroExpansion>
+      </BuildableProductRunnable>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">
