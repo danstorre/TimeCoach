@@ -115,9 +115,7 @@ final class PomodoroLocalTimerTests: XCTestCase {
     }
     
     func test_start_onPause_resumesDeliveringTime() {
-        let primary: TimeInterval = 5
-        let now = Date.now
-        let sut = makeSUT(startDate: now, primaryInterval: primary)
+        let sut = makeSUT()
         
         let expectation = expectation(description: "waits for expectation to be fullied twice")
         expectation.expectedFulfillmentCount = 3
@@ -144,7 +142,7 @@ final class PomodoroLocalTimerTests: XCTestCase {
     }
     
     // MARK: - helpers
-    private func makeSUT(startDate: Date, primaryInterval: TimeInterval,
+    private func makeSUT(startDate: Date = .now, primaryInterval: TimeInterval = 1.0,
                          file: StaticString = #filePath,
                          line: UInt = #line) -> PomodoroLocalTimer {
         let sut = PomodoroLocalTimer(startDate: startDate, primaryInterval: primaryInterval)
