@@ -43,6 +43,15 @@
 		FBE9A9A82939535800D8BF29 /* TimerViewComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4AA14229379DC90076FED9 /* TimerViewComposer.swift */; };
 		FBE9A9AB2939543600D8BF29 /* LifeCoachWatchOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB06B52D292BF71C00AE6079 /* LifeCoachWatchOS.framework */; };
 		FBE9A9B12939552400D8BF29 /* ViewInspector in Frameworks */ = {isa = PBXBuildFile; productRef = FBE9A9B02939552400D8BF29 /* ViewInspector */; };
+		FBE9A9D02939580E00D8BF29 /* pizzadude.dk License.txt in Resources */ = {isa = PBXBuildFile; fileRef = FBE9A9C72939580E00D8BF29 /* pizzadude.dk License.txt */; };
+		FBE9A9D12939580E00D8BF29 /* DIGITALDREAMFAT.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FBE9A9C82939580E00D8BF29 /* DIGITALDREAMFAT.ttf */; };
+		FBE9A9D22939580E00D8BF29 /* DIGITALDREAMFATSKEW.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FBE9A9C92939580E00D8BF29 /* DIGITALDREAMFATSKEW.ttf */; };
+		FBE9A9D32939580E00D8BF29 /* DIGITALDREAMSKEW.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FBE9A9CA2939580E00D8BF29 /* DIGITALDREAMSKEW.ttf */; };
+		FBE9A9D42939580E00D8BF29 /* DIGITALDREAMFATSKEWNARROW.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FBE9A9CB2939580E00D8BF29 /* DIGITALDREAMFATSKEWNARROW.ttf */; };
+		FBE9A9D52939580E00D8BF29 /* DIGITALDREAMSKEWNARROW.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FBE9A9CC2939580E00D8BF29 /* DIGITALDREAMSKEWNARROW.ttf */; };
+		FBE9A9D62939580E00D8BF29 /* DIGITALDREAMFATNARROW.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FBE9A9CD2939580E00D8BF29 /* DIGITALDREAMFATNARROW.ttf */; };
+		FBE9A9D72939580E00D8BF29 /* DIGITALDREAMNARROW.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FBE9A9CE2939580E00D8BF29 /* DIGITALDREAMNARROW.ttf */; };
+		FBE9A9D82939580E00D8BF29 /* DIGITALDREAM.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FBE9A9CF2939580E00D8BF29 /* DIGITALDREAM.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -134,6 +143,15 @@
 		FBE9A97D2939527E00D8BF29 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FBE9A9802939527E00D8BF29 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		FBE9A9862939527E00D8BF29 /* TimeCoach Watch AppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "TimeCoach Watch AppTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		FBE9A9C72939580E00D8BF29 /* pizzadude.dk License.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "pizzadude.dk License.txt"; sourceTree = "<group>"; };
+		FBE9A9C82939580E00D8BF29 /* DIGITALDREAMFAT.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = DIGITALDREAMFAT.ttf; sourceTree = "<group>"; };
+		FBE9A9C92939580E00D8BF29 /* DIGITALDREAMFATSKEW.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = DIGITALDREAMFATSKEW.ttf; sourceTree = "<group>"; };
+		FBE9A9CA2939580E00D8BF29 /* DIGITALDREAMSKEW.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = DIGITALDREAMSKEW.ttf; sourceTree = "<group>"; };
+		FBE9A9CB2939580E00D8BF29 /* DIGITALDREAMFATSKEWNARROW.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = DIGITALDREAMFATSKEWNARROW.ttf; sourceTree = "<group>"; };
+		FBE9A9CC2939580E00D8BF29 /* DIGITALDREAMSKEWNARROW.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = DIGITALDREAMSKEWNARROW.ttf; sourceTree = "<group>"; };
+		FBE9A9CD2939580E00D8BF29 /* DIGITALDREAMFATNARROW.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = DIGITALDREAMFATNARROW.ttf; sourceTree = "<group>"; };
+		FBE9A9CE2939580E00D8BF29 /* DIGITALDREAMNARROW.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = DIGITALDREAMNARROW.ttf; sourceTree = "<group>"; };
+		FBE9A9CF2939580E00D8BF29 /* DIGITALDREAM.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = DIGITALDREAM.ttf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -352,21 +370,12 @@
 		FBE9A9782939527C00D8BF29 /* TimeCoach Watch App */ = {
 			isa = PBXGroup;
 			children = (
+				FBE9A9B22939579F00D8BF29 /* Resources */,
 				FB4AA14129379DC20076FED9 /* Timer Composition */,
 				FBE9A9792939527C00D8BF29 /* TimeCoachApp.swift */,
 				FBE9A97B2939527D00D8BF29 /* ContentView.swift */,
-				FBE9A97D2939527E00D8BF29 /* Assets.xcassets */,
-				FBE9A97F2939527E00D8BF29 /* Preview Content */,
 			);
 			path = "TimeCoach Watch App";
-			sourceTree = "<group>";
-		};
-		FBE9A97F2939527E00D8BF29 /* Preview Content */ = {
-			isa = PBXGroup;
-			children = (
-				FBE9A9802939527E00D8BF29 /* Preview Assets.xcassets */,
-			);
-			path = "Preview Content";
 			sourceTree = "<group>";
 		};
 		FBE9A9892939527F00D8BF29 /* TimeCoach Watch AppTests */ = {
@@ -394,6 +403,32 @@
 				FB4AA1562937C3970076FED9 /* Date+Formatters.swift */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		FBE9A9B22939579F00D8BF29 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				FBE9A9C62939580E00D8BF29 /* Fonts */,
+				FBE9A9802939527E00D8BF29 /* Preview Assets.xcassets */,
+				FBE9A97D2939527E00D8BF29 /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		FBE9A9C62939580E00D8BF29 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				FBE9A9C72939580E00D8BF29 /* pizzadude.dk License.txt */,
+				FBE9A9C82939580E00D8BF29 /* DIGITALDREAMFAT.ttf */,
+				FBE9A9C92939580E00D8BF29 /* DIGITALDREAMFATSKEW.ttf */,
+				FBE9A9CA2939580E00D8BF29 /* DIGITALDREAMSKEW.ttf */,
+				FBE9A9CB2939580E00D8BF29 /* DIGITALDREAMFATSKEWNARROW.ttf */,
+				FBE9A9CC2939580E00D8BF29 /* DIGITALDREAMSKEWNARROW.ttf */,
+				FBE9A9CD2939580E00D8BF29 /* DIGITALDREAMFATNARROW.ttf */,
+				FBE9A9CE2939580E00D8BF29 /* DIGITALDREAMNARROW.ttf */,
+				FBE9A9CF2939580E00D8BF29 /* DIGITALDREAM.ttf */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -646,8 +681,17 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FBE9A9D52939580E00D8BF29 /* DIGITALDREAMSKEWNARROW.ttf in Resources */,
 				FBE9A9812939527E00D8BF29 /* Preview Assets.xcassets in Resources */,
+				FBE9A9D72939580E00D8BF29 /* DIGITALDREAMNARROW.ttf in Resources */,
+				FBE9A9D82939580E00D8BF29 /* DIGITALDREAM.ttf in Resources */,
+				FBE9A9D12939580E00D8BF29 /* DIGITALDREAMFAT.ttf in Resources */,
+				FBE9A9D02939580E00D8BF29 /* pizzadude.dk License.txt in Resources */,
+				FBE9A9D62939580E00D8BF29 /* DIGITALDREAMFATNARROW.ttf in Resources */,
+				FBE9A9D22939580E00D8BF29 /* DIGITALDREAMFATSKEW.ttf in Resources */,
 				FBE9A97E2939527E00D8BF29 /* Assets.xcassets in Resources */,
+				FBE9A9D32939580E00D8BF29 /* DIGITALDREAMSKEW.ttf in Resources */,
+				FBE9A9D42939580E00D8BF29 /* DIGITALDREAMFATSKEWNARROW.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
