@@ -80,16 +80,6 @@ class PomodoroLocalTimer {
                              repeats: true)
     }
     
-    private func createInvalidationTimer(endDate: Date) -> Timer {
-        Timer(
-            fire: endDate,
-            interval: 0,
-            repeats: false,
-            block: { [weak self] timer in
-                self?.invalidateTimers()
-            })
-    }
-    
     @objc
     func invalidateTimers() {
         invalidationTimer?.invalidate()
