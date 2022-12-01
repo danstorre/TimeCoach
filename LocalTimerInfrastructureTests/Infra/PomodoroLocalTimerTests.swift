@@ -54,9 +54,11 @@ class PomodoroLocalTimer {
         }
         
         let now = currentDate()
+        startDate = now
+        finishDate = now.adding(seconds: threshold)
         let elapsed = LocalElapsedSeconds(elapsedTimeInterval,
-                                          startDate: now,
-                                          endDate: now.adding(seconds: threshold))
+                                          startDate: startDate,
+                                          endDate: finishDate)
         completion(elapsed)
     }
     
@@ -221,6 +223,34 @@ final class PomodoroLocalTimerTests: XCTestCase {
         wait(for: [expectation], timeout: 1)
         
         let expectedLocal = LocalElapsedSeconds(0, startDate: now, endDate: now.adding(seconds: secondaryInterval))
+        
+        XCTAssertEqual(received.count, 1)
+        XCTAssertEqual(received[0], expectedLocal)
+    }
+    
+    func test_start_afterSkip_deliversCorrectSecondaryInterval() {
+        let primaryInterval: TimeInterval = 4.0
+        let secondaryInterval: TimeInterval = 1.0
+        let now = Date.now
+        let currentDate = { now }
+        let sut = makeSUT(currentDate: currentDate,
+                          primaryInterval: primaryInterval,
+                          secondaryTime: secondaryInterval)
+        var received = [LocalElapsedSeconds]()
+        let expectation = expectation(description: "waits for expectation to be fullfil only once")
+        
+        sut.skipCountdown() { _ in }
+        
+        sut.startCountdown() { elapsed in
+            received.append(elapsed)
+            expectation.fulfill()
+        }
+        
+        wait(for: [expectation], timeout: 1)
+        
+        let expectedLocal = LocalElapsedSeconds(1,
+                                                startDate: currentDate(),
+                                                endDate: currentDate().adding(seconds: secondaryInterval))
         
         XCTAssertEqual(received.count, 1)
         XCTAssertEqual(received[0], expectedLocal)
