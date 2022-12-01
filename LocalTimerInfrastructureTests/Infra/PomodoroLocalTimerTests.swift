@@ -46,9 +46,6 @@ class PomodoroLocalTimer {
         } else {
             threshold = primaryInterval
         }
-        
-        handler = completion
-        timer = createTimer()
     }
     
     private func createTimer() -> Timer {
@@ -190,16 +187,14 @@ final class PomodoroLocalTimerTests: XCTestCase {
         let sut = makeSUT(primaryInterval: primaryInterval,
                           secondaryTime: secondaryInterval)
 
-        sut.startCountdown() { _ in }
-        
-        skipExpecting(interval: secondaryInterval, toReceivedElapsedTimes: 1, sut: sut)
-        skipExpecting(interval: primaryInterval, toReceivedElapsedTimes: 2, sut: sut)
+        skipExpecting(sut: sut, toReceivedElapsedTimes: 1, withInterval: secondaryInterval)
+        skipExpecting(sut: sut, toReceivedElapsedTimes: 2, withInterval: primaryInterval)
     }
     
     // MARK: - helpers
-    private func skipExpecting(interval: TimeInterval,
+    private func skipExpecting(sut: PomodoroLocalTimer,
                                toReceivedElapsedTimes expectedTimes: Int,
-                               sut: PomodoroLocalTimer,
+                               withInterval interval: TimeInterval,
                                file: StaticString = #filePath,
                                line: UInt = #line
     ) {
@@ -208,7 +203,10 @@ final class PomodoroLocalTimerTests: XCTestCase {
         let expectation = expectation(description: "waits for interval expectation to be fullfil only once")
         expectation.expectedFulfillmentCount = 1
          
-        sut.skipCountdown() { elapsed in
+        sut.skipCountdown() { _ in
+        }
+        
+        sut.startCountdown() { elapsed in
             received.append(elapsed)
         }
         
