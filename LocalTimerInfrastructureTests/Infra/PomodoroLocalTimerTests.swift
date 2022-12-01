@@ -10,9 +10,12 @@ class PomodoroLocalTimer {
     private var startDate: Date
     private var finishDate: Date
     
+    private var threshold: TimeInterval = 0
+    
     init(startDate: Date, primaryInterval: TimeInterval) {
         self.startDate = startDate
         self.finishDate = startDate.adding(seconds: primaryInterval)
+        self.threshold = primaryInterval
     }
     
     func startCountdown(completion: @escaping (LocalElapsedSeconds) -> Void) {
@@ -55,6 +58,9 @@ class PomodoroLocalTimer {
     
     @objc
     func elapsedCompletion() {
+        guard elapsedTimeInterval < threshold else {
+            return
+        }
         elapsedTimeInterval += 1
         let elapsed = LocalElapsedSeconds(elapsedTimeInterval,
                                           startDate: startDate,
@@ -115,7 +121,7 @@ final class PomodoroLocalTimerTests: XCTestCase {
     }
     
     func test_start_onPause_resumesDeliveringTime() {
-        let sut = makeSUT()
+        let sut = makeSUT(primaryInterval: 5)
         
         let expectation = expectation(description: "waits for expectation to be fullied twice")
         expectation.expectedFulfillmentCount = 3
@@ -139,6 +145,24 @@ final class PomodoroLocalTimerTests: XCTestCase {
         })
         
         wait(for: [expectation], timeout: 5.3)
+    }
+    
+    func test_start_shouldNotDeliverMoreTime_afterReachingThresholdInterval() {
+        let sut = makeSUT(primaryInterval: 1)
+        var received = [LocalElapsedSeconds]()
+        let expectation = expectation(description: "waits for expectation to be fullfil only once")
+        expectation.expectedFulfillmentCount = 1
+         
+        sut.startCountdown() { elapsed in
+            received.append(elapsed)
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 4, execute: {
+            expectation.fulfill()
+        })
+        wait(for: [expectation], timeout: 5)
+        
+        XCTAssertEqual(received.count, 1)
     }
     
     // MARK: - helpers
