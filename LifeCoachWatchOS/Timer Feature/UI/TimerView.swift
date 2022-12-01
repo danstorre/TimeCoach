@@ -8,7 +8,7 @@ public struct TimerView: View {
     private var skipHandler: (() -> Void)?
     private var stopHandler: (() -> Void)?
     
-    init(timerViewModel: TimerViewModel,
+    public init(timerViewModel: TimerViewModel,
          togglePlayback: (() -> Void)? = nil,
          skipHandler: (() -> Void)? = nil,
          stopHandler: (() -> Void)? = nil

@@ -1,13 +1,15 @@
 import SwiftUI
 
-class TimerViewModel: ObservableObject {
+public class TimerViewModel: ObservableObject {
     @Published var timerString: String = .defaultPomodoroTimerString
     
-    func errorOnTimer(with: Error) {
+    public init() {}
+    
+    public func errorOnTimer(with: Error) {
         
     }
     
-    func delivered(elapsedTime: ElapsedSeconds) {
+    public func delivered(elapsedTime: ElapsedSeconds) {
         let formatter = makeTimerFormatter()
         let startDate = elapsedTime.startDate
         let endDate = elapsedTime.endDate.adding(seconds: -elapsedTime.elapsedSeconds)

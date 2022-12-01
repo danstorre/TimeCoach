@@ -3,6 +3,7 @@ import SwiftUI
 import XCTest
 import LifeCoachWatchOS
 import Combine
+import TimeCoach_Watch_App
 
 extension TimerView: Inspectable { }
 

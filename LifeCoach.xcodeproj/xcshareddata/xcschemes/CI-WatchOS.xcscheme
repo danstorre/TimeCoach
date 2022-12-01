@@ -68,6 +68,17 @@
                ReferencedContainer = "container:LifeCoach.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            testExecutionOrdering = "random">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "FBE9A9852939527E00D8BF29"
+               BuildableName = "TimeCoach Watch AppTests.xctest"
+               BlueprintName = "TimeCoach Watch AppTests"
+               ReferencedContainer = "container:LifeCoach.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
