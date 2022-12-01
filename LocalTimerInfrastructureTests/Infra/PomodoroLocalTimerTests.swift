@@ -158,36 +158,6 @@ final class PomodoroLocalTimerTests: XCTestCase {
         XCTAssertEqual(received[0], expectedLocal)
     }
     
-    func test_stop_deliversResettedCurrentInterval() {
-        let primaryInterval: TimeInterval = 4.0
-        let secondaryInterval: TimeInterval = 1.0
-        let now = Date.now
-        let currentDate = { now }
-        let sut = makeSUT(currentDate: currentDate,
-                          primaryInterval: primaryInterval,
-                          secondaryTime: secondaryInterval)
-        
-        let expectation = expectation(description: "waits for expectation to be fullfil only once")
-        var received = [LocalElapsedSeconds]()
-        
-        sut.startCountdown() { elapsed in
-            received.append(elapsed)
-            expectation.fulfill()
-        }
-        
-        wait(for: [expectation], timeout: 1)
-        
-        sut.stopCountdown { elapsed in
-            received.append(elapsed)
-        }
-        
-        let expectedLocal = LocalElapsedSeconds(0,
-                                                startDate: currentDate(),
-                                                endDate: currentDate().adding(seconds: primaryInterval))
-        XCTAssertEqual(received.count, 2)
-        XCTAssertEqual(received[1], expectedLocal)
-    }
-    
     func test_stop_shouldStopReceivingTimeUpdates() {
         let primaryInterval: TimeInterval = 4.0
         let secondaryInterval: TimeInterval = 1.0
@@ -214,7 +184,11 @@ final class PomodoroLocalTimerTests: XCTestCase {
         
         wait(for: [expectation], timeout: 3)
         
+        let expectedLocal = LocalElapsedSeconds(0,
+                                                startDate: currentDate(),
+                                                endDate: currentDate().adding(seconds: primaryInterval))
         XCTAssertEqual(received.count, 1)
+        XCTAssertEqual(received[0], expectedLocal)
     }
     
     // MARK: - helpers
