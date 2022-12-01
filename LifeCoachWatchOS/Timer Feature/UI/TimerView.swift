@@ -40,7 +40,7 @@ public struct TimerView: View {
     
     public var body: some View {
         VStack {
-            Label(timerViewModel.timerString, systemImage: "")
+            Label(title: { Text(timerViewModel.timerString) }, icon: {})
                 .labelStyle(TimerLabelStyle(isLuminanceReduced: isLuminanceReduced,
                                             customFont: customFont))
                 .accessibilityIdentifier(Self.timerLabelIdentifier)
