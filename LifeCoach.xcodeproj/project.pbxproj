@@ -152,7 +152,8 @@
 		FB06B53A292BF71C00AE6079 /* LifeCoachWatchOSTests */ = {
 			isa = PBXGroup;
 			children = (
-				FB4AA14F2937BE8A0076FED9 /* Timer Feature */,
+				FB4AA13B29379BC10076FED9 /* Helpers */,
+				FBE9A92E2939247A00D8BF29 /* TimerUI */,
 			);
 			path = LifeCoachWatchOSTests;
 			sourceTree = "<group>";
@@ -208,23 +209,6 @@
 				FB4AA1582937C3C50076FED9 /* Timer+DefaultStrings.swift */,
 			);
 			path = Helpers;
-			sourceTree = "<group>";
-		};
-		FB4AA14E2937BE6F0076FED9 /* UI */ = {
-			isa = PBXGroup;
-			children = (
-				FB4AA13B29379BC10076FED9 /* Helpers */,
-				FB4AA1322936EB9A0076FED9 /* TimerUIIntegrationTests.swift */,
-			);
-			path = UI;
-			sourceTree = "<group>";
-		};
-		FB4AA14F2937BE8A0076FED9 /* Timer Feature */ = {
-			isa = PBXGroup;
-			children = (
-				FB4AA14E2937BE6F0076FED9 /* UI */,
-			);
-			path = "Timer Feature";
 			sourceTree = "<group>";
 		};
 		FB4AA15C2937C6D70076FED9 /* Timer Feature */ = {
@@ -318,6 +302,14 @@
 				FB4AA1672937D2E40076FED9 /* FactoryHelpers.swift */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		FBE9A92E2939247A00D8BF29 /* TimerUI */ = {
+			isa = PBXGroup;
+			children = (
+				FB4AA1322936EB9A0076FED9 /* TimerUIIntegrationTests.swift */,
+			);
+			path = TimerUI;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
