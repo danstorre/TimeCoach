@@ -16,11 +16,9 @@ class PomodoroLocalTimer {
     }
     
     func startCountdown(completion: @escaping (LocalElapsedSeconds) -> Void) {
+        invalidateTimers()
         handler = completion
         timer = createTimer()
-        invalidationTimer = createInvalidationTimer(endDate: finishDate)
-        
-        RunLoop.current.add(invalidationTimer!, forMode: .default)
     }
     
     func pauseCountdown(completion: @escaping (LocalElapsedSeconds) -> Void) {
@@ -114,6 +112,35 @@ final class PomodoroLocalTimerTests: XCTestCase {
         
         let expectedLocal = LocalElapsedSeconds(2, startDate: now, endDate: end)
         XCTAssertEqual(receivedTime[2], expectedLocal)
+    }
+    
+    func test_start_onPause_resumesDeliveringTime() {
+        let primary: TimeInterval = 5
+        let now = Date.now
+        let sut = makeSUT(startDate: now, primaryInterval: primary)
+        
+        let expectation = expectation(description: "waits for expectation to be fullied twice")
+        expectation.expectedFulfillmentCount = 3
+        
+        let deadLine = DispatchTime.now()
+        sut.startCountdown() { elapsed in
+            expectation.fulfill()
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: deadLine + 2.1, execute: {
+            sut.pauseCountdown { elapsed in
+                XCTAssertEqual(elapsed.elapsedSeconds, 2)
+            }
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
+                sut.startCountdown() { elapsed in
+                    XCTAssertEqual(elapsed.elapsedSeconds, 3)
+                    expectation.fulfill()
+                }
+            })
+        })
+        
+        wait(for: [expectation], timeout: 5.3)
     }
     
     // MARK: - helpers
