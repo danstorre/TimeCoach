@@ -53,6 +53,7 @@
 		FBE9A9D72939580E00D8BF29 /* DIGITALDREAMNARROW.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FBE9A9CE2939580E00D8BF29 /* DIGITALDREAMNARROW.ttf */; };
 		FBE9A9D82939580E00D8BF29 /* DIGITALDREAM.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FBE9A9CF2939580E00D8BF29 /* DIGITALDREAM.ttf */; };
 		FBE9A9DC2939654400D8BF29 /* TimerLabelStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE9A9DB2939654400D8BF29 /* TimerLabelStyle.swift */; };
+		FBE9A9DE29396EA100D8BF29 /* TimeCoachAcceptanceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE9A9DD29396EA100D8BF29 /* TimeCoachAcceptanceTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -154,6 +155,7 @@
 		FBE9A9CE2939580E00D8BF29 /* DIGITALDREAMNARROW.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = DIGITALDREAMNARROW.ttf; sourceTree = "<group>"; };
 		FBE9A9CF2939580E00D8BF29 /* DIGITALDREAM.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = DIGITALDREAM.ttf; sourceTree = "<group>"; };
 		FBE9A9DB2939654400D8BF29 /* TimerLabelStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerLabelStyle.swift; sourceTree = "<group>"; };
+		FBE9A9DD29396EA100D8BF29 /* TimeCoachAcceptanceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeCoachAcceptanceTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -366,6 +368,7 @@
 			isa = PBXGroup;
 			children = (
 				FB4AA1322936EB9A0076FED9 /* TimerUIIntegrationTests.swift */,
+				FBE9A9DD29396EA100D8BF29 /* TimeCoachAcceptanceTests.swift */,
 			);
 			path = TimerUI;
 			sourceTree = "<group>";
@@ -783,6 +786,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FBE9A9DE29396EA100D8BF29 /* TimeCoachAcceptanceTests.swift in Sources */,
 				FBE9A9A5293952EB00D8BF29 /* TimerUIIntegrationTests.swift in Sources */,
 				FBE9A9A6293952EE00D8BF29 /* TimerView+Simulations.swift in Sources */,
 			);
