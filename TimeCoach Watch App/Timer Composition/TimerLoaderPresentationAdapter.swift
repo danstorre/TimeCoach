@@ -1,6 +1,8 @@
 import Foundation
 import Combine
 import LifeCoachWatchOS
+import LifeCoach
+
 
 final class TimerLoaderPresentationAdapter {
     private let loader: () -> AnyPublisher<ElapsedSeconds, Error>

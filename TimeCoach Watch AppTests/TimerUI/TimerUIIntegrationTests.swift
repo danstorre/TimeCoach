@@ -1,8 +1,9 @@
 import ViewInspector
 import SwiftUI
-import XCTest
-import LifeCoachWatchOS
 import Combine
+import XCTest
+import LifeCoach
+import LifeCoachWatchOS
 import TimeCoach_Watch_App
 
 extension TimerView: Inspectable { }
@@ -100,6 +101,7 @@ final class TimerUIIntegrationTests: XCTestCase {
         let timeLoader = TimerPublisherSpy()
         
         let timerView = TimerViewComposer.createTimer(
+            customFont: "",
             timerLoader: timeLoader.loadTimer,
                     togglePlayback: playHandler,
             skipHandler: skipHandler,

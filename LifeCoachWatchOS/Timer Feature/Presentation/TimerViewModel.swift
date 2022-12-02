@@ -1,4 +1,5 @@
 import SwiftUI
+import LifeCoach
 
 public class TimerViewModel: ObservableObject {
     @Published var timerString: String = .defaultPomodoroTimerString

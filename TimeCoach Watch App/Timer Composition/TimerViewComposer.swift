@@ -1,8 +1,10 @@
 import Combine
 import LifeCoachWatchOS
+import LifeCoach
 
 public final class TimerViewComposer {
     public static func createTimer(
+        customFont: String,
         timerLoader: @escaping () -> AnyPublisher<ElapsedSeconds, Error>,
         togglePlayback: (() -> Void)? = nil,
         skipHandler: (() -> Void)? = nil,
@@ -23,7 +25,8 @@ public final class TimerViewComposer {
             timerViewModel: viewModel,
             togglePlayback: didToggle,
             skipHandler: skipHandler,
-            stopHandler: stopHandler
+            stopHandler: stopHandler,
+            customFont: customFont
         )
         
         return timer
