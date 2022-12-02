@@ -69,11 +69,13 @@ public extension TimerCountdown {
 
     func getPublisher() -> Publisher {
         return Deferred {
-            Future { completion in
-                startCountdown(completion: { localElapsedSeconds in
-                    return completion(.success(localElapsedSeconds))
-                })
-            }
+            let currentValue = CurrentValueSubject<LocalElapsedSeconds, Error>(
+                LocalElapsedSeconds(0, startDate: .now, endDate: .now)
+            )
+            startCountdown(completion: { localElapsedSeconds in
+                currentValue.send(localElapsedSeconds)
+            })
+            return currentValue
         }
         .eraseToAnyPublisher()
     }

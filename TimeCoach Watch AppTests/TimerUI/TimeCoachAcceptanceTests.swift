@@ -27,9 +27,24 @@ final class TimeCoachAcceptanceTests: XCTestCase {
         XCTAssertEqual(timer.timerLabelString(), "24:59")
     }
     
+    func test_onLaunch_shouldShowCorrectTimerTwoSecondsAfterUserHitsPlay() {
+        let timer = showTimerTwoSecondAfterUserHitsPlay()
+        
+        XCTAssertEqual(timer.timerLabelString(), "24:58")
+    }
+    
     // MARK: - Helpers
+    private func showTimerTwoSecondAfterUserHitsPlay() -> TimerView {
+        let stub = TimerCountdownStub.delivers(after: [1.0, 2.0], pomodoroResponse)
+        let sut = TimeCoach_Watch_AppApp(timerCoundown: stub).timerView
+        
+        sut.simulateToggleTimerUserInteraction()
+        
+        return sut
+    }
+    
     private func showTimerOneSecondAfterUserHitsPlay() -> TimerView {
-        let stub = TimerCountdownStub.delivers(after: 1, pomodoroResponse)
+        let stub = TimerCountdownStub.delivers(seconds: 1.0, pomodoroResponse)
         let sut = TimeCoach_Watch_AppApp(timerCoundown: stub).timerView
         
         sut.simulateToggleTimerUserInteraction()
@@ -43,10 +58,16 @@ final class TimeCoachAcceptanceTests: XCTestCase {
     }
     
     private class TimerCountdownStub: TimerCountdown {
-        private let stub: () -> LocalElapsedSeconds
+        private var stub: (() -> LocalElapsedSeconds)? = nil
         
         init(stub: @escaping () -> LocalElapsedSeconds) {
             self.stub = stub
+        }
+        
+        private var stubs: [() -> LocalElapsedSeconds] = []
+        
+        init(stubs: [() -> LocalElapsedSeconds]) {
+            self.stubs = stubs
         }
         
         func pauseCountdown(completion: @escaping TimerCompletion) {
@@ -58,14 +79,30 @@ final class TimeCoachAcceptanceTests: XCTestCase {
         }
     
         func startCountdown(completion: @escaping TimerCompletion) {
-            completion(stub())
+            if let stub = stub {
+                completion(stub())
+            } else {
+                stubs.forEach { stub in
+                    completion(stub())
+                }
+            }
         }
         
         func stopCountdown(completion: @escaping TimerCompletion) {
             
         }
         
-        static func delivers(after seconds: TimeInterval,
+        static func delivers(after seconds: [TimeInterval],
+                             _ stub: @escaping (TimeInterval) -> LocalElapsedSeconds) -> TimerCountdownStub {
+            let stubs = seconds.map { seconds in
+                {
+                    return stub(seconds)
+                }
+            }
+            return TimerCountdownStub(stubs: stubs)
+        }
+        
+        static func delivers(seconds: TimeInterval,
                              _ stub: @escaping (TimeInterval) -> LocalElapsedSeconds) -> TimerCountdownStub {
             TimerCountdownStub {
                 return stub(seconds)
