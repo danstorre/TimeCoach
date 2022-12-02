@@ -22,36 +22,25 @@ final class TimeCoachAcceptanceTests: XCTestCase {
     }
     
     func test_onLaunch_shouldShowCorrectTimerOneSecondAfterUserHitsPlay() {
-        let timer = showTimerOneSecondAfterUserHitsPlay()
+        let timer = timerViewOnPlayUserInteraction(afterSecond: 1.0...1.0)
         
         XCTAssertEqual(timer.timerLabelString(), "24:59")
     }
     
     func test_onLaunch_shouldShowCorrectTimerTwoSecondsAfterUserHitsPlay() {
-        let timer = showTimerTwoSecondAfterUserHitsPlay()
+        let timer = timerViewOnPlayUserInteraction(afterSecond: 1.0...2.0)
         
         XCTAssertEqual(timer.timerLabelString(), "24:58")
     }
     
     // MARK: - Helpers
-    private func showTimerTwoSecondAfterUserHitsPlay() -> TimerView {
-        let stub = TimerCountdownSpy.delivers(after: 1.0...2.0, pomodoroResponse)
+    private func timerViewOnPlayUserInteraction(afterSecond: ClosedRange<TimeInterval>) -> TimerView {
+        let stub = TimerCountdownSpy.delivers(after: afterSecond, pomodoroResponse)
         let sut = TimeCoach_Watch_AppApp(timerCoundown: stub).timerView
         
         sut.simulateToggleTimerUserInteraction()
         
         stub.completeSuccessfullyAfterFirstStart()
-        
-        return sut
-    }
-    
-    private func showTimerOneSecondAfterUserHitsPlay() -> TimerView {
-        let spy = TimerCountdownSpy.delivers(after: 1.0...1.0, pomodoroResponse)
-        let sut = TimeCoach_Watch_AppApp(timerCoundown: spy).timerView
-        
-        sut.simulateToggleTimerUserInteraction()
-        
-        spy.completeSuccessfullyAfterFirstStart()
         
         return sut
     }
