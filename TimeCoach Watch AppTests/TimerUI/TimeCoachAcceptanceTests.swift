@@ -1,6 +1,7 @@
 import XCTest
 import LifeCoach
 import LifeCoachWatchOS
+import Combine
 @testable import TimeCoach_Watch_App
 
 
@@ -33,21 +34,38 @@ final class TimeCoachAcceptanceTests: XCTestCase {
         XCTAssertEqual(timer.timerLabelString(), "24:58")
     }
     
+    func test_send_shouldNotSendAnyValuesOnSubscription() {
+        let publisher = TimerCountdownSpy.delivers(after: 1.0...2.0, pomodoroResponse).getPublisher()
+        
+        var receivedValueCount = 0
+        _ = publisher.sink { _ in
+            
+        } receiveValue: { _ in
+            receivedValueCount += 1
+        }
+        
+        XCTAssertEqual(receivedValueCount, 0)
+    }
+    
     // MARK: - Helpers
     private func showTimerTwoSecondAfterUserHitsPlay() -> TimerView {
-        let stub = TimerCountdownStub.delivers(after: 1.0...2.0, pomodoroResponse)
+        let stub = TimerCountdownSpy.delivers(after: 1.0...2.0, pomodoroResponse)
         let sut = TimeCoach_Watch_AppApp(timerCoundown: stub).timerView
         
         sut.simulateToggleTimerUserInteraction()
+        
+        stub.completeSuccessfullyAfterFirstStart()
         
         return sut
     }
     
     private func showTimerOneSecondAfterUserHitsPlay() -> TimerView {
-        let stub = TimerCountdownStub.delivers(after: 1.0...1.0, pomodoroResponse)
-        let sut = TimeCoach_Watch_AppApp(timerCoundown: stub).timerView
+        let spy = TimerCountdownSpy.delivers(after: 1.0...1.0, pomodoroResponse)
+        let sut = TimeCoach_Watch_AppApp(timerCoundown: spy).timerView
         
         sut.simulateToggleTimerUserInteraction()
+        
+        spy.completeSuccessfullyAfterFirstStart()
         
         return sut
     }
@@ -57,9 +75,9 @@ final class TimeCoachAcceptanceTests: XCTestCase {
         return LocalElapsedSeconds(seconds, startDate: start, endDate: start.adding(seconds: .pomodoroInSeconds))
     }
     
-    private class TimerCountdownStub: TimerCountdown {
-        
+    private class TimerCountdownSpy: TimerCountdown {
         private var stubs: [() -> LocalElapsedSeconds] = []
+        private(set) var receivedStartCompletions = [TimerCompletion]()
         
         init(stubs: [() -> LocalElapsedSeconds]) {
             self.stubs = stubs
@@ -74,17 +92,21 @@ final class TimeCoachAcceptanceTests: XCTestCase {
         }
     
         func startCountdown(completion: @escaping TimerCompletion) {
-            stubs.forEach { stub in
-                completion(stub())
-            }
+            receivedStartCompletions.append(completion)
         }
         
         func stopCountdown(completion: @escaping TimerCompletion) {
             
         }
         
+        func completeSuccessfullyAfterFirstStart() {
+            stubs.forEach { stub in
+                receivedStartCompletions[0](stub())
+            }
+        }
+        
         static func delivers(after seconds: ClosedRange<TimeInterval>,
-                             _ stub: @escaping (TimeInterval) -> LocalElapsedSeconds) -> TimerCountdownStub {
+                             _ stub: @escaping (TimeInterval) -> LocalElapsedSeconds) -> TimerCountdownSpy {
             let start: Int = Int(seconds.lowerBound)
             let end: Int = Int(seconds.upperBound)
             let array: [TimeInterval] = (start...end).map { TimeInterval($0) }
@@ -93,7 +115,7 @@ final class TimeCoachAcceptanceTests: XCTestCase {
                     return stub(seconds)
                 }
             }
-            return TimerCountdownStub(stubs: stubs)
+            return TimerCountdownSpy(stubs: stubs)
         }
     }
 }

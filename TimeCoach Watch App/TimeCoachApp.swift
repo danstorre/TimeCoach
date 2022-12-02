@@ -76,6 +76,7 @@ public extension TimerCountdown {
             
             return currentValue
         }
+        .dropFirst()
         .eraseToAnyPublisher()
     }
 }
