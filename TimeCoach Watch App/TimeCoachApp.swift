@@ -39,20 +39,22 @@ class TimeCoachRoot {
 
 @main
 struct TimeCoach_Watch_AppApp: App {
+    var timerView: TimerView
+    @State private var root: TimeCoachRoot
     
-    var timerView: TimerView = TimerViewComposer.createTimer(customFont: CustomFont.timer.font,
-                                                             timerLoader: Self.root.makeTimerLoader())
-    
-    private static var root: TimeCoachRoot = TimeCoachRoot()
-    
-    init() {}
+    init() {
+        let root = TimeCoachRoot()
+        self.root = root
+        self.timerView = TimerViewComposer.createTimer(customFont: CustomFont.timer.font,
+                                                       timerLoader: root.makeTimerLoader())
+    }
 
     init(timerCoundown: TimerCountdown) {
-        Self.root = TimeCoachRoot(timerCoundown: timerCoundown)
+        let root = TimeCoachRoot(timerCoundown: timerCoundown)
+        self.root = root
         self.timerView = TimerViewComposer.createTimer(customFont: CustomFont.timer.font,
-                                                       timerLoader: Self.root.makeTimerLoader())
+                                                       timerLoader: root.makeTimerLoader())
     }
-    
     
     var body: some Scene {
         WindowGroup {
