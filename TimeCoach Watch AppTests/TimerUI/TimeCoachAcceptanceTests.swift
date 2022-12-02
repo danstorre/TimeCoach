@@ -35,7 +35,7 @@ final class TimeCoachAcceptanceTests: XCTestCase {
     
     // MARK: - Helpers
     private func showTimerTwoSecondAfterUserHitsPlay() -> TimerView {
-        let stub = TimerCountdownStub.delivers(after: [1.0, 2.0], pomodoroResponse)
+        let stub = TimerCountdownStub.delivers(after: 1.0...2.0, pomodoroResponse)
         let sut = TimeCoach_Watch_AppApp(timerCoundown: stub).timerView
         
         sut.simulateToggleTimerUserInteraction()
@@ -44,7 +44,7 @@ final class TimeCoachAcceptanceTests: XCTestCase {
     }
     
     private func showTimerOneSecondAfterUserHitsPlay() -> TimerView {
-        let stub = TimerCountdownStub.delivers(seconds: 1.0, pomodoroResponse)
+        let stub = TimerCountdownStub.delivers(after: 1.0...1.0, pomodoroResponse)
         let sut = TimeCoach_Watch_AppApp(timerCoundown: stub).timerView
         
         sut.simulateToggleTimerUserInteraction()
@@ -58,11 +58,6 @@ final class TimeCoachAcceptanceTests: XCTestCase {
     }
     
     private class TimerCountdownStub: TimerCountdown {
-        private var stub: (() -> LocalElapsedSeconds)? = nil
-        
-        init(stub: @escaping () -> LocalElapsedSeconds) {
-            self.stub = stub
-        }
         
         private var stubs: [() -> LocalElapsedSeconds] = []
         
@@ -79,12 +74,8 @@ final class TimeCoachAcceptanceTests: XCTestCase {
         }
     
         func startCountdown(completion: @escaping TimerCompletion) {
-            if let stub = stub {
+            stubs.forEach { stub in
                 completion(stub())
-            } else {
-                stubs.forEach { stub in
-                    completion(stub())
-                }
             }
         }
         
@@ -92,21 +83,17 @@ final class TimeCoachAcceptanceTests: XCTestCase {
             
         }
         
-        static func delivers(after seconds: [TimeInterval],
+        static func delivers(after seconds: ClosedRange<TimeInterval>,
                              _ stub: @escaping (TimeInterval) -> LocalElapsedSeconds) -> TimerCountdownStub {
-            let stubs = seconds.map { seconds in
+            let start: Int = Int(seconds.lowerBound)
+            let end: Int = Int(seconds.upperBound)
+            let array: [TimeInterval] = (start...end).map { TimeInterval($0) }
+            let stubs = array.map { seconds in
                 {
                     return stub(seconds)
                 }
             }
             return TimerCountdownStub(stubs: stubs)
-        }
-        
-        static func delivers(seconds: TimeInterval,
-                             _ stub: @escaping (TimeInterval) -> LocalElapsedSeconds) -> TimerCountdownStub {
-            TimerCountdownStub {
-                return stub(seconds)
-            }
         }
     }
 }
