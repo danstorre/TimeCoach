@@ -27,13 +27,11 @@ class TimeCoachRoot {
         self.timerCoundown = timerCoundown
     }
     
-    func makeTimerLoader() -> () -> AnyPublisher<ElapsedSeconds, Error> {
-        return { [timerCoundown] in
-            return timerCoundown
-                .getPublisher()
-                .map({ $0.timeElapsed })
-                .eraseToAnyPublisher()
-        }
+    func makeTimerLoader() -> AnyPublisher<ElapsedSeconds, Error> {
+        return timerCoundown
+            .getPublisher()
+            .map({ $0.timeElapsed })
+            .eraseToAnyPublisher()
     }
 }
 
@@ -75,6 +73,7 @@ public extension TimerCountdown {
             startCountdown(completion: { localElapsedSeconds in
                 currentValue.send(localElapsedSeconds)
             })
+            
             return currentValue
         }
         .eraseToAnyPublisher()

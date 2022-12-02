@@ -102,8 +102,8 @@ final class TimerUIIntegrationTests: XCTestCase {
         
         let timerView = TimerViewComposer.createTimer(
             customFont: "",
-            timerLoader: timeLoader.loadTimer,
-                    togglePlayback: playHandler,
+            timerLoader: timeLoader.loadTimer.eraseToAnyPublisher(),
+            togglePlayback: playHandler,
             skipHandler: skipHandler,
             stopHandler: stopHandler
         )
@@ -113,15 +113,12 @@ final class TimerUIIntegrationTests: XCTestCase {
     
     private class TimerPublisherSpy {
         private var timerElapsedSeconds = [PassthroughSubject<ElapsedSeconds, Error>]()
-        
-        func loadTimer() -> AnyPublisher<ElapsedSeconds, Error> {
-            let publisher = PassthroughSubject<ElapsedSeconds, Error>()
-            timerElapsedSeconds.append(publisher)
-            return publisher.eraseToAnyPublisher()
-        }
-        
-        func completesSuccessfullyWith(timeElapsed: ElapsedSeconds, at index: Int = 0) {
-            timerElapsedSeconds[index].send(timeElapsed)
+        lazy var loadTimer: PassthroughSubject<ElapsedSeconds, Error> = {
+            return PassthroughSubject<ElapsedSeconds, Error>()
+        }()
+    
+        func completesSuccessfullyWith(timeElapsed: ElapsedSeconds) {
+            loadTimer.send(timeElapsed)
         }
     }
 }

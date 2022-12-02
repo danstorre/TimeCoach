@@ -5,7 +5,7 @@ import LifeCoach
 public final class TimerViewComposer {
     public static func createTimer(
         customFont: String,
-        timerLoader: @escaping () -> AnyPublisher<ElapsedSeconds, Error>,
+        timerLoader: AnyPublisher<ElapsedSeconds, Error>,
         togglePlayback: (() -> Void)? = nil,
         skipHandler: (() -> Void)? = nil,
         stopHandler: (() -> Void)? = nil
