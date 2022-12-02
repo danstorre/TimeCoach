@@ -21,21 +21,23 @@ final class TimeCoachAcceptanceTests: XCTestCase {
         XCTAssertEqual(customFont, .timerFont)
     }
     
-    func test_onLaunch_shouldShowCorrectTimerOneSecondAfterUserHitsPlay() {
-        let timer = timerViewOnPlayUserInteraction(afterSecond: 1.0...1.0)
+    func test_onLaunch_OnGivenSeconds_shouldShowCorrectTimerOnPlayUserInteraction() {
+        let timer1 = timerViewOnPlayUserInteraction(afterSeconds: 1.0)
         
-        XCTAssertEqual(timer.timerLabelString(), "24:59")
-    }
-    
-    func test_onLaunch_shouldShowCorrectTimerTwoSecondsAfterUserHitsPlay() {
-        let timer = timerViewOnPlayUserInteraction(afterSecond: 1.0...2.0)
+        XCTAssertEqual(timer1.timerLabelString(), "24:59")
         
-        XCTAssertEqual(timer.timerLabelString(), "24:58")
+        let timer2 = timerViewOnPlayUserInteraction(afterSeconds: 2.0)
+        
+        XCTAssertEqual(timer2.timerLabelString(), "24:58")
+        
+        let timer3 = timerViewOnPlayUserInteraction(afterSeconds: 5.0)
+        
+        XCTAssertEqual(timer3.timerLabelString(), "24:55")
     }
     
     // MARK: - Helpers
-    private func timerViewOnPlayUserInteraction(afterSecond: ClosedRange<TimeInterval>) -> TimerView {
-        let stub = TimerCountdownSpy.delivers(after: afterSecond, pomodoroResponse)
+    private func timerViewOnPlayUserInteraction(afterSeconds seconds: TimeInterval) -> TimerView {
+        let stub = TimerCountdownSpy.delivers(after: 1.0...seconds, pomodoroResponse)
         let sut = TimeCoach_Watch_AppApp(timerCoundown: stub).timerView
         
         sut.simulateToggleTimerUserInteraction()
