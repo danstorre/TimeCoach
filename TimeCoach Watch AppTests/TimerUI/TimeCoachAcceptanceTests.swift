@@ -6,7 +6,7 @@ import Combine
 
 final class TimeCoachAcceptanceTests: XCTestCase {
     func test_onLaunch_shouldDisplayPomodoroTimer() {
-        let (sut, _) = makeSUT(pomodoroElapsedSeconds: 0.0)
+        let (sut, _) = makeSUT(pomodoroSecondsToBeFlushed: 0.0)
         
         let timerLabelString = sut.timerLabelString()
         
@@ -14,7 +14,7 @@ final class TimeCoachAcceptanceTests: XCTestCase {
     }
     
     func test_onLaunch_shouldDisplayCorrectCustomFont() {
-        let (sut, _) = makeSUT(pomodoroElapsedSeconds: 0.0)
+        let (sut, _) = makeSUT(pomodoroSecondsToBeFlushed: 0.0)
         
         let customFont = sut.customFont
         
@@ -36,7 +36,7 @@ final class TimeCoachAcceptanceTests: XCTestCase {
     }
     
     func test_onLaunch_OnSkipUserInteraction_shouldShowCorrectTimerOnPlayUserInteraction() {
-        let (sut, stub) = makeSUT(pomodoroElapsedSeconds: 1.0, breakElapsedSeconds: 1.0)
+        let (sut, stub) = makeSUT(pomodoroSecondsToBeFlushed: 1.0, breakSecondsToBeFlushed: 1.0)
         
         XCTAssertEqual(sut.timerLabelString(), "25:00")
         
@@ -61,13 +61,13 @@ final class TimeCoachAcceptanceTests: XCTestCase {
     
     // MARK: - Helpers
     private func makeSUT(
-        pomodoroElapsedSeconds: TimeInterval = 0.0,
-        breakElapsedSeconds: TimeInterval = 1.0
+        pomodoroSecondsToBeFlushed: TimeInterval = 0.0,
+        breakSecondsToBeFlushed: TimeInterval = 1.0
     ) -> (timerView: TimerView, spy: TimerCountdownSpy) {
         let spy = TimerCountdownSpy.delivers(
-            afterPomoroSeconds: 0.0...pomodoroElapsedSeconds,
+            afterPomoroSeconds: 0.0...pomodoroSecondsToBeFlushed,
             pomodoroStub: pomodoroResponse,
-            afterBreakSeconds: 0.0...breakElapsedSeconds,
+            afterBreakSeconds: 0.0...breakSecondsToBeFlushed,
             breakStub: breakResponse)
         let sut = TimeCoach_Watch_AppApp(timerCoundown: spy).timerView
         
@@ -75,7 +75,7 @@ final class TimeCoachAcceptanceTests: XCTestCase {
     }
     
     private func timerViewOnPlayUserInteraction(afterSeconds seconds: TimeInterval) -> TimerView {
-        let (sut, stub) = makeSUT(pomodoroElapsedSeconds: seconds, breakElapsedSeconds: 1.0)
+        let (sut, stub) = makeSUT(pomodoroSecondsToBeFlushed: seconds, breakSecondsToBeFlushed: 1.0)
         
         sut.simulateToggleTimerUserInteraction()
         
