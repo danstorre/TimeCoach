@@ -6,7 +6,7 @@ import Combine
 
 final class TimeCoachAcceptanceTests: XCTestCase {
     func test_onLaunch_shouldDisplayPomodoroTimer() {
-        let sut = TimeCoach_Watch_AppApp().timerView
+        let (sut, _) = makeSUT(pomodoroElapsedSeconds: 0.0)
         
         let timerLabelString = sut.timerLabelString()
         
@@ -14,7 +14,7 @@ final class TimeCoachAcceptanceTests: XCTestCase {
     }
     
     func test_onLaunch_shouldDisplayCorrectCustomFont() {
-        let sut = TimeCoach_Watch_AppApp().timerView
+        let (sut, _) = makeSUT(pomodoroElapsedSeconds: 0.0)
         
         let customFont = sut.customFont
         
@@ -61,13 +61,13 @@ final class TimeCoachAcceptanceTests: XCTestCase {
     
     // MARK: - Helpers
     private func makeSUT(
-        pomodoroElapsedSeconds: TimeInterval,
-        breakElapsedSeconds: TimeInterval
+        pomodoroElapsedSeconds: TimeInterval = 0.0,
+        breakElapsedSeconds: TimeInterval = 1.0
     ) -> (timerView: TimerView, spy: TimerCountdownSpy) {
         let spy = TimerCountdownSpy.delivers(
-            afterPomoroSeconds: 1.0...pomodoroElapsedSeconds,
+            afterPomoroSeconds: 0.0...pomodoroElapsedSeconds,
             pomodoroStub: pomodoroResponse,
-            afterBreakSeconds: 1.0...breakElapsedSeconds,
+            afterBreakSeconds: 0.0...breakElapsedSeconds,
             breakStub: breakResponse)
         let sut = TimeCoach_Watch_AppApp(timerCoundown: spy).timerView
         
