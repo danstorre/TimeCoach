@@ -13,15 +13,24 @@
       shouldUseLaunchSchemeArgsEnv = "YES"
       codeCoverageEnabled = "YES"
       onlyGenerateCoverageForSpecifiedTargets = "YES">
+      <CodeCoverageTargets>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "FBAD474F28FC8BB0003D2F7A"
+            BuildableName = "LifeCoach.framework"
+            BlueprintName = "LifeCoach"
+            ReferencedContainer = "container:LifeCoach.xcodeproj">
+         </BuildableReference>
+      </CodeCoverageTargets>
       <Testables>
          <TestableReference
             skipped = "NO"
-            parallelizable = "YES">
+            testExecutionOrdering = "random">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "FB4AA176293808360076FED9"
-               BuildableName = "LocalTimerInfrastructureTests.xctest"
-               BlueprintName = "LocalTimerInfrastructureTests"
+               BlueprintIdentifier = "FB73E920293BAE490087F9EF"
+               BuildableName = "TimerInfrastructureTests.xctest"
+               BlueprintName = "TimerInfrastructureTests"
                ReferencedContainer = "container:LifeCoach.xcodeproj">
             </BuildableReference>
          </TestableReference>
