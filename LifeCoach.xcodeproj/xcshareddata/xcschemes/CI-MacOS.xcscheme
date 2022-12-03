@@ -62,9 +62,9 @@
             testExecutionOrdering = "random">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "FB4AA176293808360076FED9"
-               BuildableName = "LocalTimerInfrastructureTests.xctest"
-               BlueprintName = "LocalTimerInfrastructureTests"
+               BlueprintIdentifier = "FB73E920293BAE490087F9EF"
+               BuildableName = "TimerInfrastructureTests.xctest"
+               BlueprintName = "TimerInfrastructureTests"
                ReferencedContainer = "container:LifeCoach.xcodeproj">
             </BuildableReference>
          </TestableReference>
