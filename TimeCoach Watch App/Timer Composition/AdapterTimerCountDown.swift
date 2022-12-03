@@ -17,3 +17,19 @@ class AdapterTimerCountDown {
         }
     }
 }
+
+class AdapterStopTimerCountDown {
+    private let timerCoundown: TimerCountdown
+    private let stopPublisher: CurrentValueSubject<ElapsedSeconds, Error>
+    
+    init(timerCoundown: TimerCountdown, stopPublisher: CurrentValueSubject<ElapsedSeconds, Error> ) {
+        self.timerCoundown = timerCoundown
+        self.stopPublisher = stopPublisher
+    }
+    
+    func stopHandler() {
+        timerCoundown.stopCountdown { [weak self] time in
+            self?.stopPublisher.send(time.timeElapsed)
+        }
+    }
+}

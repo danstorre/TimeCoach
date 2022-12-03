@@ -34,9 +34,12 @@ struct TimeCoach_Watch_AppApp: App {
             customFont: CustomFont.timer.font,
             timerLoader: root
                 .skipPublisher
+                .dropFirst()
                 .merge(with: root.startPublisher)
+                .merge(with: root.stopPublisher.dropFirst())
                 .eraseToAnyPublisher(),
-            skipHandler: root.skipHandler
+            skipHandler: root.skipHandler,
+            stopHandler: root.stopHandler
         )
     }
 }

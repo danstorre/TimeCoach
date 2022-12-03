@@ -19,6 +19,7 @@ class TimerCountdownSpy: TimerCountdown {
     private var breakStubs: [() -> LocalElapsedSeconds] = []
     private(set) var receivedStartCompletions = [TimerCompletion]()
     private(set) var receivedSkipCompletions = [TimerCompletion]()
+    private(set) var receivedStopCompletions = [TimerCompletion]()
     
     init(stubs: [() -> LocalElapsedSeconds]) {
         self.stubs = stubs
@@ -42,7 +43,7 @@ class TimerCountdownSpy: TimerCountdown {
     }
     
     func stopCountdown(completion: @escaping TimerCompletion) {
-        
+        receivedStopCompletions.append(completion)
     }
     
     func completeSuccessfullyAfterFirstStart() {
@@ -64,7 +65,11 @@ class TimerCountdownSpy: TimerCountdown {
     }
     
     func completeSuccessfullyOnSkip(at index: Int = 0) {
-        receivedSkipCompletions[0](breakResponse(0))
+        receivedSkipCompletions[index](breakResponse(0))
+    }
+    
+    func completeSuccessfullyOnPomodoroStop(at index: Int = 0) {
+        receivedStopCompletions[index](pomodoroResponse(0))
     }
     
     static func delivers(after seconds: ClosedRange<TimeInterval>,

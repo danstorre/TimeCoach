@@ -59,6 +59,26 @@ final class TimeCoachAcceptanceTests: XCTestCase {
         XCTAssertEqual(sut.timerLabelString(), "04:59")
     }
     
+    func test_onLaunch_OnStopUserIntereaction_shouldShowCorrectTimerOnPlayMode() {
+        let (sut, stub) = makeSUT(pomodoroSecondsToBeFlushed: 1.0, breakSecondsToBeFlushed: 1.0)
+        
+        XCTAssertEqual(sut.timerLabelString(), "25:00")
+        
+        sut.simulateToggleTimerUserInteraction()
+        
+        XCTAssertEqual(sut.timerLabelString(), "25:00")
+        
+        stub.flushPomodoroTimes(at: 0)
+        
+        XCTAssertEqual(sut.timerLabelString(), "24:59")
+        
+        sut.simulateStopTimerUserInteraction()
+        
+        stub.completeSuccessfullyOnPomodoroStop()
+        
+        XCTAssertEqual(sut.timerLabelString(), "25:00")
+    }
+    
     // MARK: - Helpers
     private func makeSUT(
         pomodoroSecondsToBeFlushed: TimeInterval = 0.0,
