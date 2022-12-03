@@ -14,32 +14,29 @@ struct TimeCoach_Watch_AppApp: App {
     init() {
         let root = TimeCoachRoot()
         self.root = root
-        self.timerView = TimerViewComposer.createTimer(
-            customFont: CustomFont.timer.font,
-            timerLoader: root
-                .skipPublisher
-                .merge(with: root.startPublisher)
-                .eraseToAnyPublisher(),
-            skipHandler: root.skipHandler
-        )
+        self.timerView = Self.createTimer(root)
     }
 
     init(timerCoundown: TimerCountdown) {
         let root = TimeCoachRoot(timerCoundown: timerCoundown)
         self.root = root
-        self.timerView = TimerViewComposer.createTimer(
-            customFont: CustomFont.timer.font,
-            timerLoader: root
-                .skipPublisher
-                .merge(with: root.startPublisher)
-                .eraseToAnyPublisher(),
-            skipHandler: root.skipHandler
-        )
+        self.timerView = Self.createTimer(root)
     }
     
     var body: some Scene {
         WindowGroup {
             timerView
         }
+    }
+    
+    fileprivate static func createTimer(_ root: TimeCoachRoot) -> TimerView {
+        return TimerViewComposer.createTimer(
+            customFont: CustomFont.timer.font,
+            timerLoader: root
+                .skipPublisher
+                .merge(with: root.startPublisher)
+                .eraseToAnyPublisher(),
+            skipHandler: root.skipHandler
+        )
     }
 }
