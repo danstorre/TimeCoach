@@ -17,7 +17,7 @@ public enum CustomFont {
 class TimeCoachRoot {
     init() {}
     
-    private lazy var timerCoundown: TimerCountdown = {
+    lazy var timerCoundown: TimerCountdown = {
         return PomodoroLocalTimer(startDate: .now,
                                   primaryInterval: .pomodoroInSeconds,
                                   secondaryTime: .breakInSeconds)
@@ -27,9 +27,9 @@ class TimeCoachRoot {
         self.timerCoundown = timerCoundown
     }
     
-    func makeTimerLoader() -> AnyPublisher<ElapsedSeconds, Error> {
+    func makeStartTimerPublisher() -> AnyPublisher<ElapsedSeconds, Error> {
         return timerCoundown
-            .getPublisher()
+            .getStartTimerPublisher()
             .map({ $0.timeElapsed })
             .eraseToAnyPublisher()
     }
@@ -44,14 +44,15 @@ struct TimeCoach_Watch_AppApp: App {
         let root = TimeCoachRoot()
         self.root = root
         self.timerView = TimerViewComposer.createTimer(customFont: CustomFont.timer.font,
-                                                       timerLoader: root.makeTimerLoader())
+                                                       timerLoader: root.makeStartTimerPublisher())
     }
 
     init(timerCoundown: TimerCountdown) {
         let root = TimeCoachRoot(timerCoundown: timerCoundown)
         self.root = root
-        self.timerView = TimerViewComposer.createTimer(customFont: CustomFont.timer.font,
-                                                       timerLoader: root.makeTimerLoader())
+        self.timerView = TimerViewComposer.createTimer(
+            customFont: CustomFont.timer.font,
+            timerLoader: root.makeStartTimerPublisher())
     }
     
     var body: some Scene {
@@ -65,7 +66,7 @@ struct TimeCoach_Watch_AppApp: App {
 public extension TimerCountdown {
     typealias Publisher = AnyPublisher<LocalElapsedSeconds, Error>
 
-    func getPublisher() -> Publisher {
+    func getStartTimerPublisher() -> Publisher {
         return Deferred {
             let currentValue = CurrentValueSubject<LocalElapsedSeconds, Error>(
                 LocalElapsedSeconds(0, startDate: .now, endDate: .now)
