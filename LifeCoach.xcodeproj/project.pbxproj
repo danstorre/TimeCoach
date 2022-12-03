@@ -40,7 +40,6 @@
 		FBC9ADAF2919E8B500E0BEFC /* XCTestCase+MemoryLeakTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC9ADAE2919E8B500E0BEFC /* XCTestCase+MemoryLeakTracking.swift */; };
 		FBE9A9752939527C00D8BF29 /* TimeCoach Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = FBE9A9742939527C00D8BF29 /* TimeCoach Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		FBE9A97A2939527C00D8BF29 /* TimeCoachApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE9A9792939527C00D8BF29 /* TimeCoachApp.swift */; };
-		FBE9A97C2939527D00D8BF29 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE9A97B2939527D00D8BF29 /* ContentView.swift */; };
 		FBE9A97E2939527E00D8BF29 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FBE9A97D2939527E00D8BF29 /* Assets.xcassets */; };
 		FBE9A9812939527E00D8BF29 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FBE9A9802939527E00D8BF29 /* Preview Assets.xcassets */; };
 		FBE9A9A5293952EB00D8BF29 /* TimerUIIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4AA1322936EB9A0076FED9 /* TimerUIIntegrationTests.swift */; };
@@ -51,13 +50,6 @@
 		FBE9A9B12939552400D8BF29 /* ViewInspector in Frameworks */ = {isa = PBXBuildFile; productRef = FBE9A9B02939552400D8BF29 /* ViewInspector */; };
 		FBE9A9D02939580E00D8BF29 /* pizzadude.dk License.txt in Resources */ = {isa = PBXBuildFile; fileRef = FBE9A9C72939580E00D8BF29 /* pizzadude.dk License.txt */; };
 		FBE9A9D12939580E00D8BF29 /* DIGITALDREAMFAT.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FBE9A9C82939580E00D8BF29 /* DIGITALDREAMFAT.ttf */; };
-		FBE9A9D22939580E00D8BF29 /* DIGITALDREAMFATSKEW.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FBE9A9C92939580E00D8BF29 /* DIGITALDREAMFATSKEW.ttf */; };
-		FBE9A9D32939580E00D8BF29 /* DIGITALDREAMSKEW.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FBE9A9CA2939580E00D8BF29 /* DIGITALDREAMSKEW.ttf */; };
-		FBE9A9D42939580E00D8BF29 /* DIGITALDREAMFATSKEWNARROW.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FBE9A9CB2939580E00D8BF29 /* DIGITALDREAMFATSKEWNARROW.ttf */; };
-		FBE9A9D52939580E00D8BF29 /* DIGITALDREAMSKEWNARROW.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FBE9A9CC2939580E00D8BF29 /* DIGITALDREAMSKEWNARROW.ttf */; };
-		FBE9A9D62939580E00D8BF29 /* DIGITALDREAMFATNARROW.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FBE9A9CD2939580E00D8BF29 /* DIGITALDREAMFATNARROW.ttf */; };
-		FBE9A9D72939580E00D8BF29 /* DIGITALDREAMNARROW.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FBE9A9CE2939580E00D8BF29 /* DIGITALDREAMNARROW.ttf */; };
-		FBE9A9D82939580E00D8BF29 /* DIGITALDREAM.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FBE9A9CF2939580E00D8BF29 /* DIGITALDREAM.ttf */; };
 		FBE9A9DC2939654400D8BF29 /* TimerLabelStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE9A9DB2939654400D8BF29 /* TimerLabelStyle.swift */; };
 		FBE9A9DE29396EA100D8BF29 /* TimeCoachAcceptanceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE9A9DD29396EA100D8BF29 /* TimeCoachAcceptanceTests.swift */; };
 		FBE9A9E029397BB800D8BF29 /* ExtensionHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4AA1532937C0F30076FED9 /* ExtensionHelpers.swift */; };
@@ -154,19 +146,11 @@
 		FBE9A96F2939527C00D8BF29 /* TimeCoach.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TimeCoach.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FBE9A9742939527C00D8BF29 /* TimeCoach Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "TimeCoach Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FBE9A9792939527C00D8BF29 /* TimeCoachApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeCoachApp.swift; sourceTree = "<group>"; };
-		FBE9A97B2939527D00D8BF29 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		FBE9A97D2939527E00D8BF29 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FBE9A9802939527E00D8BF29 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		FBE9A9862939527E00D8BF29 /* TimeCoach Watch AppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "TimeCoach Watch AppTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FBE9A9C72939580E00D8BF29 /* pizzadude.dk License.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "pizzadude.dk License.txt"; sourceTree = "<group>"; };
 		FBE9A9C82939580E00D8BF29 /* DIGITALDREAMFAT.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = DIGITALDREAMFAT.ttf; sourceTree = "<group>"; };
-		FBE9A9C92939580E00D8BF29 /* DIGITALDREAMFATSKEW.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = DIGITALDREAMFATSKEW.ttf; sourceTree = "<group>"; };
-		FBE9A9CA2939580E00D8BF29 /* DIGITALDREAMSKEW.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = DIGITALDREAMSKEW.ttf; sourceTree = "<group>"; };
-		FBE9A9CB2939580E00D8BF29 /* DIGITALDREAMFATSKEWNARROW.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = DIGITALDREAMFATSKEWNARROW.ttf; sourceTree = "<group>"; };
-		FBE9A9CC2939580E00D8BF29 /* DIGITALDREAMSKEWNARROW.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = DIGITALDREAMSKEWNARROW.ttf; sourceTree = "<group>"; };
-		FBE9A9CD2939580E00D8BF29 /* DIGITALDREAMFATNARROW.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = DIGITALDREAMFATNARROW.ttf; sourceTree = "<group>"; };
-		FBE9A9CE2939580E00D8BF29 /* DIGITALDREAMNARROW.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = DIGITALDREAMNARROW.ttf; sourceTree = "<group>"; };
-		FBE9A9CF2939580E00D8BF29 /* DIGITALDREAM.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = DIGITALDREAM.ttf; sourceTree = "<group>"; };
 		FBE9A9DB2939654400D8BF29 /* TimerLabelStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerLabelStyle.swift; sourceTree = "<group>"; };
 		FBE9A9DD29396EA100D8BF29 /* TimeCoachAcceptanceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeCoachAcceptanceTests.swift; sourceTree = "<group>"; };
 		FBE9A9DF293974FF00D8BF29 /* TimeCoach-Watch-App-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "TimeCoach-Watch-App-Info.plist"; sourceTree = SOURCE_ROOT; };
@@ -391,7 +375,6 @@
 				FBE9A9B22939579F00D8BF29 /* Resources */,
 				FB4AA14129379DC20076FED9 /* Timer Composition */,
 				FBE9A9792939527C00D8BF29 /* TimeCoachApp.swift */,
-				FBE9A97B2939527D00D8BF29 /* ContentView.swift */,
 			);
 			path = "TimeCoach Watch App";
 			sourceTree = "<group>";
@@ -439,13 +422,6 @@
 			children = (
 				FBE9A9C72939580E00D8BF29 /* pizzadude.dk License.txt */,
 				FBE9A9C82939580E00D8BF29 /* DIGITALDREAMFAT.ttf */,
-				FBE9A9C92939580E00D8BF29 /* DIGITALDREAMFATSKEW.ttf */,
-				FBE9A9CA2939580E00D8BF29 /* DIGITALDREAMSKEW.ttf */,
-				FBE9A9CB2939580E00D8BF29 /* DIGITALDREAMFATSKEWNARROW.ttf */,
-				FBE9A9CC2939580E00D8BF29 /* DIGITALDREAMSKEWNARROW.ttf */,
-				FBE9A9CD2939580E00D8BF29 /* DIGITALDREAMFATNARROW.ttf */,
-				FBE9A9CE2939580E00D8BF29 /* DIGITALDREAMNARROW.ttf */,
-				FBE9A9CF2939580E00D8BF29 /* DIGITALDREAM.ttf */,
 			);
 			path = Fonts;
 			sourceTree = "<group>";
@@ -708,17 +684,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FBE9A9D52939580E00D8BF29 /* DIGITALDREAMSKEWNARROW.ttf in Resources */,
 				FBE9A9812939527E00D8BF29 /* Preview Assets.xcassets in Resources */,
-				FBE9A9D72939580E00D8BF29 /* DIGITALDREAMNARROW.ttf in Resources */,
-				FBE9A9D82939580E00D8BF29 /* DIGITALDREAM.ttf in Resources */,
 				FBE9A9D12939580E00D8BF29 /* DIGITALDREAMFAT.ttf in Resources */,
 				FBE9A9D02939580E00D8BF29 /* pizzadude.dk License.txt in Resources */,
-				FBE9A9D62939580E00D8BF29 /* DIGITALDREAMFATNARROW.ttf in Resources */,
-				FBE9A9D22939580E00D8BF29 /* DIGITALDREAMFATSKEW.ttf in Resources */,
 				FBE9A97E2939527E00D8BF29 /* Assets.xcassets in Resources */,
-				FBE9A9D32939580E00D8BF29 /* DIGITALDREAMSKEW.ttf in Resources */,
-				FBE9A9D42939580E00D8BF29 /* DIGITALDREAMFATSKEWNARROW.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -788,7 +757,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				FBE9A9A72939534000D8BF29 /* TimerLoaderPresentationAdapter.swift in Sources */,
-				FBE9A97C2939527D00D8BF29 /* ContentView.swift in Sources */,
 				FB73E90E293BA3810087F9EF /* CombineHelpers.swift in Sources */,
 				FBE9A9A82939535800D8BF29 /* TimerViewComposer.swift in Sources */,
 				FB73E907293BA2850087F9EF /* AdapterTimerCountDown.swift in Sources */,
