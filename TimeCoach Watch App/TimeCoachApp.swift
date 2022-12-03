@@ -33,10 +33,9 @@ struct TimeCoach_Watch_AppApp: App {
         return TimerViewComposer.createTimer(
             customFont: CustomFont.timer.font,
             timerLoader: root
-                .skipPublisher
+                .timerPublisher
                 .dropFirst()
                 .merge(with: root.startPublisher)
-                .merge(with: root.stopPublisher.dropFirst())
                 .eraseToAnyPublisher(),
             skipHandler: root.skipHandler,
             stopHandler: root.stopHandler

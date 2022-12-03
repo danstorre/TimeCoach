@@ -2,34 +2,27 @@ import Foundation
 import LifeCoach
 import Combine
 
-class AdapterTimerCountDown {
+class AdapterTimerCountDownPublisher {
     private let timerCoundown: TimerCountdown
-    private let skipPublisher: CurrentValueSubject<ElapsedSeconds, Error>
+    private let publisher: CurrentValueSubject<ElapsedSeconds, Error>
     
-    init(timerCoundown: TimerCountdown, skipPublisher: CurrentValueSubject<ElapsedSeconds, Error> ) {
+    init(timerCoundown: TimerCountdown, publisher: CurrentValueSubject<ElapsedSeconds, Error> ) {
         self.timerCoundown = timerCoundown
-        self.skipPublisher = skipPublisher
-    }
-    
-    func skipHandler() {
-        timerCoundown.skipCountdown { [weak self] time in
-            self?.skipPublisher.send(time.timeElapsed)
-        }
+        self.publisher = publisher
     }
 }
 
-class AdapterStopTimerCountDown {
-    private let timerCoundown: TimerCountdown
-    private let stopPublisher: CurrentValueSubject<ElapsedSeconds, Error>
+extension AdapterTimerCountDownPublisher {
     
-    init(timerCoundown: TimerCountdown, stopPublisher: CurrentValueSubject<ElapsedSeconds, Error> ) {
-        self.timerCoundown = timerCoundown
-        self.stopPublisher = stopPublisher
+    func skipHandler() {
+        timerCoundown.skipCountdown { [weak self] time in
+            self?.publisher.send(time.timeElapsed)
+        }
     }
     
     func stopHandler() {
         timerCoundown.stopCountdown { [weak self] time in
-            self?.stopPublisher.send(time.timeElapsed)
+            self?.publisher.send(time.timeElapsed)
         }
     }
 }
