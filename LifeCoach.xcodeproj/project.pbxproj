@@ -31,6 +31,7 @@
 		FB73E925293BAE490087F9EF /* LifeCoach.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBAD475028FC8BB0003D2F7A /* LifeCoach.framework */; };
 		FB73E92B293BAE4F0087F9EF /* PomodoroLocalTimerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4AA1712937DE810076FED9 /* PomodoroLocalTimerTests.swift */; };
 		FB73E92C293BAEEB0087F9EF /* XCTestCase+MemoryLeakTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC9ADAE2919E8B500E0BEFC /* XCTestCase+MemoryLeakTracking.swift */; };
+		FB73E92D293BC1D80087F9EF /* LifeCoach.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBAD475028FC8BB0003D2F7A /* LifeCoach.framework */; };
 		FBAD475528FC8BB0003D2F7A /* LifeCoach.docc in Sources */ = {isa = PBXBuildFile; fileRef = FBAD475428FC8BB0003D2F7A /* LifeCoach.docc */; };
 		FBAD475B28FC8BB0003D2F7A /* LifeCoach.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBAD475028FC8BB0003D2F7A /* LifeCoach.framework */; };
 		FBC612F3293AC2ED008D9EF8 /* TimerCountDownSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC612F2293AC2ED008D9EF8 /* TimerCountDownSpy.swift */; };
@@ -176,6 +177,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FB73E92D293BC1D80087F9EF /* LifeCoach.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -248,7 +250,6 @@
 		FB4AA13E29379D9F0076FED9 /* Timer Feature */ = {
 			isa = PBXGroup;
 			children = (
-				FBE9A9A92939538200D8BF29 /* Presentation */,
 				FB4AA14429379E1F0076FED9 /* UI */,
 			);
 			path = "Timer Feature";
@@ -343,6 +344,7 @@
 		FBAD475228FC8BB0003D2F7A /* LifeCoach */ = {
 			isa = PBXGroup;
 			children = (
+				FBE9A9A92939538200D8BF29 /* Timer Presentation */,
 				FB4AA15C2937C6D70076FED9 /* Timer Feature */,
 				FB4AA1532937C0F30076FED9 /* ExtensionHelpers.swift */,
 				FBAD475428FC8BB0003D2F7A /* LifeCoach.docc */,
@@ -403,13 +405,13 @@
 			path = "TimeCoach Watch AppTests";
 			sourceTree = "<group>";
 		};
-		FBE9A9A92939538200D8BF29 /* Presentation */ = {
+		FBE9A9A92939538200D8BF29 /* Timer Presentation */ = {
 			isa = PBXGroup;
 			children = (
 				FBE9A9AA293953B700D8BF29 /* Helpers */,
 				FB4AA14929379EDF0076FED9 /* TimerViewModel.swift */,
 			);
-			path = Presentation;
+			path = "Timer Presentation";
 			sourceTree = "<group>";
 		};
 		FBE9A9AA293953B700D8BF29 /* Helpers */ = {
