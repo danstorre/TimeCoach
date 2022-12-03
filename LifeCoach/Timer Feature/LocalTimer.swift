@@ -1,12 +1,17 @@
 import Foundation
 
-public class LocalTimer {
+public protocol LocalTimerCommands {
+    func startTimer(completion: @escaping (ElapsedSeconds) -> Void)
+    func pauseTimer(completion: @escaping (ElapsedSeconds) -> Void)
+    func skipTimer(completion: @escaping (ElapsedSeconds) -> Void)
+    func stopTimer(completion: @escaping (ElapsedSeconds) -> Void)
+}
+
+public class LocalTimer: LocalTimerCommands {
     private let timer: TimerCountdown
-    private let primaryTime: TimeInterval
     
-    public init(timer: TimerCountdown, primaryTime: TimeInterval = .pomodoroInSeconds) {
+    public init(timer: TimerCountdown) {
         self.timer = timer
-        self.primaryTime = primaryTime
     }
     
     public func startTimer(completion: @escaping (ElapsedSeconds) -> Void) {

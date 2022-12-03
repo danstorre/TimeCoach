@@ -1,4 +1,5 @@
 import SwiftUI
+import LifeCoach
 
 public class TimerViewModel: ObservableObject {
     @Published var timerString: String = .defaultPomodoroTimerString
@@ -13,6 +14,11 @@ public class TimerViewModel: ObservableObject {
         let formatter = makeTimerFormatter()
         let startDate = elapsedTime.startDate
         let endDate = elapsedTime.endDate.adding(seconds: -elapsedTime.elapsedSeconds)
+        
+        guard endDate.timeIntervalSince(startDate) > 0 else {
+            timerString = formatter.string(from: startDate, to: startDate)!
+            return
+        }
         
         timerString = formatter.string(from: startDate, to: endDate)!
     }

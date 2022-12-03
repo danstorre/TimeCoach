@@ -5,7 +5,7 @@ public struct TimerView: View {
     @Environment(\.isLuminanceReduced) var isLuminanceReduced
     
     @ObservedObject var timerViewModel: TimerViewModel
-    private let customFont: String?
+    public let customFont: String?
     
     private var togglePlayback: (() -> Void)?
     private var skipHandler: (() -> Void)?

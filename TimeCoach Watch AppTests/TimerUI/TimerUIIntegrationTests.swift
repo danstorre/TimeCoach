@@ -1,8 +1,9 @@
 import ViewInspector
 import SwiftUI
-import XCTest
-import LifeCoachWatchOS
 import Combine
+import XCTest
+import LifeCoach
+import LifeCoachWatchOS
 import TimeCoach_Watch_App
 
 extension TimerView: Inspectable { }
@@ -64,8 +65,16 @@ final class TimerUIIntegrationTests: XCTestCase {
     
     func test_onPLayUserInteraction_showsCorrectFormattedElapsedTime() {
         let now = Date.now
-        let pomodoroElapsedTime = makeElapsedSeconds(1, startDate: now, endDate: now.adding(seconds: .pomodoroInSeconds))
-        let breakElapsedTime = makeElapsedSeconds(1, startDate: now, endDate: now.adding(seconds: .breakInSeconds))
+        let pomodoroOnSecondElapsedTime = makeElapsedSeconds(1, startDate: now, endDate: now.adding(seconds: .pomodoroInSeconds))
+        let breakOnSecondElapsedTime = makeElapsedSeconds(1, startDate: now, endDate: now.adding(seconds: .breakInSeconds))
+        
+        let beyondPomodoroElapsedTime = makeElapsedSeconds(.pomodoroInSeconds + 1,
+                                                           startDate: now,
+                                                           endDate: now.adding(seconds: .pomodoroInSeconds))
+        
+        let beyondBreakElapsedTime = makeElapsedSeconds(.breakInSeconds + 1,
+                                                        startDate: now,
+                                                        endDate: now.adding(seconds: .breakInSeconds))
         let (sut, spy) = makeSUT()
         
         XCTAssertEqual(sut.timerLabelString(), "25:00")
@@ -74,13 +83,21 @@ final class TimerUIIntegrationTests: XCTestCase {
         
         XCTAssertEqual(sut.timerLabelString(), "25:00")
         
-        spy.completesSuccessfullyWith(timeElapsed: pomodoroElapsedTime)
+        spy.completesSuccessfullyWith(timeElapsed: pomodoroOnSecondElapsedTime)
         
         XCTAssertEqual(sut.timerLabelString(), "24:59")
         
-        spy.completesSuccessfullyWith(timeElapsed: breakElapsedTime)
+        spy.completesSuccessfullyWith(timeElapsed: breakOnSecondElapsedTime)
         
         XCTAssertEqual(sut.timerLabelString(), "04:59")
+        
+        spy.completesSuccessfullyWith(timeElapsed: beyondPomodoroElapsedTime)
+        
+        XCTAssertEqual(sut.timerLabelString(), "00:00")
+        
+        spy.completesSuccessfullyWith(timeElapsed: beyondBreakElapsedTime)
+        
+        XCTAssertEqual(sut.timerLabelString(), "00:00")
     }
     
     // MARK: - Helpers
@@ -100,8 +117,9 @@ final class TimerUIIntegrationTests: XCTestCase {
         let timeLoader = TimerPublisherSpy()
         
         let timerView = TimerViewComposer.createTimer(
-            timerLoader: timeLoader.loadTimer,
-                    togglePlayback: playHandler,
+            customFont: "",
+            timerLoader: timeLoader.loadTimer.eraseToAnyPublisher(),
+            togglePlayback: playHandler,
             skipHandler: skipHandler,
             stopHandler: stopHandler
         )
@@ -111,15 +129,12 @@ final class TimerUIIntegrationTests: XCTestCase {
     
     private class TimerPublisherSpy {
         private var timerElapsedSeconds = [PassthroughSubject<ElapsedSeconds, Error>]()
-        
-        func loadTimer() -> AnyPublisher<ElapsedSeconds, Error> {
-            let publisher = PassthroughSubject<ElapsedSeconds, Error>()
-            timerElapsedSeconds.append(publisher)
-            return publisher.eraseToAnyPublisher()
-        }
-        
-        func completesSuccessfullyWith(timeElapsed: ElapsedSeconds, at index: Int = 0) {
-            timerElapsedSeconds[index].send(timeElapsed)
+        lazy var loadTimer: PassthroughSubject<ElapsedSeconds, Error> = {
+            return PassthroughSubject<ElapsedSeconds, Error>()
+        }()
+    
+        func completesSuccessfullyWith(timeElapsed: ElapsedSeconds) {
+            loadTimer.send(timeElapsed)
         }
     }
 }

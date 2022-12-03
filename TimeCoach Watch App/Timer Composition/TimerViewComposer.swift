@@ -1,9 +1,11 @@
 import Combine
 import LifeCoachWatchOS
+import LifeCoach
 
 public final class TimerViewComposer {
     public static func createTimer(
-        timerLoader: @escaping () -> AnyPublisher<ElapsedSeconds, Error>,
+        customFont: String,
+        timerLoader: AnyPublisher<ElapsedSeconds, Error>,
         togglePlayback: (() -> Void)? = nil,
         skipHandler: (() -> Void)? = nil,
         stopHandler: (() -> Void)? = nil
@@ -12,7 +14,12 @@ public final class TimerViewComposer {
      
         let didToggle = {
             togglePlayback?()
-            presentationAdapter.startTimer()
+            presentationAdapter.subscribeToTimer()
+        }
+        
+        let didSkip = {
+            presentationAdapter.subscribeToTimer()
+            skipHandler?()
         }
         
         let viewModel = TimerViewModel()
@@ -22,8 +29,9 @@ public final class TimerViewComposer {
         let timer = TimerView(
             timerViewModel: viewModel,
             togglePlayback: didToggle,
-            skipHandler: skipHandler,
-            stopHandler: stopHandler
+            skipHandler: didSkip,
+            stopHandler: stopHandler,
+            customFont: customFont
         )
         
         return timer

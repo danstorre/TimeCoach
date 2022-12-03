@@ -15,7 +15,7 @@ public struct LocalElapsedSeconds: Equatable {
         self.endDate = endDate
     }
     
-    var timeElapsed: ElapsedSeconds {
+    public var timeElapsed: ElapsedSeconds {
         ElapsedSeconds.init(elapsedSeconds,
                             startDate: startDate,
                             endDate: endDate)
