@@ -35,14 +35,47 @@ final class TimeCoachAcceptanceTests: XCTestCase {
         XCTAssertEqual(timer3.timerLabelString(), "24:55")
     }
     
+    func test_onLaunch_OnSkipUserInteraction_shouldShowCorrectTimerOnPlayUserInteraction() {
+        let stub = TimerCountdownSpy.delivers(
+            afterPomoroSeconds: 1.0...1.0,
+            pomodoroStub: pomodoroResponse,
+            afterBreakSeconds: 1.0...1.0,
+            breakStub: breakResponse)
+        let sut = TimeCoach_Watch_AppApp(timerCoundown: stub).timerView
+        
+        XCTAssertEqual(sut.timerLabelString(), "25:00")
+        
+        sut.simulateToggleTimerUserInteraction()
+        
+        stub.flushPomodoroTimes(at: 0)
+        
+        XCTAssertEqual(sut.timerLabelString(), "24:59")
+        
+        sut.simulateSkipTimerUserInteraction()
+        
+        stub.completeSuccessfullyOnSkip()
+        
+        XCTAssertEqual(sut.timerLabelString(), "05:00")
+        
+        sut.simulateToggleTimerUserInteraction()
+        
+        stub.flushBreakTimes(at: 2)
+        
+        XCTAssertEqual(sut.timerLabelString(), "04:59")
+    }
+    
     // MARK: - Helpers
     private func timerViewOnPlayUserInteraction(afterSeconds seconds: TimeInterval) -> TimerView {
-        let stub = TimerCountdownSpy.delivers(after: 1.0...seconds, pomodoroResponse)
+        let stub = TimerCountdownSpy.delivers(
+            afterPomoroSeconds: 1.0...seconds,
+            pomodoroStub: pomodoroResponse,
+            afterBreakSeconds: 1.0...1.0,
+            breakStub: breakResponse)
         let sut = TimeCoach_Watch_AppApp(timerCoundown: stub).timerView
         
         sut.simulateToggleTimerUserInteraction()
         
-        stub.completeSuccessfullyAfterFirstStart()
+        stub.flushPomodoroTimes(at: 0)
         
         return sut
     }

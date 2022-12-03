@@ -3,7 +3,6 @@ import Combine
 import LifeCoachWatchOS
 import LifeCoach
 
-
 final class TimerLoaderPresentationAdapter {
     private let loader: AnyPublisher<ElapsedSeconds, Error>
     private var cancellable: Cancellable?
@@ -13,7 +12,7 @@ final class TimerLoaderPresentationAdapter {
         self.loader = loader
     }
     
-    func startTimer() {
+    func subscribeToTimer() {
         cancellable = loader
             .sink(
                 receiveCompletion: { [weak self] completion in
@@ -28,4 +27,3 @@ final class TimerLoaderPresentationAdapter {
                 })
     }
 }
-

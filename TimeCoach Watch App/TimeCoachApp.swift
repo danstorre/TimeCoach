@@ -14,20 +14,50 @@ public enum CustomFont {
     }
 }
 
-class TimeCoachRoot {
-    init() {}
+class AdapterTimerCountDown {
+    private let timerCoundown: TimerCountdown
+    private let skipPublisher: CurrentValueSubject<ElapsedSeconds, Error>
     
+    init(timerCoundown: TimerCountdown, skipPublisher: CurrentValueSubject<ElapsedSeconds, Error> ) {
+        self.timerCoundown = timerCoundown
+        self.skipPublisher = skipPublisher
+    }
+    
+    func skipHandler() {
+        timerCoundown.skipCountdown { [weak self] time in
+            self?.skipPublisher.send(time.timeElapsed)
+        }
+    }
+}
+
+class TimeCoachRoot {
     lazy var timerCoundown: TimerCountdown = {
         return PomodoroLocalTimer(startDate: .now,
                                   primaryInterval: .pomodoroInSeconds,
                                   secondaryTime: .breakInSeconds)
     }()
     
-    init(timerCoundown: TimerCountdown) {
-        self.timerCoundown = timerCoundown
+    lazy var skipPublisher: CurrentValueSubject<ElapsedSeconds, Error> = {
+        CurrentValueSubject<ElapsedSeconds, Error>(ElapsedSeconds(0, startDate: .now, endDate: .now))
+    }()
+    lazy var startPublisher: AnyPublisher<ElapsedSeconds, Error> = {
+        Self.makeStartTimerPublisher(timerCoundown: timerCoundown)
+    }()
+    var skipHandler: (() -> Void)?
+    
+    init() {
+        self.skipPublisher = skipPublisher
+        self.skipHandler = AdapterTimerCountDown(timerCoundown: timerCoundown, skipPublisher: skipPublisher).skipHandler
     }
     
-    func makeStartTimerPublisher() -> AnyPublisher<ElapsedSeconds, Error> {
+    convenience init(timerCoundown: TimerCountdown) {
+        self.init()
+        self.skipHandler = AdapterTimerCountDown(timerCoundown: timerCoundown, skipPublisher: skipPublisher).skipHandler
+        self.timerCoundown = timerCoundown
+        self.startPublisher = Self.makeStartTimerPublisher(timerCoundown: timerCoundown)
+    }
+    
+    static func makeStartTimerPublisher(timerCoundown: TimerCountdown) -> AnyPublisher<ElapsedSeconds, Error> {
         return timerCoundown
             .getStartTimerPublisher()
             .map({ $0.timeElapsed })
@@ -43,8 +73,14 @@ struct TimeCoach_Watch_AppApp: App {
     init() {
         let root = TimeCoachRoot()
         self.root = root
-        self.timerView = TimerViewComposer.createTimer(customFont: CustomFont.timer.font,
-                                                       timerLoader: root.makeStartTimerPublisher())
+        self.timerView = TimerViewComposer.createTimer(
+            customFont: CustomFont.timer.font,
+            timerLoader: root
+                .skipPublisher
+                .merge(with: root.startPublisher)
+                .eraseToAnyPublisher(),
+            skipHandler: root.skipHandler
+        )
     }
 
     init(timerCoundown: TimerCountdown) {
@@ -52,7 +88,12 @@ struct TimeCoach_Watch_AppApp: App {
         self.root = root
         self.timerView = TimerViewComposer.createTimer(
             customFont: CustomFont.timer.font,
-            timerLoader: root.makeStartTimerPublisher())
+            timerLoader: root
+                .skipPublisher
+                .merge(with: root.startPublisher)
+                .eraseToAnyPublisher(),
+            skipHandler: root.skipHandler
+        )
     }
     
     var body: some Scene {
