@@ -15,6 +15,11 @@ public class TimerViewModel: ObservableObject {
         let startDate = elapsedTime.startDate
         let endDate = elapsedTime.endDate.adding(seconds: -elapsedTime.elapsedSeconds)
         
+        guard endDate.timeIntervalSince(startDate) > 0 else {
+            timerString = formatter.string(from: startDate, to: startDate)!
+            return
+        }
+        
         timerString = formatter.string(from: startDate, to: endDate)!
     }
 }

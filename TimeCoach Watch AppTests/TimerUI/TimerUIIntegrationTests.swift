@@ -65,8 +65,16 @@ final class TimerUIIntegrationTests: XCTestCase {
     
     func test_onPLayUserInteraction_showsCorrectFormattedElapsedTime() {
         let now = Date.now
-        let pomodoroElapsedTime = makeElapsedSeconds(1, startDate: now, endDate: now.adding(seconds: .pomodoroInSeconds))
-        let breakElapsedTime = makeElapsedSeconds(1, startDate: now, endDate: now.adding(seconds: .breakInSeconds))
+        let pomodoroOnSecondElapsedTime = makeElapsedSeconds(1, startDate: now, endDate: now.adding(seconds: .pomodoroInSeconds))
+        let breakOnSecondElapsedTime = makeElapsedSeconds(1, startDate: now, endDate: now.adding(seconds: .breakInSeconds))
+        
+        let beyondPomodoroElapsedTime = makeElapsedSeconds(.pomodoroInSeconds + 1,
+                                                           startDate: now,
+                                                           endDate: now.adding(seconds: .pomodoroInSeconds))
+        
+        let beyondBreakElapsedTime = makeElapsedSeconds(.breakInSeconds + 1,
+                                                        startDate: now,
+                                                        endDate: now.adding(seconds: .breakInSeconds))
         let (sut, spy) = makeSUT()
         
         XCTAssertEqual(sut.timerLabelString(), "25:00")
@@ -75,13 +83,21 @@ final class TimerUIIntegrationTests: XCTestCase {
         
         XCTAssertEqual(sut.timerLabelString(), "25:00")
         
-        spy.completesSuccessfullyWith(timeElapsed: pomodoroElapsedTime)
+        spy.completesSuccessfullyWith(timeElapsed: pomodoroOnSecondElapsedTime)
         
         XCTAssertEqual(sut.timerLabelString(), "24:59")
         
-        spy.completesSuccessfullyWith(timeElapsed: breakElapsedTime)
+        spy.completesSuccessfullyWith(timeElapsed: breakOnSecondElapsedTime)
         
         XCTAssertEqual(sut.timerLabelString(), "04:59")
+        
+        spy.completesSuccessfullyWith(timeElapsed: beyondPomodoroElapsedTime)
+        
+        XCTAssertEqual(sut.timerLabelString(), "00:00")
+        
+        spy.completesSuccessfullyWith(timeElapsed: beyondBreakElapsedTime)
+        
+        XCTAssertEqual(sut.timerLabelString(), "00:00")
     }
     
     // MARK: - Helpers
