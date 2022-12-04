@@ -32,13 +32,6 @@
       <CodeCoverageTargets>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "FB06B52C292BF71C00AE6079"
-            BuildableName = "LifeCoachWatchOS.framework"
-            BlueprintName = "LifeCoachWatchOS"
-            ReferencedContainer = "container:LifeCoach.xcodeproj">
-         </BuildableReference>
-         <BuildableReference
-            BuildableIdentifier = "primary"
             BlueprintIdentifier = "FBAD474F28FC8BB0003D2F7A"
             BuildableName = "LifeCoach.framework"
             BlueprintName = "LifeCoach"

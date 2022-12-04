@@ -8,7 +8,6 @@ import TimeCoach_Watch_App
 
 extension TimerView: Inspectable { }
 
-
 final class TimerUIIntegrationTests: XCTestCase {
     func test_onInitialLoad_shouldPresentPomodoroTimerAsDefault() {
         let (sut, _) = makeSUT()
@@ -63,43 +62,6 @@ final class TimerUIIntegrationTests: XCTestCase {
         XCTAssertEqual(stopHandlerCount, 2, "Should execute stop handler twice.")
     }
     
-    func test_onPLayUserInteraction_showsCorrectFormattedElapsedTime() {
-        let now = Date.now
-        let pomodoroOnSecondElapsedTime = makeElapsedSeconds(1, startDate: now, endDate: now.adding(seconds: .pomodoroInSeconds))
-        let breakOnSecondElapsedTime = makeElapsedSeconds(1, startDate: now, endDate: now.adding(seconds: .breakInSeconds))
-        
-        let beyondPomodoroElapsedTime = makeElapsedSeconds(.pomodoroInSeconds + 1,
-                                                           startDate: now,
-                                                           endDate: now.adding(seconds: .pomodoroInSeconds))
-        
-        let beyondBreakElapsedTime = makeElapsedSeconds(.breakInSeconds + 1,
-                                                        startDate: now,
-                                                        endDate: now.adding(seconds: .breakInSeconds))
-        let (sut, spy) = makeSUT()
-        
-        XCTAssertEqual(sut.timerLabelString(), "25:00")
-        
-        sut.simulateToggleTimerUserInteraction()
-        
-        XCTAssertEqual(sut.timerLabelString(), "25:00")
-        
-        spy.completesSuccessfullyWith(timeElapsed: pomodoroOnSecondElapsedTime)
-        
-        XCTAssertEqual(sut.timerLabelString(), "24:59")
-        
-        spy.completesSuccessfullyWith(timeElapsed: breakOnSecondElapsedTime)
-        
-        XCTAssertEqual(sut.timerLabelString(), "04:59")
-        
-        spy.completesSuccessfullyWith(timeElapsed: beyondPomodoroElapsedTime)
-        
-        XCTAssertEqual(sut.timerLabelString(), "00:00")
-        
-        spy.completesSuccessfullyWith(timeElapsed: beyondBreakElapsedTime)
-        
-        XCTAssertEqual(sut.timerLabelString(), "00:00")
-    }
-    
     // MARK: - Helpers
     private func makeElapsedSeconds(
         _ seconds: TimeInterval,
@@ -118,7 +80,7 @@ final class TimerUIIntegrationTests: XCTestCase {
         
         let timerView = TimerViewComposer.createTimer(
             customFont: "",
-            timerLoader: timeLoader.loadTimer.eraseToAnyPublisher(),
+            viewModel: TimerViewModel(),
             togglePlayback: playHandler,
             skipHandler: skipHandler,
             stopHandler: stopHandler

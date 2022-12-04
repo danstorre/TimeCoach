@@ -12,29 +12,15 @@ struct TimeCoach_Watch_AppApp: App {
     @State private var root: TimeCoachRoot
     
     init() {
-        let root = TimeCoachRoot()
+        let root = TimeCoachRoot(timerCoundown: .none)
         self.root = root
-        self.timerView = TimerViewComposer.createTimer(
-            customFont: CustomFont.timer.font,
-            timerLoader: root
-                .skipPublisher
-                .merge(with: root.startPublisher)
-                .eraseToAnyPublisher(),
-            skipHandler: root.skipHandler
-        )
+        self.timerView = root.createTimer()
     }
 
     init(timerCoundown: TimerCountdown) {
         let root = TimeCoachRoot(timerCoundown: timerCoundown)
         self.root = root
-        self.timerView = TimerViewComposer.createTimer(
-            customFont: CustomFont.timer.font,
-            timerLoader: root
-                .skipPublisher
-                .merge(with: root.startPublisher)
-                .eraseToAnyPublisher(),
-            skipHandler: root.skipHandler
-        )
+        self.timerView = root.createTimer()
     }
     
     var body: some Scene {

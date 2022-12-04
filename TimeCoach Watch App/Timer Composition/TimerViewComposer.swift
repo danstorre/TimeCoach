@@ -5,35 +5,45 @@ import LifeCoach
 public final class TimerViewComposer {
     public static func createTimer(
         customFont: String,
-        timerLoader: AnyPublisher<ElapsedSeconds, Error>,
+        playPublisher: AnyPublisher<ElapsedSeconds, Error>,
+        skipPublisher: AnyPublisher<ElapsedSeconds, Error>,
+        stopPublisher: AnyPublisher<ElapsedSeconds, Error>
+    ) -> TimerView {
+        let viewModel = TimerViewModel()
+
+        let starTimerAdapter = TimerPresentationAdapter(loader: playPublisher)
+        starTimerAdapter.presenter = viewModel
+        
+        let skipTimerAdapter = TimerPresentationAdapter(loader: skipPublisher)
+        skipTimerAdapter.presenter = viewModel
+        
+        let stopTimerAdapter = TimerPresentationAdapter(loader: stopPublisher)
+        stopTimerAdapter.presenter = viewModel
+        
+        let timer = Self.createTimer(
+            customFont: customFont,
+            viewModel: viewModel,
+            togglePlayback: starTimerAdapter.start,
+            skipHandler: skipTimerAdapter.skip,
+            stopHandler: stopTimerAdapter.stop
+        )
+        return timer
+    }
+    
+    public static func createTimer(
+        customFont: String,
+        viewModel: TimerViewModel,
         togglePlayback: (() -> Void)? = nil,
         skipHandler: (() -> Void)? = nil,
         stopHandler: (() -> Void)? = nil
     ) -> TimerView {
-        let presentationAdapter = TimerLoaderPresentationAdapter(loader: timerLoader)
-     
-        let didToggle = {
-            togglePlayback?()
-            presentationAdapter.subscribeToTimer()
-        }
-        
-        let didSkip = {
-            presentationAdapter.subscribeToTimer()
-            skipHandler?()
-        }
-        
-        let viewModel = TimerViewModel()
-        
-        presentationAdapter.presenter = viewModel
-        
         let timer = TimerView(
             timerViewModel: viewModel,
-            togglePlayback: didToggle,
-            skipHandler: didSkip,
+            togglePlayback: togglePlayback,
+            skipHandler: skipHandler,
             stopHandler: stopHandler,
             customFont: customFont
         )
-        
         return timer
     }
 }
