@@ -17,10 +17,13 @@ final class TimerUIIntegrationTests: XCTestCase {
         XCTAssertEqual(timerString, .defaultPomodoroTimerString, "Should present pomodoro Timer on view load.")
     }
     
-    func test_onPlay_sendsMessageToTimerHandler() {
+    func test_onToggle_sendsMessageToRightHandler() {
         var playHandlerCount = 0
+        var pauseHandlerCount = 0
         let (sut, _) = makeSUT(playHandler: {
             playHandlerCount += 1
+        }, pauseHandler: {
+            pauseHandlerCount += 1
         })
         
         sut.simulateToggleTimerUserInteraction()
@@ -29,7 +32,15 @@ final class TimerUIIntegrationTests: XCTestCase {
         
         sut.simulateToggleTimerUserInteraction()
         
+        XCTAssertEqual(pauseHandlerCount, 1, "Should execute pauseHandler once.")
+        
+        sut.simulateToggleTimerUserInteraction()
+        
         XCTAssertEqual(playHandlerCount, 2, "Should execute playHandler twice.")
+        
+        sut.simulateToggleTimerUserInteraction()
+        
+        XCTAssertEqual(pauseHandlerCount, 2, "Should execute pauseHandler twice.")
     }
     
     func test_onSkip_sendsMessageToSkipHandler() {
@@ -74,14 +85,16 @@ final class TimerUIIntegrationTests: XCTestCase {
     private func makeSUT(
         playHandler: (() -> Void)? = nil,
         skipHandler: (() -> Void)? = nil,
-        stopHandler: (() -> Void)? = nil
+        stopHandler: (() -> Void)? = nil,
+        pauseHandler: (() -> Void)? = nil
     ) -> (sut: TimerView, spy: TimerPublisherSpy) {
         let timeLoader = TimerPublisherSpy()
         
         let timerView = TimerViewComposer.createTimer(
             customFont: "",
             viewModel: TimerViewModel(),
-            togglePlayback: playHandler,
+            playHandler: playHandler,
+            pauseHandler: pauseHandler,
             skipHandler: skipHandler,
             stopHandler: stopHandler
         )

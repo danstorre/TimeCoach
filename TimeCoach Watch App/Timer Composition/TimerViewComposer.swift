@@ -4,19 +4,19 @@ import LifeCoach
 
 class ToggleStrategy {
     private var play: Bool = false
-    private let start: () -> Void
-    private let pause: () -> Void
+    private let start: (() -> Void)?
+    private let pause: (() -> Void)?
     
-    init(start: @escaping () -> Void, pause: @escaping () -> Void ) {
+    init(start: (() -> Void)?, pause: (() -> Void)?) {
         self.start = start
         self.pause = pause
     }
     
     func toggle() {
         if play {
-            pause()
+            pause?()
         } else {
-            start()
+            start?()
         }
         play = !play
     }
@@ -34,6 +34,7 @@ public final class TimerViewComposer {
 
         let starTimerAdapter = TimerPresentationAdapter(loader: playPublisher)
         starTimerAdapter.presenter = viewModel
+        
         let pauseTimerAdapter = TimerPresentationAdapter(loader: pausePublisher)
         pauseTimerAdapter.presenter = viewModel
         
@@ -43,13 +44,11 @@ public final class TimerViewComposer {
         let stopTimerAdapter = TimerPresentationAdapter(loader: stopPublisher)
         stopTimerAdapter.presenter = viewModel
         
-        let toggleStrategy = ToggleStrategy(start: starTimerAdapter.start,
-                                            pause: pauseTimerAdapter.pause)
-        
         let timer = Self.createTimer(
             customFont: customFont,
             viewModel: viewModel,
-            togglePlayback: toggleStrategy.toggle,
+            playHandler: starTimerAdapter.start,
+            pauseHandler: pauseTimerAdapter.pause,
             skipHandler: skipTimerAdapter.skip,
             stopHandler: stopTimerAdapter.stop
         )
@@ -59,13 +58,17 @@ public final class TimerViewComposer {
     public static func createTimer(
         customFont: String,
         viewModel: TimerViewModel,
-        togglePlayback: (() -> Void)? = nil,
+        playHandler: (() -> Void)? = nil,
+        pauseHandler: (() -> Void)? = nil,
         skipHandler: (() -> Void)? = nil,
         stopHandler: (() -> Void)? = nil
     ) -> TimerView {
+        let toggleStrategy = ToggleStrategy(start: playHandler,
+                                            pause: pauseHandler)
+        
         let timer = TimerView(
             timerViewModel: viewModel,
-            togglePlayback: togglePlayback,
+            togglePlayback: toggleStrategy.toggle,
             skipHandler: skipHandler,
             stopHandler: stopHandler,
             customFont: customFont
