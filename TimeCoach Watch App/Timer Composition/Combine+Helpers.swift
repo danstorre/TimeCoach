@@ -1,6 +1,7 @@
 import Foundation
 import Combine
 import LifeCoach
+import LifeCoachWatchOS
 
 extension TimerCountdown {
     func createStartTimer() -> AnyPublisher<ElapsedSeconds, Error> {

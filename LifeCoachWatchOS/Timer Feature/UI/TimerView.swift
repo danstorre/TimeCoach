@@ -1,5 +1,6 @@
 import SwiftUI
 import Combine
+import LifeCoach
 
 public struct TimerView: View {
     @Environment(\.isLuminanceReduced) var isLuminanceReduced

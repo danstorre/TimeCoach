@@ -11,10 +11,8 @@
 		FB0F6BB42938629C009405FE /* ExtensionHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4AA1532937C0F30076FED9 /* ExtensionHelpers.swift */; };
 		FB4AA1382936F1730076FED9 /* TimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4AA1372936F1730076FED9 /* TimerView.swift */; };
 		FB4AA14729379E520076FED9 /* TimerView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4AA14629379E520076FED9 /* TimerView+Extensions.swift */; };
-		FB4AA14A29379EDF0076FED9 /* TimerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4AA14929379EDF0076FED9 /* TimerViewModel.swift */; };
 		FB4AA1542937C0F30076FED9 /* ExtensionHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4AA1532937C0F30076FED9 /* ExtensionHelpers.swift */; };
 		FB4AA1572937C3970076FED9 /* Date+Formatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4AA1562937C3970076FED9 /* Date+Formatters.swift */; };
-		FB4AA1592937C3C50076FED9 /* Timer+DefaultStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4AA1582937C3C50076FED9 /* Timer+DefaultStrings.swift */; };
 		FB4AA1642937CD000076FED9 /* ElapsedSeconds.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4AA1632937CD000076FED9 /* ElapsedSeconds.swift */; };
 		FB4AA16D2937D7340076FED9 /* LocalElapsedSeconds.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4AA16C2937D7340076FED9 /* LocalElapsedSeconds.swift */; };
 		FB4AA16F2937D75A0076FED9 /* TimerCountdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4AA16E2937D75A0076FED9 /* TimerCountdown.swift */; };
@@ -28,6 +26,10 @@
 		FB960C6E293D2BED00ECBAD5 /* Combine+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB960C6D293D2BED00ECBAD5 /* Combine+Helpers.swift */; };
 		FB960C72293D462900ECBAD5 /* ToggleStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB960C71293D462900ECBAD5 /* ToggleStrategy.swift */; };
 		FB960C73293D479800ECBAD5 /* XCTestCase+MemoryLeakTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC9ADAE2919E8B500E0BEFC /* XCTestCase+MemoryLeakTracking.swift */; };
+		FB960C75293D484000ECBAD5 /* TimerPresentationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB960C74293D484000ECBAD5 /* TimerPresentationTests.swift */; };
+		FB960C76293D48CB00ECBAD5 /* TimerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4AA14929379EDF0076FED9 /* TimerViewModel.swift */; };
+		FB960C77293D48D200ECBAD5 /* Timer+DefaultStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4AA1582937C3C50076FED9 /* Timer+DefaultStrings.swift */; };
+		FB960C78293D48D800ECBAD5 /* Date+Formatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4AA1562937C3970076FED9 /* Date+Formatters.swift */; };
 		FBAD475528FC8BB0003D2F7A /* LifeCoach.docc in Sources */ = {isa = PBXBuildFile; fileRef = FBAD475428FC8BB0003D2F7A /* LifeCoach.docc */; };
 		FBAD475B28FC8BB0003D2F7A /* LifeCoach.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBAD475028FC8BB0003D2F7A /* LifeCoach.framework */; };
 		FBC612F3293AC2ED008D9EF8 /* TimerCountDownSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC612F2293AC2ED008D9EF8 /* TimerCountDownSpy.swift */; };
@@ -125,6 +127,7 @@
 		FB73E921293BAE490087F9EF /* TimerInfrastructureTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TimerInfrastructureTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB960C6D293D2BED00ECBAD5 /* Combine+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Combine+Helpers.swift"; sourceTree = "<group>"; };
 		FB960C71293D462900ECBAD5 /* ToggleStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleStrategy.swift; sourceTree = "<group>"; };
+		FB960C74293D484000ECBAD5 /* TimerPresentationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerPresentationTests.swift; sourceTree = "<group>"; };
 		FBAD475028FC8BB0003D2F7A /* LifeCoach.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LifeCoach.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FBAD475428FC8BB0003D2F7A /* LifeCoach.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = LifeCoach.docc; sourceTree = "<group>"; };
 		FBAD475A28FC8BB0003D2F7A /* LifeCoachTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LifeCoachTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -327,6 +330,7 @@
 			isa = PBXGroup;
 			children = (
 				FBC9ADAD2919E8A700E0BEFC /* Helpers */,
+				FB960C74293D484000ECBAD5 /* TimerPresentationTests.swift */,
 			);
 			path = LifeCoachTests;
 			sourceTree = "<group>";
@@ -688,8 +692,6 @@
 				FB4AA1572937C3970076FED9 /* Date+Formatters.swift in Sources */,
 				FB4AA1382936F1730076FED9 /* TimerView.swift in Sources */,
 				FBE9A9DC2939654400D8BF29 /* TimerLabelStyle.swift in Sources */,
-				FB4AA14A29379EDF0076FED9 /* TimerViewModel.swift in Sources */,
-				FB4AA1592937C3C50076FED9 /* Timer+DefaultStrings.swift in Sources */,
 				FB4AA14729379E520076FED9 /* TimerView+Extensions.swift in Sources */,
 				FB0F6BB42938629C009405FE /* ExtensionHelpers.swift in Sources */,
 			);
@@ -708,10 +710,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FB960C77293D48D200ECBAD5 /* Timer+DefaultStrings.swift in Sources */,
+				FB960C76293D48CB00ECBAD5 /* TimerViewModel.swift in Sources */,
 				FB4AA16D2937D7340076FED9 /* LocalElapsedSeconds.swift in Sources */,
 				FB0F6BB329386184009405FE /* PomodoroLocalTimer.swift in Sources */,
 				FB4AA1642937CD000076FED9 /* ElapsedSeconds.swift in Sources */,
 				FBAD475528FC8BB0003D2F7A /* LifeCoach.docc in Sources */,
+				FB960C78293D48D800ECBAD5 /* Date+Formatters.swift in Sources */,
 				FB4AA1542937C0F30076FED9 /* ExtensionHelpers.swift in Sources */,
 				FB4AA16F2937D75A0076FED9 /* TimerCountdown.swift in Sources */,
 			);
@@ -722,6 +727,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FBC9ADAF2919E8B500E0BEFC /* XCTestCase+MemoryLeakTracking.swift in Sources */,
+				FB960C75293D484000ECBAD5 /* TimerPresentationTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

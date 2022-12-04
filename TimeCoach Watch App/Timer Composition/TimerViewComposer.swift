@@ -1,6 +1,6 @@
 import Combine
-import LifeCoachWatchOS
 import LifeCoach
+import LifeCoachWatchOS
 
 public final class TimerViewComposer {
     public static func createTimer(
