@@ -54,7 +54,7 @@ final class TimeCoachAcceptanceTests: XCTestCase {
         
         sut.simulateToggleTimerUserInteraction()
         
-        stub.flushBreakTimes(at: 2)
+        stub.flushBreakTimes(at: 1)
         
         XCTAssertEqual(sut.timerLabelString(), "04:59")
     }

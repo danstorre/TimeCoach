@@ -25,4 +25,10 @@ extension AdapterTimerCountDownPublisher {
             self?.publisher.send(time.timeElapsed)
         }
     }
+    
+    func togglePlayback() {
+        timerCoundown.startCountdown { [weak self] time in
+            self?.publisher.send(time.timeElapsed)
+        }
+    }
 }

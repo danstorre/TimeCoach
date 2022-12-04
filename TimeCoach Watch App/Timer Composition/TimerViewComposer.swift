@@ -11,26 +11,19 @@ public final class TimerViewComposer {
         stopHandler: (() -> Void)? = nil
     ) -> TimerView {
         let presentationAdapter = TimerLoaderPresentationAdapter(loader: timerLoader)
-     
-        let didToggle = {
-            togglePlayback?()
-            presentationAdapter.subscribeToTimer()
-        }
-        
-        let didSkip = {
-            presentationAdapter.subscribeToTimer()
-            skipHandler?()
-        }
         
         let viewModel = TimerViewModel()
         
         presentationAdapter.presenter = viewModel
         
+        presentationAdapter.subscribeToTimer()
+        
         let timer = TimerView(
             timerViewModel: viewModel,
-            togglePlayback: didToggle,
-            skipHandler: didSkip,
+            togglePlayback: togglePlayback,
+            skipHandler: skipHandler,
             stopHandler: stopHandler,
+            onAppear: presentationAdapter,
             customFont: customFont
         )
         

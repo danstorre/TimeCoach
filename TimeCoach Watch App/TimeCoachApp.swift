@@ -12,7 +12,7 @@ struct TimeCoach_Watch_AppApp: App {
     @State private var root: TimeCoachRoot
     
     init() {
-        let root = TimeCoachRoot()
+        let root = TimeCoachRoot(timerCoundown: .none)
         self.root = root
         self.timerView = Self.createTimer(root)
     }
@@ -35,8 +35,8 @@ struct TimeCoach_Watch_AppApp: App {
             timerLoader: root
                 .timerPublisher
                 .dropFirst()
-                .merge(with: root.startPublisher)
                 .eraseToAnyPublisher(),
+            togglePlayback: root.togglePlayback,
             skipHandler: root.skipHandler,
             stopHandler: root.stopHandler
         )
