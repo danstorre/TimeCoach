@@ -51,17 +51,6 @@
             testExecutionOrdering = "random">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "FB06B535292BF71C00AE6079"
-               BuildableName = "LifeCoachWatchOSTests.xctest"
-               BlueprintName = "LifeCoachWatchOSTests"
-               ReferencedContainer = "container:LifeCoach.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO"
-            testExecutionOrdering = "random">
-            <BuildableReference
-               BuildableIdentifier = "primary"
                BlueprintIdentifier = "FBAD475928FC8BB0003D2F7A"
                BuildableName = "LifeCoachTests.xctest"
                BlueprintName = "LifeCoachTests"

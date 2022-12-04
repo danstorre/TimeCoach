@@ -40,11 +40,36 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      shouldUseLaunchSchemeArgsEnv = "YES">
+      shouldUseLaunchSchemeArgsEnv = "YES"
+      codeCoverageEnabled = "YES"
+      onlyGenerateCoverageForSpecifiedTargets = "YES">
+      <CodeCoverageTargets>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "FBE9A9732939527C00D8BF29"
+            BuildableName = "TimeCoach Watch App.app"
+            BlueprintName = "TimeCoach Watch App"
+            ReferencedContainer = "container:LifeCoach.xcodeproj">
+         </BuildableReference>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "FB06B52C292BF71C00AE6079"
+            BuildableName = "LifeCoachWatchOS.framework"
+            BlueprintName = "LifeCoachWatchOS"
+            ReferencedContainer = "container:LifeCoach.xcodeproj">
+         </BuildableReference>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "FBAD474F28FC8BB0003D2F7A"
+            BuildableName = "LifeCoach.framework"
+            BlueprintName = "LifeCoach"
+            ReferencedContainer = "container:LifeCoach.xcodeproj">
+         </BuildableReference>
+      </CodeCoverageTargets>
       <Testables>
          <TestableReference
             skipped = "NO"
-            parallelizable = "YES">
+            testExecutionOrdering = "random">
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "FBE9A9852939527E00D8BF29"
