@@ -10,6 +10,7 @@ final class TimerLoaderPresentationAdapter {
     
     init(loader: AnyPublisher<ElapsedSeconds, Error>) {
         self.loader = loader
+        subscribeToTimer()
     }
     
     func subscribeToTimer() {

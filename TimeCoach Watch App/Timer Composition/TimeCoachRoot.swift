@@ -1,5 +1,6 @@
 import Foundation
 import LifeCoach
+import LifeCoachWatchOS
 import Combine
 
 class TimeCoachRoot {
@@ -26,5 +27,17 @@ class TimeCoachRoot {
         self.skipHandler = adapter.skipHandler
         self.stopHandler = adapter.stopHandler
         self.togglePlayback = adapter.togglePlayback
+    }
+    
+    func createTimer() -> TimerView {
+        return TimerViewComposer.createTimer(
+            customFont: CustomFont.timer.font,
+            timerLoader: timerPublisher
+                .dropFirst()
+                .eraseToAnyPublisher(),
+            togglePlayback: togglePlayback,
+            skipHandler: skipHandler,
+            stopHandler: stopHandler
+        )
     }
 }

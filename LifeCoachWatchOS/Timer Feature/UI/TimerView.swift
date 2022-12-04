@@ -10,13 +10,13 @@ public struct TimerView: View {
     private var togglePlayback: (() -> Void)?
     private var skipHandler: (() -> Void)?
     private var stopHandler: (() -> Void)?
-    private var onAppear: AnyObject
+    private var onAppear: (() -> Void)?
     
     public init(timerViewModel: TimerViewModel,
          togglePlayback: (() -> Void)? = nil,
          skipHandler: (() -> Void)? = nil,
          stopHandler: (() -> Void)? = nil,
-         onAppear: AnyObject,
+         onAppear: (() -> Void)? = nil,
          customFont: String? = nil
     ) {
         self.timerViewModel = timerViewModel
@@ -49,11 +49,12 @@ public struct TimerView: View {
             }
             .opacity(isLuminanceReduced ? 0.0 : 1.0)
         }
+        .onAppear(perform: onAppear)
     }
 }
 
 struct TimerView_Previews: PreviewProvider {
     static var previews: some View {
-        TimerView(timerViewModel: TimerViewModel(), onAppear: NSObject())
+        TimerView(timerViewModel: TimerViewModel(), onAppear: {})
     }
 }

@@ -16,14 +16,12 @@ public final class TimerViewComposer {
         
         presentationAdapter.presenter = viewModel
         
-        presentationAdapter.subscribeToTimer()
-        
         let timer = TimerView(
             timerViewModel: viewModel,
             togglePlayback: togglePlayback,
             skipHandler: skipHandler,
             stopHandler: stopHandler,
-            onAppear: presentationAdapter,
+            onAppear: presentationAdapter.subscribeToTimer,
             customFont: customFont
         )
         
