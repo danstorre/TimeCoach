@@ -95,6 +95,28 @@ final class TimerUIIntegrationTests: XCTestCase {
         XCTAssertEqual(stopHandlerCount, 2, "Should execute stop handler twice.")
     }
     
+    func test_stop_OnPlay_sendsMessageToToggleHandler() {
+        var stopHandlerCount = 0
+        var playHandlerCount = 0
+        var pauseHandlerCount = 0
+        let (sut, _) = makeSUT(playHandler: {
+            playHandlerCount += 1
+        }, stopHandler: {
+            stopHandlerCount += 1
+        }, pauseHandler: {
+            pauseHandlerCount += 1
+        })
+        
+        sut.simulateToggleTimerUserInteraction()
+        
+        XCTAssertEqual(playHandlerCount, 1, "Should execute playHandler once.")
+        
+        sut.simulateStopTimerUserInteraction()
+        
+        XCTAssertEqual(stopHandlerCount, 1, "Should execute stopHandler once.")
+        XCTAssertEqual(pauseHandlerCount, 1, "Should execute paseHandler once.")
+    }
+    
     // MARK: - Helpers
     private func makeElapsedSeconds(
         _ seconds: TimeInterval,
