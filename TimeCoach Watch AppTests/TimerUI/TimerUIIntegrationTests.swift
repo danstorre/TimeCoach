@@ -58,6 +58,28 @@ final class TimerUIIntegrationTests: XCTestCase {
         XCTAssertEqual(skipHandlerCount, 2, "Should execute skipHandler twice.")
     }
     
+    func test_skip_onPlay_sendsMessageToToggleHandler() {
+        var skipHandlerCount = 0
+        var playHandlerCount = 0
+        var pauseHandlerCount = 0
+        let (sut, _) = makeSUT(playHandler: {
+            playHandlerCount += 1
+        }, skipHandler: {
+            skipHandlerCount += 1
+        }, pauseHandler: {
+            pauseHandlerCount += 1
+        })
+        
+        sut.simulateToggleTimerUserInteraction()
+        
+        XCTAssertEqual(playHandlerCount, 1, "Should execute playHandler once.")
+        
+        sut.simulateSkipTimerUserInteraction()
+        
+        XCTAssertEqual(skipHandlerCount, 1, "Should execute skipHandler once.")
+        XCTAssertEqual(pauseHandlerCount, 1, "Should execute paseHandler once.")
+    }
+    
     func test_onStop_sendsMessageToStopHandler() {
         var stopHandlerCount = 0
         let (sut, _) = makeSUT(stopHandler: {

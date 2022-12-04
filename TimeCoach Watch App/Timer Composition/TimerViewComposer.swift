@@ -6,10 +6,12 @@ class ToggleStrategy {
     private var play: Bool = false
     private let start: (() -> Void)?
     private let pause: (() -> Void)?
+    private let skip: (() -> Void)?
     
-    init(start: (() -> Void)?, pause: (() -> Void)?) {
+    init(start: (() -> Void)?, pause: (() -> Void)?, skip: (() -> Void)?) {
         self.start = start
         self.pause = pause
+        self.skip = skip
     }
     
     func toggle() {
@@ -19,6 +21,15 @@ class ToggleStrategy {
             start?()
         }
         play = !play
+    }
+    
+    func skipHandler() {
+        if play {
+            pause?()
+            play = false
+        }
+        
+        skip?()
     }
 }
 
@@ -64,12 +75,13 @@ public final class TimerViewComposer {
         stopHandler: (() -> Void)? = nil
     ) -> TimerView {
         let toggleStrategy = ToggleStrategy(start: playHandler,
-                                            pause: pauseHandler)
+                                            pause: pauseHandler,
+                                            skip: skipHandler)
         
         let timer = TimerView(
             timerViewModel: viewModel,
             togglePlayback: toggleStrategy.toggle,
-            skipHandler: skipHandler,
+            skipHandler: toggleStrategy.skipHandler,
             stopHandler: stopHandler,
             customFont: customFont
         )
