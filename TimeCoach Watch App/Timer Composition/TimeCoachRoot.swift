@@ -22,7 +22,8 @@ class TimeCoachRoot {
             customFont: CustomFont.timer.font,
             playPublisher: timerCoundown.createStartTimer(),
             skipPublisher: timerCoundown.createSkipTimer(),
-            stopPublisher: timerCoundown.createStopTimer()
+            stopPublisher: timerCoundown.createStopTimer(),
+            pausePublisher: timerCoundown.createPauseTimer()
         )
     }
 }

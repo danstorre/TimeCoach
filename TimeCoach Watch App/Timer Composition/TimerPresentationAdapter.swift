@@ -40,4 +40,8 @@ extension TimerPresentationAdapter {
     func stop() {
         subscribe()
     }
+    
+    func pause() {
+        subscribe()
+    }
 }
