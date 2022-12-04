@@ -16,7 +16,6 @@
 		FB4AA1642937CD000076FED9 /* ElapsedSeconds.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4AA1632937CD000076FED9 /* ElapsedSeconds.swift */; };
 		FB4AA16D2937D7340076FED9 /* LocalElapsedSeconds.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4AA16C2937D7340076FED9 /* LocalElapsedSeconds.swift */; };
 		FB4AA16F2937D75A0076FED9 /* TimerCountdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4AA16E2937D75A0076FED9 /* TimerCountdown.swift */; };
-		FB73E907293BA2850087F9EF /* AdapterTimerCountDown.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB73E906293BA2850087F9EF /* AdapterTimerCountDown.swift */; };
 		FB73E909293BA2A40087F9EF /* TimeCoachRoot.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB73E908293BA2A40087F9EF /* TimeCoachRoot.swift */; };
 		FB73E90B293BA2B70087F9EF /* CustomFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB73E90A293BA2B70087F9EF /* CustomFont.swift */; };
 		FB73E925293BAE490087F9EF /* LifeCoach.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBAD475028FC8BB0003D2F7A /* LifeCoach.framework */; };
@@ -121,7 +120,6 @@
 		FB4AA16C2937D7340076FED9 /* LocalElapsedSeconds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalElapsedSeconds.swift; sourceTree = "<group>"; };
 		FB4AA16E2937D75A0076FED9 /* TimerCountdown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerCountdown.swift; sourceTree = "<group>"; };
 		FB4AA1712937DE810076FED9 /* PomodoroLocalTimerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PomodoroLocalTimerTests.swift; sourceTree = "<group>"; };
-		FB73E906293BA2850087F9EF /* AdapterTimerCountDown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdapterTimerCountDown.swift; sourceTree = "<group>"; };
 		FB73E908293BA2A40087F9EF /* TimeCoachRoot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeCoachRoot.swift; sourceTree = "<group>"; };
 		FB73E90A293BA2B70087F9EF /* CustomFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomFont.swift; sourceTree = "<group>"; };
 		FB73E921293BAE490087F9EF /* TimerInfrastructureTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TimerInfrastructureTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -234,7 +232,6 @@
 			children = (
 				FB4AA13929378A460076FED9 /* TimerPresentationAdapter.swift */,
 				FB4AA14229379DC90076FED9 /* TimerViewComposer.swift */,
-				FB73E906293BA2850087F9EF /* AdapterTimerCountDown.swift */,
 				FB73E908293BA2A40087F9EF /* TimeCoachRoot.swift */,
 				FB960C6D293D2BED00ECBAD5 /* Combine+Helpers.swift */,
 				FB960C71293D462900ECBAD5 /* ToggleStrategy.swift */,
@@ -737,7 +734,6 @@
 			files = (
 				FBE9A9A72939534000D8BF29 /* TimerPresentationAdapter.swift in Sources */,
 				FBE9A9A82939535800D8BF29 /* TimerViewComposer.swift in Sources */,
-				FB73E907293BA2850087F9EF /* AdapterTimerCountDown.swift in Sources */,
 				FB960C6E293D2BED00ECBAD5 /* Combine+Helpers.swift in Sources */,
 				FBFDBAB42939843500133F85 /* ExtensionHelpers.swift in Sources */,
 				FB960C72293D462900ECBAD5 /* ToggleStrategy.swift in Sources */,
