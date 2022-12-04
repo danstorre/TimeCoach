@@ -113,6 +113,8 @@ final class TimeCoachAcceptanceTests: XCTestCase {
             breakStub: breakResponse)
         let sut = TimeCoach_Watch_AppApp(timerCoundown: spy).timerView
         
+        trackForMemoryLeak(instance: spy)
+        
         return (sut, spy)
     }
     

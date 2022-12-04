@@ -142,6 +142,8 @@ final class TimerUIIntegrationTests: XCTestCase {
             skipHandler: skipHandler,
             stopHandler: stopHandler
         )
+    
+        trackForMemoryLeak(instance: timeLoader)
         
         return (timerView, timeLoader)
     }
