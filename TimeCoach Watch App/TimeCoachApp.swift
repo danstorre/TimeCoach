@@ -12,7 +12,7 @@ struct TimeCoach_Watch_AppApp: App {
     @State private var root: TimeCoachRoot
     
     init() {
-        let root = TimeCoachRoot(timerCoundown: .none)
+        let root = TimeCoachRoot()
         self.root = root
         self.timerView = root.createTimer()
     }

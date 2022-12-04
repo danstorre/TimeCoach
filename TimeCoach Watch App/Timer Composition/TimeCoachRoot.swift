@@ -10,11 +10,9 @@ class TimeCoachRoot {
                                   secondaryTime: .breakInSeconds)
     }()
     
-    convenience init(timerCoundown: TimerCountdown?) {
+    convenience init(timerCoundown: TimerCountdown) {
         self.init()
-        if let timerCoundown = timerCoundown {
-            self.timerCoundown = timerCoundown
-        }
+        self.timerCoundown = timerCoundown
     }
     
     func createTimer() -> TimerView {
