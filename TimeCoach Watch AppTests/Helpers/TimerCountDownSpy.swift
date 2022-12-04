@@ -17,7 +17,7 @@ class TimerCountdownSpy: TimerCountdown {
     private var stubs: [() -> LocalElapsedSeconds] = []
     private var pomodoroStubs: [() -> LocalElapsedSeconds] = []
     private var breakStubs: [() -> LocalElapsedSeconds] = []
-    private(set) var receivedStartCompletions = [TimerCompletion]()
+    private(set) var receivedToggleCompletions = [TimerCompletion]()
     private(set) var receivedSkipCompletions = [TimerCompletion]()
     private(set) var receivedStopCompletions = [TimerCompletion]()
     
@@ -31,7 +31,7 @@ class TimerCountdownSpy: TimerCountdown {
     }
     
     func pauseCountdown(completion: @escaping TimerCompletion) {
-        
+        receivedToggleCompletions.append(completion)
     }
     
     func skipCountdown(completion: @escaping TimerCompletion) {
@@ -39,7 +39,7 @@ class TimerCountdownSpy: TimerCountdown {
     }
     
     func startCountdown(completion: @escaping TimerCompletion) {
-        receivedStartCompletions.append(completion)
+        receivedToggleCompletions.append(completion)
     }
     
     func stopCountdown(completion: @escaping TimerCompletion) {
@@ -48,19 +48,19 @@ class TimerCountdownSpy: TimerCountdown {
     
     func completeSuccessfullyAfterFirstStart() {
         stubs.forEach { stub in
-            receivedStartCompletions[0](stub())
+            receivedToggleCompletions[0](stub())
         }
     }
     
     func flushPomodoroTimes(at index: Int) {
         pomodoroStubs.forEach { stub in
-            receivedStartCompletions[index](stub())
+            receivedToggleCompletions[index](stub())
         }
     }
     
     func flushBreakTimes(at index: Int) {
         breakStubs.forEach { stub in
-            receivedStartCompletions[index](stub())
+            receivedToggleCompletions[index](stub())
         }
     }
     
@@ -70,6 +70,12 @@ class TimerCountdownSpy: TimerCountdown {
     
     func completeSuccessfullyOnPomodoroStop(at index: Int = 0) {
         receivedStopCompletions[index](pomodoroResponse(0))
+    }
+    
+    func completeSuccessfullyOnPomodoroToggle(at index: Int = 0) {
+        if let lastGivenPomodoro = pomodoroStubs.last {
+            receivedToggleCompletions[index](lastGivenPomodoro())
+        }
     }
     
     static func delivers(after seconds: ClosedRange<TimeInterval>,

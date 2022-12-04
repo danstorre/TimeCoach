@@ -17,10 +17,13 @@ final class TimerUIIntegrationTests: XCTestCase {
         XCTAssertEqual(timerString, .defaultPomodoroTimerString, "Should present pomodoro Timer on view load.")
     }
     
-    func test_onPlay_sendsMessageToTimerHandler() {
+    func test_onToggle_sendsMessageToRightHandler() {
         var playHandlerCount = 0
+        var pauseHandlerCount = 0
         let (sut, _) = makeSUT(playHandler: {
             playHandlerCount += 1
+        }, pauseHandler: {
+            pauseHandlerCount += 1
         })
         
         sut.simulateToggleTimerUserInteraction()
@@ -29,7 +32,15 @@ final class TimerUIIntegrationTests: XCTestCase {
         
         sut.simulateToggleTimerUserInteraction()
         
+        XCTAssertEqual(pauseHandlerCount, 1, "Should execute pauseHandler once.")
+        
+        sut.simulateToggleTimerUserInteraction()
+        
         XCTAssertEqual(playHandlerCount, 2, "Should execute playHandler twice.")
+        
+        sut.simulateToggleTimerUserInteraction()
+        
+        XCTAssertEqual(pauseHandlerCount, 2, "Should execute pauseHandler twice.")
     }
     
     func test_onSkip_sendsMessageToSkipHandler() {
@@ -47,6 +58,28 @@ final class TimerUIIntegrationTests: XCTestCase {
         XCTAssertEqual(skipHandlerCount, 2, "Should execute skipHandler twice.")
     }
     
+    func test_skip_onPlay_sendsMessageToToggleHandler() {
+        var skipHandlerCount = 0
+        var playHandlerCount = 0
+        var pauseHandlerCount = 0
+        let (sut, _) = makeSUT(playHandler: {
+            playHandlerCount += 1
+        }, skipHandler: {
+            skipHandlerCount += 1
+        }, pauseHandler: {
+            pauseHandlerCount += 1
+        })
+        
+        sut.simulateToggleTimerUserInteraction()
+        
+        XCTAssertEqual(playHandlerCount, 1, "Should execute playHandler once.")
+        
+        sut.simulateSkipTimerUserInteraction()
+        
+        XCTAssertEqual(skipHandlerCount, 1, "Should execute skipHandler once.")
+        XCTAssertEqual(pauseHandlerCount, 1, "Should execute paseHandler once.")
+    }
+    
     func test_onStop_sendsMessageToStopHandler() {
         var stopHandlerCount = 0
         let (sut, _) = makeSUT(stopHandler: {
@@ -62,6 +95,28 @@ final class TimerUIIntegrationTests: XCTestCase {
         XCTAssertEqual(stopHandlerCount, 2, "Should execute stop handler twice.")
     }
     
+    func test_stop_OnPlay_sendsMessageToToggleHandler() {
+        var stopHandlerCount = 0
+        var playHandlerCount = 0
+        var pauseHandlerCount = 0
+        let (sut, _) = makeSUT(playHandler: {
+            playHandlerCount += 1
+        }, stopHandler: {
+            stopHandlerCount += 1
+        }, pauseHandler: {
+            pauseHandlerCount += 1
+        })
+        
+        sut.simulateToggleTimerUserInteraction()
+        
+        XCTAssertEqual(playHandlerCount, 1, "Should execute playHandler once.")
+        
+        sut.simulateStopTimerUserInteraction()
+        
+        XCTAssertEqual(stopHandlerCount, 1, "Should execute stopHandler once.")
+        XCTAssertEqual(pauseHandlerCount, 1, "Should execute paseHandler once.")
+    }
+    
     // MARK: - Helpers
     private func makeElapsedSeconds(
         _ seconds: TimeInterval,
@@ -74,17 +129,21 @@ final class TimerUIIntegrationTests: XCTestCase {
     private func makeSUT(
         playHandler: (() -> Void)? = nil,
         skipHandler: (() -> Void)? = nil,
-        stopHandler: (() -> Void)? = nil
+        stopHandler: (() -> Void)? = nil,
+        pauseHandler: (() -> Void)? = nil
     ) -> (sut: TimerView, spy: TimerPublisherSpy) {
         let timeLoader = TimerPublisherSpy()
         
         let timerView = TimerViewComposer.createTimer(
             customFont: "",
             viewModel: TimerViewModel(),
-            togglePlayback: playHandler,
+            playHandler: playHandler,
+            pauseHandler: pauseHandler,
             skipHandler: skipHandler,
             stopHandler: stopHandler
         )
+    
+        trackForMemoryLeak(instance: timeLoader)
         
         return (timerView, timeLoader)
     }

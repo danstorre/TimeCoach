@@ -53,3 +53,21 @@ extension TimerCountdown {
         .eraseToAnyPublisher()
     }
 }
+
+extension TimerCountdown {
+    func createPauseTimer() -> AnyPublisher<ElapsedSeconds, Error> {
+        return Deferred {
+            let currentValue = CurrentValueSubject<ElapsedSeconds, Error>(
+                ElapsedSeconds(0, startDate: .now, endDate: .now)
+            )
+            
+            pauseCountdown { time in
+                currentValue.send(time.timeElapsed)
+            }
+
+            return currentValue
+        }
+        .dropFirst()
+        .eraseToAnyPublisher()
+    }
+}

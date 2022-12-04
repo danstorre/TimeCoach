@@ -59,7 +59,7 @@ final class TimeCoachAcceptanceTests: XCTestCase {
         XCTAssertEqual(sut.timerLabelString(), "04:59")
     }
     
-    func test_onLaunch_OnStopUserIntereaction_shouldShowCorrectTimerOnPlayMode() {
+    func test_onLaunch_AfterPlayUserInteraction_OnStopUserInteraction_shouldShowCorrectTimer() {
         let (sut, stub) = makeSUT(pomodoroSecondsToBeFlushed: 1.0, breakSecondsToBeFlushed: 1.0)
         
         XCTAssertEqual(sut.timerLabelString(), "25:00")
@@ -79,6 +79,28 @@ final class TimeCoachAcceptanceTests: XCTestCase {
         XCTAssertEqual(sut.timerLabelString(), "25:00")
     }
     
+    func test_onLaunch_AfterPlayUserInteraction_OnPauseUserIntereaction_shouldShowCorrectTimer() {
+        let (sut, stub) = makeSUT(pomodoroSecondsToBeFlushed: 1.0, breakSecondsToBeFlushed: 1.0)
+        
+        XCTAssertEqual(sut.timerLabelString(), "25:00")
+        
+        sut.simulateToggleTimerUserInteraction()
+        
+        XCTAssertEqual(sut.timerLabelString(), "25:00")
+        
+        stub.flushPomodoroTimes(at: 0)
+        
+        XCTAssertEqual(sut.timerLabelString(), "24:59")
+        
+        sut.simulateToggleTimerUserInteraction()
+        
+        XCTAssertEqual(sut.timerLabelString(), "24:59")
+        
+        stub.completeSuccessfullyOnPomodoroToggle(at: 1)
+        
+        XCTAssertEqual(sut.timerLabelString(), "24:59")
+    }
+    
     // MARK: - Helpers
     private func makeSUT(
         pomodoroSecondsToBeFlushed: TimeInterval = 0.0,
@@ -90,6 +112,8 @@ final class TimeCoachAcceptanceTests: XCTestCase {
             afterBreakSeconds: 0.0...breakSecondsToBeFlushed,
             breakStub: breakResponse)
         let sut = TimeCoach_Watch_AppApp(timerCoundown: spy).timerView
+        
+        trackForMemoryLeak(instance: spy)
         
         return (sut, spy)
     }

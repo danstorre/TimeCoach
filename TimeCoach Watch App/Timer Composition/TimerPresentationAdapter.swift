@@ -13,7 +13,6 @@ final class TimerPresentationAdapter {
     }
     
     private func subscribe() {
-        cancellable?.cancel()
         cancellable = loader
             .sink(
                 receiveCompletion: { [weak self] completion in
@@ -39,6 +38,10 @@ extension TimerPresentationAdapter {
     }
     
     func stop() {
+        subscribe()
+    }
+    
+    func pause() {
         subscribe()
     }
 }
