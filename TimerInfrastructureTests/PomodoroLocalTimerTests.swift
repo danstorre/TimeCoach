@@ -186,6 +186,43 @@ final class PomodoroLocalTimerTests: XCTestCase {
         assertEqual(received[0], expectedLocal)
     }
     
+    func test_fromBackgroundStateToForeGroundState_shouldDeliverTheElapsedTime() {
+        let primaryInterval: TimeInterval = .pomodoroInSeconds
+        let secondaryInterval: TimeInterval = .breakInSeconds
+        let now = Date.now
+        let currentDate = { now }
+        let sut = makeSUT(currentDate: currentDate,
+                          primaryInterval: primaryInterval,
+                          secondaryTime: secondaryInterval)
+        
+        let expectation = expectation(description: "waits for expectation to be fulfill only once")
+        var received = [LocalElapsedSeconds]()
+        
+        sut.startCountdown() { elapsed in
+            received.append(elapsed)
+        }
+        
+        sut.saveTime()
+        Self.executeAfter(seconds: 1, execute: {
+            sut.loadTime()
+            Self.executeAfter(seconds: 1.1, execute: {
+                expectation.fulfill()
+            })
+        })
+        wait(for: [expectation], timeout: 10.1)
+        
+        XCTAssertEqual(received.count, 2)
+        
+        let expectedReceived = [
+            LocalElapsedSeconds(1, startDate: currentDate(), endDate: currentDate().adding(seconds: primaryInterval)),
+            LocalElapsedSeconds(2, startDate: currentDate(), endDate: currentDate().adding(seconds: primaryInterval))
+        ]
+        
+        expectedReceived.enumerated().forEach { (index, expectedElapsedSeconds) in
+            assertEqual(received[index], expectedElapsedSeconds)
+        }
+    }
+    
     // MARK: - helpers
     private static func executeAfter(seconds: Double, execute: @escaping () -> Void ){
         DispatchQueue.main.asyncAfter(deadline: .now() + seconds, execute: {

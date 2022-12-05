@@ -1,5 +1,13 @@
 import Foundation
 
+public protocol TimerSave {
+    func saveTime()
+}
+
+public protocol TimerLoad {
+    func loadTime()
+}
+
 public class PomodoroLocalTimer: TimerCountdown {
     private var handler: ((LocalElapsedSeconds) -> Void)? = nil
     private var timer: Timer? = nil
@@ -15,6 +23,7 @@ public class PomodoroLocalTimer: TimerCountdown {
     private var threshold: TimeInterval = 0
     
     private let currentDate: () -> Date
+    private var timeAtSave: CFTimeInterval = 0
     
     public init(currentDate: @escaping () -> Date = Date.init,
          startDate: Date,
@@ -94,5 +103,21 @@ public class PomodoroLocalTimer: TimerCountdown {
                                           startDate: startDate,
                                           endDate: finishDate)
         handler?(elapsed)
+    }
+}
+
+extension PomodoroLocalTimer: TimerSave {
+    public func saveTime() {
+        timeAtSave = CFAbsoluteTimeGetCurrent()
+        pauseCountdown(completion: { _ in })
+    }
+}
+
+extension PomodoroLocalTimer: TimerLoad {
+    public func loadTime() {
+        let elapsed = CFAbsoluteTimeGetCurrent() - timeAtSave
+        elapsedTimeInterval += elapsed.rounded()
+        handler?(LocalElapsedSeconds(elapsedTimeInterval, startDate: startDate, endDate: finishDate))
+        startCountdown(completion: handler ?? { _ in })
     }
 }

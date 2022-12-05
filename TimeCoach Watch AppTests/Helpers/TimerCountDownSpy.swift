@@ -117,4 +117,7 @@ class TimerCountdownSpy: TimerCountdown {
         
         return TimerCountdownSpy(pomodoroStub: pomodoroStub, breakStub: breakStub)
     }
+    
+    // MARK: Time Saver
+    private(set) var saveTimeCallCount = 0
 }

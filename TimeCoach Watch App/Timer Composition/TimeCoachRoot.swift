@@ -4,15 +4,24 @@ import LifeCoachWatchOS
 import Combine
 
 class TimeCoachRoot {
-    lazy var timerCoundown: TimerCountdown = {
-        return PomodoroLocalTimer(startDate: .now,
-                                  primaryInterval: .pomodoroInSeconds,
-                                  secondaryTime: .breakInSeconds)
-    }()
+    private var timerCoundown: TimerCountdown
+    private var timerSave: TimerSave
+    private var timerLoad: TimerLoad
     
-    convenience init(timerCoundown: TimerCountdown) {
+    init() {
+        let pomodoro = PomodoroLocalTimer(startDate: .now,
+                                          primaryInterval: .pomodoroInSeconds,
+                                          secondaryTime: .breakInSeconds)
+        self.timerSave = pomodoro
+        self.timerCoundown = pomodoro
+        self.timerLoad = pomodoro
+    }
+    
+    convenience init(timerCoundown: TimerCountdown, timerState: TimerSave & TimerLoad) {
         self.init()
         self.timerCoundown = timerCoundown
+        self.timerSave = timerState
+        self.timerLoad = timerState
     }
     
     func createTimer() -> TimerView {
@@ -23,6 +32,14 @@ class TimeCoachRoot {
             stopPublisher: timerCoundown.createStopTimer(),
             pausePublisher: timerCoundown.createPauseTimer()
         )
+    }
+    
+    func goToBackground() {
+        timerSave.saveTime()
+    }
+    
+    func goToForeground() {
+        timerLoad.loadTime()
     }
 }
 
