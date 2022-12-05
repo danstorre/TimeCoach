@@ -3,26 +3,6 @@ import LifeCoach
 import LifeCoachWatchOS
 import Combine
 
-public protocol TimerSave {
-    func saveTime()
-}
-
-public protocol TimerLoad {
-    func loadTime()
-}
-
-extension PomodoroLocalTimer: TimerSave {
-    public func saveTime() {
-        
-    }
-}
-
-extension PomodoroLocalTimer: TimerLoad {
-    public func loadTime() {
-        
-    }
-}
-
 class TimeCoachRoot {
     private var timerCoundown: TimerCountdown
     private var timerSave: TimerSave

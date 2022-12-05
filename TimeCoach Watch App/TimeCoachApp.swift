@@ -28,9 +28,12 @@ struct TimeCoach_Watch_AppApp: App {
         WindowGroup {
             timerView.onChange(of: scenePhase) { phase in
                 switch phase {
-                case .active: goToForeground()
-                case .inactive: goToBackground()
-                case .background: break
+                case .active:
+                    goToForeground()
+                case .inactive:
+                    break
+                case .background:
+                    goToBackground()
                 @unknown default: break
                 }
             }
