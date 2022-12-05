@@ -18,8 +18,8 @@ struct TimeCoach_Watch_AppApp: App {
         self.timerView = root.createTimer()
     }
 
-    init(timerCoundown: TimerCountdown, timerSave: TimerSave) {
-        let root = TimeCoachRoot(timerCoundown: timerCoundown, timerSave: timerSave)
+    init(timerCoundown: TimerCountdown, timerState: TimerSave & TimerLoad) {
+        let root = TimeCoachRoot(timerCoundown: timerCoundown, timerState: timerState)
         self.root = root
         self.timerView = root.createTimer()
     }
@@ -27,12 +27,21 @@ struct TimeCoach_Watch_AppApp: App {
     var body: some Scene {
         WindowGroup {
             timerView.onChange(of: scenePhase) { phase in
-                goToBackground()
+                switch phase {
+                case .active: goToForeground()
+                case .inactive: goToBackground()
+                case .background: break
+                @unknown default: break
+                }
             }
         }
     }
     
     func goToBackground() {
         root.goToBackground()
+    }
+    
+    func goToForeground() {
+        root.goToForeground()
     }
 }

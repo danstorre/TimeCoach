@@ -108,30 +108,43 @@ final class TimeCoachAcceptanceTests: XCTestCase {
         
         XCTAssertEqual(spy.saveTimeCallCount, 1)
     }
+    
+    func test_OnForeground_shouldSendMessageToTimeLoader() {
+        let (sut, spy) = makeSUT()
+
+        sut.simulateGoToForeground()
+        
+        XCTAssertEqual(spy.loadTimeCallCount, 1)
+    }
 
     // MARK: - Helpers
-    class TimerSaverSpy: TimerSave {
+    class TimerStateSpy: TimerSave, TimerLoad {
         private(set) var saveTimeCallCount: Int = 0
+        private(set) var loadTimeCallCount: Int = 0
         
         func saveTime() {
             saveTimeCallCount += 1
         }
+        
+        func loadTime() {
+            loadTimeCallCount += 1
+        }
     }
     
-    private func makeSUT() -> (timerView: TimeCoach_Watch_AppApp, spy: TimerSaverSpy) {
+    private func makeSUT() -> (timerView: TimeCoach_Watch_AppApp, spy: TimerStateSpy) {
         let spy = TimerCountdownSpy.delivers(
             afterPomoroSeconds: 0.0...0.0,
             pomodoroStub: pomodoroResponse,
             afterBreakSeconds: 0.0...0.0,
             breakStub: breakResponse)
-        let spySaver = TimerSaverSpy()
+        let spyTimeState = TimerStateSpy()
         
         let sut = TimeCoach_Watch_AppApp(timerCoundown: spy,
-                                         timerSave: spySaver)
+                                         timerState: spyTimeState)
         
         trackForMemoryLeak(instance: spy)
         
-        return (sut, spySaver)
+        return (sut, spyTimeState)
     }
     
     private func makeSUT(
@@ -143,9 +156,9 @@ final class TimeCoachAcceptanceTests: XCTestCase {
             pomodoroStub: pomodoroResponse,
             afterBreakSeconds: 0.0...breakSecondsToBeFlushed,
             breakStub: breakResponse)
-        let spySaver = TimerSaverSpy()
+        let spyState = TimerStateSpy()
         
-        let sut = TimeCoach_Watch_AppApp(timerCoundown: spy, timerSave: spySaver).timerView
+        let sut = TimeCoach_Watch_AppApp(timerCoundown: spy, timerState: spyState).timerView
         
         trackForMemoryLeak(instance: spy)
         
@@ -172,5 +185,9 @@ extension String {
 extension TimeCoach_Watch_AppApp {
     func simulateGoToBackground() {
         goToBackground()
+    }
+    
+    func simulateGoToForeground() {
+        goToForeground()
     }
 }

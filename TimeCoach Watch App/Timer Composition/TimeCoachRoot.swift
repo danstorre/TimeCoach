@@ -7,8 +7,18 @@ public protocol TimerSave {
     func saveTime()
 }
 
+public protocol TimerLoad {
+    func loadTime()
+}
+
 extension PomodoroLocalTimer: TimerSave {
     public func saveTime() {
+        
+    }
+}
+
+extension PomodoroLocalTimer: TimerLoad {
+    public func loadTime() {
         
     }
 }
@@ -16,6 +26,7 @@ extension PomodoroLocalTimer: TimerSave {
 class TimeCoachRoot {
     private var timerCoundown: TimerCountdown
     private var timerSave: TimerSave
+    private var timerLoad: TimerLoad
     
     init() {
         let pomodoro = PomodoroLocalTimer(startDate: .now,
@@ -23,12 +34,14 @@ class TimeCoachRoot {
                                           secondaryTime: .breakInSeconds)
         self.timerSave = pomodoro
         self.timerCoundown = pomodoro
+        self.timerLoad = pomodoro
     }
     
-    convenience init(timerCoundown: TimerCountdown, timerSave: TimerSave) {
+    convenience init(timerCoundown: TimerCountdown, timerState: TimerSave & TimerLoad) {
         self.init()
         self.timerCoundown = timerCoundown
-        self.timerSave = timerSave
+        self.timerSave = timerState
+        self.timerLoad = timerState
     }
     
     func createTimer() -> TimerView {
@@ -43,6 +56,10 @@ class TimeCoachRoot {
     
     func goToBackground() {
         timerSave.saveTime()
+    }
+    
+    func goToForeground() {
+        timerLoad.loadTime()
     }
 }
 
