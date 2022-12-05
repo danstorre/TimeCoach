@@ -101,13 +101,39 @@ final class TimeCoachAcceptanceTests: XCTestCase {
         XCTAssertEqual(sut.timerLabelString(), "24:59")
     }
     
-//    func test_OnBackground_shouldSendMessageToTimeSaver() {
-//        let (sut, spy) = makeSUT()
-//
-//        spy.
-//    }
-//
+    func test_OnBackground_shouldSendMessageToTimeSaver() {
+        let (sut, spy) = makeSUT()
+
+        sut.simulateGoToBackground()
+        
+        XCTAssertEqual(spy.saveTimeCallCount, 1)
+    }
+
     // MARK: - Helpers
+    class TimerSaverSpy: TimerSave {
+        private(set) var saveTimeCallCount: Int = 0
+        
+        func saveTime() {
+            saveTimeCallCount += 1
+        }
+    }
+    
+    private func makeSUT() -> (timerView: TimeCoach_Watch_AppApp, spy: TimerSaverSpy) {
+        let spy = TimerCountdownSpy.delivers(
+            afterPomoroSeconds: 0.0...0.0,
+            pomodoroStub: pomodoroResponse,
+            afterBreakSeconds: 0.0...0.0,
+            breakStub: breakResponse)
+        let spySaver = TimerSaverSpy()
+        
+        let sut = TimeCoach_Watch_AppApp(timerCoundown: spy,
+                                         timerSave: spySaver)
+        
+        trackForMemoryLeak(instance: spy)
+        
+        return (sut, spySaver)
+    }
+    
     private func makeSUT(
         pomodoroSecondsToBeFlushed: TimeInterval = 0.0,
         breakSecondsToBeFlushed: TimeInterval = 1.0
@@ -117,7 +143,9 @@ final class TimeCoachAcceptanceTests: XCTestCase {
             pomodoroStub: pomodoroResponse,
             afterBreakSeconds: 0.0...breakSecondsToBeFlushed,
             breakStub: breakResponse)
-        let sut = TimeCoach_Watch_AppApp(timerCoundown: spy).timerView
+        let spySaver = TimerSaverSpy()
+        
+        let sut = TimeCoach_Watch_AppApp(timerCoundown: spy, timerSave: spySaver).timerView
         
         trackForMemoryLeak(instance: spy)
         
@@ -138,5 +166,11 @@ final class TimeCoachAcceptanceTests: XCTestCase {
 extension String {
     static var timerFont: String {
         CustomFont.timer.font
+    }
+}
+
+extension TimeCoach_Watch_AppApp {
+    func simulateGoToBackground() {
+        goToBackground()
     }
 }

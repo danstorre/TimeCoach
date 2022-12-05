@@ -8,8 +8,9 @@ import Combine
 
 @main
 struct TimeCoach_Watch_AppApp: App {
+    @Environment(\.scenePhase) private var scenePhase
     var timerView: TimerView
-    @State private var root: TimeCoachRoot
+    private var root: TimeCoachRoot
     
     init() {
         let root = TimeCoachRoot()
@@ -17,15 +18,21 @@ struct TimeCoach_Watch_AppApp: App {
         self.timerView = root.createTimer()
     }
 
-    init(timerCoundown: TimerCountdown) {
-        let root = TimeCoachRoot(timerCoundown: timerCoundown)
+    init(timerCoundown: TimerCountdown, timerSave: TimerSave) {
+        let root = TimeCoachRoot(timerCoundown: timerCoundown, timerSave: timerSave)
         self.root = root
         self.timerView = root.createTimer()
     }
     
     var body: some Scene {
         WindowGroup {
-            timerView
+            timerView.onChange(of: scenePhase) { phase in
+                goToBackground()
+            }
         }
+    }
+    
+    func goToBackground() {
+        root.goToBackground()
     }
 }

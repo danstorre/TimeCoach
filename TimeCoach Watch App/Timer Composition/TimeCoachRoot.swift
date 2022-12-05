@@ -3,16 +3,32 @@ import LifeCoach
 import LifeCoachWatchOS
 import Combine
 
+public protocol TimerSave {
+    func saveTime()
+}
+
+extension PomodoroLocalTimer: TimerSave {
+    public func saveTime() {
+        
+    }
+}
+
 class TimeCoachRoot {
-    lazy var timerCoundown: TimerCountdown = {
-        return PomodoroLocalTimer(startDate: .now,
-                                  primaryInterval: .pomodoroInSeconds,
-                                  secondaryTime: .breakInSeconds)
-    }()
+    private var timerCoundown: TimerCountdown
+    private var timerSave: TimerSave
     
-    convenience init(timerCoundown: TimerCountdown) {
+    init() {
+        let pomodoro = PomodoroLocalTimer(startDate: .now,
+                                          primaryInterval: .pomodoroInSeconds,
+                                          secondaryTime: .breakInSeconds)
+        self.timerSave = pomodoro
+        self.timerCoundown = pomodoro
+    }
+    
+    convenience init(timerCoundown: TimerCountdown, timerSave: TimerSave) {
         self.init()
         self.timerCoundown = timerCoundown
+        self.timerSave = timerSave
     }
     
     func createTimer() -> TimerView {
@@ -23,6 +39,10 @@ class TimeCoachRoot {
             stopPublisher: timerCoundown.createStopTimer(),
             pausePublisher: timerCoundown.createPauseTimer()
         )
+    }
+    
+    func goToBackground() {
+        timerSave.saveTime()
     }
 }
 
