@@ -13,14 +13,6 @@ final class TimeCoachAcceptanceTests: XCTestCase {
         XCTAssertEqual(timerLabelString, "25:00")
     }
     
-    func test_onLaunch_shouldDisplayCorrectCustomFont() {
-        let (sut, _) = makeSUT(pomodoroSecondsToBeFlushed: 0.0)
-        
-        let customFont = sut.customFont
-        
-        XCTAssertEqual(customFont, .timerFont)
-    }
-    
     func test_onLaunch_OnGivenSeconds_shouldShowCorrectTimerOnPlayUserInteraction() {
         let timer1 = timerViewOnPlayUserInteraction(afterSeconds: 1.0)
         

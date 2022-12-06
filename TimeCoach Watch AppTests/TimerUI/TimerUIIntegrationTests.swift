@@ -9,6 +9,14 @@ import TimeCoach_Watch_App
 extension TimerView: Inspectable { }
 
 final class TimerUIIntegrationTests: XCTestCase {
+    func test_onInitialLoad_shouldDisplayCorrectCustomFont() {
+        let (sut, _) = makeSUT()
+        
+        let customFont = sut.customFont
+        
+        XCTAssertEqual(customFont, .timerFont)
+    }
+    
     func test_onInitialLoad_shouldPresentPomodoroTimerAsDefault() {
         let (sut, _) = makeSUT()
         
@@ -135,7 +143,7 @@ final class TimerUIIntegrationTests: XCTestCase {
         let timeLoader = TimerPublisherSpy()
         
         let timerView = TimerViewComposer.createTimer(
-            customFont: "",
+            customFont: .timerFont,
             viewModel: TimerViewModel(),
             playHandler: playHandler,
             pauseHandler: pauseHandler,
@@ -157,5 +165,11 @@ final class TimerUIIntegrationTests: XCTestCase {
         func completesSuccessfullyWith(timeElapsed: ElapsedSeconds) {
             loadTimer.send(timeElapsed)
         }
+    }
+}
+
+extension TimerView {
+    var customFont: String? {
+        timer.customFont
     }
 }
