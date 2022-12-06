@@ -1,7 +1,7 @@
 import Foundation
 
 public protocol TimerSave {
-    func saveTime()
+    func saveTime(completion: @escaping (TimeInterval) -> Void)
 }
 
 public protocol TimerLoad {
@@ -107,10 +107,14 @@ public class PomodoroLocalTimer: TimerCountdown {
 }
 
 extension PomodoroLocalTimer: TimerSave {
-    public func saveTime() {
+    public func saveTime(completion: @escaping (TimeInterval) -> Void) {
         guard let timer = timer, timer.isValid else { return }
         pauseCountdown(completion: { _ in })
         timeAtSave = CFAbsoluteTimeGetCurrent()
+        let elapsedDate = startDate.adding(seconds: elapsedTimeInterval)
+        
+        let remainingSeconds = finishDate.timeIntervalSince(elapsedDate)
+        completion(remainingSeconds)
     }
 }
 
