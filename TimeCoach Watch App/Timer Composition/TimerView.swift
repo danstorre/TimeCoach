@@ -3,7 +3,7 @@ import LifeCoachWatchOS
 import SwiftUI
 
 public struct TimerView: View {
-    public var timer: TimerText
+    public var timer: TimerTextTimeLine
     public var controls: TimerControls
     
     public init(timerViewModel: TimerViewModel,
@@ -12,7 +12,7 @@ public struct TimerView: View {
          stopHandler: (() -> Void)? = nil,
          customFont: String? = nil
     ) {
-        self.timer = TimerText(timerViewModel: timerViewModel, customFont: customFont)
+        self.timer = TimerTextTimeLine(timerViewModel: timerViewModel, customFont: customFont)
         self.controls = TimerControls(togglePlayback: togglePlayback, skipHandler: skipHandler, stopHandler: stopHandler)
     }
     

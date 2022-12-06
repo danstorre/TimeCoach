@@ -3,7 +3,7 @@ import LifeCoach
 
 public struct TimerTextTimeLine: View {
     @ObservedObject var timerViewModel: TimerViewModel
-    let customFont: String?
+    public let customFont: String?
     
     public init(timerViewModel: TimerViewModel, customFont: String? = nil) {
         self.timerViewModel = timerViewModel
