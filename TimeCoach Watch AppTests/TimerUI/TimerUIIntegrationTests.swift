@@ -157,7 +157,8 @@ final class TimerUIIntegrationTests: XCTestCase {
             playHandler: playHandler,
             pauseHandler: pauseHandler,
             skipHandler: skipHandler,
-            stopHandler: stopHandler
+            stopHandler: stopHandler,
+            withTimeLine: false
         )
     
         trackForMemoryLeak(instance: timeLoader)
@@ -179,6 +180,6 @@ final class TimerUIIntegrationTests: XCTestCase {
 
 extension TimerView {
     var customFont: String? {
-        timer.customFont
+        timerWithoutTimeLine?.customFont
     }
 }

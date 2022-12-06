@@ -41,7 +41,8 @@ public final class TimerViewComposer {
         playHandler: (() -> Void)? = nil,
         pauseHandler: (() -> Void)? = nil,
         skipHandler: (() -> Void)? = nil,
-        stopHandler: (() -> Void)? = nil
+        stopHandler: (() -> Void)? = nil,
+        withTimeLine: Bool = true
     ) -> TimerView {
         let toggleStrategy = ToggleStrategy(start: playHandler,
                                             pause: pauseHandler,
@@ -53,7 +54,8 @@ public final class TimerViewComposer {
             togglePlayback: toggleStrategy.toggle,
             skipHandler: toggleStrategy.skipHandler,
             stopHandler: toggleStrategy.stopHandler,
-            customFont: customFont
+            customFont: customFont,
+            withTimeLine: withTimeLine
         )
         return timer
     }

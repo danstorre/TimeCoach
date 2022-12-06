@@ -3,22 +3,36 @@ import LifeCoachWatchOS
 import SwiftUI
 
 public struct TimerView: View {
-    public var timer: TimerTextTimeLine
+    public var timerWithTimeLine: TimerTextTimeLine?
+    public var timerWithoutTimeLine: TimerText?
     public var controls: TimerControls
+    var withTimeLine = true
     
-    public init(timerViewModel: TimerViewModel,
-         togglePlayback: (() -> Void)? = nil,
-         skipHandler: (() -> Void)? = nil,
-         stopHandler: (() -> Void)? = nil,
-         customFont: String? = nil
+    public init(
+        timerViewModel: TimerViewModel,
+        togglePlayback: (() -> Void)? = nil,
+        skipHandler: (() -> Void)? = nil,
+        stopHandler: (() -> Void)? = nil,
+        customFont: String? = nil,
+        withTimeLine: Bool = false
     ) {
-        self.timer = TimerTextTimeLine(timerViewModel: timerViewModel, customFont: customFont)
+        if withTimeLine {
+            self.timerWithTimeLine = TimerTextTimeLine(timerViewModel: timerViewModel, customFont: customFont)
+        } else {
+            self.timerWithoutTimeLine = TimerText(timerViewModel: timerViewModel, mode: .full, customFont: customFont)
+        }
+        
+        self.withTimeLine = withTimeLine
         self.controls = TimerControls(togglePlayback: togglePlayback, skipHandler: skipHandler, stopHandler: stopHandler)
     }
     
     public var body: some View {
         VStack {
-            timer
+            if withTimeLine {
+                timerWithTimeLine
+            } else {
+                timerWithoutTimeLine
+            }
             controls
         }
     }
