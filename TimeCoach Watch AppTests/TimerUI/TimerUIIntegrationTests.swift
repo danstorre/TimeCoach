@@ -7,6 +7,15 @@ import LifeCoachWatchOS
 import TimeCoach_Watch_App
 
 extension TimerView: Inspectable { }
+extension TimelineView: Inspectable {
+    public var entity: ViewInspector.Content.InspectableEntity {
+        .view
+    }
+    
+    public func extractContent(environmentObjects: [AnyObject]) throws -> Any {
+        0
+    }
+}
 
 final class TimerUIIntegrationTests: XCTestCase {
     func test_onInitialLoad_shouldDisplayCorrectCustomFont() {
@@ -148,7 +157,8 @@ final class TimerUIIntegrationTests: XCTestCase {
             playHandler: playHandler,
             pauseHandler: pauseHandler,
             skipHandler: skipHandler,
-            stopHandler: stopHandler
+            stopHandler: stopHandler,
+            withTimeLine: false
         )
     
         trackForMemoryLeak(instance: timeLoader)
@@ -170,6 +180,6 @@ final class TimerUIIntegrationTests: XCTestCase {
 
 extension TimerView {
     var customFont: String? {
-        timer.customFont
+        timerWithoutTimeLine?.customFont
     }
 }

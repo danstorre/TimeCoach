@@ -28,13 +28,14 @@ class TimeCoachRoot {
         self.timerLoad = timerState
     }
     
-    func createTimer() -> TimerView {
+    func createTimer(withTimeLine: Bool = true) -> TimerView {
         return TimerViewComposer.createTimer(
             customFont: CustomFont.timer.font,
             playPublisher: timerCoundown.createStartTimer(),
             skipPublisher: timerCoundown.createSkipTimer(),
             stopPublisher: timerCoundown.createStopTimer(),
-            pausePublisher: timerCoundown.createPauseTimer()
+            pausePublisher: timerCoundown.createPauseTimer(),
+            withTimeLine: withTimeLine
         )
     }
     
