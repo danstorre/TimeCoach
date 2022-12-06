@@ -4,11 +4,13 @@ public class TimerViewModel: ObservableObject {
     @Published public var timerString: String = .defaultPomodoroTimerString
     public var mode: TimePresentation = .full {
         didSet {
+            guard !hasFinished else { return }
             if case .none = mode {
                 timerString = "--:--"
             }
         }
     }
+    private var hasFinished = false
     
     public enum TimePresentation {
         case full
@@ -22,11 +24,13 @@ public class TimerViewModel: ObservableObject {
     }
     
     public func delivered(elapsedTime: ElapsedSeconds) {
+        hasFinished = false
         let startDate = elapsedTime.startDate
         let endDate = elapsedTime.endDate.adding(seconds: -elapsedTime.elapsedSeconds)
         
         guard endDate.timeIntervalSince(startDate) > 0 else {
             timerString = "00:00"
+            hasFinished = true
             return
         }
         
