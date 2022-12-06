@@ -2,7 +2,7 @@ import SwiftUI
 import LifeCoach
 
 public struct TimerTextTimeLine: View {
-    @ObservedObject var timerViewModel: TimerViewModel
+    public let timerViewModel: TimerViewModel
     public let customFont: String?
     
     public init(timerViewModel: TimerViewModel, customFont: String? = nil) {
