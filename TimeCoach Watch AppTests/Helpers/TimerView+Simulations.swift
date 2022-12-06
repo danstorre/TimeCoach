@@ -1,4 +1,8 @@
 import LifeCoachWatchOS
+import ViewInspector
+
+extension TimerText: Inspectable {}
+extension TimerControls: Inspectable {}
 
 extension TimerView {
     func timerLabelString() -> String {
