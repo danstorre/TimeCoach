@@ -50,6 +50,7 @@
 		FBED1E4B293EDAD10061CAAF /* TimerControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBED1E4A293EDAD10061CAAF /* TimerControls.swift */; };
 		FBED1E4D293EDB3F0061CAAF /* TimerTextTimeLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBED1E4C293EDB3F0061CAAF /* TimerTextTimeLine.swift */; };
 		FBED1E52293EE13F0061CAAF /* TimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBED1E51293EE13F0061CAAF /* TimerView.swift */; };
+		FBED1E54293F7E980061CAAF /* UserNotificationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBED1E53293F7E980061CAAF /* UserNotificationDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -164,6 +165,7 @@
 		FBED1E4A293EDAD10061CAAF /* TimerControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerControls.swift; sourceTree = "<group>"; };
 		FBED1E4C293EDB3F0061CAAF /* TimerTextTimeLine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerTextTimeLine.swift; sourceTree = "<group>"; };
 		FBED1E51293EE13F0061CAAF /* TimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerView.swift; sourceTree = "<group>"; };
+		FBED1E53293F7E980061CAAF /* UserNotificationDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNotificationDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -259,6 +261,7 @@
 				FB960C6D293D2BED00ECBAD5 /* Combine+Helpers.swift */,
 				FB960C71293D462900ECBAD5 /* ToggleStrategy.swift */,
 				FBED1E51293EE13F0061CAAF /* TimerView.swift */,
+				FBED1E53293F7E980061CAAF /* UserNotificationDelegate.swift */,
 			);
 			path = "Timer Composition";
 			sourceTree = "<group>";
@@ -760,6 +763,7 @@
 			files = (
 				FBED1E52293EE13F0061CAAF /* TimerView.swift in Sources */,
 				FBE9A9A72939534000D8BF29 /* TimerPresentationAdapter.swift in Sources */,
+				FBED1E54293F7E980061CAAF /* UserNotificationDelegate.swift in Sources */,
 				FBE9A9A82939535800D8BF29 /* TimerViewComposer.swift in Sources */,
 				FB960C6E293D2BED00ECBAD5 /* Combine+Helpers.swift in Sources */,
 				FB960C72293D462900ECBAD5 /* ToggleStrategy.swift in Sources */,
