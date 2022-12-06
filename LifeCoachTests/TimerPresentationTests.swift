@@ -23,7 +23,7 @@ final class TimerPresentationTests: XCTestCase {
         XCTAssertEqual(sut.timerString, "00:00")
     }
     
-    func test_timerString_OnMinuteMode_deliversCorrectMinuteTime() {
+    func test_timerString_OnNoneMode_deliversCorrectTimerString() {
         let sut = TimerViewModel()
         
         sut.mode = TimerViewModel.TimePresentation.none
@@ -47,6 +47,16 @@ final class TimerPresentationTests: XCTestCase {
         sut.delivered(elapsedTime: elapsedSecondsFromBreak(.breakInSeconds + 1))
         
         XCTAssertEqual(sut.timerString, "00:00")
+    }
+    
+    func test_init_OnNoneMode_setsCorrectTimerString() {
+        let sut = TimerViewModel()
+        
+        XCTAssertEqual(sut.timerString, "25:00")
+        
+        sut.mode = TimerViewModel.TimePresentation.none
+        
+        XCTAssertEqual(sut.timerString, "--:--")
     }
     
     private func elapsedSecondsFromPomodoro(_ seconds: TimeInterval) -> ElapsedSeconds {

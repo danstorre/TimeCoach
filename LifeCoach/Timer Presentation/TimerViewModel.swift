@@ -2,7 +2,13 @@ import SwiftUI
 
 public class TimerViewModel: ObservableObject {
     @Published public var timerString: String = .defaultPomodoroTimerString
-    public var mode: TimePresentation = .full
+    public var mode: TimePresentation = .full {
+        didSet {
+            if case .none = mode {
+                timerString = "--:--"
+            }
+        }
+    }
     
     public enum TimePresentation {
         case full
