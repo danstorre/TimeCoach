@@ -121,5 +121,7 @@ extension PomodoroLocalTimer: TimerLoad {
         elapsedTimeInterval += elapsed.rounded()
         handler?(LocalElapsedSeconds(elapsedTimeInterval, startDate: startDate, endDate: finishDate))
         startCountdown(completion: handler ?? { _ in })
+        
+        self.timeAtSave = nil
     }
 }
