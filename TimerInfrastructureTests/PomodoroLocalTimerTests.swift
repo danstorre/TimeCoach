@@ -223,6 +223,75 @@ final class PomodoroLocalTimerTests: XCTestCase {
         }
     }
     
+    func test_fromBackgroundStateToForeGroundState_OnPause_shouldNotDeliverAnyElapsedTime() {
+        let primaryInterval: TimeInterval = .pomodoroInSeconds
+        let secondaryInterval: TimeInterval = .breakInSeconds
+        let now = Date.now
+        let currentDate = { now }
+        let sut = makeSUT(currentDate: currentDate,
+                          primaryInterval: primaryInterval,
+                          secondaryTime: secondaryInterval)
+        
+        let expectation = expectation(description: "waits for expectation to be fulfill only once")
+        var received = [LocalElapsedSeconds]()
+        
+        sut.startCountdown() { elapsed in
+            received.append(elapsed)
+        }
+        
+        sut.pauseCountdown { _ in }
+        
+        sut.saveTime()
+        Self.executeAfter(seconds: 1, execute: {
+            sut.loadTime()
+            Self.executeAfter(seconds: 1.1, execute: {
+                expectation.fulfill()
+            })
+        })
+        wait(for: [expectation], timeout: 10.1)
+        
+        XCTAssertTrue(received.isEmpty)
+    }
+    
+    func test_loadTime_OnPlayModeAfterSaveOnce_shouldNotDeliverAnyElapsedTime_OnPauseMode() {
+        let primaryInterval: TimeInterval = .pomodoroInSeconds
+        let secondaryInterval: TimeInterval = .breakInSeconds
+        let now = Date.now
+        let currentDate = { now }
+        let sut = makeSUT(currentDate: currentDate,
+                          primaryInterval: primaryInterval,
+                          secondaryTime: secondaryInterval)
+        
+        let expectation = expectation(description: "waits for expectation to be fulfill only once")
+        var received = [LocalElapsedSeconds]()
+        
+        sut.startCountdown() { elapsed in
+            received.append(elapsed)
+        }
+        
+        sut.saveTime()
+        Self.executeAfter(seconds: 1, execute: {
+            sut.loadTime()
+            Self.executeAfter(seconds: 1.1, execute: {
+                XCTAssertEqual(received.count, 2)
+                
+                sut.pauseCountdown { _ in }
+                
+                sut.saveTime()
+                Self.executeAfter(seconds: 1, execute: {
+                    sut.loadTime()
+                    Self.executeAfter(seconds: 1.1, execute: {
+                        expectation.fulfill()
+                    })
+                })
+            })
+        })
+        
+        wait(for: [expectation], timeout: 10.1)
+        
+        XCTAssertEqual(received.count, 2)
+    }
+    
     // MARK: - helpers
     private static func executeAfter(seconds: Double, execute: @escaping () -> Void ){
         DispatchQueue.main.asyncAfter(deadline: .now() + seconds, execute: {
