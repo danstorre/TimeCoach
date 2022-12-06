@@ -8,7 +8,8 @@ public final class TimerViewComposer {
         playPublisher: AnyPublisher<ElapsedSeconds, Error>,
         skipPublisher: AnyPublisher<ElapsedSeconds, Error>,
         stopPublisher: AnyPublisher<ElapsedSeconds, Error>,
-        pausePublisher: AnyPublisher<ElapsedSeconds, Error>
+        pausePublisher: AnyPublisher<ElapsedSeconds, Error>,
+        withTimeLine: Bool = true
     ) -> TimerView {
         let viewModel = TimerViewModel()
 
@@ -30,7 +31,8 @@ public final class TimerViewComposer {
             playHandler: starTimerAdapter.start,
             pauseHandler: pauseTimerAdapter.pause,
             skipHandler: skipTimerAdapter.skip,
-            stopHandler: stopTimerAdapter.stop
+            stopHandler: stopTimerAdapter.stop,
+            withTimeLine: withTimeLine
         )
         return timer
     }

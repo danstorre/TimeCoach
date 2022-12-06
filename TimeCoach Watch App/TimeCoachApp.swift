@@ -22,7 +22,7 @@ struct TimeCoach_Watch_AppApp: App {
     init(timerCoundown: TimerCountdown, timerState: TimerSave & TimerLoad) {
         let root = TimeCoachRoot(timerCoundown: timerCoundown, timerState: timerState)
         self.root = root
-        self.timerView = root.createTimer()
+        self.timerView = root.createTimer(withTimeLine: false)
     }
     
     var body: some Scene {
