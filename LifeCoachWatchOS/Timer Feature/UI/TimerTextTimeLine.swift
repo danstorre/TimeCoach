@@ -13,9 +13,9 @@ public struct TimerTextTimeLine: View {
     public var body: some View {
         TimelineView(.periodic(from: .now, by: 1)) { context in
             switch context.cadence {
-            case .live, .seconds:
+            case .live:
                 TimerText(timerViewModel: timerViewModel, mode: .full, customFont: customFont)
-            case .minutes:
+            case .seconds, .minutes:
                 TimerText(timerViewModel: timerViewModel, mode: .minutes, customFont: customFont)
             @unknown default:
                 TimerText(timerViewModel: timerViewModel)
