@@ -5,6 +5,7 @@ import SwiftUI
 import LifeCoachWatchOS
 import LifeCoach
 import Combine
+import UserNotifications
 
 @main
 struct TimeCoach_Watch_AppApp: App {
@@ -26,7 +27,8 @@ struct TimeCoach_Watch_AppApp: App {
     
     var body: some Scene {
         WindowGroup {
-            timerView.onChange(of: scenePhase) { phase in
+            timerView
+            .onChange(of: scenePhase) { phase in
                 switch phase {
                 case .active:
                     goToForeground()
@@ -36,6 +38,16 @@ struct TimeCoach_Watch_AppApp: App {
                 case .background:
                     goToBackground()
                 @unknown default: break
+                }
+            }
+            .onAppear {
+                UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { accepted, error in
+                    guard error == nil else {
+                        print("error while requesting authorization")
+                        return
+                    }
+                    
+                    accepted ? print("yeap") : print("nop")
                 }
             }
         }
