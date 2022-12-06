@@ -114,7 +114,7 @@ final class TimeCoachAcceptanceTests: XCTestCase {
         private(set) var saveTimeCallCount: Int = 0
         private(set) var loadTimeCallCount: Int = 0
         
-        func saveTime() {
+        func saveTime(completion: @escaping (TimeInterval) -> Void) {
             saveTimeCallCount += 1
         }
         

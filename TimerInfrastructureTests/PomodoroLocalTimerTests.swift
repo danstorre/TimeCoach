@@ -202,7 +202,7 @@ final class PomodoroLocalTimerTests: XCTestCase {
             received.append(elapsed)
         }
         
-        sut.saveTime()
+        sut.saveTime { _ in }
         Self.executeAfter(seconds: 1, execute: {
             sut.loadTime()
             Self.executeAfter(seconds: 1.1, execute: {
@@ -241,7 +241,7 @@ final class PomodoroLocalTimerTests: XCTestCase {
         
         sut.pauseCountdown { _ in }
         
-        sut.saveTime()
+        sut.saveTime { _ in }
         Self.executeAfter(seconds: 1, execute: {
             sut.loadTime()
             Self.executeAfter(seconds: 1.1, execute: {
@@ -269,7 +269,7 @@ final class PomodoroLocalTimerTests: XCTestCase {
             received.append(elapsed)
         }
         
-        sut.saveTime()
+        sut.saveTime { _ in }
         Self.executeAfter(seconds: 1, execute: {
             sut.loadTime()
             Self.executeAfter(seconds: 1.1, execute: {
@@ -277,7 +277,7 @@ final class PomodoroLocalTimerTests: XCTestCase {
                 
                 sut.pauseCountdown { _ in }
                 
-                sut.saveTime()
+                sut.saveTime { _ in }
                 Self.executeAfter(seconds: 1, execute: {
                     sut.loadTime()
                     Self.executeAfter(seconds: 1.1, execute: {
@@ -290,6 +290,35 @@ final class PomodoroLocalTimerTests: XCTestCase {
         wait(for: [expectation], timeout: 10.1)
         
         XCTAssertEqual(received.count, 2)
+    }
+    
+    func test_OnBackground_shouldDeliverRemainingTime() {
+        let primaryInterval: TimeInterval = .pomodoroInSeconds
+        let secondaryInterval: TimeInterval = .breakInSeconds
+        let now = Date.now
+        let currentDate = { now }
+        let sut = makeSUT(currentDate: currentDate,
+                          primaryInterval: primaryInterval,
+                          secondaryTime: secondaryInterval)
+
+        let expectation = expectation(description: "waits for expectation to be fulfill only once")
+        var received = [LocalElapsedSeconds]()
+
+        sut.startCountdown() { elapsed in
+            received.append(elapsed)
+        }
+
+        var receivedTime: TimeInterval?
+        Self.executeAfter(seconds: 2, execute: {
+            sut.saveTime() { timeRemaining in
+                receivedTime = timeRemaining
+                expectation.fulfill()
+            }
+        })
+
+        wait(for: [expectation], timeout: 10.0)
+
+        XCTAssertEqual(receivedTime, .pomodoroInSeconds - 2)
     }
     
     // MARK: - helpers
