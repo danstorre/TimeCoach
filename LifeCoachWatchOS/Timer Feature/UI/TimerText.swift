@@ -23,3 +23,11 @@ public struct TimerText: View {
 extension TimerText {
     public static let timerLabelIdentifier = "timerLabelIdentifier"
 }
+
+extension TimerText {
+    public init(timerViewModel: TimerViewModel, mode: TimerViewModel.TimePresentation, customFont: String? = nil) {
+        self.timerViewModel = timerViewModel
+        self.customFont = customFont
+        timerViewModel.mode = mode
+    }
+}

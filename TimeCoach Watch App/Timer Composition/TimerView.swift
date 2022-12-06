@@ -1,4 +1,5 @@
 import LifeCoach
+import LifeCoachWatchOS
 import SwiftUI
 
 public struct TimerView: View {
