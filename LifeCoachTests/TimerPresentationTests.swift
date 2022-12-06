@@ -26,19 +26,19 @@ final class TimerPresentationTests: XCTestCase {
     func test_timerString_OnMinuteMode_deliversCorrectMinuteTime() {
         let sut = TimerViewModel()
         
-        sut.mode = TimerViewModel.TimePresentation.minutes
+        sut.mode = TimerViewModel.TimePresentation.none
         
         sut.delivered(elapsedTime: elapsedSecondsFromPomodoro(0))
         
-        XCTAssertEqual(sut.timerString, "25:--")
+        XCTAssertEqual(sut.timerString, "--:--")
         
         sut.delivered(elapsedTime: elapsedSecondsFromPomodoro(1))
         
-        XCTAssertEqual(sut.timerString, "24:--")
+        XCTAssertEqual(sut.timerString, "--:--")
         
         sut.delivered(elapsedTime: elapsedSecondsFromPomodoro(61))
         
-        XCTAssertEqual(sut.timerString, "23:--")
+        XCTAssertEqual(sut.timerString, "--:--")
         
         sut.delivered(elapsedTime: elapsedSecondsFromPomodoro(.pomodoroInSeconds + 1))
         

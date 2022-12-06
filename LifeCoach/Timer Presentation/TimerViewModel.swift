@@ -6,7 +6,7 @@ public class TimerViewModel: ObservableObject {
     
     public enum TimePresentation {
         case full
-        case minutes
+        case none
     }
     
     public init() {}
@@ -28,19 +28,17 @@ public class TimerViewModel: ObservableObject {
     }
     
     private func makeStringFrom(startDate: Date, endDate: Date, elapsedTime: ElapsedSeconds) -> String {
-        let formatter = makeTimerFrom(mode: mode)
-    
         switch mode {
-        case .minutes:
-            return formatter.string(from: startDate, to: endDate)! + ":--"
+        case .none:
+            return "--:--"
         case .full:
-            return formatter.string(from: startDate, to: endDate)!
+            return makeTimerFormatter().string(from: startDate, to: endDate)!
         }
     }
     
     private func makeTimerFrom(mode: TimePresentation) -> DateComponentsFormatter {
         switch mode {
-        case .minutes:
+        case .none:
             return makeMinuteTimerFormatter()
         case .full:
             return makeTimerFormatter()

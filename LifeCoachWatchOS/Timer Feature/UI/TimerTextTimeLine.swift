@@ -16,7 +16,7 @@ public struct TimerTextTimeLine: View {
             case .live:
                 TimerText(timerViewModel: timerViewModel, mode: .full, customFont: customFont)
             case .seconds, .minutes:
-                TimerText(timerViewModel: timerViewModel, mode: .minutes, customFont: customFont)
+                TimerText(timerViewModel: timerViewModel, mode: .none, customFont: customFont)
             @unknown default:
                 TimerText(timerViewModel: timerViewModel)
             }
