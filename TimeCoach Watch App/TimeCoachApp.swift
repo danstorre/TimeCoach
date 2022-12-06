@@ -31,7 +31,8 @@ struct TimeCoach_Watch_AppApp: App {
                 case .active:
                     goToForeground()
                 case .inactive:
-                    break
+                    goToForeground()
+                    goToBackground()
                 case .background:
                     goToBackground()
                 @unknown default: break
