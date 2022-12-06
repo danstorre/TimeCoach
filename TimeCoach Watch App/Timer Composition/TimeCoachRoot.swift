@@ -40,27 +40,31 @@ class TimeCoachRoot: NSObject, UNUserNotificationCenterDelegate {
     
     func goToBackground() {
         timerSave.saveTime(completion: { time in
-            guard time > 0 else { return }
-            UNUserNotificationCenter.current().removeAllDeliveredNotifications()
-            UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
-            
-            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: time, repeats: false)
-            
-            let content = UNMutableNotificationContent()
-            content.title = "timer's up!"
-            content.interruptionLevel = .critical
-            
-            let notification = UNNotificationRequest(
-                identifier: UUID().uuidString,
-                content: content,
-                trigger: trigger
-            )
-            UNUserNotificationCenter.current().add(notification)
+            Self.registerNotificationOn(remainingTime: time)
         })
     }
     
     func goToForeground() {
         timerLoad.loadTime()
+    }
+    
+    static func registerNotificationOn(remainingTime: TimeInterval){
+        guard remainingTime > 0 else { return }
+        UNUserNotificationCenter.current().removeAllDeliveredNotifications()
+        UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
+        
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: remainingTime, repeats: false)
+        
+        let content = UNMutableNotificationContent()
+        content.title = "timer's up!"
+        content.interruptionLevel = .critical
+        
+        let notification = UNNotificationRequest(
+            identifier: UUID().uuidString,
+            content: content,
+            trigger: trigger
+        )
+        UNUserNotificationCenter.current().add(notification)
     }
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
