@@ -23,7 +23,7 @@ public class PomodoroLocalTimer: TimerCountdown {
     private var threshold: TimeInterval = 0
     
     private let currentDate: () -> Date
-    private var timeAtSave: CFTimeInterval = 0
+    private var timeAtSave: CFTimeInterval? = nil
     
     public init(currentDate: @escaping () -> Date = Date.init,
          startDate: Date,
@@ -108,13 +108,15 @@ public class PomodoroLocalTimer: TimerCountdown {
 
 extension PomodoroLocalTimer: TimerSave {
     public func saveTime() {
-        timeAtSave = CFAbsoluteTimeGetCurrent()
+        guard let timer = timer, timer.isValid else { return }
         pauseCountdown(completion: { _ in })
+        timeAtSave = CFAbsoluteTimeGetCurrent()
     }
 }
 
 extension PomodoroLocalTimer: TimerLoad {
     public func loadTime() {
+        guard let timeAtSave = timeAtSave else { return }
         let elapsed = CFAbsoluteTimeGetCurrent() - timeAtSave
         elapsedTimeInterval += elapsed.rounded()
         handler?(LocalElapsedSeconds(elapsedTimeInterval, startDate: startDate, endDate: finishDate))
