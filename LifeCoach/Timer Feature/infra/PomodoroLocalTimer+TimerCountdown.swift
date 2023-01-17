@@ -1,21 +1,13 @@
 import Foundation
 
-public protocol TimerSave {
-    func saveTime(completion: @escaping (TimeInterval) -> Void)
-}
-
-public protocol TimerLoad {
-    func loadTime()
-}
-
 public class PomodoroLocalTimer: TimerCountdown {
-    private var handler: ((LocalElapsedSeconds) -> Void)? = nil
-    private var timer: Timer? = nil
+    public var handler: ((LocalElapsedSeconds) -> Void)? = nil
+    public var timer: Timer? = nil
     private var invalidationTimer: Timer? = nil
     
-    private var elapsedTimeInterval: TimeInterval = 0
-    private var startDate: Date
-    private var finishDate: Date
+    public var elapsedTimeInterval: TimeInterval = 0
+    public var startDate: Date
+    public var finishDate: Date
     
     private var primaryInterval: TimeInterval
     private var secondaryTime: TimeInterval
@@ -23,7 +15,7 @@ public class PomodoroLocalTimer: TimerCountdown {
     private var threshold: TimeInterval = 0
     
     private let currentDate: () -> Date
-    private var timeAtSave: CFTimeInterval? = nil
+    public var timeAtSave: CFTimeInterval? = nil
     
     public init(currentDate: @escaping () -> Date = Date.init,
          startDate: Date,
@@ -106,25 +98,3 @@ public class PomodoroLocalTimer: TimerCountdown {
     }
 }
 
-extension PomodoroLocalTimer: TimerSave {
-    public func saveTime(completion: @escaping (TimeInterval) -> Void) {
-        guard let timer = timer, timer.isValid else { return }
-        pauseCountdown(completion: { _ in })
-        timeAtSave = CFAbsoluteTimeGetCurrent()
-        let elapsedDate = startDate.adding(seconds: elapsedTimeInterval)
-        
-        let remainingSeconds = finishDate.timeIntervalSince(elapsedDate)
-        completion(remainingSeconds)
-    }
-}
-
-extension PomodoroLocalTimer: TimerLoad {
-    public func loadTime() {
-        guard let timeAtSave = timeAtSave else { return }
-        let elapsed = CFAbsoluteTimeGetCurrent() - timeAtSave
-        elapsedTimeInterval += elapsed.rounded()
-        handler?(LocalElapsedSeconds(elapsedTimeInterval, startDate: startDate, endDate: finishDate))
-        startCountdown(completion: handler ?? { _ in })
-        self.timeAtSave = nil
-    }
-}
