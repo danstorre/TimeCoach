@@ -293,6 +293,8 @@
 				FB4AA16B2937D7290076FED9 /* infra */,
 				FB4AA16E2937D75A0076FED9 /* TimerCountdown.swift */,
 				FB4AA16C2937D7340076FED9 /* LocalElapsedSeconds.swift */,
+				FBDBAC4529762AC7009E440A /* TimerSave.swift */,
+				FBDBAC4729762AD1009E440A /* TimerLoad.swift */,
 				FB4AA1632937CD000076FED9 /* ElapsedSeconds.swift */,
 				FBDBAC4D29762B1E009E440A /* LocalElapsedSeconds+ElapsedSeconds.swift */,
 			);
@@ -303,8 +305,6 @@
 			isa = PBXGroup;
 			children = (
 				FB0F6BB229386184009405FE /* PomodoroLocalTimer+TimerCountdown.swift */,
-				FBDBAC4529762AC7009E440A /* TimerSave.swift */,
-				FBDBAC4729762AD1009E440A /* TimerLoad.swift */,
 				FBDBAC4929762AE5009E440A /* PomodoroLocalTimer+TimerSave.swift */,
 				FBDBAC4B29762AFE009E440A /* PomodoroLocalTimer+TimerLoad.swift */,
 			);
