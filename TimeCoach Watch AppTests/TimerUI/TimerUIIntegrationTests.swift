@@ -35,103 +35,73 @@ final class TimerUIIntegrationTests: XCTestCase {
     }
     
     func test_onToggle_sendsMessageToRightHandler() {
-        var playHandlerCount = 0
-        var pauseHandlerCount = 0
-        let (sut, _) = makeSUT(playHandler: {
-            playHandlerCount += 1
-        }, pauseHandler: {
-            pauseHandlerCount += 1
-        })
+        let (sut, spy) = makeSUT()
         
         sut.simulateToggleTimerUserInteraction()
         
-        XCTAssertEqual(playHandlerCount, 1, "Should execute playHandler once.")
+        XCTAssertEqual(spy.playCallCount, 1, "Should execute playHandler once.")
         
         sut.simulateToggleTimerUserInteraction()
         
-        XCTAssertEqual(pauseHandlerCount, 1, "Should execute pauseHandler once.")
+        XCTAssertEqual(spy.pauseCallCount, 1, "Should execute pauseHandler once.")
         
         sut.simulateToggleTimerUserInteraction()
         
-        XCTAssertEqual(playHandlerCount, 2, "Should execute playHandler twice.")
+        XCTAssertEqual(spy.playCallCount, 2, "Should execute playHandler twice.")
         
         sut.simulateToggleTimerUserInteraction()
         
-        XCTAssertEqual(pauseHandlerCount, 2, "Should execute pauseHandler twice.")
+        XCTAssertEqual(spy.pauseCallCount, 2, "Should execute pauseHandler twice.")
     }
     
     func test_onSkip_sendsMessageToSkipHandler() {
-        var skipHandlerCount = 0
-        let (sut, _) = makeSUT(skipHandler: {
-            skipHandlerCount += 1
-        })
+        let (sut, spy) = makeSUT()
         
         sut.simulateSkipTimerUserInteraction()
         
-        XCTAssertEqual(skipHandlerCount, 1, "Should execute skipHandler once.")
+        XCTAssertEqual(spy.skipCallCount, 1, "Should execute skipHandler once.")
         
         sut.simulateSkipTimerUserInteraction()
         
-        XCTAssertEqual(skipHandlerCount, 2, "Should execute skipHandler twice.")
+        XCTAssertEqual(spy.skipCallCount, 2, "Should execute skipHandler twice.")
     }
     
     func test_skip_onPlay_sendsMessageToToggleHandler() {
-        var skipHandlerCount = 0
-        var playHandlerCount = 0
-        var pauseHandlerCount = 0
-        let (sut, _) = makeSUT(playHandler: {
-            playHandlerCount += 1
-        }, skipHandler: {
-            skipHandlerCount += 1
-        }, pauseHandler: {
-            pauseHandlerCount += 1
-        })
+        let (sut, spy) = makeSUT()
         
         sut.simulateToggleTimerUserInteraction()
         
-        XCTAssertEqual(playHandlerCount, 1, "Should execute playHandler once.")
+        XCTAssertEqual(spy.playCallCount, 1, "Should execute playHandler once.")
         
         sut.simulateSkipTimerUserInteraction()
         
-        XCTAssertEqual(skipHandlerCount, 1, "Should execute skipHandler once.")
-        XCTAssertEqual(pauseHandlerCount, 1, "Should execute paseHandler once.")
+        XCTAssertEqual(spy.skipCallCount, 1, "Should execute skipHandler once.")
+        XCTAssertEqual(spy.pauseCallCount, 1, "Should execute paseHandler once.")
     }
     
     func test_onStop_sendsMessageToStopHandler() {
-        var stopHandlerCount = 0
-        let (sut, _) = makeSUT(stopHandler: {
-            stopHandlerCount += 1
-        })
+        let (sut, spy) = makeSUT()
         
         sut.simulateStopTimerUserInteraction()
         
-        XCTAssertEqual(stopHandlerCount, 1, "Should execute stop handler once.")
+        XCTAssertEqual(spy.stopCallCount, 1, "Should execute stop handler once.")
         
         sut.simulateStopTimerUserInteraction()
         
-        XCTAssertEqual(stopHandlerCount, 2, "Should execute stop handler twice.")
+        XCTAssertEqual(spy.stopCallCount, 2, "Should execute stop handler twice.")
     }
     
     func test_stop_OnPlay_sendsMessageToToggleHandler() {
-        var stopHandlerCount = 0
-        var playHandlerCount = 0
-        var pauseHandlerCount = 0
-        let (sut, _) = makeSUT(playHandler: {
-            playHandlerCount += 1
-        }, stopHandler: {
-            stopHandlerCount += 1
-        }, pauseHandler: {
-            pauseHandlerCount += 1
-        })
+        let (sut, spy) = makeSUT()
         
         sut.simulateToggleTimerUserInteraction()
         
-        XCTAssertEqual(playHandlerCount, 1, "Should execute playHandler once.")
+        XCTAssertEqual(spy.playCallCount, 1, "Should execute playHandler once.")
         
         sut.simulateStopTimerUserInteraction()
         
-        XCTAssertEqual(stopHandlerCount, 1, "Should execute stopHandler once.")
-        XCTAssertEqual(pauseHandlerCount, 1, "Should execute paseHandler once.")
+        XCTAssertEqual(spy.stopCallCount, 1, "Should execute stopHandler once.")
+        XCTAssertEqual(spy.pauseCallCount, 1, "Should execute paseHandler once.")
     }
     
     // MARK: - Helpers
@@ -144,16 +114,9 @@ final class TimerUIIntegrationTests: XCTestCase {
     }
     
     private func makeSUT(
-        playHandler: (() -> Void)? = nil,
-        skipHandler: (() -> Void)? = nil,
-        stopHandler: (() -> Void)? = nil,
-        pauseHandler: (() -> Void)? = nil,
         file: StaticString = #filePath, line: UInt = #line
     ) -> (sut: TimerView, spy: TimerPublisherSpy) {
-        let timeLoader = TimerPublisherSpy(playHandler: playHandler,
-                                           pauseHandler: pauseHandler,
-                                           skipHandler: skipHandler,
-                                           stopHandler: stopHandler)
+        let timeLoader = TimerPublisherSpy()
         
         let timerView = TimerViewComposer
             .createTimer(
@@ -171,55 +134,39 @@ final class TimerUIIntegrationTests: XCTestCase {
     }
     
     private class TimerPublisherSpy {
-        private let playHandler: (() -> Void)?
-        private let pauseHandler: (() -> Void)?
-        private let skipHandler: (() -> Void)?
-        private let stopHandler: (() -> Void)?
-        
-        init(
-            playHandler: (() -> Void)?,
-            pauseHandler: (() -> Void)?,
-            skipHandler: (() -> Void)?,
-            stopHandler: (() -> Void)?
-        ) {
-            self.playHandler = playHandler
-            self.pauseHandler = pauseHandler
-            self.skipHandler = skipHandler
-            self.stopHandler = stopHandler
-        }
+        private(set) var playCallCount = 0
+        private(set) var pauseCallCount = 0
+        private(set) var skipCallCount = 0
+        private(set) var stopCallCount = 0
         
         func play() -> AnyPublisher<ElapsedSeconds, Error> {
             let elapsed = ElapsedSeconds(0, startDate: Date(), endDate: Date())
-            let playHandler = self.playHandler
-            return CurrentValueSubject<ElapsedSeconds, Error>(elapsed).map { [playHandler] elapsed in
-                playHandler?()
+            return CurrentValueSubject<ElapsedSeconds, Error>(elapsed).map { elapsed in
+                self.playCallCount += 1
                 return elapsed
             }.eraseToAnyPublisher()
         }
         
         func skip() -> AnyPublisher<ElapsedSeconds, Error> {
             let elapsedTime = ElapsedSeconds(0, startDate: Date(), endDate: Date())
-            let skipHandler = self.skipHandler
-            return CurrentValueSubject<ElapsedSeconds, Error>(elapsedTime).map { [skipHandler] elapsed in
-                skipHandler?()
+            return CurrentValueSubject<ElapsedSeconds, Error>(elapsedTime).map { elapsed in
+                self.skipCallCount += 1
                 return elapsed
             }.eraseToAnyPublisher()
         }
         
         func stop() -> AnyPublisher<ElapsedSeconds, Error> {
             let elapsedTime = ElapsedSeconds(0, startDate: Date(), endDate: Date())
-            let stopHandler = self.stopHandler
-            return CurrentValueSubject<ElapsedSeconds, Error>(elapsedTime).map { [stopHandler] elapsed in
-                stopHandler?()
+            return CurrentValueSubject<ElapsedSeconds, Error>(elapsedTime).map { elapsed in
+                self.stopCallCount += 1
                 return elapsed
             }.eraseToAnyPublisher()
         }
         
         func pause() -> AnyPublisher<ElapsedSeconds, Error> {
             let elapsedTime = ElapsedSeconds(0, startDate: Date(), endDate: Date())
-            let pauseHandler = self.pauseHandler
-            return CurrentValueSubject<ElapsedSeconds, Error>(elapsedTime).map { [pauseHandler] elapsed in
-                pauseHandler?()
+            return CurrentValueSubject<ElapsedSeconds, Error>(elapsedTime).map { elapsed in
+                self.pauseCallCount += 1
                 return elapsed
             }.eraseToAnyPublisher()
         }
