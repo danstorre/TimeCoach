@@ -149,17 +149,20 @@ final class TimerUIIntegrationTests: XCTestCase {
         stopHandler: (() -> Void)? = nil,
         pauseHandler: (() -> Void)? = nil
     ) -> (sut: TimerView, spy: TimerPublisherSpy) {
-        let timeLoader = TimerPublisherSpy()
+        let timeLoader = TimerPublisherSpy(playHandler: playHandler,
+                                           pauseHandler: pauseHandler,
+                                           skipHandler: skipHandler,
+                                           stopHandler: stopHandler)
         
-        let timerView = TimerViewComposer.createTimer(
-            customFont: .timerFont,
-            viewModel: TimerViewModel(),
-            playHandler: playHandler,
-            pauseHandler: pauseHandler,
-            skipHandler: skipHandler,
-            stopHandler: stopHandler,
-            withTimeLine: false
-        )
+        let timerView = TimerViewComposer
+            .createTimer(
+                customFont: .timerFont,
+                playPublisher: timeLoader.play(),
+                skipPublisher: timeLoader.skip(),
+                stopPublisher: timeLoader.stop(),
+                pausePublisher: timeLoader.pause(),
+                withTimeLine: false
+            )
     
         trackForMemoryLeak(instance: timeLoader)
         
@@ -167,13 +170,57 @@ final class TimerUIIntegrationTests: XCTestCase {
     }
     
     private class TimerPublisherSpy {
-        private var timerElapsedSeconds = [PassthroughSubject<ElapsedSeconds, Error>]()
-        lazy var loadTimer: PassthroughSubject<ElapsedSeconds, Error> = {
-            return PassthroughSubject<ElapsedSeconds, Error>()
-        }()
-    
-        func completesSuccessfullyWith(timeElapsed: ElapsedSeconds) {
-            loadTimer.send(timeElapsed)
+        private let playHandler: (() -> Void)?
+        private let pauseHandler: (() -> Void)?
+        private let skipHandler: (() -> Void)?
+        private let stopHandler: (() -> Void)?
+        
+        init(
+            playHandler: (() -> Void)?,
+            pauseHandler: (() -> Void)?,
+            skipHandler: (() -> Void)?,
+            stopHandler: (() -> Void)?
+        ) {
+            self.playHandler = playHandler
+            self.pauseHandler = pauseHandler
+            self.skipHandler = skipHandler
+            self.stopHandler = stopHandler
+        }
+        
+        func play() -> AnyPublisher<ElapsedSeconds, Error> {
+            let elapsed = ElapsedSeconds(0, startDate: Date(), endDate: Date())
+            let playHandler = self.playHandler
+            return CurrentValueSubject<ElapsedSeconds, Error>(elapsed).map { [playHandler] elapsed in
+                playHandler?()
+                return elapsed
+            }.eraseToAnyPublisher()
+        }
+        
+        func skip() -> AnyPublisher<ElapsedSeconds, Error> {
+            let elapsedTime = ElapsedSeconds(0, startDate: Date(), endDate: Date())
+            let skipHandler = self.skipHandler
+            return CurrentValueSubject<ElapsedSeconds, Error>(elapsedTime).map { [skipHandler] elapsed in
+                skipHandler?()
+                return elapsed
+            }.eraseToAnyPublisher()
+        }
+        
+        func stop() -> AnyPublisher<ElapsedSeconds, Error> {
+            let elapsedTime = ElapsedSeconds(0, startDate: Date(), endDate: Date())
+            let stopHandler = self.stopHandler
+            return CurrentValueSubject<ElapsedSeconds, Error>(elapsedTime).map { [stopHandler] elapsed in
+                stopHandler?()
+                return elapsed
+            }.eraseToAnyPublisher()
+        }
+        
+        func pause() -> AnyPublisher<ElapsedSeconds, Error> {
+            let elapsedTime = ElapsedSeconds(0, startDate: Date(), endDate: Date())
+            let pauseHandler = self.pauseHandler
+            return CurrentValueSubject<ElapsedSeconds, Error>(elapsedTime).map { [pauseHandler] elapsed in
+                pauseHandler?()
+                return elapsed
+            }.eraseToAnyPublisher()
         }
     }
 }

@@ -9,7 +9,7 @@ public final class TimerViewComposer {
         skipPublisher: AnyPublisher<ElapsedSeconds, Error>,
         stopPublisher: AnyPublisher<ElapsedSeconds, Error>,
         pausePublisher: AnyPublisher<ElapsedSeconds, Error>,
-        withTimeLine: Bool = true
+        withTimeLine: Bool
     ) -> TimerView {
         let viewModel = TimerViewModel()
 
@@ -25,31 +25,10 @@ public final class TimerViewComposer {
         let stopTimerAdapter = TimerPresentationAdapter(loader: stopPublisher)
         stopTimerAdapter.presenter = viewModel
         
-        let timer = Self.createTimer(
-            customFont: customFont,
-            viewModel: viewModel,
-            playHandler: starTimerAdapter.start,
-            pauseHandler: pauseTimerAdapter.pause,
-            skipHandler: skipTimerAdapter.skip,
-            stopHandler: stopTimerAdapter.stop,
-            withTimeLine: withTimeLine
-        )
-        return timer
-    }
-    
-    public static func createTimer(
-        customFont: String,
-        viewModel: TimerViewModel,
-        playHandler: (() -> Void)? = nil,
-        pauseHandler: (() -> Void)? = nil,
-        skipHandler: (() -> Void)? = nil,
-        stopHandler: (() -> Void)? = nil,
-        withTimeLine: Bool = true
-    ) -> TimerView {
-        let toggleStrategy = ToggleStrategy(start: playHandler,
-                                            pause: pauseHandler,
-                                            skip: skipHandler,
-                                            stop: stopHandler)
+        let toggleStrategy = ToggleStrategy(start: starTimerAdapter.start,
+                                            pause: pauseTimerAdapter.pause,
+                                            skip: skipTimerAdapter.skip,
+                                            stop: stopTimerAdapter.stop)
         
         let timer = TimerView(
             timerViewModel: viewModel,

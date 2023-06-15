@@ -28,7 +28,10 @@ public struct TimerControls: View {
                 Image(systemName: "forward.end.fill")
             }
             
-            Button.init(action: togglePlayback ?? {}) {
+            Button.init(action: {
+                togglePlayback?()
+                print("toggle")
+            }) {
                 Image(systemName: "playpause.fill")
             }
         }
