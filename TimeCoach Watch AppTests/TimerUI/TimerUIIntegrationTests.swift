@@ -1,21 +1,8 @@
-import ViewInspector
 import SwiftUI
 import Combine
 import XCTest
 import LifeCoach
-import LifeCoachWatchOS
 import TimeCoach_Watch_App
-
-extension TimerView: Inspectable { }
-extension TimelineView: Inspectable {
-    public var entity: ViewInspector.Content.InspectableEntity {
-        .view
-    }
-    
-    public func extractContent(environmentObjects: [AnyObject]) throws -> Any {
-        0
-    }
-}
 
 final class TimerUIIntegrationTests: XCTestCase {
     func test_onInitialLoad_shouldDisplayCorrectCustomFont() {
