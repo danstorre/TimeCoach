@@ -147,7 +147,8 @@ final class TimerUIIntegrationTests: XCTestCase {
         playHandler: (() -> Void)? = nil,
         skipHandler: (() -> Void)? = nil,
         stopHandler: (() -> Void)? = nil,
-        pauseHandler: (() -> Void)? = nil
+        pauseHandler: (() -> Void)? = nil,
+        file: StaticString = #filePath, line: UInt = #line
     ) -> (sut: TimerView, spy: TimerPublisherSpy) {
         let timeLoader = TimerPublisherSpy(playHandler: playHandler,
                                            pauseHandler: pauseHandler,
@@ -164,7 +165,7 @@ final class TimerUIIntegrationTests: XCTestCase {
                 withTimeLine: false // the integration tests do not contemplate the time line since this an watchOS specific trait.
             )
     
-        trackForMemoryLeak(instance: timeLoader)
+        trackForMemoryLeak(instance: timeLoader, file: file, line: line)
         
         return (timerView, timeLoader)
     }
