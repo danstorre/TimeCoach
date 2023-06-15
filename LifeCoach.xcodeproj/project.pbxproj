@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		FB0F6BB329386184009405FE /* PomodoroLocalTimer+TimerCountdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB0F6BB229386184009405FE /* PomodoroLocalTimer+TimerCountdown.swift */; };
+		FB0F6BB329386184009405FE /* PomodoroLocalTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB0F6BB229386184009405FE /* PomodoroLocalTimer.swift */; };
 		FB4AA1382936F1730076FED9 /* TimerText.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4AA1372936F1730076FED9 /* TimerText.swift */; };
 		FB4AA1542937C0F30076FED9 /* ExtensionHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4AA1532937C0F30076FED9 /* ExtensionHelpers.swift */; };
 		FB4AA1642937CD000076FED9 /* ElapsedSeconds.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4AA1632937CD000076FED9 /* ElapsedSeconds.swift */; };
@@ -131,7 +131,7 @@
 
 /* Begin PBXFileReference section */
 		FB06B52D292BF71C00AE6079 /* LifeCoachWatchOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LifeCoachWatchOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		FB0F6BB229386184009405FE /* PomodoroLocalTimer+TimerCountdown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PomodoroLocalTimer+TimerCountdown.swift"; sourceTree = "<group>"; };
+		FB0F6BB229386184009405FE /* PomodoroLocalTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PomodoroLocalTimer.swift; sourceTree = "<group>"; };
 		FB4AA1322936EB9A0076FED9 /* TimerUIIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerUIIntegrationTests.swift; sourceTree = "<group>"; };
 		FB4AA1372936F1730076FED9 /* TimerText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerText.swift; sourceTree = "<group>"; };
 		FB4AA13929378A460076FED9 /* TimerPresentationAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerPresentationAdapter.swift; sourceTree = "<group>"; };
@@ -304,7 +304,7 @@
 		FB4AA16B2937D7290076FED9 /* infra */ = {
 			isa = PBXGroup;
 			children = (
-				FB0F6BB229386184009405FE /* PomodoroLocalTimer+TimerCountdown.swift */,
+				FB0F6BB229386184009405FE /* PomodoroLocalTimer.swift */,
 				FBDBAC4929762AE5009E440A /* PomodoroLocalTimer+TimerSave.swift */,
 				FBDBAC4B29762AFE009E440A /* PomodoroLocalTimer+TimerLoad.swift */,
 			);
@@ -756,7 +756,7 @@
 				FBDBAC4829762AD1009E440A /* TimerLoad.swift in Sources */,
 				FBDBAC4A29762AE5009E440A /* PomodoroLocalTimer+TimerSave.swift in Sources */,
 				FB4AA16D2937D7340076FED9 /* LocalElapsedSeconds.swift in Sources */,
-				FB0F6BB329386184009405FE /* PomodoroLocalTimer+TimerCountdown.swift in Sources */,
+				FB0F6BB329386184009405FE /* PomodoroLocalTimer.swift in Sources */,
 				FB4AA1642937CD000076FED9 /* ElapsedSeconds.swift in Sources */,
 				FBAD475528FC8BB0003D2F7A /* LifeCoach.docc in Sources */,
 				FBDBAC4629762AC7009E440A /* TimerSave.swift in Sources */,
