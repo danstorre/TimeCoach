@@ -127,19 +127,3 @@ final class TimeCoachAcceptanceTests: XCTestCase {
         return sut
     }
 }
-
-extension String {
-    static var timerFont: String {
-        CustomFont.timer.font
-    }
-}
-
-extension TimeCoach_Watch_AppApp {
-    func simulateGoToBackground() {
-        goToBackground()
-    }
-    
-    func simulateGoToForeground() {
-        goToForeground()
-    }
-}

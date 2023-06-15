@@ -178,7 +178,7 @@ final class TimerUIIntegrationTests: XCTestCase {
     }
 }
 
-extension TimerView {
+private extension TimerView {
     var customFont: String? {
         timerWithoutTimeLine?.customFont
     }
