@@ -161,7 +161,7 @@ final class TimerUIIntegrationTests: XCTestCase {
                 skipPublisher: timeLoader.skip(),
                 stopPublisher: timeLoader.stop(),
                 pausePublisher: timeLoader.pause(),
-                withTimeLine: false
+                withTimeLine: false // the integration tests do not contemplate the time line since this an watchOS specific trait.
             )
     
         trackForMemoryLeak(instance: timeLoader)
