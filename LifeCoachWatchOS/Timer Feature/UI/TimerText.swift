@@ -15,12 +15,7 @@ public struct TimerText: View {
         Label(title: { Text(timerViewModel.timerString) }, icon: {})
             .labelStyle(TimerLabelStyle(isLuminanceReduced: isLuminanceReduced,
                                         customFont: customFont))
-            .accessibilityIdentifier(Self.timerLabelIdentifier)
     }
-}
-
-extension TimerText {
-    public static let timerLabelIdentifier = "timerLabelIdentifier"
 }
 
 extension TimerText {

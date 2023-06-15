@@ -8,7 +8,7 @@ extension TimerTextTimeLine: Inspectable {}
 
 extension TimerView {
     func timerLabelString() -> String {
-        inspectLabelWith(id: Self.timerLabelIdentifier)
+        inspectTimerLabel()
     }
     
     func simulateToggleTimerUserInteractionTwice() {
@@ -17,38 +17,37 @@ extension TimerView {
     }
     
     func simulateToggleTimerUserInteraction() {
-        tapButton(id: Self.togglePlaybackButtonIdentifier)
+        tapButton(index: Self.togglePlaybackButtonIdentifier)
     }
     
     func simulateSkipTimerUserInteraction() {
-        tapButton(id: Self.skipButtonIdentifier)
+        tapButton(index: Self.skipButtonIdentifier)
     }
     
     func simulateStopTimerUserInteraction() {
-        tapButton(id: Self.stopButtonIdentifier)
+        tapButton(index: Self.stopButtonIdentifier)
     }
     
-    private func tapButton(id: String) {
+    private func tapButton(index: Int) {
         do {
-            try inspect()
-                .find(viewWithAccessibilityIdentifier: id)
-                .button()
+            try inspect().find(TimerControls.self)
+                .hStack()
+                .button(index)
                 .tap()
         } catch {
-            fatalError("couldn't inspect `simulatePlayUserInteraction`")
+            fatalError("couldn't inspect button at \(index)")
         }
     }
     
-    private func inspectLabelWith(id: String) -> String{
+    private func inspectTimerLabel() -> String{
         do {
-            return try inspect()
-                .find(viewWithAccessibilityIdentifier: id)
+            return try inspect().find(TimerText.self)
                 .label()
                 .title()
-                .text(0)
+                .text()
                 .string()
         } catch {
-            fatalError("couldn't inspect `timerLabelString`")
+            fatalError("couldn't inspect timer Label")
         }
     }
 }

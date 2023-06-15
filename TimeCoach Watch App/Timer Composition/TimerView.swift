@@ -45,11 +45,9 @@ struct TimerView_Previews: PreviewProvider {
 }
 
 extension TimerView {
-    public static let timerLabelIdentifier = "timerLabelIdentifier"
+    public static let togglePlaybackButtonIdentifier: Int = 2
     
-    public static let togglePlaybackButtonIdentifier = "togglePlaybackButtonIdentifier"
+    public static let skipButtonIdentifier: Int = 1
     
-    public static let skipButtonIdentifier = "skipButtonIdentifier"
-    
-    public static let stopButtonIdentifier = "stopButtonIdentifier"
+    public static let stopButtonIdentifier: Int = 0
 }
