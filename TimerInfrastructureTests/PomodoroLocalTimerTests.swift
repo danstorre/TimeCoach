@@ -4,7 +4,7 @@ import XCTest
 final class PomodoroLocalTimerTests: XCTestCase {
     
     func test_startCountdown_deliversTimerAfterOneSecond() {
-        var received = [LocalElapsedSeconds]()
+        var received = [ElapsedSeconds]()
         let expectation = expectation(description: "waits for timer to finish twice")
         expectation.expectedFulfillmentCount = 2
         
@@ -29,7 +29,7 @@ final class PomodoroLocalTimerTests: XCTestCase {
         let end = now.adding(seconds: primary)
         let sut = makeSUT(startDate: now, primaryInterval: primary)
         
-        var receivedTime = [LocalElapsedSeconds]()
+        var receivedTime = [ElapsedSeconds]()
         let expectation = expectation(description: "waits for timer to finish three times")
         expectation.expectedFulfillmentCount = 3
         sut.startCountdown() { elapsed in
@@ -78,7 +78,7 @@ final class PomodoroLocalTimerTests: XCTestCase {
     
     func test_start_shouldNotDeliverMoreTime_afterReachingThresholdInterval() {
         let sut = makeSUT(primaryInterval: 1)
-        var received = [LocalElapsedSeconds]()
+        var received = [ElapsedSeconds]()
         let expectation = expectation(description: "waits for expectation to be fulfill only once")
         expectation.expectedFulfillmentCount = 1
          
@@ -111,7 +111,7 @@ final class PomodoroLocalTimerTests: XCTestCase {
         let sut = makeSUT(currentDate: { now },
                           primaryInterval: primaryInterval,
                           secondaryTime: secondaryInterval)
-        var received = [LocalElapsedSeconds]()
+        var received = [ElapsedSeconds]()
         let expectation = expectation(description: "waits for expectation to be fulfill only once")
         
         sut.skipCountdown() { elapsed in
@@ -135,7 +135,7 @@ final class PomodoroLocalTimerTests: XCTestCase {
         let sut = makeSUT(currentDate: currentDate,
                           primaryInterval: primaryInterval,
                           secondaryTime: secondaryInterval)
-        var received = [LocalElapsedSeconds]()
+        var received = [ElapsedSeconds]()
         let expectation = expectation(description: "waits for expectation to be fulfill only once")
         
         sut.skipCountdown() { _ in }
@@ -164,7 +164,7 @@ final class PomodoroLocalTimerTests: XCTestCase {
                           secondaryTime: secondaryInterval)
         
         let expectation = expectation(description: "waits for expectation to be fulfill only once")
-        var received = [LocalElapsedSeconds]()
+        var received = [ElapsedSeconds]()
         
         sut.startCountdown() { elapsed in
             received.append(elapsed)
@@ -196,7 +196,7 @@ final class PomodoroLocalTimerTests: XCTestCase {
                           secondaryTime: secondaryInterval)
         
         let expectation = expectation(description: "waits for expectation to be fulfill only once")
-        var received = [LocalElapsedSeconds]()
+        var received = [ElapsedSeconds]()
         
         sut.startCountdown() { elapsed in
             received.append(elapsed)
@@ -214,8 +214,8 @@ final class PomodoroLocalTimerTests: XCTestCase {
         XCTAssertEqual(received.count, 2)
         
         let expectedReceived = [
-            LocalElapsedSeconds(1, startDate: currentDate(), endDate: currentDate().adding(seconds: primaryInterval)),
-            LocalElapsedSeconds(2, startDate: currentDate(), endDate: currentDate().adding(seconds: primaryInterval))
+            ElapsedSeconds(1, startDate: currentDate(), endDate: currentDate().adding(seconds: primaryInterval)),
+            ElapsedSeconds(2, startDate: currentDate(), endDate: currentDate().adding(seconds: primaryInterval))
         ]
         
         expectedReceived.enumerated().forEach { (index, expectedElapsedSeconds) in
@@ -233,7 +233,7 @@ final class PomodoroLocalTimerTests: XCTestCase {
                           secondaryTime: secondaryInterval)
         
         let expectation = expectation(description: "waits for expectation to be fulfill only once")
-        var received = [LocalElapsedSeconds]()
+        var received = [ElapsedSeconds]()
         
         sut.startCountdown() { elapsed in
             received.append(elapsed)
@@ -263,7 +263,7 @@ final class PomodoroLocalTimerTests: XCTestCase {
                           secondaryTime: secondaryInterval)
         
         let expectation = expectation(description: "waits for expectation to be fulfill only once")
-        var received = [LocalElapsedSeconds]()
+        var received = [ElapsedSeconds]()
         
         sut.startCountdown() { elapsed in
             received.append(elapsed)
@@ -302,7 +302,7 @@ final class PomodoroLocalTimerTests: XCTestCase {
                           secondaryTime: secondaryInterval)
 
         let expectation = expectation(description: "waits for expectation to be fulfill only once")
-        var received = [LocalElapsedSeconds]()
+        var received = [ElapsedSeconds]()
 
         sut.startCountdown() { elapsed in
             received.append(elapsed)
@@ -332,13 +332,13 @@ final class PomodoroLocalTimerTests: XCTestCase {
         _ elapsedSeconds: TimeInterval,
         startDate: Date,
         endDate: Date
-    ) -> LocalElapsedSeconds {
-        LocalElapsedSeconds(elapsedSeconds,
+    ) -> ElapsedSeconds {
+        ElapsedSeconds(elapsedSeconds,
                             startDate: startDate,
                             endDate: endDate)
     }
     
-    private func assertEqual(_ lhs: LocalElapsedSeconds, _ rhs: LocalElapsedSeconds, file: StaticString = #filePath, line: UInt = #line) {
+    private func assertEqual(_ lhs: ElapsedSeconds, _ rhs: ElapsedSeconds, file: StaticString = #filePath, line: UInt = #line) {
         XCTAssertEqual(lhs.elapsedSeconds, rhs.elapsedSeconds, file: file, line: line)
         XCTAssertEqual(lhs.startDate.timeIntervalSince1970,
                        rhs.startDate.timeIntervalSince1970, accuracy: 0.001, file: file, line: line)
@@ -352,7 +352,7 @@ final class PomodoroLocalTimerTests: XCTestCase {
                                file: StaticString = #filePath,
                                line: UInt = #line
     ) {
-        var received = [LocalElapsedSeconds]()
+        var received = [ElapsedSeconds]()
         
         let expectation = expectation(description: "waits for interval expectation to be fulfill only once")
         expectation.expectedFulfillmentCount = 1
@@ -398,7 +398,7 @@ final class PomodoroLocalTimerTests: XCTestCase {
     }
     
     private func assertsThatStartCoutdownDeliverTimeAfterOneSecond(
-        of received: [LocalElapsedSeconds], from now: Date, to end: Date, count: Int,
+        of received: [ElapsedSeconds], from now: Date, to end: Date, count: Int,
         file: StaticString = #filePath, line: UInt = #line)
     {
         XCTAssertEqual(received.count, count, file: file, line: line)

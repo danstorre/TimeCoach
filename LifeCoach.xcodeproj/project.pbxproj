@@ -11,7 +11,6 @@
 		FB4AA1382936F1730076FED9 /* TimerText.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4AA1372936F1730076FED9 /* TimerText.swift */; };
 		FB4AA1542937C0F30076FED9 /* ExtensionHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4AA1532937C0F30076FED9 /* ExtensionHelpers.swift */; };
 		FB4AA1642937CD000076FED9 /* ElapsedSeconds.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4AA1632937CD000076FED9 /* ElapsedSeconds.swift */; };
-		FB4AA16D2937D7340076FED9 /* LocalElapsedSeconds.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4AA16C2937D7340076FED9 /* LocalElapsedSeconds.swift */; };
 		FB4AA16F2937D75A0076FED9 /* TimerCountdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4AA16E2937D75A0076FED9 /* TimerCountdown.swift */; };
 		FB4B895A2A3B950C0088DB5B /* CustomFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4B89592A3B950C0088DB5B /* CustomFont.swift */; };
 		FB4B895D2A3BB9D90088DB5B /* SaveTimerAcceptanceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4B895C2A3BB9D90088DB5B /* SaveTimerAcceptanceTests.swift */; };
@@ -44,7 +43,6 @@
 		FBDBAC4829762AD1009E440A /* TimerLoad.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDBAC4729762AD1009E440A /* TimerLoad.swift */; };
 		FBDBAC4A29762AE5009E440A /* PomodoroLocalTimer+TimerSave.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDBAC4929762AE5009E440A /* PomodoroLocalTimer+TimerSave.swift */; };
 		FBDBAC4C29762AFE009E440A /* PomodoroLocalTimer+TimerLoad.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDBAC4B29762AFE009E440A /* PomodoroLocalTimer+TimerLoad.swift */; };
-		FBDBAC4E29762B1E009E440A /* LocalElapsedSeconds+ElapsedSeconds.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDBAC4D29762B1E009E440A /* LocalElapsedSeconds+ElapsedSeconds.swift */; };
 		FBE9A9752939527C00D8BF29 /* TimeCoach Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = FBE9A9742939527C00D8BF29 /* TimeCoach Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		FBE9A97A2939527C00D8BF29 /* TimeCoachApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE9A9792939527C00D8BF29 /* TimeCoachApp.swift */; };
 		FBE9A97E2939527E00D8BF29 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FBE9A97D2939527E00D8BF29 /* Assets.xcassets */; };
@@ -148,7 +146,6 @@
 		FB4AA1562937C3970076FED9 /* Date+Formatters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Formatters.swift"; sourceTree = "<group>"; };
 		FB4AA1582937C3C50076FED9 /* Timer+DefaultStrings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Timer+DefaultStrings.swift"; sourceTree = "<group>"; };
 		FB4AA1632937CD000076FED9 /* ElapsedSeconds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElapsedSeconds.swift; sourceTree = "<group>"; };
-		FB4AA16C2937D7340076FED9 /* LocalElapsedSeconds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalElapsedSeconds.swift; sourceTree = "<group>"; };
 		FB4AA16E2937D75A0076FED9 /* TimerCountdown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerCountdown.swift; sourceTree = "<group>"; };
 		FB4AA1712937DE810076FED9 /* PomodoroLocalTimerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PomodoroLocalTimerTests.swift; sourceTree = "<group>"; };
 		FB4B89592A3B950C0088DB5B /* CustomFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomFont.swift; sourceTree = "<group>"; };
@@ -172,7 +169,6 @@
 		FBDBAC4729762AD1009E440A /* TimerLoad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerLoad.swift; sourceTree = "<group>"; };
 		FBDBAC4929762AE5009E440A /* PomodoroLocalTimer+TimerSave.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PomodoroLocalTimer+TimerSave.swift"; sourceTree = "<group>"; };
 		FBDBAC4B29762AFE009E440A /* PomodoroLocalTimer+TimerLoad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PomodoroLocalTimer+TimerLoad.swift"; sourceTree = "<group>"; };
-		FBDBAC4D29762B1E009E440A /* LocalElapsedSeconds+ElapsedSeconds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LocalElapsedSeconds+ElapsedSeconds.swift"; sourceTree = "<group>"; };
 		FBE9A96F2939527C00D8BF29 /* TimeCoach.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TimeCoach.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FBE9A9742939527C00D8BF29 /* TimeCoach Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "TimeCoach Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FBE9A9792939527C00D8BF29 /* TimeCoachApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeCoachApp.swift; sourceTree = "<group>"; };
@@ -294,8 +290,6 @@
 			isa = PBXGroup;
 			children = (
 				FB4AA16E2937D75A0076FED9 /* TimerCountdown.swift */,
-				FB4AA16C2937D7340076FED9 /* LocalElapsedSeconds.swift */,
-				FBDBAC4D29762B1E009E440A /* LocalElapsedSeconds+ElapsedSeconds.swift */,
 				FB4AA1632937CD000076FED9 /* ElapsedSeconds.swift */,
 			);
 			path = "Timer Feature";
@@ -789,7 +783,6 @@
 				FB960C76293D48CB00ECBAD5 /* TimerViewModel.swift in Sources */,
 				FBDBAC4829762AD1009E440A /* TimerLoad.swift in Sources */,
 				FBDBAC4A29762AE5009E440A /* PomodoroLocalTimer+TimerSave.swift in Sources */,
-				FB4AA16D2937D7340076FED9 /* LocalElapsedSeconds.swift in Sources */,
 				FB0F6BB329386184009405FE /* PomodoroLocalTimer.swift in Sources */,
 				FB4AA1642937CD000076FED9 /* ElapsedSeconds.swift in Sources */,
 				FBAD475528FC8BB0003D2F7A /* LifeCoach.docc in Sources */,
@@ -798,7 +791,6 @@
 				FBDBAC4C29762AFE009E440A /* PomodoroLocalTimer+TimerLoad.swift in Sources */,
 				FB4AA1542937C0F30076FED9 /* ExtensionHelpers.swift in Sources */,
 				FB4AA16F2937D75A0076FED9 /* TimerCountdown.swift in Sources */,
-				FBDBAC4E29762B1E009E440A /* LocalElapsedSeconds+ElapsedSeconds.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

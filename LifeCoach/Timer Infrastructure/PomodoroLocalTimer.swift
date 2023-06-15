@@ -1,7 +1,7 @@
 import Foundation
 
 public class PomodoroLocalTimer: TimerCountdown {
-    public var handler: ((LocalElapsedSeconds) -> Void)? = nil
+    public var handler: ((ElapsedSeconds) -> Void)? = nil
     public var timer: Timer? = nil
     private var invalidationTimer: Timer? = nil
     
@@ -29,21 +29,21 @@ public class PomodoroLocalTimer: TimerCountdown {
         self.currentDate = currentDate
     }
     
-    public func startCountdown(completion: @escaping (LocalElapsedSeconds) -> Void) {
+    public func startCountdown(completion: @escaping (ElapsedSeconds) -> Void) {
         invalidateTimers()
         handler = completion
         timer = createTimer()
     }
     
-    public func pauseCountdown(completion: @escaping (LocalElapsedSeconds) -> Void) {
+    public func pauseCountdown(completion: @escaping (ElapsedSeconds) -> Void) {
         invalidateTimers()
-        let elapsed = LocalElapsedSeconds(elapsedTimeInterval,
+        let elapsed = ElapsedSeconds(elapsedTimeInterval,
                                           startDate: startDate,
                                           endDate: finishDate)
         completion(elapsed)
     }
     
-    public func skipCountdown(completion: @escaping (LocalElapsedSeconds) -> Void) {
+    public func skipCountdown(completion: @escaping (ElapsedSeconds) -> Void) {
         invalidateTimers()
         elapsedTimeInterval = 0
         
@@ -56,17 +56,17 @@ public class PomodoroLocalTimer: TimerCountdown {
         let now = currentDate()
         startDate = now
         finishDate = now.adding(seconds: threshold)
-        let elapsed = LocalElapsedSeconds(elapsedTimeInterval,
+        let elapsed = ElapsedSeconds(elapsedTimeInterval,
                                           startDate: startDate,
                                           endDate: finishDate)
         completion(elapsed)
     }
     
-    public func stopCountdown(completion: @escaping (LocalElapsedSeconds) -> Void) {
+    public func stopCountdown(completion: @escaping (ElapsedSeconds) -> Void) {
         invalidateTimers()
         elapsedTimeInterval = 0
         
-        let elapsed = LocalElapsedSeconds(elapsedTimeInterval,
+        let elapsed = ElapsedSeconds(elapsedTimeInterval,
                                           startDate: startDate,
                                           endDate: finishDate)
         completion(elapsed)
@@ -91,7 +91,7 @@ public class PomodoroLocalTimer: TimerCountdown {
             return
         }
         elapsedTimeInterval += 1
-        let elapsed = LocalElapsedSeconds(elapsedTimeInterval,
+        let elapsed = ElapsedSeconds(elapsedTimeInterval,
                                           startDate: startDate,
                                           endDate: finishDate)
         handler?(elapsed)

@@ -11,7 +11,7 @@ extension TimerCountdown {
             )
             
             startCountdown { time in
-                currentValue.send(time.timeElapsed)
+                currentValue.send(time)
             }
 
             return currentValue
@@ -29,7 +29,7 @@ extension TimerCountdown {
             )
             
             stopCountdown { time in
-                currentValue.send(time.timeElapsed)
+                currentValue.send(time)
             }
 
             return currentValue
@@ -46,7 +46,7 @@ extension TimerCountdown {
             )
             
             skipCountdown { time in
-                currentValue.send(time.timeElapsed)
+                currentValue.send(time)
             }
 
             return currentValue
@@ -63,7 +63,7 @@ extension TimerCountdown {
             )
             
             pauseCountdown { time in
-                currentValue.send(time.timeElapsed)
+                currentValue.send(time)
             }
 
             return currentValue
