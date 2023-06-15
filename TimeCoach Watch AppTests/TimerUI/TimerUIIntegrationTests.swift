@@ -139,9 +139,14 @@ final class TimerUIIntegrationTests: XCTestCase {
         private(set) var skipCallCount = 0
         private(set) var stopCallCount = 0
         
+        typealias PlayPublisher = CurrentValueSubject<ElapsedSeconds, Error>
+        typealias SkipPublisher = CurrentValueSubject<ElapsedSeconds, Error>
+        typealias StopPublisher = CurrentValueSubject<ElapsedSeconds, Error>
+        typealias PausePublisher = CurrentValueSubject<ElapsedSeconds, Error>
+        
         func play() -> AnyPublisher<ElapsedSeconds, Error> {
             let elapsed = ElapsedSeconds(0, startDate: Date(), endDate: Date())
-            return CurrentValueSubject<ElapsedSeconds, Error>(elapsed).map { elapsed in
+            return PlayPublisher(elapsed).map { elapsed in
                 self.playCallCount += 1
                 return elapsed
             }.eraseToAnyPublisher()
@@ -149,7 +154,7 @@ final class TimerUIIntegrationTests: XCTestCase {
         
         func skip() -> AnyPublisher<ElapsedSeconds, Error> {
             let elapsedTime = ElapsedSeconds(0, startDate: Date(), endDate: Date())
-            return CurrentValueSubject<ElapsedSeconds, Error>(elapsedTime).map { elapsed in
+            return SkipPublisher(elapsedTime).map { elapsed in
                 self.skipCallCount += 1
                 return elapsed
             }.eraseToAnyPublisher()
@@ -157,7 +162,7 @@ final class TimerUIIntegrationTests: XCTestCase {
         
         func stop() -> AnyPublisher<ElapsedSeconds, Error> {
             let elapsedTime = ElapsedSeconds(0, startDate: Date(), endDate: Date())
-            return CurrentValueSubject<ElapsedSeconds, Error>(elapsedTime).map { elapsed in
+            return StopPublisher(elapsedTime).map { elapsed in
                 self.stopCallCount += 1
                 return elapsed
             }.eraseToAnyPublisher()
@@ -165,7 +170,7 @@ final class TimerUIIntegrationTests: XCTestCase {
         
         func pause() -> AnyPublisher<ElapsedSeconds, Error> {
             let elapsedTime = ElapsedSeconds(0, startDate: Date(), endDate: Date())
-            return CurrentValueSubject<ElapsedSeconds, Error>(elapsedTime).map { elapsed in
+            return PausePublisher(elapsedTime).map { elapsed in
                 self.pauseCallCount += 1
                 return elapsed
             }.eraseToAnyPublisher()
