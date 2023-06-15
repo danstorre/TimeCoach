@@ -269,8 +269,8 @@
 			children = (
 				FB4B89572A3B949B0088DB5B /* Helpers */,
 				FB73E908293BA2A40087F9EF /* TimeCoachRoot.swift */,
-				FBED1E51293EE13F0061CAAF /* TimerView.swift */,
 				FB4AA14229379DC90076FED9 /* TimerViewComposer.swift */,
+				FBED1E51293EE13F0061CAAF /* TimerView.swift */,
 				FB4AA13929378A460076FED9 /* TimerPresentationAdapter.swift */,
 				FB960C71293D462900ECBAD5 /* ToggleStrategy.swift */,
 				FBED1E53293F7E980061CAAF /* UserNotificationDelegate.swift */,
