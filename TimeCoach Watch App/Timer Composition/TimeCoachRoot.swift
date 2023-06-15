@@ -49,11 +49,3 @@ class TimeCoachRoot {
         timerLoad.loadTime()
     }
 }
-
-public enum CustomFont {
-    case timer
-    
-    public var font: String {
-        "Digital dream Fat"
-    }
-}
