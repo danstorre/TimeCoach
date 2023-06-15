@@ -257,15 +257,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		FB4AA13B29379BC10076FED9 /* Helpers */ = {
-			isa = PBXGroup;
-			children = (
-				FB4AA13C29379D140076FED9 /* TimerView+Simulations.swift */,
-				FBC612F2293AC2ED008D9EF8 /* TimerCountDownSpy.swift */,
-			);
-			path = Helpers;
-			sourceTree = "<group>";
-		};
 		FB4AA13E29379D9F0076FED9 /* Timer Feature */ = {
 			isa = PBXGroup;
 			children = (
@@ -340,6 +331,8 @@
 		FB4B89602A3BBB5F0088DB5B /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				FB4AA13C29379D140076FED9 /* TimerView+Simulations.swift */,
+				FBC612F2293AC2ED008D9EF8 /* TimerCountDownSpy.swift */,
 				FB4B89612A3BBB6D0088DB5B /* TimerStateSpy.swift */,
 				FB4B89682A3BBC700088DB5B /* TimeCoach_Watch_AppApp+Helpers.swift */,
 				FB4B896A2A3BBCFD0088DB5B /* TimerView+ViewInspectorHelpers.swift */,
@@ -448,7 +441,6 @@
 		FBE9A9892939527F00D8BF29 /* TimeCoach Watch AppTests */ = {
 			isa = PBXGroup;
 			children = (
-				FB4AA13B29379BC10076FED9 /* Helpers */,
 				FBE9A92E2939247A00D8BF29 /* TimerUI */,
 			);
 			path = "TimeCoach Watch AppTests";
