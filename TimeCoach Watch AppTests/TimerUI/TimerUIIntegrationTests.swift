@@ -21,7 +21,7 @@ final class TimerUIIntegrationTests: XCTestCase {
         XCTAssertEqual(timerString, .defaultPomodoroTimerString, "Should present pomodoro Timer on view load.")
     }
     
-    func test_onToggle_sendsMessageToRightHandler() {
+    func test_onToggleUserInteraction_sendsCommandsCorrectlyToHandler() {
         let (sut, spy) = makeSUT()
         
         sut.simulateToggleTimerUserInteraction()
@@ -36,12 +36,24 @@ final class TimerUIIntegrationTests: XCTestCase {
         
         XCTAssertEqual(spy.commandsReceived, [.play, .pause, .play], "Should execute playHandler twice.")
         
+        sut.simulateSkipTimerUserInteraction()
+        
+        XCTAssertEqual(spy.commandsReceived, [.play, .pause, .play, .pause, .skip], "Should execute skip once")
+        
         sut.simulateToggleTimerUserInteraction()
         
-        XCTAssertEqual(spy.commandsReceived, [.play, .pause, .play, .pause], "Should execute pauseHandler twice.")
+        XCTAssertEqual(spy.commandsReceived, [.play, .pause, .play, .pause, .skip, .play], "Should execute playHandler once.")
+        
+        sut.simulateStopTimerUserInteraction()
+        
+        XCTAssertEqual(spy.commandsReceived, [.play, .pause, .play, .pause, .skip, .play, .pause, .stop], "Should execute stop.")
+        
+        sut.simulateToggleTimerUserInteraction()
+        
+        XCTAssertEqual(spy.commandsReceived, [.play, .pause, .play, .pause, .skip, .play, .pause, .stop, .play], "Should execute play after stop.")
     }
     
-    func test_onSkip_sendsMessageToSkipHandler() {
+    func test_onSkipUserInteraction_sendsCommandsCorrectlyToHandler() {
         let (sut, spy) = makeSUT()
         
         sut.simulateSkipTimerUserInteraction()
@@ -53,19 +65,7 @@ final class TimerUIIntegrationTests: XCTestCase {
         XCTAssertEqual(spy.commandsReceived, [.skip, .skip], "Should execute skipHandler twice.")
     }
     
-    func test_skip_onPlay_sendsMessageToToggleHandler() {
-        let (sut, spy) = makeSUT()
-        
-        sut.simulateToggleTimerUserInteraction()
-        
-        XCTAssertEqual(spy.commandsReceived, [.play], "Should execute playHandler once.")
-        
-        sut.simulateSkipTimerUserInteraction()
-        
-        XCTAssertEqual(spy.commandsReceived, [.play, .pause, .skip], "Should execute pause first then skip once")
-    }
-    
-    func test_onStop_sendsMessageToStopHandler() {
+    func test_onStopUserInteraction_sendsCommandsCorrectlyToHandler() {
         let (sut, spy) = makeSUT()
         
         sut.simulateStopTimerUserInteraction()
@@ -75,18 +75,6 @@ final class TimerUIIntegrationTests: XCTestCase {
         sut.simulateStopTimerUserInteraction()
         
         XCTAssertEqual(spy.commandsReceived, [.stop, .stop], "Should execute stop handler twice.")
-    }
-    
-    func test_stop_OnPlay_sendsMessageToToggleHandler() {
-        let (sut, spy) = makeSUT()
-        
-        sut.simulateToggleTimerUserInteraction()
-        
-        XCTAssertEqual(spy.commandsReceived, [.play], "Should execute playHandler once.")
-        
-        sut.simulateStopTimerUserInteraction()
-        
-        XCTAssertEqual(spy.commandsReceived, [.play, .pause, .stop], "Should execute pause first then stop.")
     }
     
     // MARK: - Helpers
