@@ -265,12 +265,12 @@
 		FB4AA14129379DC20076FED9 /* Timer Composition */ = {
 			isa = PBXGroup;
 			children = (
-				FB4AA13929378A460076FED9 /* TimerPresentationAdapter.swift */,
-				FB4AA14229379DC90076FED9 /* TimerViewComposer.swift */,
+				FB4B89572A3B949B0088DB5B /* Helpers */,
 				FB73E908293BA2A40087F9EF /* TimeCoachRoot.swift */,
-				FB960C6D293D2BED00ECBAD5 /* Combine+Helpers.swift */,
-				FB960C71293D462900ECBAD5 /* ToggleStrategy.swift */,
 				FBED1E51293EE13F0061CAAF /* TimerView.swift */,
+				FB4AA14229379DC90076FED9 /* TimerViewComposer.swift */,
+				FB4AA13929378A460076FED9 /* TimerPresentationAdapter.swift */,
+				FB960C71293D462900ECBAD5 /* ToggleStrategy.swift */,
 				FBED1E53293F7E980061CAAF /* UserNotificationDelegate.swift */,
 			);
 			path = "Timer Composition";
@@ -309,6 +309,14 @@
 				FBDBAC4B29762AFE009E440A /* PomodoroLocalTimer+TimerLoad.swift */,
 			);
 			path = infra;
+			sourceTree = "<group>";
+		};
+		FB4B89572A3B949B0088DB5B /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				FB960C6D293D2BED00ECBAD5 /* Combine+Helpers.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 		FB73E922293BAE490087F9EF /* TimerInfrastructureTests */ = {
@@ -395,11 +403,11 @@
 		FBE9A9782939527C00D8BF29 /* TimeCoach Watch App */ = {
 			isa = PBXGroup;
 			children = (
-				FB960C7E293D530900ECBAD5 /* Previews */,
-				FBE9A9DF293974FF00D8BF29 /* TimeCoach-Watch-App-Info.plist */,
-				FBE9A9B22939579F00D8BF29 /* Resources */,
 				FB4AA14129379DC20076FED9 /* Timer Composition */,
+				FB960C7E293D530900ECBAD5 /* Previews */,
+				FBE9A9B22939579F00D8BF29 /* Resources */,
 				FBE9A9792939527C00D8BF29 /* TimeCoachApp.swift */,
+				FBE9A9DF293974FF00D8BF29 /* TimeCoach-Watch-App-Info.plist */,
 			);
 			path = "TimeCoach Watch App";
 			sourceTree = "<group>";
