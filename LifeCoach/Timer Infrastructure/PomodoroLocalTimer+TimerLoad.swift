@@ -12,7 +12,7 @@ extension PomodoroLocalTimer: TimerLoad {
         guard let timeAtSave = timeAtSave else { return }
         let elapsed = CFAbsoluteTimeGetCurrent() - timeAtSave
         elapsedTimeInterval += elapsed.rounded()
-        handler?(ElapsedSeconds(elapsedTimeInterval, startDate: startDate, endDate: finishDate))
+        handler?(LocalElapsedSeconds(elapsedTimeInterval, startDate: startDate, endDate: finishDate).toElapseSeconds)
         startCountdown(completion: handler ?? { _ in })
         self.timeAtSave = nil
     }
