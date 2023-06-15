@@ -78,14 +78,6 @@ final class TimerUIIntegrationTests: XCTestCase {
     }
     
     // MARK: - Helpers
-    private func makeElapsedSeconds(
-        _ seconds: TimeInterval,
-        startDate: Date,
-        endDate: Date
-    ) -> ElapsedSeconds {
-        ElapsedSeconds(seconds, startDate: startDate, endDate: endDate)
-    }
-    
     private func makeSUT(
         file: StaticString = #filePath, line: UInt = #line
     ) -> (sut: TimerView, spy: TimerPublisherSpy) {
@@ -127,7 +119,7 @@ final class TimerUIIntegrationTests: XCTestCase {
         typealias PausePublisher = CurrentValueSubject<ElapsedSeconds, Error>
         
         func play() -> AnyPublisher<ElapsedSeconds, Error> {
-            let elapsed = ElapsedSeconds(0, startDate: Date(), endDate: Date())
+            let elapsed = makeElapsedSeconds(0, startDate: Date(), endDate: Date())
             return PlayPublisher(elapsed).map { elapsed in
                 self.commandsReceived.append(.play)
                 return elapsed
@@ -135,7 +127,7 @@ final class TimerUIIntegrationTests: XCTestCase {
         }
         
         func skip() -> AnyPublisher<ElapsedSeconds, Error> {
-            let elapsedTime = ElapsedSeconds(0, startDate: Date(), endDate: Date())
+            let elapsedTime = makeElapsedSeconds(0, startDate: Date(), endDate: Date())
             return SkipPublisher(elapsedTime).map { elapsed in
                 self.commandsReceived.append(.skip)
                 return elapsed
@@ -143,7 +135,7 @@ final class TimerUIIntegrationTests: XCTestCase {
         }
         
         func stop() -> AnyPublisher<ElapsedSeconds, Error> {
-            let elapsedTime = ElapsedSeconds(0, startDate: Date(), endDate: Date())
+            let elapsedTime = makeElapsedSeconds(0, startDate: Date(), endDate: Date())
             return StopPublisher(elapsedTime).map { elapsed in
                 self.commandsReceived.append(.stop)
                 return elapsed
@@ -151,7 +143,7 @@ final class TimerUIIntegrationTests: XCTestCase {
         }
         
         func pause() -> AnyPublisher<ElapsedSeconds, Error> {
-            let elapsedTime = ElapsedSeconds(0, startDate: Date(), endDate: Date())
+            let elapsedTime = makeElapsedSeconds(0, startDate: Date(), endDate: Date())
             return PausePublisher(elapsedTime).map { elapsed in
                 self.commandsReceived.append(.pause)
                 return elapsed
@@ -164,4 +156,12 @@ private extension TimerView {
     var customFont: String? {
         timerWithoutTimeLine?.customFont
     }
+}
+
+private func makeElapsedSeconds(
+    _ seconds: TimeInterval,
+    startDate: Date,
+    endDate: Date
+) -> ElapsedSeconds {
+    ElapsedSeconds(seconds, startDate: startDate, endDate: endDate)
 }
