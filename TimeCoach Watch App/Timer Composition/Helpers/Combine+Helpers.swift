@@ -7,7 +7,7 @@ extension TimerCountdown {
     func createStartTimer() -> AnyPublisher<ElapsedSeconds, Error> {
         return Deferred {
             let currentValue = CurrentValueSubject<ElapsedSeconds, Error>(
-                ElapsedSeconds(0, startDate: .now, endDate: .now)
+                createElapsedSeconds(0, startDate: .now, endDate: .now)
             )
             
             startCountdown { time in
@@ -25,7 +25,7 @@ extension TimerCountdown {
     func createStopTimer() -> AnyPublisher<ElapsedSeconds, Error> {
         return Deferred {
             let currentValue = CurrentValueSubject<ElapsedSeconds, Error>(
-                ElapsedSeconds(0, startDate: .now, endDate: .now)
+                createElapsedSeconds(0, startDate: .now, endDate: .now)
             )
             
             stopCountdown { time in
@@ -42,7 +42,7 @@ extension TimerCountdown {
     func createSkipTimer() -> AnyPublisher<ElapsedSeconds, Error> {
         return Deferred {
             let currentValue = CurrentValueSubject<ElapsedSeconds, Error>(
-                ElapsedSeconds(0, startDate: .now, endDate: .now)
+                createElapsedSeconds(0, startDate: .now, endDate: .now)
             )
             
             skipCountdown { time in
@@ -59,7 +59,7 @@ extension TimerCountdown {
     func createPauseTimer() -> AnyPublisher<ElapsedSeconds, Error> {
         return Deferred {
             let currentValue = CurrentValueSubject<ElapsedSeconds, Error>(
-                ElapsedSeconds(0, startDate: .now, endDate: .now)
+                createElapsedSeconds(0, startDate: .now, endDate: .now)
             )
             
             pauseCountdown { time in
@@ -71,4 +71,9 @@ extension TimerCountdown {
         .dropFirst()
         .eraseToAnyPublisher()
     }
+}
+
+
+fileprivate func createElapsedSeconds(_ elapsedSeconds: TimeInterval, startDate: Date, endDate: Date) -> ElapsedSeconds {
+    ElapsedSeconds(elapsedSeconds, startDate: startDate, endDate: endDate)
 }
