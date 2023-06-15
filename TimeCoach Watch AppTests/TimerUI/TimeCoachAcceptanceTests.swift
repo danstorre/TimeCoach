@@ -141,7 +141,9 @@ final class TimeCoachAcceptanceTests: XCTestCase {
     
     private func makeSUT(
         pomodoroSecondsToBeFlushed: TimeInterval = 0.0,
-        breakSecondsToBeFlushed: TimeInterval = 1.0
+        breakSecondsToBeFlushed: TimeInterval = 1.0,
+        file: StaticString = #filePath,
+        line: UInt = #line
     ) -> (timerView: TimerView, spy: TimerCountdownSpy) {
         let spy = TimerCountdownSpy.delivers(
             afterPomoroSeconds: 0.0...pomodoroSecondsToBeFlushed,
@@ -152,13 +154,15 @@ final class TimeCoachAcceptanceTests: XCTestCase {
         
         let sut = TimeCoach_Watch_AppApp(timerCoundown: spy, timerState: spyState).timerView
         
-        trackForMemoryLeak(instance: spy)
+        trackForMemoryLeak(instance: spy, file: file, line: line)
         
         return (sut, spy)
     }
     
-    private func timerViewOnPlayUserInteraction(afterSeconds seconds: TimeInterval) -> TimerView {
-        let (sut, stub) = makeSUT(pomodoroSecondsToBeFlushed: seconds, breakSecondsToBeFlushed: 1.0)
+    private func timerViewOnPlayUserInteraction(afterSeconds seconds: TimeInterval,
+                                                file: StaticString = #filePath,
+                                                line: UInt = #line) -> TimerView {
+        let (sut, stub) = makeSUT(pomodoroSecondsToBeFlushed: seconds, breakSecondsToBeFlushed: 1.0, file: file, line: line)
         
         sut.simulateToggleTimerUserInteraction()
         
