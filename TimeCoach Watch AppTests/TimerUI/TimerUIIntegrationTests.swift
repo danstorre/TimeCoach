@@ -26,19 +26,19 @@ final class TimerUIIntegrationTests: XCTestCase {
         
         sut.simulateToggleTimerUserInteraction()
         
-        XCTAssertEqual(spy.playCallCount, 1, "Should execute playHandler once.")
+        XCTAssertEqual(spy.commandsReceived, [.play], "Should execute playHandler once.")
         
         sut.simulateToggleTimerUserInteraction()
         
-        XCTAssertEqual(spy.pauseCallCount, 1, "Should execute pauseHandler once.")
+        XCTAssertEqual(spy.commandsReceived, [.play, .pause], "Should execute pauseHandler once.")
         
         sut.simulateToggleTimerUserInteraction()
         
-        XCTAssertEqual(spy.playCallCount, 2, "Should execute playHandler twice.")
+        XCTAssertEqual(spy.commandsReceived, [.play, .pause, .play], "Should execute playHandler twice.")
         
         sut.simulateToggleTimerUserInteraction()
         
-        XCTAssertEqual(spy.pauseCallCount, 2, "Should execute pauseHandler twice.")
+        XCTAssertEqual(spy.commandsReceived, [.play, .pause, .play, .pause], "Should execute pauseHandler twice.")
     }
     
     func test_onSkip_sendsMessageToSkipHandler() {
@@ -46,11 +46,11 @@ final class TimerUIIntegrationTests: XCTestCase {
         
         sut.simulateSkipTimerUserInteraction()
         
-        XCTAssertEqual(spy.skipCallCount, 1, "Should execute skipHandler once.")
+        XCTAssertEqual(spy.commandsReceived, [.skip], "Should execute skipHandler once.")
         
         sut.simulateSkipTimerUserInteraction()
         
-        XCTAssertEqual(spy.skipCallCount, 2, "Should execute skipHandler twice.")
+        XCTAssertEqual(spy.commandsReceived, [.skip, .skip], "Should execute skipHandler twice.")
     }
     
     func test_skip_onPlay_sendsMessageToToggleHandler() {
@@ -58,12 +58,11 @@ final class TimerUIIntegrationTests: XCTestCase {
         
         sut.simulateToggleTimerUserInteraction()
         
-        XCTAssertEqual(spy.playCallCount, 1, "Should execute playHandler once.")
+        XCTAssertEqual(spy.commandsReceived, [.play], "Should execute playHandler once.")
         
         sut.simulateSkipTimerUserInteraction()
         
-        XCTAssertEqual(spy.skipCallCount, 1, "Should execute skipHandler once.")
-        XCTAssertEqual(spy.pauseCallCount, 1, "Should execute paseHandler once.")
+        XCTAssertEqual(spy.commandsReceived, [.play, .pause, .skip], "Should execute pause first then skip once")
     }
     
     func test_onStop_sendsMessageToStopHandler() {
@@ -71,11 +70,11 @@ final class TimerUIIntegrationTests: XCTestCase {
         
         sut.simulateStopTimerUserInteraction()
         
-        XCTAssertEqual(spy.stopCallCount, 1, "Should execute stop handler once.")
+        XCTAssertEqual(spy.commandsReceived, [.stop], "Should execute stop handler once.")
         
         sut.simulateStopTimerUserInteraction()
         
-        XCTAssertEqual(spy.stopCallCount, 2, "Should execute stop handler twice.")
+        XCTAssertEqual(spy.commandsReceived, [.stop, .stop], "Should execute stop handler twice.")
     }
     
     func test_stop_OnPlay_sendsMessageToToggleHandler() {
@@ -83,12 +82,11 @@ final class TimerUIIntegrationTests: XCTestCase {
         
         sut.simulateToggleTimerUserInteraction()
         
-        XCTAssertEqual(spy.playCallCount, 1, "Should execute playHandler once.")
+        XCTAssertEqual(spy.commandsReceived, [.play], "Should execute playHandler once.")
         
         sut.simulateStopTimerUserInteraction()
         
-        XCTAssertEqual(spy.stopCallCount, 1, "Should execute stopHandler once.")
-        XCTAssertEqual(spy.pauseCallCount, 1, "Should execute paseHandler once.")
+        XCTAssertEqual(spy.commandsReceived, [.play, .pause, .stop], "Should execute pause first then stop.")
     }
     
     // MARK: - Helpers
@@ -121,10 +119,19 @@ final class TimerUIIntegrationTests: XCTestCase {
     }
     
     private class TimerPublisherSpy {
-        private(set) var playCallCount = 0
-        private(set) var pauseCallCount = 0
-        private(set) var skipCallCount = 0
-        private(set) var stopCallCount = 0
+        private(set) var commandsReceived = [Command]()
+        enum Command: Equatable, CustomStringConvertible {
+            case pause, play, skip, stop
+            
+            var description: String {
+                switch self {
+                case .pause: return "pause"
+                case .play: return "play"
+                case .skip: return "skip"
+                case .stop: return "stop"
+                }
+            }
+        }
         
         typealias PlayPublisher = CurrentValueSubject<ElapsedSeconds, Error>
         typealias SkipPublisher = CurrentValueSubject<ElapsedSeconds, Error>
@@ -134,7 +141,7 @@ final class TimerUIIntegrationTests: XCTestCase {
         func play() -> AnyPublisher<ElapsedSeconds, Error> {
             let elapsed = ElapsedSeconds(0, startDate: Date(), endDate: Date())
             return PlayPublisher(elapsed).map { elapsed in
-                self.playCallCount += 1
+                self.commandsReceived.append(.play)
                 return elapsed
             }.eraseToAnyPublisher()
         }
@@ -142,7 +149,7 @@ final class TimerUIIntegrationTests: XCTestCase {
         func skip() -> AnyPublisher<ElapsedSeconds, Error> {
             let elapsedTime = ElapsedSeconds(0, startDate: Date(), endDate: Date())
             return SkipPublisher(elapsedTime).map { elapsed in
-                self.skipCallCount += 1
+                self.commandsReceived.append(.skip)
                 return elapsed
             }.eraseToAnyPublisher()
         }
@@ -150,7 +157,7 @@ final class TimerUIIntegrationTests: XCTestCase {
         func stop() -> AnyPublisher<ElapsedSeconds, Error> {
             let elapsedTime = ElapsedSeconds(0, startDate: Date(), endDate: Date())
             return StopPublisher(elapsedTime).map { elapsed in
-                self.stopCallCount += 1
+                self.commandsReceived.append(.stop)
                 return elapsed
             }.eraseToAnyPublisher()
         }
@@ -158,7 +165,7 @@ final class TimerUIIntegrationTests: XCTestCase {
         func pause() -> AnyPublisher<ElapsedSeconds, Error> {
             let elapsedTime = ElapsedSeconds(0, startDate: Date(), endDate: Date())
             return PausePublisher(elapsedTime).map { elapsed in
-                self.pauseCallCount += 1
+                self.commandsReceived.append(.pause)
                 return elapsed
             }.eraseToAnyPublisher()
         }
