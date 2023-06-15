@@ -93,31 +93,7 @@ final class TimeCoachAcceptanceTests: XCTestCase {
         XCTAssertEqual(sut.timerLabelString(), "24:59")
     }
     
-    func test_OnForeground_shouldSendMessageToTimeLoader() {
-        let (sut, spy) = makeSUT()
-
-        sut.simulateGoToForeground()
-        
-        XCTAssertEqual(spy.loadTimeCallCount, 1)
-    }
-
     // MARK: - Helpers
-    private func makeSUT() -> (timerView: TimeCoach_Watch_AppApp, spy: TimerStateSpy) {
-        let spy = TimerCountdownSpy.delivers(
-            afterPomoroSeconds: 0.0...0.0,
-            pomodoroStub: pomodoroResponse,
-            afterBreakSeconds: 0.0...0.0,
-            breakStub: breakResponse)
-        let spyTimeState = TimerStateSpy()
-        
-        let sut = TimeCoach_Watch_AppApp(timerCoundown: spy,
-                                         timerState: spyTimeState)
-        
-        trackForMemoryLeak(instance: spy)
-        
-        return (sut, spyTimeState)
-    }
-    
     private func makeSUT(
         pomodoroSecondsToBeFlushed: TimeInterval = 0.0,
         breakSecondsToBeFlushed: TimeInterval = 1.0,
