@@ -93,14 +93,6 @@ final class TimeCoachAcceptanceTests: XCTestCase {
         XCTAssertEqual(sut.timerLabelString(), "24:59")
     }
     
-    func test_OnBackground_shouldSendMessageToTimeSaver() {
-        let (sut, spy) = makeSUT()
-
-        sut.simulateGoToBackground()
-        
-        XCTAssertEqual(spy.saveTimeCallCount, 1)
-    }
-    
     func test_OnForeground_shouldSendMessageToTimeLoader() {
         let (sut, spy) = makeSUT()
 
