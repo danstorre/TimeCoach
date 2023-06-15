@@ -37,10 +37,10 @@ public class PomodoroLocalTimer: TimerCountdown {
     
     public func pauseCountdown(completion: @escaping (ElapsedSeconds) -> Void) {
         invalidateTimers()
-        let elapsed = ElapsedSeconds(elapsedTimeInterval,
+        let elapsed = LocalElapsedSeconds(elapsedTimeInterval,
                                           startDate: startDate,
                                           endDate: finishDate)
-        completion(elapsed)
+        completion(elapsed.toElapseSeconds)
     }
     
     public func skipCountdown(completion: @escaping (ElapsedSeconds) -> Void) {
@@ -56,20 +56,20 @@ public class PomodoroLocalTimer: TimerCountdown {
         let now = currentDate()
         startDate = now
         finishDate = now.adding(seconds: threshold)
-        let elapsed = ElapsedSeconds(elapsedTimeInterval,
+        let elapsed = LocalElapsedSeconds(elapsedTimeInterval,
                                           startDate: startDate,
                                           endDate: finishDate)
-        completion(elapsed)
+        completion(elapsed.toElapseSeconds)
     }
     
     public func stopCountdown(completion: @escaping (ElapsedSeconds) -> Void) {
         invalidateTimers()
         elapsedTimeInterval = 0
         
-        let elapsed = ElapsedSeconds(elapsedTimeInterval,
+        let elapsed = LocalElapsedSeconds(elapsedTimeInterval,
                                           startDate: startDate,
                                           endDate: finishDate)
-        completion(elapsed)
+        completion(elapsed.toElapseSeconds)
     }
     
     private func createTimer() -> Timer {
@@ -91,10 +91,29 @@ public class PomodoroLocalTimer: TimerCountdown {
             return
         }
         elapsedTimeInterval += 1
-        let elapsed = ElapsedSeconds(elapsedTimeInterval,
+        let elapsed = LocalElapsedSeconds(elapsedTimeInterval,
                                           startDate: startDate,
                                           endDate: finishDate)
-        handler?(elapsed)
+        handler?(elapsed.toElapseSeconds)
     }
 }
 
+fileprivate struct LocalElapsedSeconds {
+    public let elapsedSeconds: TimeInterval
+    public let startDate: Date
+    public let endDate: Date
+
+    public init(
+        _ elapsedSeconds: TimeInterval,
+        startDate: Date,
+        endDate: Date
+    ) {
+        self.elapsedSeconds = elapsedSeconds
+        self.startDate = startDate
+        self.endDate = endDate
+    }
+    
+    var toElapseSeconds: ElapsedSeconds {
+        ElapsedSeconds(elapsedSeconds, startDate: startDate, endDate: endDate)
+    }
+}
