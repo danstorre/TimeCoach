@@ -36,10 +36,13 @@ final class PomodoroUseCaseTests: XCTestCase {
     }
     
     // MARK: - Helpers
-    private func makeSUT() -> (PomodoroTimer, TimerSpy) {
+    private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> (PomodoroTimer, TimerSpy) {
         let spy = TimerSpy()
-        let pomodoroTimer = PomodoroTimer(timer: spy)
+        let sut = PomodoroTimer(timer: spy)
         
-        return (pomodoroTimer, spy)
+        trackForMemoryLeak(instance: spy, file: file, line: line)
+        trackForMemoryLeak(instance: sut, file: file, line: line)
+        
+        return (sut, spy)
     }
 }
