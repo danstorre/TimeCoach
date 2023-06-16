@@ -35,6 +35,10 @@ class PomodoroTimer {
     func stop() {
         timer.stopCountdown()
     }
+    
+    func skip() {
+        timer.skipCountdown()
+    }
 }
 
 class TimerSpy {
@@ -43,6 +47,7 @@ class TimerSpy {
         case start
         case stop
         case pause
+        case skip
     }
     // MARK: - StartCoundown methods
     typealias StartCoundownCompletion = (Result<LocalElapsedSeconds, Error>) -> Void
@@ -69,6 +74,11 @@ class TimerSpy {
     // MARK: - PauseCoutdown methods
     func pauseCountdown() {
         messagesReceived.append(.pause)
+    }
+    
+    // MARK: - SkipCoutdown methods
+    func skipCountdown() {
+        messagesReceived.append(.skip)
     }
 }
 
@@ -136,6 +146,14 @@ final class PomodoroUseCaseTests: XCTestCase {
         sut.stop()
         
         XCTAssertEqual(spy.messagesReceived, [.stop])
+    }
+    
+    func test_skip_sendsSkipMessageToTimerCountdown() {
+        let (sut, spy) = makeSUT()
+        
+        sut.skip()
+        
+        XCTAssertEqual(spy.messagesReceived, [.skip])
     }
     
     // MARK: - Helper
