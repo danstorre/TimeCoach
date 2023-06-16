@@ -50,7 +50,7 @@ final class FoundationTimerCountdownTests: XCTestCase {
         XCTAssertEqual(receivedElapsedSeconds, [startingSeconds.addingElapsedSeconds(1)])
     }
     
-    
+    // MARK: - Helpers
     private func createAnyLocalElapsedSeconds(date: Date = Date()) -> LocalElapsedSeconds {
         LocalElapsedSeconds(0, startDate: date, endDate: date.adding(seconds: 1))
     }
