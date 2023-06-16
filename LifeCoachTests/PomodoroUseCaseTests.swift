@@ -72,21 +72,15 @@ final class PomodoroUseCaseTests: XCTestCase {
     }
     
     func test_start_deliversTimerErrorOnTimerCountdownError() {
-        var receivedError: PomodoroTimer.Error?
+        var recievedResult: PomodoroTimer.Result?
         let (sut, spy) = makeSUT(timeReceiver: { result in
-            switch result {
-            case .success:
-                XCTFail("should have failed")
-            case let .failure(error):
-                receivedError = error
-            }
+            recievedResult = result
         })
         
         sut.start()
-        
         spy.failsTimerWith(error: anyNSError())
         
-        XCTAssertEqual(receivedError, .timerError)
+        assert(recievedResult: recievedResult!, ToBe: .failure(.timerError))
     }
     
     func test_start_sendsStopMessageToTimerCountdownOnTimerCountdownError() {
@@ -100,24 +94,31 @@ final class PomodoroUseCaseTests: XCTestCase {
     }
     
     func test_start_deliversElapsedSecondsOnTimerCountdownSuccessDelivery() {
-        let startTime = Date()
-        let deliveredTime = makeDeliveredTime(1, startDate: startTime, endDate: startTime.adding(seconds: .pomodoroInSeconds))
-        
+        var recievedResult: PomodoroTimer.Result?
         let (sut, spy) = makeSUT(timeReceiver: { result in
-            switch result {
-            case let .success(elapsedSeconds):
-                XCTAssertEqual(elapsedSeconds, deliveredTime.model)
-            case .failure:
-                XCTFail("should have succeeded")
-            }
+            recievedResult = result
         })
+        let startTime = Date()
+        let expectedDeliveredTime = makeDeliveredTime(1, startDate: startTime, endDate: startTime.adding(seconds: .pomodoroInSeconds))
         
         sut.start()
+        spy.delivers(time: expectedDeliveredTime.local)
         
-        spy.delivers(time: deliveredTime.local)
+        assert(recievedResult: recievedResult!, ToBe: .success(expectedDeliveredTime.model))
     }
     
-    // MARK: - Helpers
+    // MARK: - Helper
+    private func assert(recievedResult result: PomodoroTimer.Result, ToBe expectedResult: PomodoroTimer.Result) {
+        switch (result, expectedResult) {
+        case let (.success(timeDelivered), .success(expectedTimeDelivered)):
+            XCTAssertEqual(timeDelivered, expectedTimeDelivered)
+        case let (.failure(error), .failure(expectedError)):
+            XCTAssertEqual(error, expectedError)
+        case (.failure, .success), (.success, .failure):
+            XCTFail("expected \(expectedResult), got \(result)")
+        }
+    }
+    
     private func makeDeliveredTime(_ elapsedSeconds: TimeInterval,
                                    startDate: Date,
                                    endDate: Date) -> (model: ElapsedSeconds, local: LocalElapsedSeconds) {
