@@ -1,12 +1,5 @@
 import Foundation
 
-public protocol RegularTimer {
-    func start()
-    func pause()
-    func stop()
-    func skip()
-}
-
 public class PomodoroTimer: RegularTimer {
     private let timer: TimerCoutdown
     private let timeReceiver: (Result) -> Void
