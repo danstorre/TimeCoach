@@ -10,13 +10,34 @@ class FoundationTimerCountdown {
     
     var state: TimerState { .pause }
     private let startingSeconds: LocalElapsedSeconds
+    private var elapsedTimeInterval: TimeInterval = 0
+    private var timerDelivery: StartCoundownCompletion?
+    
+    private var currentTimer: Timer?
     
     init(startingSeconds: LocalElapsedSeconds) {
         self.startingSeconds = startingSeconds
     }
     
     func startCountdown(completion: @escaping StartCoundownCompletion) {
-        completion(.success(startingSeconds.addingElapsedSeconds(1)))
+        timerDelivery = completion
+        createTimer()
+    }
+    
+    private func createTimer() {
+        currentTimer = Timer.init(timeInterval: 1, target: self, selector: #selector(elapsedCompletion), userInfo: nil, repeats: true)
+        RunLoop.current.add(currentTimer!, forMode: .common)
+    }
+    
+    @objc
+    private func elapsedCompletion() {
+        elapsedTimeInterval += 1
+        let elapsed = startingSeconds.addingElapsedSeconds(elapsedTimeInterval)
+        timerDelivery?(.success(elapsed))
+    }
+    
+    func invalidatesTimer() {
+        currentTimer?.invalidate()
     }
 }
 
@@ -27,6 +48,7 @@ private extension LocalElapsedSeconds {
 }
 
 final class FoundationTimerCountdownTests: XCTestCase {
+    
     func test_init_stateIsPaused() {
         let sut = FoundationTimerCountdown(startingSeconds: createAnyLocalElapsedSeconds())
         XCTAssertEqual(sut.state, .pause)
@@ -46,8 +68,30 @@ final class FoundationTimerCountdownTests: XCTestCase {
             expectation.fulfill()
         }
         
-        wait(for: [expectation], timeout: 1.5)
+        wait(for: [expectation], timeout: 1.1)
+        sut.invalidatesTimer()
         XCTAssertEqual(receivedElapsedSeconds, [startingSeconds.addingElapsedSeconds(1)])
+    }
+    
+    func test_start_deliversTwoSecondsElapsedFromTheSetOfStartingSeconds() {
+        let fixedDate = Date()
+        let startingSeconds = createElapsedSeconds(0, startDate: fixedDate, endDate: fixedDate.addingTimeInterval(.pomodoroInSeconds))
+        let sut = FoundationTimerCountdown(startingSeconds: startingSeconds)
+
+        var receivedElapsedSeconds = [LocalElapsedSeconds]()
+        let expectation = expectation(description: "wait for start countdown to deliver time.")
+        expectation.expectedFulfillmentCount = 2
+        sut.startCountdown() { result in
+            if case let .success(deliveredElapsedSeconds) = result {
+                receivedElapsedSeconds.append(deliveredElapsedSeconds)
+            }
+            expectation.fulfill()
+        }
+
+        wait(for: [expectation], timeout: 2.1)
+        sut.invalidatesTimer()
+
+        XCTAssertEqual(receivedElapsedSeconds, [startingSeconds.addingElapsedSeconds(1), startingSeconds.addingElapsedSeconds(2)])
     }
     
     // MARK: - Helpers
