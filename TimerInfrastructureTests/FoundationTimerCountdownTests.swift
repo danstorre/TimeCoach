@@ -34,7 +34,7 @@ final class FoundationTimerCountdownTests: XCTestCase {
     
     func test_start_deliversOneSecondElapsedFromTheSetOfStartingSeconds() {
         let fixedDate = Date()
-        let startingSeconds = LocalElapsedSeconds(0, startDate: fixedDate, endDate: fixedDate.addingTimeInterval(.pomodoroInSeconds))
+        let startingSeconds = createElapsedSeconds(0, startDate: fixedDate, endDate: fixedDate.addingTimeInterval(.pomodoroInSeconds))
         let timerCountdown = FoundationTimerCountdown(startingSeconds: startingSeconds)
         
         var receivedElapsedSeconds = [LocalElapsedSeconds]()
@@ -51,6 +51,10 @@ final class FoundationTimerCountdownTests: XCTestCase {
     }
     
     // MARK: - Helpers
+    private func createElapsedSeconds(_ elapsedSeconds: TimeInterval, startDate: Date, endDate: Date) -> LocalElapsedSeconds {
+        LocalElapsedSeconds(elapsedSeconds, startDate: startDate, endDate: startDate)
+    }
+    
     private func createAnyLocalElapsedSeconds(date: Date = Date()) -> LocalElapsedSeconds {
         LocalElapsedSeconds(0, startDate: date, endDate: date.adding(seconds: 1))
     }
