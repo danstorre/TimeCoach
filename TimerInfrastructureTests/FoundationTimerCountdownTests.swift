@@ -28,18 +28,18 @@ private extension LocalElapsedSeconds {
 
 final class FoundationTimerCountdownTests: XCTestCase {
     func test_init_stateIsPaused() {
-        let timerCountdown = FoundationTimerCountdown(startingSeconds: createAnyLocalElapsedSeconds())
-        XCTAssertEqual(timerCountdown.state, .pause)
+        let sut = FoundationTimerCountdown(startingSeconds: createAnyLocalElapsedSeconds())
+        XCTAssertEqual(sut.state, .pause)
     }
     
     func test_start_deliversOneSecondElapsedFromTheSetOfStartingSeconds() {
         let fixedDate = Date()
         let startingSeconds = createElapsedSeconds(0, startDate: fixedDate, endDate: fixedDate.addingTimeInterval(.pomodoroInSeconds))
-        let timerCountdown = FoundationTimerCountdown(startingSeconds: startingSeconds)
+        let sut = FoundationTimerCountdown(startingSeconds: startingSeconds)
         
         var receivedElapsedSeconds = [LocalElapsedSeconds]()
         let expectation = expectation(description: "wait for start countdown to deliver time.")
-        timerCountdown.startCountdown() { result in
+        sut.startCountdown() { result in
             if case let .success(deliveredElapsedSeconds) = result {
                 receivedElapsedSeconds.append(deliveredElapsedSeconds)
             }
