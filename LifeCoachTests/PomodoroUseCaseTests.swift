@@ -2,7 +2,7 @@ import XCTest
 import LifeCoach
 
 class PomodoroTimer {
-    private let timer: TimerSpy
+    private let timer: TimerCoutdown
     private let timeReceiver: (Result) -> Void
     
     enum Error: Swift.Error {
@@ -11,7 +11,7 @@ class PomodoroTimer {
     
     typealias Result = Swift.Result<ElapsedSeconds, Error>
     
-    init(timer: TimerSpy, timeReceiver: @escaping (Result) -> Void) {
+    init(timer: TimerCoutdown, timeReceiver: @escaping (Result) -> Void) {
         self.timer = timer
         self.timeReceiver = timeReceiver
     }
@@ -41,45 +41,12 @@ class PomodoroTimer {
     }
 }
 
-class TimerSpy {
-    private(set) var messagesReceived = [TimerCountdownMessages]()
-    enum TimerCountdownMessages {
-        case start
-        case stop
-        case pause
-        case skip
-    }
-    // MARK: - StartCoundown methods
+protocol TimerCoutdown {
     typealias StartCoundownCompletion = (Result<LocalElapsedSeconds, Error>) -> Void
-    private var startCountdownCompletions = [StartCoundownCompletion]()
-    
-    func startCountdown(completion: @escaping StartCoundownCompletion) {
-        messagesReceived.append(.start)
-        startCountdownCompletions.append(completion)
-    }
-    
-    func failsTimerWith(error: NSError, at index: Int = 0) {
-        startCountdownCompletions[index](.failure(error))
-    }
-    
-    func delivers(time localTime: LocalElapsedSeconds, at index: Int = 0) {
-        startCountdownCompletions[index](.success(localTime))
-    }
-    
-    // MARK: - StopCountdown methods
-    func stopCountdown() {
-        messagesReceived.append(.stop)
-    }
-    
-    // MARK: - PauseCoutdown methods
-    func pauseCountdown() {
-        messagesReceived.append(.pause)
-    }
-    
-    // MARK: - SkipCoutdown methods
-    func skipCountdown() {
-        messagesReceived.append(.skip)
-    }
+    func startCountdown(completion: @escaping StartCoundownCompletion)
+    func stopCountdown()
+    func pauseCountdown()
+    func skipCountdown()
 }
 
 final class PomodoroUseCaseTests: XCTestCase {
@@ -190,5 +157,46 @@ final class PomodoroUseCaseTests: XCTestCase {
     
     private func anyNSError() -> NSError {
         NSError(domain: "any", code: 1)
+    }
+    
+    private class TimerSpy: TimerCoutdown {
+        private(set) var messagesReceived = [TimerCountdownMessages]()
+        enum TimerCountdownMessages {
+            case start
+            case stop
+            case pause
+            case skip
+        }
+        // MARK: - StartCoundown methods
+        typealias StartCoundownCompletion = (Result<LocalElapsedSeconds, Error>) -> Void
+        private var startCountdownCompletions = [StartCoundownCompletion]()
+        
+        func startCountdown(completion: @escaping StartCoundownCompletion) {
+            messagesReceived.append(.start)
+            startCountdownCompletions.append(completion)
+        }
+        
+        func failsTimerWith(error: NSError, at index: Int = 0) {
+            startCountdownCompletions[index](.failure(error))
+        }
+        
+        func delivers(time localTime: LocalElapsedSeconds, at index: Int = 0) {
+            startCountdownCompletions[index](.success(localTime))
+        }
+        
+        // MARK: - StopCountdown methods
+        func stopCountdown() {
+            messagesReceived.append(.stop)
+        }
+        
+        // MARK: - PauseCoutdown methods
+        func pauseCountdown() {
+            messagesReceived.append(.pause)
+        }
+        
+        // MARK: - SkipCoutdown methods
+        func skipCountdown() {
+            messagesReceived.append(.skip)
+        }
     }
 }
