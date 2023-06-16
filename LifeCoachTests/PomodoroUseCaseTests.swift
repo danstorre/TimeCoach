@@ -15,23 +15,35 @@ class PomodoroTimer {
     
     func start() {
         timer.startCountdown() { [unowned self] error in
+            self.timer.stopCountdown()
             self.timeReceiver(.timerError)
         }
     }
 }
 
 class TimerSpy {
-    private(set) var startCountdownCallCount = 0
+    var startCountdownCallCount: Int {
+        messagesReceived.filter { $0 == .start }.count
+    }
+    private(set) var messagesReceived = [TimerCountdownMessages]()
+    enum TimerCountdownMessages {
+        case start
+        case stop
+    }
     
     private var startCountdownCompletions = [(Error) -> Void]()
     
     func startCountdown(completion: @escaping (Error) -> Void) {
-        startCountdownCallCount += 1
+        messagesReceived.append(.start)
         startCountdownCompletions.append(completion)
     }
     
     func failsTimerWith(error: NSError, at index: Int = 0) {
         startCountdownCompletions[index](error)
+    }
+    
+    func stopCountdown() {
+        messagesReceived.append(.stop)
     }
 }
 
@@ -61,6 +73,16 @@ final class PomodoroUseCaseTests: XCTestCase {
         spy.failsTimerWith(error: anyNSError())
         
         XCTAssertEqual(receivedError, .timerError)
+    }
+    
+    func test_start_sendsStopMessageToTimerCountdownOnTimerCountdownError() {
+        let (sut, spy) = makeSUT()
+        
+        sut.start()
+        
+        spy.failsTimerWith(error: anyNSError())
+        
+        XCTAssertEqual(spy.messagesReceived, [.start, .stop])
     }
     
     // MARK: - Helpers
