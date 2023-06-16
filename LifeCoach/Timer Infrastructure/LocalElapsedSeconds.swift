@@ -1,6 +1,6 @@
 import Foundation
 
-struct LocalElapsedSeconds {
+public struct LocalElapsedSeconds {
     public let elapsedSeconds: TimeInterval
     public let startDate: Date
     public let endDate: Date
