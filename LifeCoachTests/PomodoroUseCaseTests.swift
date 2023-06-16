@@ -1,54 +1,6 @@
 import XCTest
 import LifeCoach
 
-class PomodoroTimer {
-    private let timer: TimerCoutdown
-    private let timeReceiver: (Result) -> Void
-    
-    enum Error: Swift.Error {
-        case timerError
-    }
-    
-    typealias Result = Swift.Result<ElapsedSeconds, Error>
-    
-    init(timer: TimerCoutdown, timeReceiver: @escaping (Result) -> Void) {
-        self.timer = timer
-        self.timeReceiver = timeReceiver
-    }
-    
-    func start() {
-        timer.startCountdown() { [unowned self] result in
-            switch result {
-            case let .success(localElapsedSeconds):
-                self.timeReceiver(.success(localElapsedSeconds.toElapseSeconds))
-            case .failure:
-                self.timer.stopCountdown()
-                self.timeReceiver(.failure(.timerError))
-            }
-        }
-    }
-    
-    func pause() {
-        timer.pauseCountdown()
-    }
-    
-    func stop() {
-        timer.stopCountdown()
-    }
-    
-    func skip() {
-        timer.skipCountdown()
-    }
-}
-
-protocol TimerCoutdown {
-    typealias StartCoundownCompletion = (Result<LocalElapsedSeconds, Error>) -> Void
-    func startCountdown(completion: @escaping StartCoundownCompletion)
-    func stopCountdown()
-    func pauseCountdown()
-    func skipCountdown()
-}
-
 final class PomodoroUseCaseTests: XCTestCase {
     func test_init_doesNotSendsMessageToTimerCountdownOnInit() {
         let (_, spy) = makeSUT()
