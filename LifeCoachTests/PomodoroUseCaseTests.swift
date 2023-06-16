@@ -97,7 +97,7 @@ final class PomodoroUseCaseTests: XCTestCase {
     
     private func makeSUT(timeReceiver: ((PomodoroTimer.Result) -> Void)? = nil,
                          file: StaticString = #filePath,
-                         line: UInt = #line) -> (PomodoroTimer, TimerSpy) {
+                         line: UInt = #line) -> (RegularTimer, TimerSpy) {
         let spy = TimerSpy()
         let sut = PomodoroTimer(timer: spy, timeReceiver: timeReceiver ?? { _ in })
         

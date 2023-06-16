@@ -1,13 +1,13 @@
-//
-//  PomodoroTimer.swift
-//  LifeCoach
-//
-//  Created by Daniel Torres on 6/16/23.
-//
-
 import Foundation
 
-public class PomodoroTimer {
+public protocol RegularTimer {
+    func start()
+    func pause()
+    func stop()
+    func skip()
+}
+
+public class PomodoroTimer: RegularTimer {
     private let timer: TimerCoutdown
     private let timeReceiver: (Result) -> Void
     
