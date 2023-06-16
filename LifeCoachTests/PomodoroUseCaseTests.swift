@@ -31,6 +31,10 @@ class PomodoroTimer {
     func pause() {
         timer.pauseCountdown()
     }
+    
+    func stop() {
+        timer.stopCountdown()
+    }
 }
 
 class TimerSpy {
@@ -124,6 +128,14 @@ final class PomodoroUseCaseTests: XCTestCase {
         sut.pause()
         
         XCTAssertEqual(spy.messagesReceived, [.pause])
+    }
+    
+    func test_stop_sendsStopMessageToTimerCountdown() {
+        let (sut, spy) = makeSUT()
+        
+        sut.stop()
+        
+        XCTAssertEqual(spy.messagesReceived, [.stop])
     }
     
     // MARK: - Helper
