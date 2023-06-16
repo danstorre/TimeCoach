@@ -1,0 +1,26 @@
+- startCountdown (side-effects)
+   - on countdown `pause` state, changes countdown state to `running` and sends with `1 elapsed second` from the current set.
+   - on countdown `running` state, does nothing (countdown keeps `running` state and does not fail)
+   - Error returns error (if applicable, e.g., timer error)
+
+- stopCountdown (side-effects)
+   - on countdown `pause` state, does nothing (countdown keeps in a `pause` state and does not fail)
+   - on countdown `running` state, changes countdown state to `pause` sends `0 elapsed seconds` from the current set.
+   - Error returns error (if applicable, e.g., timer error)
+
+- pauseCountdown (side-effects)
+   - on countdown `pause` state, does nothing (countdown keeps in a `pause` state and does not fail)
+   - on countdown `running` state, changes countdown state to `pause` and does not send any other values.
+   - Error returns error (if applicable, e.g., timer error)
+
+- skipCountdown (side-effects)
+   - on countdown `pause` state, does not change any state of the countdown, and sends next countdown set.
+   - on countdown `running` state, changes countdown state to `pause`, and sends next countdown set.
+   - Error returns error (if applicable, e.g., timer error)
+
+- Side-effects must run serially to avoid race conditions.
+
+
+States:
+Running
+Pause
