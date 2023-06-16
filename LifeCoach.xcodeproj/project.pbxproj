@@ -44,6 +44,7 @@
 		FBD56F6B2A3CEF33002736AD /* PomodoroUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD56F6A2A3CEF33002736AD /* PomodoroUseCaseTests.swift */; };
 		FBD56F722A3D0E20002736AD /* PomodoroTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD56F712A3D0E20002736AD /* PomodoroTimer.swift */; };
 		FBD56F742A3D0ECE002736AD /* RegularTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD56F732A3D0ECE002736AD /* RegularTimer.swift */; };
+		FBD56F762A3D0EFA002736AD /* TimerCoutdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD56F752A3D0EFA002736AD /* TimerCoutdown.swift */; };
 		FBDBAC4629762AC7009E440A /* TimerSave.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDBAC4529762AC7009E440A /* TimerSave.swift */; };
 		FBDBAC4829762AD1009E440A /* TimerLoad.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDBAC4729762AD1009E440A /* TimerLoad.swift */; };
 		FBDBAC4A29762AE5009E440A /* PomodoroLocalTimer+TimerSave.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDBAC4929762AE5009E440A /* PomodoroLocalTimer+TimerSave.swift */; };
@@ -175,6 +176,7 @@
 		FBD56F6A2A3CEF33002736AD /* PomodoroUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PomodoroUseCaseTests.swift; sourceTree = "<group>"; };
 		FBD56F712A3D0E20002736AD /* PomodoroTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PomodoroTimer.swift; sourceTree = "<group>"; };
 		FBD56F732A3D0ECE002736AD /* RegularTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegularTimer.swift; sourceTree = "<group>"; };
+		FBD56F752A3D0EFA002736AD /* TimerCoutdown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerCoutdown.swift; sourceTree = "<group>"; };
 		FBDBAC4529762AC7009E440A /* TimerSave.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerSave.swift; sourceTree = "<group>"; };
 		FBDBAC4729762AD1009E440A /* TimerLoad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerLoad.swift; sourceTree = "<group>"; };
 		FBDBAC4929762AE5009E440A /* PomodoroLocalTimer+TimerSave.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PomodoroLocalTimer+TimerSave.swift"; sourceTree = "<group>"; };
@@ -435,6 +437,7 @@
 			isa = PBXGroup;
 			children = (
 				FBD56F712A3D0E20002736AD /* PomodoroTimer.swift */,
+				FBD56F752A3D0EFA002736AD /* TimerCoutdown.swift */,
 			);
 			path = "Timer Pomodoro";
 			sourceTree = "<group>";
@@ -815,6 +818,7 @@
 				FB960C77293D48D200ECBAD5 /* Timer+DefaultStrings.swift in Sources */,
 				FB960C76293D48CB00ECBAD5 /* TimerViewModel.swift in Sources */,
 				FBD56F722A3D0E20002736AD /* PomodoroTimer.swift in Sources */,
+				FBD56F762A3D0EFA002736AD /* TimerCoutdown.swift in Sources */,
 				FBDBAC4829762AD1009E440A /* TimerLoad.swift in Sources */,
 				FBDBAC4A29762AE5009E440A /* PomodoroLocalTimer+TimerSave.swift in Sources */,
 				FB0F6BB329386184009405FE /* PomodoroLocalTimer.swift in Sources */,
