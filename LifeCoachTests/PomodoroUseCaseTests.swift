@@ -23,17 +23,23 @@ class TimerSpy {
 final class PomodoroUseCaseTests: XCTestCase {
 
     func test_init_doesNotSendsMessageToTimerCountdownOnInit() {
-        let timerHelper = TimerSpy()
-        let _ = PomodoroTimer(timer: timerHelper)
-        XCTAssertEqual(timerHelper.getTimeCallCount, 0)
+        let (_, spy) = makeSUT()
+        XCTAssertEqual(spy.getTimeCallCount, 0)
     }
     
     func test_start_sendsStartMessageToTimerCountdown() {
-        let timerHelper = TimerSpy()
-        let pomodoroTimer = PomodoroTimer(timer: timerHelper)
+        let (sut, spy) = makeSUT()
         
-        pomodoroTimer.start()
+        sut.start()
         
-        XCTAssertEqual(timerHelper.getTimeCallCount, 1)
+        XCTAssertEqual(spy.getTimeCallCount, 1)
+    }
+    
+    // MARK: - Helpers
+    private func makeSUT() -> (PomodoroTimer, TimerSpy) {
+        let spy = TimerSpy()
+        let pomodoroTimer = PomodoroTimer(timer: spy)
+        
+        return (pomodoroTimer, spy)
     }
 }
