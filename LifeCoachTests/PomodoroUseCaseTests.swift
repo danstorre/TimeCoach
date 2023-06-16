@@ -31,9 +31,10 @@ class TimerSpy {
         case stop
     }
     
-    private var startCountdownCompletions = [(Error) -> Void]()
+    typealias StartCoundownCompletion = (Error) -> Void
+    private var startCountdownCompletions = [StartCoundownCompletion]()
     
-    func startCountdown(completion: @escaping (Error) -> Void) {
+    func startCountdown(completion: @escaping StartCoundownCompletion) {
         messagesReceived.append(.start)
         startCountdownCompletions.append(completion)
     }
