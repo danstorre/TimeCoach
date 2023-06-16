@@ -27,6 +27,10 @@ class PomodoroTimer {
             }
         }
     }
+    
+    func pause() {
+        timer.pauseCountdown()
+    }
 }
 
 class TimerSpy {
@@ -34,6 +38,7 @@ class TimerSpy {
     enum TimerCountdownMessages {
         case start
         case stop
+        case pause
     }
     // MARK: - StartCoundown methods
     typealias StartCoundownCompletion = (Result<LocalElapsedSeconds, Error>) -> Void
@@ -55,6 +60,11 @@ class TimerSpy {
     // MARK: - StopCountdown methods
     func stopCountdown() {
         messagesReceived.append(.stop)
+    }
+    
+    // MARK: - PauseCoutdown methods
+    func pauseCountdown() {
+        messagesReceived.append(.pause)
     }
 }
 
@@ -106,6 +116,14 @@ final class PomodoroUseCaseTests: XCTestCase {
         spy.delivers(time: expectedDeliveredTime.local)
         
         assert(recievedResult: recievedResult!, ToBe: .success(expectedDeliveredTime.model))
+    }
+    
+    func test_pause_sendsPauseMessageToTimerCountdown() {
+        let (sut, spy) = makeSUT()
+        
+        sut.pause()
+        
+        XCTAssertEqual(spy.messagesReceived, [.pause])
     }
     
     // MARK: - Helper
