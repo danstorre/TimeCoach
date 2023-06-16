@@ -113,7 +113,7 @@ final class PomodoroUseCaseTests: XCTestCase {
     
     private class TimerSpy: TimerCoutdown {
         private(set) var messagesReceived = [TimerCountdownMessages]()
-        enum TimerCountdownMessages {
+        enum TimerCountdownMessages: Equatable {
             case start
             case stop
             case pause
