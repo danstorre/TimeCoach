@@ -22,9 +22,6 @@ class PomodoroTimer {
 }
 
 class TimerSpy {
-    var startCountdownCallCount: Int {
-        messagesReceived.filter { $0 == .start }.count
-    }
     private(set) var messagesReceived = [TimerCountdownMessages]()
     enum TimerCountdownMessages {
         case start
@@ -52,7 +49,7 @@ final class PomodoroUseCaseTests: XCTestCase {
 
     func test_init_doesNotSendsMessageToTimerCountdownOnInit() {
         let (_, spy) = makeSUT()
-        XCTAssertEqual(spy.startCountdownCallCount, 0)
+        XCTAssertEqual(spy.messagesReceived, [])
     }
     
     func test_start_sendsStartMessageToTimerCountdown() {
@@ -60,7 +57,7 @@ final class PomodoroUseCaseTests: XCTestCase {
         
         sut.start()
         
-        XCTAssertEqual(spy.startCountdownCallCount, 1)
+        XCTAssertEqual(spy.messagesReceived, [.start])
     }
     
     func test_start_deliversTimerErrorOnTimerCountdownError() {
