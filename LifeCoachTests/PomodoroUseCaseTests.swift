@@ -35,7 +35,7 @@ class TimerSpy {
         case start
         case stop
     }
-    
+    // MARK: - StartCoundown methods
     typealias StartCoundownCompletion = (Result<LocalElapsedSeconds, Error>) -> Void
     private var startCountdownCompletions = [StartCoundownCompletion]()
     
@@ -48,12 +48,13 @@ class TimerSpy {
         startCountdownCompletions[index](.failure(error))
     }
     
-    func stopCountdown() {
-        messagesReceived.append(.stop)
-    }
-    
     func delivers(time localTime: LocalElapsedSeconds, at index: Int = 0) {
         startCountdownCompletions[index](.success(localTime))
+    }
+    
+    // MARK: - StopCountdown methods
+    func stopCountdown() {
+        messagesReceived.append(.stop)
     }
 }
 
