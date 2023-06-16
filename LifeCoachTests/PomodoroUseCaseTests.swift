@@ -22,7 +22,7 @@ class TimerSpy {
 
 final class PomodoroUseCaseTests: XCTestCase {
 
-    func test_init_doesNotSendsMessageGetTimeOnInit() {
+    func test_init_doesNotSendsMessageToTimerCountdownOnInit() {
         let timerHelper = TimerSpy()
         let _ = PomodoroTimer(timer: timerHelper)
         XCTAssertEqual(timerHelper.getTimeCallCount, 0)
