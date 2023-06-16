@@ -58,7 +58,6 @@ class TimerSpy {
 }
 
 final class PomodoroUseCaseTests: XCTestCase {
-
     func test_init_doesNotSendsMessageToTimerCountdownOnInit() {
         let (_, spy) = makeSUT()
         XCTAssertEqual(spy.messagesReceived, [])
@@ -102,12 +101,12 @@ final class PomodoroUseCaseTests: XCTestCase {
     
     func test_start_deliversElapsedSecondsOnTimerCountdownSuccessDelivery() {
         let startTime = Date()
-        let model = makeModel(1, startDate: startTime, endDate: startTime.adding(seconds: .pomodoroInSeconds))
+        let deliveredTime = makeDeliveredTime(1, startDate: startTime, endDate: startTime.adding(seconds: .pomodoroInSeconds))
         
         let (sut, spy) = makeSUT(timeReceiver: { result in
             switch result {
             case let .success(elapsedSeconds):
-                XCTAssertEqual(elapsedSeconds, model.model)
+                XCTAssertEqual(elapsedSeconds, deliveredTime.model)
             case .failure:
                 XCTFail("should have succeeded")
             }
@@ -115,13 +114,13 @@ final class PomodoroUseCaseTests: XCTestCase {
         
         sut.start()
         
-        spy.delivers(time: model.local)
+        spy.delivers(time: deliveredTime.local)
     }
     
     // MARK: - Helpers
-    private func makeModel(_ elapsedSeconds: TimeInterval,
-                           startDate: Date,
-                           endDate: Date) -> (model: ElapsedSeconds, local: LocalElapsedSeconds) {
+    private func makeDeliveredTime(_ elapsedSeconds: TimeInterval,
+                                   startDate: Date,
+                                   endDate: Date) -> (model: ElapsedSeconds, local: LocalElapsedSeconds) {
         let model = ElapsedSeconds(elapsedSeconds, startDate: startDate, endDate: endDate)
         let local = LocalElapsedSeconds(elapsedSeconds, startDate: startDate, endDate: endDate)
         return (model, local)
