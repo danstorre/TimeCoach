@@ -83,7 +83,7 @@ final class FoundationTimerCountdownTests: XCTestCase {
         XCTAssertEqual(sut.state, .pause)
     }
     
-    func test_start_deliversOneSecondElapsedFromTheStartingSetAndChangesStateToRunning() {
+    func test_start_deliversOneMilliSecondElapsedFromTheStartingSetAndChangesStateToRunning() {
         let startSet = createAnyTimerSet()
         let sut = makeSUT(startingSet: startSet, nextSet: createAnyTimerSet())
         
@@ -91,7 +91,7 @@ final class FoundationTimerCountdownTests: XCTestCase {
                andChangesStateTo: .running)
     }
     
-    func test_start_deliversTwoSecondsElapsedFromTheStartingSetAndChangesStateToRunning() {
+    func test_start_deliversTwoMilliSecondsElapsedFromTheStartingSetAndChangesStateToRunning() {
         let fixedDate = Date()
         let startSet = createTimerSet(0, startDate: fixedDate, endDate: fixedDate.adding(seconds: 0.002))
         let sut = makeSUT(startingSet: startSet, nextSet: createAnyTimerSet())
