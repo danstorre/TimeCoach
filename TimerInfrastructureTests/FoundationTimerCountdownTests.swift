@@ -38,12 +38,8 @@ class FoundationTimerCountdown {
     
     @objc
     private func elapsedCompletion() {
-        let endDate = currentSet.endDate.adding(seconds: -elapsedTimeInterval)
-        
-        guard endDate.timeIntervalSince(currentSet.startDate) > 0 else {
-            setA = currentSet
-            currentSet = setB
-            setB = setA
+        guard hasNotHitThreshold() else {
+            executeNextSet()
             return
         }
         
@@ -51,6 +47,20 @@ class FoundationTimerCountdown {
         
         let elapsed = currentSet.addingElapsedSeconds(elapsedTimeInterval)
         timerDelivery?(.success(elapsed))
+    }
+    
+    private func hasNotHitThreshold() -> Bool {
+        let endDate = currentSet.endDate.adding(seconds: -elapsedTimeInterval)
+        return endDate.timeIntervalSince(currentSet.startDate) > 0
+    }
+    
+    private func executeNextSet() {
+        invalidatesTimer()
+        state = .pause
+        setA = currentSet
+        currentSet = setB
+        timerDelivery?(.success(setB))
+        setB = setA
     }
     
     func invalidatesTimer() {
@@ -94,6 +104,15 @@ final class FoundationTimerCountdownTests: XCTestCase {
         let sut = makeSUT(startingSet: startSet, nextSet: createAnyTimerSet())
 
         assertsStartCountdownTwiceChangesStateToRunning(sut: sut)
+    }
+    
+    func test_start_onThresholdHit_DeliversNextTimerSetAndChangesStateToPause() {
+        let fixedDate = Date()
+        let startingSet = createTimerSet(0, startDate: fixedDate, endDate: fixedDate.adding(seconds: 1))
+        let nextSet = createTimerSet(0, startDate: fixedDate, endDate: fixedDate.adding(seconds: 2))
+        let sut = makeSUT(startingSet: startingSet, nextSet: nextSet)
+        
+        expect(sut: sut, toDeliver: [startingSet.addingElapsedSeconds(1), nextSet], andChangesStateTo: .pause)
     }
     
     // MARK: - Helpers
