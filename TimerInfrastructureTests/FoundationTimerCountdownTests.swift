@@ -105,7 +105,7 @@ final class FoundationTimerCountdownTests: XCTestCase {
         let startSet = createAnyTimerSet()
         let sut = makeSUT(startingSet: startSet, nextSet: createAnyTimerSet())
 
-        assertsStartCountdownTwiceChangesStateToRunning(sut: sut)
+        assertsStartCountdownTwiceKeepsStateToRunning(sut: sut)
     }
     
     func test_start_onThresholdHit_DeliversNextTimerSetAndChangesStateToPause() {
@@ -118,7 +118,7 @@ final class FoundationTimerCountdownTests: XCTestCase {
     }
     
     // MARK: - Helpers
-    private func assertsStartCountdownTwiceChangesStateToRunning(sut: FoundationTimerCountdown) {
+    private func assertsStartCountdownTwiceKeepsStateToRunning(sut: FoundationTimerCountdown) {
         assertsStartCountdownChangesStateToRunning(sut: sut)
         assertsStartCountdownChangesStateToRunning(sut: sut)
         sut.invalidatesTimer()
