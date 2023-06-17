@@ -6,9 +6,10 @@ class FoundationTimerCountdown {
     
     enum TimerState {
         case pause
+        case running
     }
     
-    var state: TimerState { .pause }
+    private(set) var state: TimerState = .pause
     private let startingSeconds: LocalElapsedSeconds
     private var elapsedTimeInterval: TimeInterval = 0
     private var timerDelivery: StartCoundownCompletion?
@@ -20,6 +21,7 @@ class FoundationTimerCountdown {
     }
     
     func startCountdown(completion: @escaping StartCoundownCompletion) {
+        state = .running
         timerDelivery = completion
         createTimer()
     }
@@ -54,24 +56,25 @@ final class FoundationTimerCountdownTests: XCTestCase {
         XCTAssertEqual(sut.state, .pause)
     }
     
-    func test_start_deliversOneSecondElapsedFromTheSetOfStartingSeconds() {
+    func test_start_deliversOneSecondElapsedFromTheSetOfStartingSecondsAndChangesStateToRunning() {
         let fixedDate = Date()
         let startingSeconds = createElapsedSeconds(0, startDate: fixedDate, endDate: fixedDate.addingTimeInterval(.pomodoroInSeconds))
         let sut = FoundationTimerCountdown(startingSeconds: startingSeconds)
         
-        expect(sut: sut, toDeliver: [startingSeconds.addingElapsedSeconds(1)])
+        expect(sut: sut, toDeliver: [startingSeconds.addingElapsedSeconds(1)], andChangesStateTo: .running)
     }
     
-    func test_start_deliversTwoSecondsElapsedFromTheSetOfStartingSeconds() {
+    func test_start_deliversTwoSecondsElapsedFromTheSetOfStartingSecondsAndChangesStateToRunning() {
         let fixedDate = Date()
         let startingSeconds = createElapsedSeconds(0, startDate: fixedDate, endDate: fixedDate.addingTimeInterval(.pomodoroInSeconds))
         let sut = FoundationTimerCountdown(startingSeconds: startingSeconds)
 
-        expect(sut: sut, toDeliver: [startingSeconds.addingElapsedSeconds(1), startingSeconds.addingElapsedSeconds(2)])
+        expect(sut: sut, toDeliver: [startingSeconds.addingElapsedSeconds(1), startingSeconds.addingElapsedSeconds(2)],     andChangesStateTo: .running)
     }
     
     // MARK: - Helpers
-    private func expect(sut: FoundationTimerCountdown, toDeliver: [LocalElapsedSeconds]) {
+    private func expect(sut: FoundationTimerCountdown, toDeliver: [LocalElapsedSeconds],
+                        andChangesStateTo expectedState: FoundationTimerCountdown.TimerState) {
         var receivedElapsedSeconds = [LocalElapsedSeconds]()
         let expectation = expectation(description: "wait for start countdown to deliver time.")
         expectation.expectedFulfillmentCount = toDeliver.count
@@ -86,6 +89,7 @@ final class FoundationTimerCountdownTests: XCTestCase {
         sut.invalidatesTimer()
 
         XCTAssertEqual(receivedElapsedSeconds, toDeliver)
+        XCTAssertEqual(sut.state, expectedState)
     }
     
     private func createElapsedSeconds(_ elapsedSeconds: TimeInterval, startDate: Date, endDate: Date) -> LocalElapsedSeconds {
