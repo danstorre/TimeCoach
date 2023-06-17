@@ -1,5 +1,6 @@
 - startCountdown (side-effects)
-   - on countdown `pause` state, changes countdown state to `running` and sends with `1 elapsed second` from the current set.
+   ✅ on countdown `pause` state, changes countdown state to `running` and sends with `1 elapsed second` after one second has passed from the current set.
+   ✅ on countdown `pause` state, changes countdown state to `running` and sends with `2 elapsed second` after two seconds has passed from the current set.
    - on countdown `running` state, does nothing (countdown keeps `running` state and does not fail)
    - on countdown threshold, changes countdown state to `pause` and and sends next countdown set.
    - Error returns error (if applicable, e.g., timer error)
