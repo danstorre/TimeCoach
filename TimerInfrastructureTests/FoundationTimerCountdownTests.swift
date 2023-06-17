@@ -174,22 +174,27 @@ final class FoundationTimerCountdownTests: XCTestCase {
     
     func test_skip_onPauseState_doesNotChangesPauseStateAndDeliversNextTimerSet() {
         let fixedDate = Date()
-        let startingSet = createTimerSet(0, startDate: fixedDate, endDate: fixedDate.adding(seconds: 0.001))
+        let startingSet = createAnyTimerSet()
         let nextSet = createTimerSet(0, startDate: fixedDate, endDate: fixedDate.adding(seconds: 0.002))
         let sut = makeSUT(startingSet: startingSet, nextSet: nextSet)
         
-        var receivedElapsedSeconds = [LocalElapsedSeconds]()
-        sut.skipCountdown() { result in
-            if case let .success(deliveredElapsedSeconds) = result {
-                receivedElapsedSeconds.append(deliveredElapsedSeconds)
-            }
-        }
+        var receivedElapsedSeconds = receivedElapsedSecondsOnSkip(from: sut)
         
         XCTAssertEqual(sut.state, .pause)
         XCTAssertEqual(receivedElapsedSeconds, [nextSet])
     }
     
     // MARK: - Helpers
+    private func receivedElapsedSecondsOnSkip(from sut: FoundationTimerCountdown) -> [LocalElapsedSeconds] {
+        var receivedElapsedSeconds = [LocalElapsedSeconds]()
+        sut.skipCountdown() { result in
+            if case let .success(deliveredElapsedSeconds) = result {
+                receivedElapsedSeconds.append(deliveredElapsedSeconds)
+            }
+        }
+        return receivedElapsedSeconds
+    }
+    
     private func receivedElapsedSecondsOnRunningState(from sut: FoundationTimerCountdown, when action: () -> Void) -> [LocalElapsedSeconds] {
         var receivedElapsedSeconds = [LocalElapsedSeconds]()
         sut.startCountdown() { result in
