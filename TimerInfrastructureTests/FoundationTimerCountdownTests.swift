@@ -39,7 +39,10 @@ class FoundationTimerCountdown {
         timerDelivery?(.success(currentSet))
     }
     
-    func pause() {}
+    func pause() {
+        invalidatesTimer()
+        state = .pause
+    }
     
     private func createTimer() {
         currentTimer = Timer.init(timeInterval: incrementing, target: self, selector: #selector(elapsedCompletion), userInfo: nil, repeats: true)
@@ -151,7 +154,34 @@ final class FoundationTimerCountdownTests: XCTestCase {
         XCTAssertEqual(sut.state, .pause)
     }
     
+    func test_pause_onRunningState_doesNotDeliverAnyMoreTimesAndChangesStateToPause() {
+        let fixedDate = Date()
+        let startingSet = createTimerSet(0, startDate: fixedDate, endDate: fixedDate.adding(seconds: 0.001))
+        let nextSet = createTimerSet(0, startDate: fixedDate, endDate: fixedDate.adding(seconds: 0.002))
+        let sut = makeSUT(startingSet: startingSet, nextSet: nextSet)
+        
+        let receivedElapsedSeconds = receivedElapsedSecondsOnRunningState(from: sut, when: {
+            sut.pause()
+        })
+
+        XCTAssertEqual(sut.state, .pause)
+        XCTAssertEqual(receivedElapsedSeconds, [])
+    }
+    
     // MARK: - Helpers
+    private func receivedElapsedSecondsOnRunningState(from sut: FoundationTimerCountdown, when action: () -> Void) -> [LocalElapsedSeconds] {
+        var receivedElapsedSeconds = [LocalElapsedSeconds]()
+        sut.startCountdown() { result in
+            if case let .success(deliveredElapsedSeconds) = result {
+                receivedElapsedSeconds.append(deliveredElapsedSeconds)
+            }
+        }
+
+        action()
+        
+        return receivedElapsedSeconds
+    }
+    
     private func receivedElapsedSecondsOnRunningStateAfterStop(from sut: FoundationTimerCountdown) -> [LocalElapsedSeconds] {
         var receivedElapsedSeconds = [LocalElapsedSeconds]()
         sut.startCountdown() { result in
