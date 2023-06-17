@@ -123,7 +123,7 @@ final class FoundationTimerCountdownTests: XCTestCase {
         expect(sut: sut, toDeliver: [startingSet.addingElapsedSeconds(0.001), nextSet], andChangesStateTo: .pause)
     }
     
-    func test_stop_OnPauseState_DoesNotChangeStateToPause() {
+    func test_stop_OnPauseState_DoesNotChangeStateFromPause() {
         let sut = makeSUT(startingSet: createAnyTimerSet(), nextSet: createAnyTimerSet())
         
         sut.stop()
