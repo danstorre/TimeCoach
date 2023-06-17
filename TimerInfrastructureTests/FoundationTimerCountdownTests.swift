@@ -157,10 +157,7 @@ final class FoundationTimerCountdownTests: XCTestCase {
     }
     
     func test_pause_onRunningState_doesNotDeliverAnyMoreTimesAndChangesStateToPause() {
-        let fixedDate = Date()
-        let startingSet = createTimerSet(0, startDate: fixedDate, endDate: fixedDate.adding(seconds: 0.001))
-        let nextSet = createTimerSet(0, startDate: fixedDate, endDate: fixedDate.adding(seconds: 0.002))
-        let sut = makeSUT(startingSet: startingSet, nextSet: nextSet)
+        let sut = makeSUT(startingSet: createAnyTimerSet(), nextSet: createAnyTimerSet())
         
         let receivedElapsedSeconds = receivedElapsedSecondsOnRunningState(from: sut, when: {
             sut.pause()
