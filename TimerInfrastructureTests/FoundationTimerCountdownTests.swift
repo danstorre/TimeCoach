@@ -33,7 +33,11 @@ class FoundationTimerCountdown {
         createTimer()
     }
     
-    func stop() {}
+    func stop() {
+        invalidatesTimer()
+        state = .pause
+        timerDelivery?(.success(currentSet))
+    }
     
     private func createTimer() {
         currentTimer = Timer.init(timeInterval: incrementing, target: self, selector: #selector(elapsedCompletion), userInfo: nil, repeats: true)
@@ -127,7 +131,30 @@ final class FoundationTimerCountdownTests: XCTestCase {
         XCTAssertEqual(sut.state, .pause)
     }
     
+    func test_stop_onRunningStateDeliversNonElapsedSecondsFromTheCurrentTimerSet() {
+        let startingSet = createAnyTimerSet()
+        let sut = makeSUT(startingSet: startingSet, nextSet: createAnyTimerSet())
+        
+        var receivedElapsedSeconds = receivedElapsedSecondsOnRunningStateAfterStop(from: sut)
+        
+        XCTAssertEqual(sut.state, .pause)
+        XCTAssertEqual(receivedElapsedSeconds, [startingSet])
+    }
+    
     // MARK: - Helpers
+    private func receivedElapsedSecondsOnRunningStateAfterStop(from sut: FoundationTimerCountdown) -> [LocalElapsedSeconds] {
+        var receivedElapsedSeconds = [LocalElapsedSeconds]()
+        sut.startCountdown() { result in
+            if case let .success(deliveredElapsedSeconds) = result {
+                receivedElapsedSeconds.append(deliveredElapsedSeconds)
+            }
+        }
+
+        sut.stop()
+        
+        return receivedElapsedSeconds
+    }
+    
     private func assertsStartCountdownTwiceKeepsStateToRunning(sut: FoundationTimerCountdown) {
         assertsStartCountdownChangesStateToRunning(sut: sut)
         assertsStartCountdownChangesStateToRunning(sut: sut)
@@ -164,7 +191,7 @@ final class FoundationTimerCountdownTests: XCTestCase {
             expectation.fulfill()
         }
 
-        wait(for: [expectation], timeout: Double(deliverExpectation.count) + 0.1)
+        wait(for: [expectation], timeout: 0.1)
         sut.invalidatesTimer()
 
         XCTAssertEqual(receivedElapsedSeconds, deliverExpectation, file: file, line: line)
