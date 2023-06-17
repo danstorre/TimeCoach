@@ -33,6 +33,8 @@ class FoundationTimerCountdown {
         createTimer()
     }
     
+    func stop() {}
+    
     private func createTimer() {
         currentTimer = Timer.init(timeInterval: incrementing, target: self, selector: #selector(elapsedCompletion), userInfo: nil, repeats: true)
         RunLoop.current.add(currentTimer!, forMode: .common)
@@ -115,6 +117,14 @@ final class FoundationTimerCountdownTests: XCTestCase {
         let sut = makeSUT(startingSet: startingSet, nextSet: nextSet)
         
         expect(sut: sut, toDeliver: [startingSet.addingElapsedSeconds(0.001), nextSet], andChangesStateTo: .pause)
+    }
+    
+    func test_stop_OnPauseState_DoesNotChangeStateToPause() {
+        let sut = makeSUT(startingSet: createAnyTimerSet(), nextSet: createAnyTimerSet())
+        
+        sut.stop()
+        
+        XCTAssertEqual(sut.state, .pause)
     }
     
     // MARK: - Helpers
