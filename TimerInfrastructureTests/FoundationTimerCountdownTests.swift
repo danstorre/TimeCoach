@@ -14,14 +14,16 @@ class FoundationTimerCountdown {
     private var setB: LocalElapsedSeconds
     private var currentSet: LocalElapsedSeconds
     private var elapsedTimeInterval: TimeInterval = 0
+    private let incrementing: Double
     private var timerDelivery: StartCoundownCompletion?
     
     private var currentTimer: Timer?
     
-    init(startingSet: LocalElapsedSeconds, nextSet: LocalElapsedSeconds) {
+    init(startingSet: LocalElapsedSeconds, nextSet: LocalElapsedSeconds, incrementing: Double = 1.0) {
         self.setA = startingSet
         self.setB = nextSet
         self.currentSet = startingSet
+        self.incrementing = incrementing
     }
     
     func startCountdown(completion: @escaping StartCoundownCompletion) {
@@ -32,7 +34,7 @@ class FoundationTimerCountdown {
     }
     
     private func createTimer() {
-        currentTimer = Timer.init(timeInterval: 1, target: self, selector: #selector(elapsedCompletion), userInfo: nil, repeats: true)
+        currentTimer = Timer.init(timeInterval: incrementing, target: self, selector: #selector(elapsedCompletion), userInfo: nil, repeats: true)
         RunLoop.current.add(currentTimer!, forMode: .common)
     }
     
@@ -43,7 +45,7 @@ class FoundationTimerCountdown {
             return
         }
         
-        elapsedTimeInterval += 1
+        elapsedTimeInterval += incrementing
         
         let elapsed = currentSet.addingElapsedSeconds(elapsedTimeInterval)
         timerDelivery?(.success(elapsed))
@@ -85,17 +87,17 @@ final class FoundationTimerCountdownTests: XCTestCase {
         let startSet = createAnyTimerSet()
         let sut = makeSUT(startingSet: startSet, nextSet: createAnyTimerSet())
         
-        expect(sut: sut, toDeliver: [startSet.addingElapsedSeconds(1)],
+        expect(sut: sut, toDeliver: [startSet.addingElapsedSeconds(0.001)],
                andChangesStateTo: .running)
     }
     
     func test_start_deliversTwoSecondsElapsedFromTheSetOfStartingSecondsAndChangesStateToRunning() {
         let fixedDate = Date()
-        let startSet = createTimerSet(0, startDate: fixedDate, endDate: fixedDate.adding(seconds: 2))
+        let startSet = createTimerSet(0, startDate: fixedDate, endDate: fixedDate.adding(seconds: 0.002))
         let sut = makeSUT(startingSet: startSet, nextSet: createAnyTimerSet())
 
         expect(sut: sut,
-               toDeliver: [startSet.addingElapsedSeconds(1), startSet.addingElapsedSeconds(2)],
+               toDeliver: [startSet.addingElapsedSeconds(0.001), startSet.addingElapsedSeconds(0.002)],
                andChangesStateTo: .running)
     }
     
@@ -108,11 +110,11 @@ final class FoundationTimerCountdownTests: XCTestCase {
     
     func test_start_onThresholdHit_DeliversNextTimerSetAndChangesStateToPause() {
         let fixedDate = Date()
-        let startingSet = createTimerSet(0, startDate: fixedDate, endDate: fixedDate.adding(seconds: 1))
-        let nextSet = createTimerSet(0, startDate: fixedDate, endDate: fixedDate.adding(seconds: 2))
+        let startingSet = createTimerSet(0, startDate: fixedDate, endDate: fixedDate.adding(seconds: 0.001))
+        let nextSet = createTimerSet(0, startDate: fixedDate, endDate: fixedDate.adding(seconds: 0.002))
         let sut = makeSUT(startingSet: startingSet, nextSet: nextSet)
         
-        expect(sut: sut, toDeliver: [startingSet.addingElapsedSeconds(1), nextSet], andChangesStateTo: .pause)
+        expect(sut: sut, toDeliver: [startingSet.addingElapsedSeconds(0.001), nextSet], andChangesStateTo: .pause)
     }
     
     // MARK: - Helpers
@@ -131,7 +133,7 @@ final class FoundationTimerCountdownTests: XCTestCase {
     private func makeSUT(startingSet: LocalElapsedSeconds, nextSet: LocalElapsedSeconds,
                          file: StaticString = #filePath,
                          line: UInt = #line) -> FoundationTimerCountdown {
-        let sut = FoundationTimerCountdown(startingSet: startingSet, nextSet: nextSet)
+        let sut = FoundationTimerCountdown(startingSet: startingSet, nextSet: nextSet, incrementing: 0.001)
         
         trackForMemoryLeak(instance: sut, file: file, line: line)
         
