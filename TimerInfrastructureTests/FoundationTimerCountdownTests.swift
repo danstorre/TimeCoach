@@ -61,14 +61,17 @@ final class FoundationTimerCountdownTests: XCTestCase {
         let startingSeconds = createAnyLocalElapsedSeconds()
         let sut = makeSUT(startingSeconds: startingSeconds)
         
-        expect(sut: sut, toDeliver: [startingSeconds.addingElapsedSeconds(1)], andChangesStateTo: .running)
+        expect(sut: sut, toDeliver: [startingSeconds.addingElapsedSeconds(1)],
+               andChangesStateTo: .running)
     }
     
     func test_start_deliversTwoSecondsElapsedFromTheSetOfStartingSecondsAndChangesStateToRunning() {
         let startingSeconds = createAnyLocalElapsedSeconds()
         let sut = makeSUT(startingSeconds: startingSeconds)
 
-        expect(sut: sut, toDeliver: [startingSeconds.addingElapsedSeconds(1), startingSeconds.addingElapsedSeconds(2)],     andChangesStateTo: .running)
+        expect(sut: sut,
+               toDeliver: [startingSeconds.addingElapsedSeconds(1), startingSeconds.addingElapsedSeconds(2)],
+               andChangesStateTo: .running)
     }
     
     func test_startTwice_doesNotChangeStateOfRunning() {
