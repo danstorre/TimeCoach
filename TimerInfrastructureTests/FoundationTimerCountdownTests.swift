@@ -39,6 +39,8 @@ class FoundationTimerCountdown {
         timerDelivery?(.success(currentSet))
     }
     
+    func pause() {}
+    
     private func createTimer() {
         currentTimer = Timer.init(timeInterval: incrementing, target: self, selector: #selector(elapsedCompletion), userInfo: nil, repeats: true)
         RunLoop.current.add(currentTimer!, forMode: .common)
@@ -139,6 +141,14 @@ final class FoundationTimerCountdownTests: XCTestCase {
         
         XCTAssertEqual(sut.state, .pause)
         XCTAssertEqual(receivedElapsedSeconds, [startingSet])
+    }
+    
+    func test_pause_OnPauseState_DoesNotChangeStateFromPause() {
+        let sut = makeSUT(startingSet: createAnyTimerSet(), nextSet: createAnyTimerSet())
+        
+        sut.pause()
+        
+        XCTAssertEqual(sut.state, .pause)
     }
     
     // MARK: - Helpers
