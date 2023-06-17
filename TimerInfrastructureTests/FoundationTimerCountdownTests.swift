@@ -78,18 +78,18 @@ final class FoundationTimerCountdownTests: XCTestCase {
         let startingSeconds = createAnyLocalElapsedSeconds()
         let sut = makeSUT(startingSeconds: startingSeconds)
 
-        sut.startCountdown(completion: { _ in })
-
-        XCTAssertEqual(sut.state, .running)
-
-        sut.startCountdown(completion: { _ in })
-
-        XCTAssertEqual(sut.state, .running)
+        assertsStartCountdownChangesStateToRunning(sut: sut)
+        assertsStartCountdownChangesStateToRunning(sut: sut)
         
         sut.invalidatesTimer()
     }
     
     // MARK: - Helpers
+    private func assertsStartCountdownChangesStateToRunning(sut: FoundationTimerCountdown) {
+        sut.startCountdown(completion: { _ in })
+
+        XCTAssertEqual(sut.state, .running)
+    }
     private func makeSUT(startingSeconds: LocalElapsedSeconds, file: StaticString = #filePath,
                          line: UInt = #line) -> FoundationTimerCountdown {
         let sut = FoundationTimerCountdown(startingSeconds: startingSeconds)
