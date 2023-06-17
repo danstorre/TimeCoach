@@ -103,11 +103,11 @@ final class FoundationTimerCountdownTests: XCTestCase {
         return sut
     }
     
-    private func expect(sut: FoundationTimerCountdown, toDeliver: [LocalElapsedSeconds],
+    private func expect(sut: FoundationTimerCountdown, toDeliver deliverExpectation: [LocalElapsedSeconds],
                         andChangesStateTo expectedState: FoundationTimerCountdown.TimerState) {
         var receivedElapsedSeconds = [LocalElapsedSeconds]()
         let expectation = expectation(description: "wait for start countdown to deliver time.")
-        expectation.expectedFulfillmentCount = toDeliver.count
+        expectation.expectedFulfillmentCount = deliverExpectation.count
         sut.startCountdown() { result in
             if case let .success(deliveredElapsedSeconds) = result {
                 receivedElapsedSeconds.append(deliveredElapsedSeconds)
@@ -115,10 +115,10 @@ final class FoundationTimerCountdownTests: XCTestCase {
             expectation.fulfill()
         }
 
-        wait(for: [expectation], timeout: Double(toDeliver.count) + 0.1)
+        wait(for: [expectation], timeout: Double(deliverExpectation.count) + 0.1)
         sut.invalidatesTimer()
 
-        XCTAssertEqual(receivedElapsedSeconds, toDeliver)
+        XCTAssertEqual(receivedElapsedSeconds, deliverExpectation)
         XCTAssertEqual(sut.state, expectedState)
     }
     
