@@ -178,7 +178,7 @@ final class FoundationTimerCountdownTests: XCTestCase {
         let nextSet = createTimerSet(0, startDate: fixedDate, endDate: fixedDate.adding(seconds: 0.002))
         let sut = makeSUT(startingSet: startingSet, nextSet: nextSet)
         
-        var receivedElapsedSeconds = receivedElapsedSecondsOnSkip(from: sut)
+        let receivedElapsedSeconds = receivedElapsedSecondsOnSkip(from: sut)
         
         XCTAssertEqual(sut.state, .pause)
         XCTAssertEqual(receivedElapsedSeconds, [nextSet])
