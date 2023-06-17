@@ -57,16 +57,14 @@ final class FoundationTimerCountdownTests: XCTestCase {
     }
     
     func test_start_deliversOneSecondElapsedFromTheSetOfStartingSecondsAndChangesStateToRunning() {
-        let fixedDate = Date()
-        let startingSeconds = createElapsedSeconds(0, startDate: fixedDate, endDate: fixedDate.addingTimeInterval(.pomodoroInSeconds))
+        let startingSeconds = createAnyLocalElapsedSeconds()
         let sut = FoundationTimerCountdown(startingSeconds: startingSeconds)
         
         expect(sut: sut, toDeliver: [startingSeconds.addingElapsedSeconds(1)], andChangesStateTo: .running)
     }
     
     func test_start_deliversTwoSecondsElapsedFromTheSetOfStartingSecondsAndChangesStateToRunning() {
-        let fixedDate = Date()
-        let startingSeconds = createElapsedSeconds(0, startDate: fixedDate, endDate: fixedDate.addingTimeInterval(.pomodoroInSeconds))
+        let startingSeconds = createAnyLocalElapsedSeconds()
         let sut = FoundationTimerCountdown(startingSeconds: startingSeconds)
 
         expect(sut: sut, toDeliver: [startingSeconds.addingElapsedSeconds(1), startingSeconds.addingElapsedSeconds(2)],     andChangesStateTo: .running)
