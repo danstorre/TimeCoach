@@ -13,7 +13,7 @@
    ✅ on countdown `running` state, changes countdown state to `pause` and does not send any other values.
 
 - skipCountdown (side-effects)
-   - on countdown `pause` state, does not change any state of the countdown, and sends next countdown set.
+   ✅ on countdown `pause` state, does not change any state of the countdown, and sends next countdown set.
    - on countdown `running` state, changes countdown state to `pause`, and sends next countdown set.
 
 - Side-effects must run serially to avoid race conditions.

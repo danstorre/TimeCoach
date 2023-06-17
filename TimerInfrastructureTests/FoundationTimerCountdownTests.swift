@@ -44,6 +44,11 @@ class FoundationTimerCountdown {
         state = .pause
     }
     
+    func skipCountdown(completion: @escaping StartCoundownCompletion) {
+        timerDelivery = completion
+        executeNextSet()
+    }
+    
     private func createTimer() {
         currentTimer = Timer.init(timeInterval: incrementing, target: self, selector: #selector(elapsedCompletion), userInfo: nil, repeats: true)
         RunLoop.current.add(currentTimer!, forMode: .common)
@@ -165,6 +170,23 @@ final class FoundationTimerCountdownTests: XCTestCase {
 
         XCTAssertEqual(sut.state, .pause)
         XCTAssertEqual(receivedElapsedSeconds, [])
+    }
+    
+    func test_skip_onPauseState_doesNotChangesPauseStateAndDeliversNextTimerSet() {
+        let fixedDate = Date()
+        let startingSet = createTimerSet(0, startDate: fixedDate, endDate: fixedDate.adding(seconds: 0.001))
+        let nextSet = createTimerSet(0, startDate: fixedDate, endDate: fixedDate.adding(seconds: 0.002))
+        let sut = makeSUT(startingSet: startingSet, nextSet: nextSet)
+        
+        var receivedElapsedSeconds = [LocalElapsedSeconds]()
+        sut.skipCountdown() { result in
+            if case let .success(deliveredElapsedSeconds) = result {
+                receivedElapsedSeconds.append(deliveredElapsedSeconds)
+            }
+        }
+        
+        XCTAssertEqual(sut.state, .pause)
+        XCTAssertEqual(receivedElapsedSeconds, [nextSet])
     }
     
     // MARK: - Helpers
