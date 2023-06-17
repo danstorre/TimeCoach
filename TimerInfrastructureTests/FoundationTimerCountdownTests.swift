@@ -21,6 +21,7 @@ class FoundationTimerCountdown {
     }
     
     func startCountdown(completion: @escaping StartCoundownCompletion) {
+        invalidatesTimer()
         state = .running
         timerDelivery = completion
         createTimer()
@@ -81,14 +82,20 @@ final class FoundationTimerCountdownTests: XCTestCase {
         sut.startCountdown(completion: { _ in })
 
         XCTAssertEqual(sut.state, .running)
+        
+        sut.invalidatesTimer()
     }
     
     // MARK: - Helpers
-    private func makeSUT(startingSeconds: LocalElapsedSeconds) -> FoundationTimerCountdown {
+    private func makeSUT(startingSeconds: LocalElapsedSeconds, file: StaticString = #filePath,
+                         line: UInt = #line) -> FoundationTimerCountdown {
         let sut = FoundationTimerCountdown(startingSeconds: startingSeconds)
+        
+        trackForMemoryLeak(instance: sut, file: file, line: line)
         
         return sut
     }
+    
     private func expect(sut: FoundationTimerCountdown, toDeliver: [LocalElapsedSeconds],
                         andChangesStateTo expectedState: FoundationTimerCountdown.TimerState) {
         var receivedElapsedSeconds = [LocalElapsedSeconds]()
