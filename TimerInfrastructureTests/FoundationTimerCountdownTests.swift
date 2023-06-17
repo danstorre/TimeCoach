@@ -52,25 +52,30 @@ private extension LocalElapsedSeconds {
 final class FoundationTimerCountdownTests: XCTestCase {
     
     func test_init_stateIsPaused() {
-        let sut = FoundationTimerCountdown(startingSeconds: createAnyLocalElapsedSeconds())
+        let sut = makeSUT(startingSeconds: createAnyLocalElapsedSeconds())
         XCTAssertEqual(sut.state, .pause)
     }
     
     func test_start_deliversOneSecondElapsedFromTheSetOfStartingSecondsAndChangesStateToRunning() {
         let startingSeconds = createAnyLocalElapsedSeconds()
-        let sut = FoundationTimerCountdown(startingSeconds: startingSeconds)
+        let sut = makeSUT(startingSeconds: startingSeconds)
         
         expect(sut: sut, toDeliver: [startingSeconds.addingElapsedSeconds(1)], andChangesStateTo: .running)
     }
     
     func test_start_deliversTwoSecondsElapsedFromTheSetOfStartingSecondsAndChangesStateToRunning() {
         let startingSeconds = createAnyLocalElapsedSeconds()
-        let sut = FoundationTimerCountdown(startingSeconds: startingSeconds)
+        let sut = makeSUT(startingSeconds: startingSeconds)
 
         expect(sut: sut, toDeliver: [startingSeconds.addingElapsedSeconds(1), startingSeconds.addingElapsedSeconds(2)],     andChangesStateTo: .running)
     }
     
     // MARK: - Helpers
+    private func makeSUT(startingSeconds: LocalElapsedSeconds) -> FoundationTimerCountdown {
+        let sut = FoundationTimerCountdown(startingSeconds: startingSeconds)
+        
+        return sut
+    }
     private func expect(sut: FoundationTimerCountdown, toDeliver: [LocalElapsedSeconds],
                         andChangesStateTo expectedState: FoundationTimerCountdown.TimerState) {
         var receivedElapsedSeconds = [LocalElapsedSeconds]()
