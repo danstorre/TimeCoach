@@ -79,14 +79,13 @@ final class FoundationTimerCountdownTests: XCTestCase {
         let sut = makeSUT(startingSeconds: startingSeconds)
 
         assertsStartCountdownTwiceChangesStateToRunning(sut: sut)
-        
-        sut.invalidatesTimer()
     }
     
     // MARK: - Helpers
     private func assertsStartCountdownTwiceChangesStateToRunning(sut: FoundationTimerCountdown) {
         assertsStartCountdownChangesStateToRunning(sut: sut)
         assertsStartCountdownChangesStateToRunning(sut: sut)
+        sut.invalidatesTimer()
     }
     
     private func assertsStartCountdownChangesStateToRunning(sut: FoundationTimerCountdown) {
