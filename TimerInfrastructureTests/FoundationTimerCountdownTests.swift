@@ -70,6 +70,19 @@ final class FoundationTimerCountdownTests: XCTestCase {
         expect(sut: sut, toDeliver: [startingSeconds.addingElapsedSeconds(1), startingSeconds.addingElapsedSeconds(2)],     andChangesStateTo: .running)
     }
     
+    func test_startTwice_doesNotChangeStateOfRunning() {
+        let startingSeconds = createAnyLocalElapsedSeconds()
+        let sut = makeSUT(startingSeconds: startingSeconds)
+
+        sut.startCountdown(completion: { _ in })
+
+        XCTAssertEqual(sut.state, .running)
+
+        sut.startCountdown(completion: { _ in })
+
+        XCTAssertEqual(sut.state, .running)
+    }
+    
     // MARK: - Helpers
     private func makeSUT(startingSeconds: LocalElapsedSeconds) -> FoundationTimerCountdown {
         let sut = FoundationTimerCountdown(startingSeconds: startingSeconds)
