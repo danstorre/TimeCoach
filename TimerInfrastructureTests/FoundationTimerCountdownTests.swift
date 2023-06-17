@@ -140,7 +140,9 @@ final class FoundationTimerCountdownTests: XCTestCase {
         let startingSet = createAnyTimerSet()
         let sut = makeSUT(startingSet: startingSet, nextSet: createAnyTimerSet())
         
-        let receivedElapsedSeconds = receivedElapsedSecondsOnRunningStateAfterStop(from: sut)
+        let receivedElapsedSeconds = receivedElapsedSecondsOnRunningState(from: sut, when: {
+            sut.stop()
+        })
         
         XCTAssertEqual(sut.state, .pause)
         XCTAssertEqual(receivedElapsedSeconds, [startingSet])
@@ -178,19 +180,6 @@ final class FoundationTimerCountdownTests: XCTestCase {
         }
 
         action()
-        
-        return receivedElapsedSeconds
-    }
-    
-    private func receivedElapsedSecondsOnRunningStateAfterStop(from sut: FoundationTimerCountdown) -> [LocalElapsedSeconds] {
-        var receivedElapsedSeconds = [LocalElapsedSeconds]()
-        sut.startCountdown() { result in
-            if case let .success(deliveredElapsedSeconds) = result {
-                receivedElapsedSeconds.append(deliveredElapsedSeconds)
-            }
-        }
-
-        sut.stop()
         
         return receivedElapsedSeconds
     }
