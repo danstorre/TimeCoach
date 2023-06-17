@@ -10,14 +10,14 @@ class FoundationTimerCountdown {
     }
     
     private(set) var state: TimerState = .pause
-    private let startingSeconds: LocalElapsedSeconds
+    private let startingSet: LocalElapsedSeconds
     private var elapsedTimeInterval: TimeInterval = 0
     private var timerDelivery: StartCoundownCompletion?
     
     private var currentTimer: Timer?
     
-    init(startingSeconds: LocalElapsedSeconds) {
-        self.startingSeconds = startingSeconds
+    init(startingSet: LocalElapsedSeconds) {
+        self.startingSet = startingSet
     }
     
     func startCountdown(completion: @escaping StartCoundownCompletion) {
@@ -35,7 +35,7 @@ class FoundationTimerCountdown {
     @objc
     private func elapsedCompletion() {
         elapsedTimeInterval += 1
-        let elapsed = startingSeconds.addingElapsedSeconds(elapsedTimeInterval)
+        let elapsed = startingSet.addingElapsedSeconds(elapsedTimeInterval)
         timerDelivery?(.success(elapsed))
     }
     
@@ -53,30 +53,30 @@ private extension LocalElapsedSeconds {
 final class FoundationTimerCountdownTests: XCTestCase {
     
     func test_init_stateIsPaused() {
-        let sut = makeSUT(startingSeconds: createAnyLocalElapsedSeconds())
+        let sut = makeSUT(startingSet: createAnyTimerSet())
         XCTAssertEqual(sut.state, .pause)
     }
     
     func test_start_deliversOneSecondElapsedFromTheSetOfStartingSecondsAndChangesStateToRunning() {
-        let startingSeconds = createAnyLocalElapsedSeconds()
-        let sut = makeSUT(startingSeconds: startingSeconds)
+        let startSet = createAnyTimerSet()
+        let sut = makeSUT(startingSet: startSet)
         
-        expect(sut: sut, toDeliver: [startingSeconds.addingElapsedSeconds(1)],
+        expect(sut: sut, toDeliver: [startSet.addingElapsedSeconds(1)],
                andChangesStateTo: .running)
     }
     
     func test_start_deliversTwoSecondsElapsedFromTheSetOfStartingSecondsAndChangesStateToRunning() {
-        let startingSeconds = createAnyLocalElapsedSeconds()
-        let sut = makeSUT(startingSeconds: startingSeconds)
+        let startSet = createAnyTimerSet()
+        let sut = makeSUT(startingSet: startSet)
 
         expect(sut: sut,
-               toDeliver: [startingSeconds.addingElapsedSeconds(1), startingSeconds.addingElapsedSeconds(2)],
+               toDeliver: [startSet.addingElapsedSeconds(1), startSet.addingElapsedSeconds(2)],
                andChangesStateTo: .running)
     }
     
     func test_startTwice_doesNotChangeStateOfRunning() {
-        let startingSeconds = createAnyLocalElapsedSeconds()
-        let sut = makeSUT(startingSeconds: startingSeconds)
+        let startSet = createAnyTimerSet()
+        let sut = makeSUT(startingSet: startSet)
 
         assertsStartCountdownTwiceChangesStateToRunning(sut: sut)
     }
@@ -94,9 +94,9 @@ final class FoundationTimerCountdownTests: XCTestCase {
         XCTAssertEqual(sut.state, .running)
     }
     
-    private func makeSUT(startingSeconds: LocalElapsedSeconds, file: StaticString = #filePath,
+    private func makeSUT(startingSet: LocalElapsedSeconds, file: StaticString = #filePath,
                          line: UInt = #line) -> FoundationTimerCountdown {
-        let sut = FoundationTimerCountdown(startingSeconds: startingSeconds)
+        let sut = FoundationTimerCountdown(startingSet: startingSet)
         
         trackForMemoryLeak(instance: sut, file: file, line: line)
         
@@ -122,11 +122,7 @@ final class FoundationTimerCountdownTests: XCTestCase {
         XCTAssertEqual(sut.state, expectedState)
     }
     
-    private func createElapsedSeconds(_ elapsedSeconds: TimeInterval, startDate: Date, endDate: Date) -> LocalElapsedSeconds {
-        LocalElapsedSeconds(elapsedSeconds, startDate: startDate, endDate: startDate)
-    }
-    
-    private func createAnyLocalElapsedSeconds(date: Date = Date()) -> LocalElapsedSeconds {
-        LocalElapsedSeconds(0, startDate: date, endDate: date.adding(seconds: 1))
+    private func createAnyTimerSet(startingFrom startDate: Date = Date()) -> LocalElapsedSeconds {
+        LocalElapsedSeconds(0, startDate: startDate, endDate: startDate.adding(seconds: 1))
     }
 }
