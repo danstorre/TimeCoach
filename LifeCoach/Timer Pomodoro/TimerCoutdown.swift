@@ -1,8 +1,9 @@
 import Foundation
 
 public protocol TimerCoutdown {
-    typealias StartCoundownCompletion = (Result<LocalElapsedSeconds, Error>) -> Void
-    typealias SkipCountdownCompletion = (Result<LocalElapsedSeconds, Error>) -> Void
+    typealias Result = Swift.Result<LocalElapsedSeconds, Error>
+    typealias StartCoundownCompletion = (Result) -> Void
+    typealias SkipCountdownCompletion = (Result) -> Void
     func startCountdown(completion: @escaping StartCoundownCompletion)
     func stopCountdown()
     func pauseCountdown()
