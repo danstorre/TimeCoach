@@ -37,6 +37,7 @@ public class PomodoroTimer: RegularTimer {
     
     public func skip() {
         timer.skipCountdown() { [unowned self] _ in
+            self.timer.stopCountdown()
             self.timeReceiver(.failure(.timerError))
         }
     }

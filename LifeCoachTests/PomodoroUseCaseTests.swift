@@ -87,6 +87,15 @@ final class PomodoroUseCaseTests: XCTestCase {
         assert(recievedResult: recievedResult!, ToBe: .failure(.timerError))
     }
     
+    func test_skip_sendsStopMessageToTimerCountdownOnTimerCountdownError() {
+        let (sut, spy) = makeSUT()
+        
+        sut.skip()
+        spy.failsSkipTimerWith(error: anyNSError())
+        
+        XCTAssertEqual(spy.messagesReceived, [.skip, .stop])
+    }
+    
     // MARK: - Helper
     private func assert(recievedResult result: PomodoroTimer.Result, ToBe expectedResult: PomodoroTimer.Result) {
         switch (result, expectedResult) {
