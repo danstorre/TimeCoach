@@ -125,11 +125,20 @@ final class PomodoroUseCaseTests: XCTestCase {
     
     private class TimerSpy: TimerCoutdown {
         private(set) var messagesReceived = [TimerCountdownMessages]()
-        enum TimerCountdownMessages: Equatable {
+        enum TimerCountdownMessages: Equatable, CustomStringConvertible {
             case start
             case stop
             case pause
             case skip
+            
+            var description: String {
+                switch self {
+                case .start: return "start"
+                case .stop: return "stop"
+                case .pause: return "pause"
+                case .skip: return "skip"
+                }
+            }
         }
         // MARK: - StartCoundown methods
         private var startCountdownCompletions = [StartCoundownCompletion]()
