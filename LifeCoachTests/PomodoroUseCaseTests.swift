@@ -124,6 +124,20 @@ final class PomodoroUseCaseTests: XCTestCase {
         XCTAssertNil(recievedResult)
     }
     
+    func test_skip_doesNotDeliverElapsedSecondsAfterSUTHasBeenDeallocated() {
+        var recievedResult: PomodoroTimer.Result?
+        let spy = TimerSpy()
+        var sut: PomodoroTimer? = PomodoroTimer(timer: spy, timeReceiver: { result in
+            recievedResult = result
+        })
+        
+        sut?.skip()
+        sut = nil
+        spy.skipDelivers(time: createAnyLocalElapsedSeconds())
+        
+        XCTAssertNil(recievedResult)
+    }
+    
     // MARK: - Helper
     private func assert(recievedResult result: PomodoroTimer.Result, ToBe expectedResult: PomodoroTimer.Result, file: StaticString = #filePath, line: UInt = #line) {
         switch (result, expectedResult) {
