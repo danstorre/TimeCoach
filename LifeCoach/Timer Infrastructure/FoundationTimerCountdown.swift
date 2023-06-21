@@ -4,11 +4,6 @@ public final class FoundationTimerCountdown: TimerCoutdown {
     public typealias StartCoundownCompletion = (Result<LocalElapsedSeconds, Error>) -> Void
     public typealias SkipCoundownCompletion = (Result<LocalElapsedSeconds, Error>) -> Void
     
-    public enum TimerState {
-        case pause
-        case running
-    }
-    
     public private(set) var state: TimerState = .pause
     private var setA: LocalElapsedSeconds
     private var setB: LocalElapsedSeconds
@@ -83,6 +78,10 @@ public final class FoundationTimerCountdown: TimerCoutdown {
     
     public func invalidatesTimer() {
         currentTimer?.invalidate()
+    }
+    
+    deinit {
+        invalidatesTimer()
     }
 }
 

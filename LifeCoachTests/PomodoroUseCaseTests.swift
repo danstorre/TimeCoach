@@ -179,6 +179,8 @@ final class PomodoroUseCaseTests: XCTestCase {
     }
     
     private class TimerSpy: TimerCoutdown {
+        var state: LifeCoach.TimerState { .pause }
+        
         private(set) var messagesReceived = [TimerCountdownMessages]()
         enum TimerCountdownMessages: Equatable, CustomStringConvertible {
             case start

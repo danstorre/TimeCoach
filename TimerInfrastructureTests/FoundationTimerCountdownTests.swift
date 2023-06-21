@@ -110,7 +110,7 @@ final class FoundationTimerCountdownTests: XCTestCase {
     }
     
     // MARK: - Helpers
-    private func receivedElapsedSecondsOnSkip(from sut: FoundationTimerCountdown) -> [LocalElapsedSeconds] {
+    private func receivedElapsedSecondsOnSkip(from sut: TimerCoutdown) -> [LocalElapsedSeconds] {
         var receivedElapsedSeconds = [LocalElapsedSeconds]()
         sut.skipCountdown() { result in
             if case let .success(deliveredElapsedSeconds) = result {
@@ -120,7 +120,7 @@ final class FoundationTimerCountdownTests: XCTestCase {
         return receivedElapsedSeconds
     }
     
-    private func receivedElapsedSecondsOnRunningState(from sut: FoundationTimerCountdown, when action: () -> Void) -> [LocalElapsedSeconds] {
+    private func receivedElapsedSecondsOnRunningState(from sut: TimerCoutdown, when action: () -> Void) -> [LocalElapsedSeconds] {
         var receivedElapsedSeconds = [LocalElapsedSeconds]()
         sut.startCountdown() { result in
             if case let .success(deliveredElapsedSeconds) = result {
@@ -133,13 +133,13 @@ final class FoundationTimerCountdownTests: XCTestCase {
         return receivedElapsedSeconds
     }
     
-    private func assertsStartCountdownTwiceKeepsStateToRunning(sut: FoundationTimerCountdown) {
+    private func assertsStartCountdownTwiceKeepsStateToRunning(sut: TimerCoutdown) {
         assertsStartCountdownChangesStateToRunning(sut: sut)
         assertsStartCountdownChangesStateToRunning(sut: sut)
-        sut.invalidatesTimer()
+        invalidatesTimer(on: sut)
     }
     
-    private func assertsStartCountdownChangesStateToRunning(sut: FoundationTimerCountdown) {
+    private func assertsStartCountdownChangesStateToRunning(sut: TimerCoutdown) {
         sut.startCountdown(completion: { _ in })
 
         XCTAssertEqual(sut.state, .running)
@@ -147,7 +147,7 @@ final class FoundationTimerCountdownTests: XCTestCase {
     
     private func makeSUT(startingSet: LocalElapsedSeconds, nextSet: LocalElapsedSeconds,
                          file: StaticString = #filePath,
-                         line: UInt = #line) -> FoundationTimerCountdown {
+                         line: UInt = #line) -> TimerCoutdown {
         let sut = FoundationTimerCountdown(startingSet: startingSet, nextSet: nextSet, incrementing: 0.001)
         
         trackForMemoryLeak(instance: sut, file: file, line: line)
@@ -155,8 +155,8 @@ final class FoundationTimerCountdownTests: XCTestCase {
         return sut
     }
     
-    private func expect(sut: FoundationTimerCountdown, toDeliver deliverExpectation: [LocalElapsedSeconds],
-                        andChangesStateTo expectedState: FoundationTimerCountdown.TimerState,
+    private func expect(sut: TimerCoutdown, toDeliver deliverExpectation: [LocalElapsedSeconds],
+                        andChangesStateTo expectedState: TimerState,
                         file: StaticString = #filePath,
                         line: UInt = #line) {
         var receivedElapsedSeconds = [LocalElapsedSeconds]()
@@ -170,7 +170,7 @@ final class FoundationTimerCountdownTests: XCTestCase {
         }
 
         wait(for: [expectation], timeout: 0.1)
-        sut.invalidatesTimer()
+        invalidatesTimer(on: sut)
 
         XCTAssertEqual(receivedElapsedSeconds, deliverExpectation, file: file, line: line)
         XCTAssertEqual(sut.state, expectedState, file: file, line: line)
@@ -182,5 +182,9 @@ final class FoundationTimerCountdownTests: XCTestCase {
     
     private func createTimerSet(_ elapsedSeconds: TimeInterval, startDate: Date, endDate: Date) -> LocalElapsedSeconds {
         LocalElapsedSeconds(elapsedSeconds, startDate: startDate, endDate: endDate)
+    }
+    
+    private func invalidatesTimer(on sut: TimerCoutdown) {
+        (sut as? FoundationTimerCountdown)?.invalidatesTimer()
     }
 }
