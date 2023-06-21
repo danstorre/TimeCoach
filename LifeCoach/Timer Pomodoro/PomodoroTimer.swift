@@ -16,7 +16,8 @@ public class PomodoroTimer: RegularTimer {
     }
     
     public func start() {
-        timer.startCountdown() { [unowned self] result in
+        timer.startCountdown() { [weak self] result in
+            guard let self = self else { return }
             switch result {
             case let .success(localElapsedSeconds):
                 self.timeReceiver(.success(localElapsedSeconds.toElapseSeconds))

@@ -46,7 +46,7 @@ final class PomodoroUseCaseTests: XCTestCase {
         let expectedDeliveredTime = makeDeliveredTime(1, startDate: startTime, endDate: startTime.adding(seconds: .pomodoroInSeconds))
         
         sut.start()
-        spy.delivers(time: expectedDeliveredTime.local)
+        spy.startDelivers(time: expectedDeliveredTime.local)
         
         assert(recievedResult: recievedResult!, ToBe: .success(expectedDeliveredTime.model))
     }
@@ -110,6 +110,20 @@ final class PomodoroUseCaseTests: XCTestCase {
         assert(recievedResult: recievedResult!, ToBe: .success(expectedDeliveredTime.model))
     }
     
+    func test_start_doesNotDeliverElapsedSecondsAfterSUTHasBeenDeallocated() {
+        var recievedResult: PomodoroTimer.Result?
+        let spy = TimerSpy()
+        var sut: PomodoroTimer? = PomodoroTimer(timer: spy, timeReceiver: { result in
+            recievedResult = result
+        })
+        
+        sut?.start()
+        sut = nil
+        spy.startDelivers(time: createAnyLocalElapsedSeconds())
+        
+        XCTAssertNil(recievedResult)
+    }
+    
     // MARK: - Helper
     private func assert(recievedResult result: PomodoroTimer.Result, ToBe expectedResult: PomodoroTimer.Result, file: StaticString = #filePath, line: UInt = #line) {
         switch (result, expectedResult) {
@@ -120,6 +134,10 @@ final class PomodoroUseCaseTests: XCTestCase {
         case (.failure, .success), (.success, .failure):
             XCTFail("expected \(expectedResult), got \(result)", file: file, line: line)
         }
+    }
+    
+    private func createAnyLocalElapsedSeconds() -> LocalElapsedSeconds {
+        LocalElapsedSeconds(1, startDate: Date(), endDate: Date())
     }
     
     private func makeDeliveredTime(_ elapsedSeconds: TimeInterval,
@@ -175,7 +193,7 @@ final class PomodoroUseCaseTests: XCTestCase {
             startCountdownCompletions[index](.failure(error))
         }
         
-        func delivers(time localTime: LocalElapsedSeconds, at index: Int = 0) {
+        func startDelivers(time localTime: LocalElapsedSeconds, at index: Int = 0) {
             startCountdownCompletions[index](.success(localTime))
         }
         
