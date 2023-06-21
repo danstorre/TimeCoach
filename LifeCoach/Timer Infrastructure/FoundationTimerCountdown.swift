@@ -2,6 +2,7 @@ import Foundation
 
 public final class FoundationTimerCountdown {
     public typealias StartCoundownCompletion = (Result<LocalElapsedSeconds, Error>) -> Void
+    public typealias SkipCoundownCompletion = (Result<LocalElapsedSeconds, Error>) -> Void
     
     public enum TimerState {
         case pause
@@ -43,7 +44,7 @@ public final class FoundationTimerCountdown {
         state = .pause
     }
     
-    public func skipCountdown(completion: @escaping StartCoundownCompletion) {
+    public func skipCountdown(completion: @escaping SkipCoundownCompletion) {
         timerDelivery = completion
         executeNextSet()
     }
