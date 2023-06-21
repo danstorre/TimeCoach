@@ -18,10 +18,7 @@ public class PomodoroTimer: RegularTimer {
     public func start() {
         timer.startCountdown() { [weak self] result in
             guard let self = self else { return }
-            if case .failure = result {
-                self.timer.stopCountdown()
-            }
-            
+            self.stopCountDownOnFailure(result: result)
             self.timeReceiver(Self.resolveResult(result: result))
         }
     }
@@ -37,11 +34,14 @@ public class PomodoroTimer: RegularTimer {
     public func skip() {
         timer.skipCountdown() { [weak self] result in
             guard let self = self else { return }
-            if case .failure = result {
-                self.timer.stopCountdown()
-            }
-            
+            self.stopCountDownOnFailure(result: result)
             self.timeReceiver(Self.resolveResult(result: result))
+        }
+    }
+    
+    private func stopCountDownOnFailure(result: TimerCoutdown.Result) {
+        if case .failure = result {
+            self.timer.stopCountdown()
         }
     }
     
