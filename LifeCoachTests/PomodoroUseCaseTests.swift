@@ -22,7 +22,7 @@ final class PomodoroUseCaseTests: XCTestCase {
         })
         
         sut.start()
-        spy.failsTimerWith(error: anyNSError())
+        spy.failsStartTimerWith(error: anyNSError())
         
         assert(recievedResult: recievedResult!, ToBe: .failure(.timerError))
     }
@@ -32,7 +32,7 @@ final class PomodoroUseCaseTests: XCTestCase {
         
         sut.start()
         
-        spy.failsTimerWith(error: anyNSError())
+        spy.failsStartTimerWith(error: anyNSError())
         
         XCTAssertEqual(spy.messagesReceived, [.start, .stop])
     }
@@ -139,7 +139,7 @@ final class PomodoroUseCaseTests: XCTestCase {
             startCountdownCompletions.append(completion)
         }
         
-        func failsTimerWith(error: NSError, at index: Int = 0) {
+        func failsStartTimerWith(error: NSError, at index: Int = 0) {
             startCountdownCompletions[index](.failure(error))
         }
         
