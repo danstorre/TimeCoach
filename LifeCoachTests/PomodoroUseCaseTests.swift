@@ -75,6 +75,18 @@ final class PomodoroUseCaseTests: XCTestCase {
         XCTAssertEqual(spy.messagesReceived, [.skip])
     }
     
+    func test_skip_deliversTimerErrorOnTimerCountdownError() {
+        var recievedResult: PomodoroTimer.Result?
+        let (sut, spy) = makeSUT(timeReceiver: { result in
+            recievedResult = result
+        })
+        
+        sut.skip()
+        spy.failsSkipTimerWith(error: anyNSError())
+        
+        assert(recievedResult: recievedResult!, ToBe: .failure(.timerError))
+    }
+    
     // MARK: - Helper
     private func assert(recievedResult result: PomodoroTimer.Result, ToBe expectedResult: PomodoroTimer.Result) {
         switch (result, expectedResult) {
@@ -120,7 +132,6 @@ final class PomodoroUseCaseTests: XCTestCase {
             case skip
         }
         // MARK: - StartCoundown methods
-        typealias StartCoundownCompletion = (Result<LocalElapsedSeconds, Error>) -> Void
         private var startCountdownCompletions = [StartCoundownCompletion]()
         
         func startCountdown(completion: @escaping StartCoundownCompletion) {
@@ -147,8 +158,16 @@ final class PomodoroUseCaseTests: XCTestCase {
         }
         
         // MARK: - SkipCoutdown methods
-        func skipCountdown() {
+        private var skipCountdownCompletions = [SkipCountdownCompletion]()
+        
+        func skipCountdown(completion: @escaping SkipCountdownCompletion) {
             messagesReceived.append(.skip)
+            
+            skipCountdownCompletions.append(completion)
+        }
+        
+        func failsSkipTimerWith(error: NSError, at index: Int = 0) {
+            skipCountdownCompletions[index](error)
         }
     }
 }
