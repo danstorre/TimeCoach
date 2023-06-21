@@ -1,6 +1,6 @@
 import Foundation
 
-public final class FoundationTimerCountdown {
+public final class FoundationTimerCountdown: TimerCoutdown {
     public typealias StartCoundownCompletion = (Result<LocalElapsedSeconds, Error>) -> Void
     public typealias SkipCoundownCompletion = (Result<LocalElapsedSeconds, Error>) -> Void
     
@@ -33,13 +33,13 @@ public final class FoundationTimerCountdown {
         createTimer()
     }
     
-    public func stop() {
+    public func stopCountdown() {
         invalidatesTimer()
         state = .pause
         timerDelivery?(.success(currentSet))
     }
     
-    public func pause() {
+    public func pauseCountdown() {
         invalidatesTimer()
         state = .pause
     }
