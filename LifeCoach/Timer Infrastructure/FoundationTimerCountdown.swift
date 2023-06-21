@@ -79,10 +79,6 @@ public final class FoundationTimerCountdown: TimerCoutdown {
     public func invalidatesTimer() {
         currentTimer?.invalidate()
     }
-    
-    deinit {
-        invalidatesTimer()
-    }
 }
 
 public extension LocalElapsedSeconds {
