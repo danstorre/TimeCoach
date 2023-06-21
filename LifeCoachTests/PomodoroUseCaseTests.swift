@@ -96,15 +96,29 @@ final class PomodoroUseCaseTests: XCTestCase {
         XCTAssertEqual(spy.messagesReceived, [.skip, .stop])
     }
     
+    func test_skip_deliversElapsedSecondsOnTimerCountdownSuccessDelivery() {
+        var recievedResult: PomodoroTimer.Result?
+        let (sut, spy) = makeSUT(timeReceiver: { result in
+            recievedResult = result
+        })
+        let startTime = Date()
+        let expectedDeliveredTime = makeDeliveredTime(1, startDate: startTime, endDate: startTime.adding(seconds: .pomodoroInSeconds))
+        
+        sut.skip()
+        spy.skipDelivers(time: expectedDeliveredTime.local)
+        
+        assert(recievedResult: recievedResult!, ToBe: .success(expectedDeliveredTime.model))
+    }
+    
     // MARK: - Helper
-    private func assert(recievedResult result: PomodoroTimer.Result, ToBe expectedResult: PomodoroTimer.Result) {
+    private func assert(recievedResult result: PomodoroTimer.Result, ToBe expectedResult: PomodoroTimer.Result, file: StaticString = #filePath, line: UInt = #line) {
         switch (result, expectedResult) {
         case let (.success(timeDelivered), .success(expectedTimeDelivered)):
-            XCTAssertEqual(timeDelivered, expectedTimeDelivered)
+            XCTAssertEqual(timeDelivered, expectedTimeDelivered, file: file, line: line)
         case let (.failure(error), .failure(expectedError)):
-            XCTAssertEqual(error, expectedError)
+            XCTAssertEqual(error, expectedError, file: file, line: line)
         case (.failure, .success), (.success, .failure):
-            XCTFail("expected \(expectedResult), got \(result)")
+            XCTFail("expected \(expectedResult), got \(result)", file: file, line: line)
         }
     }
     
@@ -185,7 +199,11 @@ final class PomodoroUseCaseTests: XCTestCase {
         }
         
         func failsSkipTimerWith(error: NSError, at index: Int = 0) {
-            skipCountdownCompletions[index](error)
+            skipCountdownCompletions[index](.failure(error))
+        }
+        
+        func skipDelivers(time localTime: LocalElapsedSeconds, at index: Int = 0) {
+            skipCountdownCompletions[index](.success(localTime))
         }
     }
 }
