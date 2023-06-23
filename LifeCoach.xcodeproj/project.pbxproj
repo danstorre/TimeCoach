@@ -509,10 +509,10 @@
 				FBE9A9892939527F00D8BF29 /* TimeCoach Watch AppTests */,
 				FB73E922293BAE490087F9EF /* TimerInfrastructureTests */,
 				FB5398922A45DA7C000B9CFD /* TimeCoachVision */,
-				FB5398932A45DA7C000B9CFD /* Packages */,
 				FB5398A72A45DA7D000B9CFD /* TimeCoachVisionTests */,
 				FB5398E42A4617EF000B9CFD /* TimeCoachVisionOS */,
 				FBAD475128FC8BB0003D2F7A /* Products */,
+				FB5398932A45DA7C000B9CFD /* Packages */,
 				FB0F6BB52938639F009405FE /* Frameworks */,
 			);
 			sourceTree = "<group>";
