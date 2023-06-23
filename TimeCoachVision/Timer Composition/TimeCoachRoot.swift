@@ -5,14 +5,9 @@ import Combine
 import UserNotifications
 
 class TimeCoachRoot {
-    private var timerCoundown: TimerCountdown
-    
-    init() {
-        let pomodoro = PomodoroLocalTimer(startDate: .now,
-                                          primaryInterval: .pomodoroInSeconds,
-                                          secondaryTime: .breakInSeconds)
-        self.timerCoundown = pomodoro
-    }
+    private lazy var timerCoundown: TimerCountdown = PomodoroLocalTimer(startDate: .now,
+                                                                        primaryInterval: .pomodoroInSeconds,
+                                                                        secondaryTime: .breakInSeconds)
     
     func createTimer(withTimeLine: Bool = true) -> TimerView {
         return TimerViewComposer.createTimer(
