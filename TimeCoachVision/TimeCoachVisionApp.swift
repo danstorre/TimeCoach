@@ -8,7 +8,6 @@ import Combine
 
 @main
 struct TimeCoach_Watch_AppApp: App {
-    @Environment(\.scenePhase) private var scenePhase
     var timerView: TimerView
     private var root: TimeCoachRoot
     
