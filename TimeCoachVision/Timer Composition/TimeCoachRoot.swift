@@ -9,7 +9,7 @@ class TimeCoachRoot {
                                                                         primaryInterval: .pomodoroInSeconds,
                                                                         secondaryTime: .breakInSeconds)
     
-    func createTimer(withTimeLine: Bool = true) -> TimerView {
+    func createTimer(withTimeLine: Bool = false) -> TimerView {
         return TimerViewComposer.createTimer(
             customFont: CustomFont.timer.font,
             playPublisher: timerCoundown.createStartTimer(),

@@ -3,7 +3,6 @@ import TimeCoachVisionOS
 import SwiftUI
 
 public struct TimerView: View {
-    public var timerWithTimeLine: TimerTextTimeLine?
     public var timerWithoutTimeLine: TimerText?
     public var controls: TimerControls
     var withTimeLine = true
@@ -16,23 +15,14 @@ public struct TimerView: View {
         customFont: String? = nil,
         withTimeLine: Bool = false
     ) {
-        if withTimeLine {
-            self.timerWithTimeLine = TimerTextTimeLine(timerViewModel: timerViewModel, customFont: customFont)
-        } else {
-            self.timerWithoutTimeLine = TimerText(timerViewModel: timerViewModel, mode: .full, customFont: customFont)
-        }
-        
+        self.timerWithoutTimeLine = TimerText(timerViewModel: timerViewModel, mode: .full, customFont: customFont)
         self.withTimeLine = withTimeLine
         self.controls = TimerControls(togglePlayback: togglePlayback, skipHandler: skipHandler, stopHandler: stopHandler)
     }
     
     public var body: some View {
         VStack {
-            if withTimeLine {
-                timerWithTimeLine
-            } else {
-                timerWithoutTimeLine
-            }
+            timerWithoutTimeLine
             controls
         }
     }
