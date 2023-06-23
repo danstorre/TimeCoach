@@ -24,8 +24,6 @@
 		FB53989C2A45DA7C000B9CFD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FB53989B2A45DA7C000B9CFD /* Assets.xcassets */; };
 		FB53989F2A45DA7D000B9CFD /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FB53989E2A45DA7D000B9CFD /* Preview Assets.xcassets */; };
 		FB5398A92A45DA7D000B9CFD /* TimeCoachVisionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5398A82A45DA7D000B9CFD /* TimeCoachVisionTests.swift */; };
-		FB5398EB2A4617F0000B9CFD /* TimeCoachVisionOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB5398E32A4617EF000B9CFD /* TimeCoachVisionOS.framework */; };
-		FB5398F22A4617F0000B9CFD /* TimeCoachVisionOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5398F12A4617F0000B9CFD /* TimeCoachVisionOSTests.swift */; };
 		FB5398F62A4617F0000B9CFD /* TimeCoachVisionOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB5398E32A4617EF000B9CFD /* TimeCoachVisionOS.framework */; };
 		FB5398F72A4617F0000B9CFD /* TimeCoachVisionOS.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FB5398E32A4617EF000B9CFD /* TimeCoachVisionOS.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FB5399032A46197E000B9CFD /* TimerText.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5399022A46197E000B9CFD /* TimerText.swift */; };
@@ -87,20 +85,6 @@
 
 /* Begin PBXContainerItemProxy section */
 		FB5398A52A45DA7D000B9CFD /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = FBAD474728FC8BB0003D2F7A /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = FB5398902A45DA7C000B9CFD;
-			remoteInfo = TimeCoachVision;
-		};
-		FB5398EC2A4617F0000B9CFD /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = FBAD474728FC8BB0003D2F7A /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = FB5398E22A4617EF000B9CFD;
-			remoteInfo = TimeCoachVisionOS;
-		};
-		FB5398EE2A4617F0000B9CFD /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = FBAD474728FC8BB0003D2F7A /* Project object */;
 			proxyType = 1;
@@ -232,9 +216,6 @@
 		FB5398A42A45DA7D000B9CFD /* TimeCoachVisionTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TimeCoachVisionTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB5398A82A45DA7D000B9CFD /* TimeCoachVisionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeCoachVisionTests.swift; sourceTree = "<group>"; };
 		FB5398E32A4617EF000B9CFD /* TimeCoachVisionOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TimeCoachVisionOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		FB5398EA2A4617F0000B9CFD /* TimeCoachVisionOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TimeCoachVisionOSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		FB5398F12A4617F0000B9CFD /* TimeCoachVisionOSTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeCoachVisionOSTests.swift; sourceTree = "<group>"; };
-		FB5399012A4618BE000B9CFD /* TimeCoachVisionOS.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = file; path = TimeCoachVisionOS.xctestplan; sourceTree = SOURCE_ROOT; };
 		FB5399022A46197E000B9CFD /* TimerText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerText.swift; sourceTree = "<group>"; };
 		FB5399092A4619FD000B9CFD /* TimerLabelStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerLabelStyle.swift; sourceTree = "<group>"; };
 		FB53990B2A461A76000B9CFD /* TimerControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerControls.swift; sourceTree = "<group>"; };
@@ -309,14 +290,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				FB5399042A461996000B9CFD /* LifeCoach.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		FB5398E72A4617F0000B9CFD /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				FB5398EB2A4617F0000B9CFD /* TimeCoachVisionOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -509,15 +482,6 @@
 			path = TimeCoachVisionOS;
 			sourceTree = "<group>";
 		};
-		FB5398F02A4617F0000B9CFD /* TimeCoachVisionOSTests */ = {
-			isa = PBXGroup;
-			children = (
-				FB5398F12A4617F0000B9CFD /* TimeCoachVisionOSTests.swift */,
-				FB5399012A4618BE000B9CFD /* TimeCoachVisionOS.xctestplan */,
-			);
-			path = TimeCoachVisionOSTests;
-			sourceTree = "<group>";
-		};
 		FB73E922293BAE490087F9EF /* TimerInfrastructureTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -548,7 +512,6 @@
 				FB5398932A45DA7C000B9CFD /* Packages */,
 				FB5398A72A45DA7D000B9CFD /* TimeCoachVisionTests */,
 				FB5398E42A4617EF000B9CFD /* TimeCoachVisionOS */,
-				FB5398F02A4617F0000B9CFD /* TimeCoachVisionOSTests */,
 				FBAD475128FC8BB0003D2F7A /* Products */,
 				FB0F6BB52938639F009405FE /* Frameworks */,
 			);
@@ -567,7 +530,6 @@
 				FB5398912A45DA7C000B9CFD /* TimeCoachVision.app */,
 				FB5398A42A45DA7D000B9CFD /* TimeCoachVisionTests.xctest */,
 				FB5398E32A4617EF000B9CFD /* TimeCoachVisionOS.framework */,
-				FB5398EA2A4617F0000B9CFD /* TimeCoachVisionOSTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -803,25 +765,6 @@
 			productReference = FB5398E32A4617EF000B9CFD /* TimeCoachVisionOS.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		FB5398E92A4617F0000B9CFD /* TimeCoachVisionOSTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = FB5398FE2A4617F0000B9CFD /* Build configuration list for PBXNativeTarget "TimeCoachVisionOSTests" */;
-			buildPhases = (
-				FB5398E62A4617F0000B9CFD /* Sources */,
-				FB5398E72A4617F0000B9CFD /* Frameworks */,
-				FB5398E82A4617F0000B9CFD /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				FB5398ED2A4617F0000B9CFD /* PBXTargetDependency */,
-				FB5398EF2A4617F0000B9CFD /* PBXTargetDependency */,
-			);
-			name = TimeCoachVisionOSTests;
-			productName = TimeCoachVisionOSTests;
-			productReference = FB5398EA2A4617F0000B9CFD /* TimeCoachVisionOSTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 		FB73E920293BAE490087F9EF /* TimerInfrastructureTests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = FB73E92A293BAE490087F9EF /* Build configuration list for PBXNativeTarget "TimerInfrastructureTests" */;
@@ -958,10 +901,6 @@
 						CreatedOnToolsVersion = 15.0;
 						LastSwiftMigration = 1500;
 					};
-					FB5398E92A4617F0000B9CFD = {
-						CreatedOnToolsVersion = 15.0;
-						TestTargetID = FB5398902A45DA7C000B9CFD;
-					};
 					FB73E920293BAE490087F9EF = {
 						CreatedOnToolsVersion = 14.0;
 					};
@@ -1010,7 +949,6 @@
 				FB5398902A45DA7C000B9CFD /* TimeCoachVision */,
 				FB5398A32A45DA7D000B9CFD /* TimeCoachVisionTests */,
 				FB5398E22A4617EF000B9CFD /* TimeCoachVisionOS */,
-				FB5398E92A4617F0000B9CFD /* TimeCoachVisionOSTests */,
 			);
 		};
 /* End PBXProject section */
@@ -1040,13 +978,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		FB5398E12A4617EF000B9CFD /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		FB5398E82A4617F0000B9CFD /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1141,14 +1072,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		FB5398E62A4617F0000B9CFD /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				FB5398F22A4617F0000B9CFD /* TimeCoachVisionOSTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		FB73E91D293BAE490087F9EF /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1235,16 +1158,6 @@
 			isa = PBXTargetDependency;
 			target = FB5398902A45DA7C000B9CFD /* TimeCoachVision */;
 			targetProxy = FB5398A52A45DA7D000B9CFD /* PBXContainerItemProxy */;
-		};
-		FB5398ED2A4617F0000B9CFD /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = FB5398E22A4617EF000B9CFD /* TimeCoachVisionOS */;
-			targetProxy = FB5398EC2A4617F0000B9CFD /* PBXContainerItemProxy */;
-		};
-		FB5398EF2A4617F0000B9CFD /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = FB5398902A45DA7C000B9CFD /* TimeCoachVision */;
-			targetProxy = FB5398EE2A4617F0000B9CFD /* PBXContainerItemProxy */;
 		};
 		FB5398F52A4617F0000B9CFD /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1552,56 +1465,6 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2,7";
-				VALIDATE_PRODUCT = YES;
-				XROS_DEPLOYMENT_TARGET = 1.0;
-			};
-			name = Release;
-		};
-		FB5398FB2A4617F0000B9CFD /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = AEWQUX8MPM;
-				GCC_C_LANGUAGE_STANDARD = gnu17;
-				GENERATE_INFOPLIST_FILE = YES;
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.danstorre.TimeCoachVisionOSTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = xros;
-				SUPPORTED_PLATFORMS = "xros xrsimulator";
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2,7";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TimeCoachVision.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/TimeCoachVision";
-				XROS_DEPLOYMENT_TARGET = 1.0;
-			};
-			name = Debug;
-		};
-		FB5398FC2A4617F0000B9CFD /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = AEWQUX8MPM;
-				GCC_C_LANGUAGE_STANDARD = gnu17;
-				GENERATE_INFOPLIST_FILE = YES;
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.danstorre.TimeCoachVisionOSTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = xros;
-				SUPPORTED_PLATFORMS = "xros xrsimulator";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2,7";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TimeCoachVision.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/TimeCoachVision";
 				VALIDATE_PRODUCT = YES;
 				XROS_DEPLOYMENT_TARGET = 1.0;
 			};
@@ -2069,15 +1932,6 @@
 			buildConfigurations = (
 				FB5398F92A4617F0000B9CFD /* Debug */,
 				FB5398FA2A4617F0000B9CFD /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		FB5398FE2A4617F0000B9CFD /* Build configuration list for PBXNativeTarget "TimeCoachVisionOSTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				FB5398FB2A4617F0000B9CFD /* Debug */,
-				FB5398FC2A4617F0000B9CFD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
