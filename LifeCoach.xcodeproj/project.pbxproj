@@ -32,6 +32,7 @@
 		FB5399042A461996000B9CFD /* LifeCoach.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBAD475028FC8BB0003D2F7A /* LifeCoach.framework */; };
 		FB53990A2A4619FD000B9CFD /* TimerLabelStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5399092A4619FD000B9CFD /* TimerLabelStyle.swift */; };
 		FB53990C2A461A76000B9CFD /* TimerControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB53990B2A461A76000B9CFD /* TimerControls.swift */; };
+		FB53990E2A461AC2000B9CFD /* TimerTextTimeLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB53990D2A461AC2000B9CFD /* TimerTextTimeLine.swift */; };
 		FB73E909293BA2A40087F9EF /* TimeCoachRoot.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB73E908293BA2A40087F9EF /* TimeCoachRoot.swift */; };
 		FB73E925293BAE490087F9EF /* LifeCoach.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBAD475028FC8BB0003D2F7A /* LifeCoach.framework */; };
 		FB73E92B293BAE4F0087F9EF /* PomodoroLocalTimerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4AA1712937DE810076FED9 /* PomodoroLocalTimerTests.swift */; };
@@ -237,6 +238,7 @@
 		FB5399022A46197E000B9CFD /* TimerText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerText.swift; sourceTree = "<group>"; };
 		FB5399092A4619FD000B9CFD /* TimerLabelStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerLabelStyle.swift; sourceTree = "<group>"; };
 		FB53990B2A461A76000B9CFD /* TimerControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerControls.swift; sourceTree = "<group>"; };
+		FB53990D2A461AC2000B9CFD /* TimerTextTimeLine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerTextTimeLine.swift; sourceTree = "<group>"; };
 		FB73E908293BA2A40087F9EF /* TimeCoachRoot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeCoachRoot.swift; sourceTree = "<group>"; };
 		FB73E921293BAE490087F9EF /* TimerInfrastructureTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TimerInfrastructureTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB960C6D293D2BED00ECBAD5 /* Combine+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Combine+Helpers.swift"; sourceTree = "<group>"; };
@@ -502,6 +504,7 @@
 				FB5399022A46197E000B9CFD /* TimerText.swift */,
 				FB5399092A4619FD000B9CFD /* TimerLabelStyle.swift */,
 				FB53990B2A461A76000B9CFD /* TimerControls.swift */,
+				FB53990D2A461AC2000B9CFD /* TimerTextTimeLine.swift */,
 			);
 			path = TimeCoachVisionOS;
 			sourceTree = "<group>";
@@ -1134,6 +1137,7 @@
 				FB53990A2A4619FD000B9CFD /* TimerLabelStyle.swift in Sources */,
 				FB5399032A46197E000B9CFD /* TimerText.swift in Sources */,
 				FB53990C2A461A76000B9CFD /* TimerControls.swift in Sources */,
+				FB53990E2A461AC2000B9CFD /* TimerTextTimeLine.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
