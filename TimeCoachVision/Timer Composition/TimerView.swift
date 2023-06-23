@@ -33,11 +33,3 @@ struct TimerView_Previews: PreviewProvider {
         TimerView(timerViewModel: TimerViewModel())
     }
 }
-
-extension TimerView {
-    public static let togglePlaybackButtonIdentifier: Int = 2
-    
-    public static let skipButtonIdentifier: Int = 1
-    
-    public static let stopButtonIdentifier: Int = 0
-}
