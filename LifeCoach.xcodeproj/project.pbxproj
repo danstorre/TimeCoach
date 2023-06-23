@@ -31,6 +31,10 @@
 		FB53990A2A4619FD000B9CFD /* TimerLabelStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5399092A4619FD000B9CFD /* TimerLabelStyle.swift */; };
 		FB53990C2A461A76000B9CFD /* TimerControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB53990B2A461A76000B9CFD /* TimerControls.swift */; };
 		FB53990E2A461AC2000B9CFD /* TimerTextTimeLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB53990D2A461AC2000B9CFD /* TimerTextTimeLine.swift */; };
+		FB5399102A461B9D000B9CFD /* TimeCoach-VisionOS-App-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FB53990F2A461B9D000B9CFD /* TimeCoach-VisionOS-App-Info.plist */; };
+		FB5399162A461BBF000B9CFD /* pizzadude.dk License.txt in Resources */ = {isa = PBXBuildFile; fileRef = FB5399132A461BBF000B9CFD /* pizzadude.dk License.txt */; };
+		FB5399172A461BBF000B9CFD /* DIGITALDREAMFAT.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FB5399142A461BBF000B9CFD /* DIGITALDREAMFAT.ttf */; };
+		FB5399182A461BBF000B9CFD /* CustomFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5399152A461BBF000B9CFD /* CustomFont.swift */; };
 		FB73E909293BA2A40087F9EF /* TimeCoachRoot.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB73E908293BA2A40087F9EF /* TimeCoachRoot.swift */; };
 		FB73E925293BAE490087F9EF /* LifeCoach.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBAD475028FC8BB0003D2F7A /* LifeCoach.framework */; };
 		FB73E92B293BAE4F0087F9EF /* PomodoroLocalTimerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4AA1712937DE810076FED9 /* PomodoroLocalTimerTests.swift */; };
@@ -220,6 +224,10 @@
 		FB5399092A4619FD000B9CFD /* TimerLabelStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerLabelStyle.swift; sourceTree = "<group>"; };
 		FB53990B2A461A76000B9CFD /* TimerControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerControls.swift; sourceTree = "<group>"; };
 		FB53990D2A461AC2000B9CFD /* TimerTextTimeLine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerTextTimeLine.swift; sourceTree = "<group>"; };
+		FB53990F2A461B9D000B9CFD /* TimeCoach-VisionOS-App-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "TimeCoach-VisionOS-App-Info.plist"; sourceTree = "<group>"; };
+		FB5399132A461BBF000B9CFD /* pizzadude.dk License.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "pizzadude.dk License.txt"; sourceTree = "<group>"; };
+		FB5399142A461BBF000B9CFD /* DIGITALDREAMFAT.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = DIGITALDREAMFAT.ttf; sourceTree = "<group>"; };
+		FB5399152A461BBF000B9CFD /* CustomFont.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomFont.swift; sourceTree = "<group>"; };
 		FB73E908293BA2A40087F9EF /* TimeCoachRoot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeCoachRoot.swift; sourceTree = "<group>"; };
 		FB73E921293BAE490087F9EF /* TimerInfrastructureTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TimerInfrastructureTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB960C6D293D2BED00ECBAD5 /* Combine+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Combine+Helpers.swift"; sourceTree = "<group>"; };
@@ -439,10 +447,12 @@
 		FB5398922A45DA7C000B9CFD /* TimeCoachVision */ = {
 			isa = PBXGroup;
 			children = (
+				FB53989D2A45DA7D000B9CFD /* Preview Content */,
+				FB5399112A461BA7000B9CFD /* Resources */,
+				FB53990F2A461B9D000B9CFD /* TimeCoach-VisionOS-App-Info.plist */,
 				FB5398972A45DA7C000B9CFD /* TimeCoachVisionApp.swift */,
 				FB5398992A45DA7C000B9CFD /* ContentView.swift */,
 				FB53989B2A45DA7C000B9CFD /* Assets.xcassets */,
-				FB53989D2A45DA7D000B9CFD /* Preview Content */,
 			);
 			path = TimeCoachVision;
 			sourceTree = "<group>";
@@ -480,6 +490,24 @@
 				FB53990D2A461AC2000B9CFD /* TimerTextTimeLine.swift */,
 			);
 			path = TimeCoachVisionOS;
+			sourceTree = "<group>";
+		};
+		FB5399112A461BA7000B9CFD /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				FB5399122A461BBF000B9CFD /* Fonts */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		FB5399122A461BBF000B9CFD /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				FB5399132A461BBF000B9CFD /* pizzadude.dk License.txt */,
+				FB5399142A461BBF000B9CFD /* DIGITALDREAMFAT.ttf */,
+				FB5399152A461BBF000B9CFD /* CustomFont.swift */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 		FB73E922293BAE490087F9EF /* TimerInfrastructureTests */ = {
@@ -965,7 +993,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FB5399102A461B9D000B9CFD /* TimeCoach-VisionOS-App-Info.plist in Resources */,
 				FB53989F2A45DA7D000B9CFD /* Preview Assets.xcassets in Resources */,
+				FB5399172A461BBF000B9CFD /* DIGITALDREAMFAT.ttf in Resources */,
+				FB5399162A461BBF000B9CFD /* pizzadude.dk License.txt in Resources */,
 				FB53989C2A45DA7C000B9CFD /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1048,6 +1079,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FB5399182A461BBF000B9CFD /* CustomFont.swift in Sources */,
 				FB53989A2A45DA7C000B9CFD /* ContentView.swift in Sources */,
 				FB5398982A45DA7C000B9CFD /* TimeCoachVisionApp.swift in Sources */,
 			);
