@@ -81,6 +81,8 @@
 		FBE6465E2A4AA59F005022A2 /* FoundationTimerCountdownTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD56F772A3D184C002736AD /* FoundationTimerCountdownTests.swift */; };
 		FBE646642A4AA7CA005022A2 /* Combine+RegularTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE6465C2A4AA2DE005022A2 /* Combine+RegularTimer.swift */; };
 		FBE646652A4AA84F005022A2 /* TimerViewComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4AA14229379DC90076FED9 /* TimerViewComposer.swift */; };
+		FBE646672A4AA924005022A2 /* TimeCoachRoot+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE646662A4AA924005022A2 /* TimeCoachRoot+Extension.swift */; };
+		FBE646682A4AA98B005022A2 /* TimeCoachRoot+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE646662A4AA924005022A2 /* TimeCoachRoot+Extension.swift */; };
 		FBE9A9752939527C00D8BF29 /* TimeCoach Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = FBE9A9742939527C00D8BF29 /* TimeCoach Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		FBE9A97A2939527C00D8BF29 /* TimeCoachApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE9A9792939527C00D8BF29 /* TimeCoachApp.swift */; };
 		FBE9A97E2939527E00D8BF29 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FBE9A97D2939527E00D8BF29 /* Assets.xcassets */; };
@@ -290,6 +292,7 @@
 		FBE646552A4A9F3F005022A2 /* TimerVoidAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerVoidAdapter.swift; sourceTree = "<group>"; };
 		FBE646572A4A9F77005022A2 /* TimerAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerAdapter.swift; sourceTree = "<group>"; };
 		FBE6465C2A4AA2DE005022A2 /* Combine+RegularTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Combine+RegularTimer.swift"; sourceTree = "<group>"; };
+		FBE646662A4AA924005022A2 /* TimeCoachRoot+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimeCoachRoot+Extension.swift"; sourceTree = "<group>"; };
 		FBE9A96F2939527C00D8BF29 /* TimeCoach.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TimeCoach.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FBE9A9742939527C00D8BF29 /* TimeCoach Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "TimeCoach Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FBE9A9792939527C00D8BF29 /* TimeCoachApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeCoachApp.swift; sourceTree = "<group>"; };
@@ -643,6 +646,7 @@
 			isa = PBXGroup;
 			children = (
 				FBE6465C2A4AA2DE005022A2 /* Combine+RegularTimer.swift */,
+				FBE646662A4AA924005022A2 /* TimeCoachRoot+Extension.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -1138,6 +1142,7 @@
 				FBE646642A4AA7CA005022A2 /* Combine+RegularTimer.swift in Sources */,
 				FB5398982A45DA7C000B9CFD /* TimeCoachVisionApp.swift in Sources */,
 				FBE646592A4A9FBC005022A2 /* TimerAdapter.swift in Sources */,
+				FBE646682A4AA98B005022A2 /* TimeCoachRoot+Extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1192,6 +1197,7 @@
 			files = (
 				FBED1E52293EE13F0061CAAF /* TimerView.swift in Sources */,
 				FBE9A9A72939534000D8BF29 /* TimerPresentationAdapter.swift in Sources */,
+				FBE646672A4AA924005022A2 /* TimeCoachRoot+Extension.swift in Sources */,
 				FBED1E54293F7E980061CAAF /* UserNotificationDelegate.swift in Sources */,
 				FBE646562A4A9F3F005022A2 /* TimerVoidAdapter.swift in Sources */,
 				FBE9A9A82939535800D8BF29 /* TimerViewComposer.swift in Sources */,

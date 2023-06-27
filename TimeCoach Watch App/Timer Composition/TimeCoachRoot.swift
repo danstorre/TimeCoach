@@ -10,7 +10,7 @@ class TimeCoachRoot {
     private var notificationDelegate: UNUserNotificationCenterDelegate
     
     private var regularTimer: RegularTimer?
-    private var timerCoutdown: TimerCoutdown?
+    var timerCoutdown: TimerCoutdown?
     
     init() {
         let pomodoro = PomodoroLocalTimer(startDate: .now,
@@ -55,37 +55,4 @@ class TimeCoachRoot {
         timerLoad.loadTime()
     }
     
-    // MARK: Factory methods
-    func createTimerCountDown(from date: Date) -> TimerCoutdown {
-        timerCoutdown ?? FoundationTimerCountdown(startingSet: .pomodoroSet(date: date),
-                                                  nextSet: .breakSet(date: date))
-    }
-    
-    static func createPomodorTimer(with timer: TimerCoutdown, and currentValue: RegularTimer.CurrentValuePublisher) -> RegularTimer {
-        PomodoroTimer(timer: timer, timeReceiver: { result in
-            switch result {
-            case let .success(seconds):
-                currentValue.send(seconds)
-            case let .failure(error):
-                currentValue.send(completion: .failure(error))
-            }
-        })
-    }
-    
-    static func createFirstValuePublisher(from date: Date) -> RegularTimer.CurrentValuePublisher {
-        CurrentValueSubject<ElapsedSeconds, Error>(ElapsedSeconds(0,
-                                                                  startDate: date,
-                                                                  endDate: date.adding(seconds: .pomodoroInSeconds)))
-    }
-    
-}
-
-private extension LocalElapsedSeconds {
-    static func pomodoroSet(date: Date) -> LocalElapsedSeconds {
-        LocalElapsedSeconds(0, startDate: date, endDate: date.adding(seconds: .pomodoroInSeconds))
-    }
-    
-    static func breakSet(date: Date) -> LocalElapsedSeconds {
-        LocalElapsedSeconds(0, startDate: date, endDate: date.adding(seconds: .breakInSeconds))
-    }
 }
