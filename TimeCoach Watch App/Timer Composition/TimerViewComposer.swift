@@ -1,6 +1,10 @@
 import Combine
 import LifeCoach
+#if os(watchOS)
 import LifeCoachWatchOS
+#elseif os(xrOS)
+import TimeCoachVisionOS
+#endif
 
 public final class TimerViewComposer {
     public static func createTimer(

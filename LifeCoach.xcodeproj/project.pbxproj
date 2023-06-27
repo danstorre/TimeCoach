@@ -41,7 +41,6 @@
 		FB5399172A461BBF000B9CFD /* DIGITALDREAMFAT.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FB5399142A461BBF000B9CFD /* DIGITALDREAMFAT.ttf */; };
 		FB5399182A461BBF000B9CFD /* CustomFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5399152A461BBF000B9CFD /* CustomFont.swift */; };
 		FB53991B2A461C44000B9CFD /* TimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB53991A2A461C44000B9CFD /* TimerView.swift */; };
-		FB53991D2A461CCF000B9CFD /* TimerViewComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB53991C2A461CCF000B9CFD /* TimerViewComposer.swift */; };
 		FB53991F2A461CEC000B9CFD /* TimerPresentationAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB53991E2A461CEC000B9CFD /* TimerPresentationAdapter.swift */; };
 		FB5399212A461D04000B9CFD /* ToggleStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5399202A461D04000B9CFD /* ToggleStrategy.swift */; };
 		FB53992E2A46202D000B9CFD /* TimeCoachRoot.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB53992D2A46202D000B9CFD /* TimeCoachRoot.swift */; };
@@ -81,6 +80,7 @@
 		FBE6465D2A4AA2DE005022A2 /* Combine+RegularTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE6465C2A4AA2DE005022A2 /* Combine+RegularTimer.swift */; };
 		FBE6465E2A4AA59F005022A2 /* FoundationTimerCountdownTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD56F772A3D184C002736AD /* FoundationTimerCountdownTests.swift */; };
 		FBE646642A4AA7CA005022A2 /* Combine+RegularTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE6465C2A4AA2DE005022A2 /* Combine+RegularTimer.swift */; };
+		FBE646652A4AA84F005022A2 /* TimerViewComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4AA14229379DC90076FED9 /* TimerViewComposer.swift */; };
 		FBE9A9752939527C00D8BF29 /* TimeCoach Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = FBE9A9742939527C00D8BF29 /* TimeCoach Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		FBE9A97A2939527C00D8BF29 /* TimeCoachApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE9A9792939527C00D8BF29 /* TimeCoachApp.swift */; };
 		FBE9A97E2939527E00D8BF29 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FBE9A97D2939527E00D8BF29 /* Assets.xcassets */; };
@@ -262,7 +262,6 @@
 		FB5399142A461BBF000B9CFD /* DIGITALDREAMFAT.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = DIGITALDREAMFAT.ttf; sourceTree = "<group>"; };
 		FB5399152A461BBF000B9CFD /* CustomFont.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomFont.swift; sourceTree = "<group>"; };
 		FB53991A2A461C44000B9CFD /* TimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerView.swift; sourceTree = "<group>"; };
-		FB53991C2A461CCF000B9CFD /* TimerViewComposer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerViewComposer.swift; sourceTree = "<group>"; };
 		FB53991E2A461CEC000B9CFD /* TimerPresentationAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerPresentationAdapter.swift; sourceTree = "<group>"; };
 		FB5399202A461D04000B9CFD /* ToggleStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleStrategy.swift; sourceTree = "<group>"; };
 		FB53992D2A46202D000B9CFD /* TimeCoachRoot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeCoachRoot.swift; sourceTree = "<group>"; };
@@ -534,7 +533,6 @@
 			isa = PBXGroup;
 			children = (
 				FB53992D2A46202D000B9CFD /* TimeCoachRoot.swift */,
-				FB53991C2A461CCF000B9CFD /* TimerViewComposer.swift */,
 				FB53991A2A461C44000B9CFD /* TimerView.swift */,
 				FB53991E2A461CEC000B9CFD /* TimerPresentationAdapter.swift */,
 				FB5399202A461D04000B9CFD /* ToggleStrategy.swift */,
@@ -1132,12 +1130,12 @@
 				FB5399212A461D04000B9CFD /* ToggleStrategy.swift in Sources */,
 				FB5399182A461BBF000B9CFD /* CustomFont.swift in Sources */,
 				FB53991F2A461CEC000B9CFD /* TimerPresentationAdapter.swift in Sources */,
+				FBE646652A4AA84F005022A2 /* TimerViewComposer.swift in Sources */,
 				FB5399312A46209C000B9CFD /* PreviewTimer.swift in Sources */,
 				FB53989A2A45DA7C000B9CFD /* ContentView.swift in Sources */,
 				FB53991B2A461C44000B9CFD /* TimerView.swift in Sources */,
 				FB53992E2A46202D000B9CFD /* TimeCoachRoot.swift in Sources */,
 				FBE646642A4AA7CA005022A2 /* Combine+RegularTimer.swift in Sources */,
-				FB53991D2A461CCF000B9CFD /* TimerViewComposer.swift in Sources */,
 				FB5398982A45DA7C000B9CFD /* TimeCoachVisionApp.swift in Sources */,
 				FBE646592A4A9FBC005022A2 /* TimerAdapter.swift in Sources */,
 			);
