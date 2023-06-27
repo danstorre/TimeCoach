@@ -4,7 +4,7 @@ public final class FoundationTimerCountdown: TimerCoutdown {
     public typealias StartCoundownCompletion = (Result<LocalElapsedSeconds, Error>) -> Void
     public typealias SkipCoundownCompletion = (Result<LocalElapsedSeconds, Error>) -> Void
     
-    public private(set) var state: TimerState = .pause
+    public private(set) var state: TimerState = .stop
     private var setA: LocalElapsedSeconds
     private var setB: LocalElapsedSeconds
     private var currentSet: LocalElapsedSeconds
@@ -30,7 +30,7 @@ public final class FoundationTimerCountdown: TimerCoutdown {
     
     public func stopCountdown() {
         invalidatesTimer()
-        state = .pause
+        state = .stop
         timerDelivery?(.success(currentSet))
     }
     
@@ -69,7 +69,7 @@ public final class FoundationTimerCountdown: TimerCoutdown {
     
     private func executeNextSet() {
         invalidatesTimer()
-        state = .pause
+        state = .stop
         setA = currentSet
         currentSet = setB
         timerDelivery?(.success(setB))

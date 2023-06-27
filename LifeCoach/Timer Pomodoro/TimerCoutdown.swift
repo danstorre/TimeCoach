@@ -3,6 +3,7 @@ import Foundation
 public enum TimerState {
     case pause
     case running
+    case stop
 }
 
 public protocol TimerCoutdown {
