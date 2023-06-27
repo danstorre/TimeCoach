@@ -84,7 +84,7 @@ final class TimerUIIntegrationTests: XCTestCase {
         let timeLoader = TimerPublisherSpy()
         
         let timerView = TimerViewComposer
-            .createTimer(
+            .newCreateTimer(
                 customFont: .timerFont,
                 playPublisher: timeLoader.play(),
                 skipPublisher: timeLoader.skip(),
@@ -115,8 +115,8 @@ final class TimerUIIntegrationTests: XCTestCase {
         
         typealias PlayPublisher = CurrentValueSubject<ElapsedSeconds, Error>
         typealias SkipPublisher = CurrentValueSubject<ElapsedSeconds, Error>
-        typealias StopPublisher = CurrentValueSubject<ElapsedSeconds, Error>
-        typealias PausePublisher = CurrentValueSubject<ElapsedSeconds, Error>
+        typealias StopPublisher = CurrentValueSubject<Void, Error>
+        typealias PausePublisher = CurrentValueSubject<Void, Error>
         
         func play() -> AnyPublisher<ElapsedSeconds, Error> {
             let elapsed = makeElapsedSeconds(0, startDate: Date(), endDate: Date())
@@ -134,19 +134,15 @@ final class TimerUIIntegrationTests: XCTestCase {
             }.eraseToAnyPublisher()
         }
         
-        func stop() -> AnyPublisher<ElapsedSeconds, Error> {
-            let elapsedTime = makeElapsedSeconds(0, startDate: Date(), endDate: Date())
-            return StopPublisher(elapsedTime).map { elapsed in
-                self.commandsReceived.append(.stop)
-                return elapsed
+        func stop() -> AnyPublisher<Void, Error> {
+            return StopPublisher({}()).map {
+                return self.commandsReceived.append(.stop)
             }.eraseToAnyPublisher()
         }
         
-        func pause() -> AnyPublisher<ElapsedSeconds, Error> {
-            let elapsedTime = makeElapsedSeconds(0, startDate: Date(), endDate: Date())
-            return PausePublisher(elapsedTime).map { elapsed in
-                self.commandsReceived.append(.pause)
-                return elapsed
+        func pause() -> AnyPublisher<Void, Error> {
+            return PausePublisher({}()).map {
+                return self.commandsReceived.append(.pause)
             }.eraseToAnyPublisher()
         }
     }
