@@ -69,7 +69,7 @@ class TimeCoachRoot {
             }.eraseToAnyPublisher()
         }
         
-        return TimerViewComposer.newCreateTimer(
+        return TimerViewComposer.createTimer(
             customFont: CustomFont.timer.font,
             playPublisher: playPublisher,
             skipPublisher: skipPublisher,
