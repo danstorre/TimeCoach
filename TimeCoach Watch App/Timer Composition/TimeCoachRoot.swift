@@ -33,9 +33,7 @@ class TimeCoachRoot {
         let date = Date()
         let timerCountdown = timerCoutdown ?? FoundationTimerCountdown(startingSet: .pomodoroSet(date: date),
                                                                                  nextSet: .breakSet(date: date))
-        let currentSubject = CurrentValueSubject<ElapsedSeconds, Error>(ElapsedSeconds(0,
-                                                                                       startDate: date,
-                                                                                       endDate: date.adding(seconds: .pomodoroInSeconds)))
+        let currentSubject = Self.createFirstValuePublisher(from: date)
         regularTimer = Self.createPomodorTimer(with: timerCountdown, and: currentSubject)
         
         return TimerViewComposer.createTimer(
@@ -58,6 +56,7 @@ class TimeCoachRoot {
         timerLoad.loadTime()
     }
     
+    // MARK: Factory methods
     static func createPomodorTimer(with timer: TimerCoutdown, and currentValue: RegularTimer.CurrentValuePublisher) -> RegularTimer {
         PomodoroTimer(timer: timer, timeReceiver: { result in
             switch result {
@@ -67,6 +66,12 @@ class TimeCoachRoot {
                 currentValue.send(completion: .failure(error))
             }
         })
+    }
+    
+    static func createFirstValuePublisher(from date: Date) -> RegularTimer.CurrentValuePublisher {
+        CurrentValueSubject<ElapsedSeconds, Error>(ElapsedSeconds(0,
+                                                                  startDate: date,
+                                                                  endDate: date.adding(seconds: .pomodoroInSeconds)))
     }
     
 }
