@@ -45,11 +45,6 @@ class TimeCoachRoot {
             }
         })
         
-        let pausePublisher = Deferred { [regularTimer] in
-            regularTimer?.pause()
-            return PassthroughSubject<Void, Error>()
-        }.eraseToAnyPublisher()
-        
         let playPublisher = { [regularTimer] in
             Deferred {
                 regularTimer?.start()
@@ -69,7 +64,7 @@ class TimeCoachRoot {
             playPublisher: playPublisher,
             skipPublisher: skipPublisher,
             stopPublisher: regularTimer!.stopPublisher(),
-            pausePublisher: pausePublisher,
+            pausePublisher: regularTimer!.pausePublisher(),
             withTimeLine: withTimeLine
         )
     }
@@ -100,6 +95,13 @@ private extension RegularTimer {
     func stopPublisher() -> AnyPublisher<Void, Error> {
         return Deferred {
             self.stop()
+            return PassthroughSubject<Void, Error>()
+        }.eraseToAnyPublisher()
+    }
+    
+    func pausePublisher() -> AnyPublisher<Void, Error> {
+        return Deferred {
+            self.pause()
             return PassthroughSubject<Void, Error>()
         }.eraseToAnyPublisher()
     }
