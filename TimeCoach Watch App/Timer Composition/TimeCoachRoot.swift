@@ -45,16 +45,9 @@ class TimeCoachRoot {
             }
         })
         
-        let playPublisher = { [regularTimer] in
-            Deferred {
-                regularTimer?.start()
-                return currentSubject
-            }.eraseToAnyPublisher()
-        }
-        
         return TimerViewComposer.createTimer(
             customFont: CustomFont.timer.font,
-            playPublisher: playPublisher,
+            playPublisher: regularTimer!.playPublisher(currentSubject: currentSubject),
             skipPublisher: regularTimer!.skipPublisher(currentSubject: currentSubject),
             stopPublisher: regularTimer!.stopPublisher(),
             pausePublisher: regularTimer!.pausePublisher(),
@@ -103,6 +96,15 @@ private extension RegularTimer {
         {
             Deferred {
                 skip()
+                return currentSubject
+            }.eraseToAnyPublisher()
+        }
+    }
+    
+    func playPublisher(currentSubject: CurrentValueSubject<ElapsedSeconds, Error>) -> () -> AnyPublisher<ElapsedSeconds, Error> {
+        {
+            Deferred {
+                start()
                 return currentSubject
             }.eraseToAnyPublisher()
         }
