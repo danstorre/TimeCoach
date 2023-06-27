@@ -86,8 +86,8 @@ final class TimerUIIntegrationTests: XCTestCase {
         let timerView = TimerViewComposer
             .newCreateTimer(
                 customFont: .timerFont,
-                playPublisher: timeLoader.play(),
-                skipPublisher: timeLoader.skip(),
+                playPublisher: { timeLoader.play() },
+                skipPublisher: { timeLoader.skip() },
                 stopPublisher: timeLoader.stop(),
                 pausePublisher: timeLoader.pause(),
                 withTimeLine: false // the integration tests do not contemplate the time line since this an watchOS specific trait.

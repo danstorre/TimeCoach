@@ -11,6 +11,7 @@ class TimeCoachRoot {
     private var notificationDelegate: UNUserNotificationCenterDelegate
     
     private var regularTimer: RegularTimer?
+    private var timerCoutdown: TimerCoutdown?
     
     init() {
         let pomodoro = PomodoroLocalTimer(startDate: .now,
@@ -30,6 +31,16 @@ class TimeCoachRoot {
         self.timerLoad = timerState
     }
     
+    convenience init(timerCoutdown: TimerCoutdown, timerState: TimerSave & TimerLoad) {
+        self.init()
+        self.timerCoundown = PomodoroLocalTimer(startDate: .now,
+                                                primaryInterval: .pomodoroInSeconds,
+                                                secondaryTime: .breakInSeconds)
+        self.timerSave = timerState
+        self.timerLoad = timerState
+        self.timerCoutdown = timerCoutdown
+    }
+    
     func createTimer(withTimeLine: Bool = true) -> TimerView {
         return TimerViewComposer.createTimer(
             customFont: CustomFont.timer.font,
@@ -43,9 +54,11 @@ class TimeCoachRoot {
     
     func newCreateTimer(withTimeLine: Bool = true) -> TimerView {
         let date = Date()
-        let foundationTimerCountdown = FoundationTimerCountdown(startingSet: .pomodoroSet(date: date),
-                                                                nextSet: .breakSet(date: date))
-        let currentSubject = CurrentValueSubject<ElapsedSeconds, Error>(ElapsedSeconds(0, startDate: date, endDate: date))
+        let foundationTimerCountdown = timerCoutdown ?? FoundationTimerCountdown(startingSet: .pomodoroSet(date: date),
+                                                                                 nextSet: .breakSet(date: date))
+        let currentSubject = CurrentValueSubject<ElapsedSeconds, Error>(ElapsedSeconds(0,
+                                                                                       startDate: date,
+                                                                                       endDate: date.adding(seconds: .pomodoroInSeconds)))
         regularTimer = PomodoroTimer(timer: foundationTimerCountdown, timeReceiver: { result in
             switch result {
             case let .success(seconds):
@@ -55,33 +68,37 @@ class TimeCoachRoot {
             }
         })
         
-        let passSubject = Deferred { PassthroughSubject<Void, Error>() }
-        let currentValuePublisher = Deferred { currentSubject }
+        let stopPublisher = Deferred { [regularTimer] in
+            regularTimer?.stop()
+            return PassthroughSubject<Void, Error>()
+        }.eraseToAnyPublisher()
+        
+        let pausePublisher = Deferred { [regularTimer] in
+            regularTimer?.pause()
+            return PassthroughSubject<Void, Error>()
+        }.eraseToAnyPublisher()
+        
+        let playPublisher = { [regularTimer] in
+            Deferred {
+                regularTimer?.start()
+                return currentSubject
+            }.eraseToAnyPublisher()
+        }
+        
+        let skipPublisher = { [regularTimer] in
+            Deferred {
+                regularTimer?.skip()
+                return currentSubject
+            }.eraseToAnyPublisher()
+        }
+        
         
         return TimerViewComposer.newCreateTimer(
             customFont: CustomFont.timer.font,
-            playPublisher: currentValuePublisher
-                .merge(with: passSubject
-                    .map({ [regularTimer] _ in
-                        regularTimer?.start()
-                    }).map({ _ in
-                        return ElapsedSeconds(0, startDate: date, endDate: date)
-                    }).eraseToAnyPublisher())
-                .eraseToAnyPublisher(),
-            skipPublisher: currentValuePublisher
-                .merge(with: passSubject
-                    .map({ [regularTimer]_ in
-                        regularTimer?.skip()
-                    }).map({ _ in
-                        return ElapsedSeconds(0, startDate: date, endDate: date)
-                    }).eraseToAnyPublisher())
-                .eraseToAnyPublisher(),
-            stopPublisher: passSubject.map({ [regularTimer] _ in
-                regularTimer?.stop()
-            }).eraseToAnyPublisher(),
-            pausePublisher: passSubject.map({ [regularTimer] _ in
-                regularTimer?.pause()
-            }).eraseToAnyPublisher(),
+            playPublisher: playPublisher,
+            skipPublisher: skipPublisher,
+            stopPublisher: stopPublisher,
+            pausePublisher: pausePublisher,
             withTimeLine: withTimeLine
         )
     }

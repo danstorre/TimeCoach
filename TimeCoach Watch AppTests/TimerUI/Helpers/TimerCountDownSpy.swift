@@ -13,7 +13,31 @@ func breakResponse(_ seconds: TimeInterval) -> ElapsedSeconds {
     return ElapsedSeconds(seconds, startDate: start, endDate: start.adding(seconds: .breakInSeconds))
 }
 
-class TimerCountdownSpy: TimerCountdown {
+class TimerCountdownSpy: TimerCountdown, TimerCoutdown {
+    
+    private(set) var receivedStartCountdownCompletions = [StartCoundownCompletion]()
+    private(set) var receivedSkipCountdownCompletions = [SkipCountdownCompletion]()
+    private(set) var stopCallCount = 0
+    private(set) var pauseCallCount = 0
+ 
+    var state: LifeCoach.TimerState = .pause
+    
+    func startCountdown(completion: @escaping StartCoundownCompletion) {
+        receivedStartCountdownCompletions.append(completion)
+    }
+    
+    func stopCountdown() {
+        stopCallCount += 1
+    }
+    
+    func pauseCountdown() {
+        pauseCallCount += 1
+    }
+    
+    func skipCountdown(completion: @escaping SkipCountdownCompletion) {
+        receivedSkipCountdownCompletions.append(completion)
+    }
+    
     private var stubs: [() -> ElapsedSeconds] = []
     private var pomodoroStubs: [() -> ElapsedSeconds] = []
     private var breakStubs: [() -> ElapsedSeconds] = []
@@ -54,27 +78,27 @@ class TimerCountdownSpy: TimerCountdown {
     
     func flushPomodoroTimes(at index: Int) {
         pomodoroStubs.forEach { stub in
-            receivedToggleCompletions[index](stub())
+            receivedStartCountdownCompletions[index](.success(stub().toLocal()))
         }
     }
     
     func flushBreakTimes(at index: Int) {
         breakStubs.forEach { stub in
-            receivedToggleCompletions[index](stub())
+            receivedStartCountdownCompletions[index](.success(stub().toLocal()))
         }
     }
     
     func completeSuccessfullyOnSkip(at index: Int = 0) {
-        receivedSkipCompletions[index](breakResponse(0))
+        receivedSkipCountdownCompletions[index](.success(breakResponse(0).toLocal()))
     }
     
     func completeSuccessfullyOnPomodoroStop(at index: Int = 0) {
-        receivedStopCompletions[index](pomodoroResponse(0))
+        receivedStartCountdownCompletions[index](.success(pomodoroResponse(0).toLocal()))
     }
     
     func completeSuccessfullyOnPomodoroToggle(at index: Int = 0) {
         if let lastGivenPomodoro = pomodoroStubs.last {
-            receivedToggleCompletions[index](lastGivenPomodoro())
+            receivedStartCountdownCompletions[index](.success(lastGivenPomodoro().toLocal()))
         }
     }
     
@@ -120,4 +144,11 @@ class TimerCountdownSpy: TimerCountdown {
     
     // MARK: Time Saver
     private(set) var saveTimeCallCount = 0
+}
+
+
+extension ElapsedSeconds {
+    func toLocal() -> LocalElapsedSeconds {
+        LocalElapsedSeconds(elapsedSeconds, startDate: startDate, endDate: endDate)
+    }
 }

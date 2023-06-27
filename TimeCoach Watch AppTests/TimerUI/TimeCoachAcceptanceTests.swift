@@ -54,43 +54,49 @@ final class TimeCoachAcceptanceTests: XCTestCase {
     func test_onLaunch_AfterPlayUserInteraction_OnStopUserInteraction_shouldShowCorrectTimer() {
         let (sut, spy) = makeSUT(pomodoroSecondsToBeFlushed: 1.0, breakSecondsToBeFlushed: 1.0)
         
-        XCTAssertEqual(sut.timerLabelString(), "25:00")
+        XCTAssertEqual(spy.stopCallCount, 0)
         
         sut.simulateToggleTimerUserInteraction()
         
-        XCTAssertEqual(sut.timerLabelString(), "25:00")
+        XCTAssertEqual(spy.stopCallCount, 0)
         
         spy.flushPomodoroTimes(at: 0)
         
-        XCTAssertEqual(sut.timerLabelString(), "24:59")
+        XCTAssertEqual(spy.stopCallCount, 0)
         
         sut.simulateStopTimerUserInteraction()
+    
+        XCTAssertEqual(spy.stopCallCount, 1)
         
-        spy.completeSuccessfullyOnPomodoroStop()
-        
-        XCTAssertEqual(sut.timerLabelString(), "25:00")
+        sut.simulateStopTimerUserInteraction()
+    
+        XCTAssertEqual(spy.stopCallCount, 2)
     }
     
     func test_onLaunch_AfterPlayUserInteraction_OnPauseUserIntereaction_shouldShowCorrectTimer() {
         let (sut, spy) = makeSUT(pomodoroSecondsToBeFlushed: 1.0, breakSecondsToBeFlushed: 1.0)
         
-        XCTAssertEqual(sut.timerLabelString(), "25:00")
+        XCTAssertEqual(spy.pauseCallCount, 0)
         
         sut.simulateToggleTimerUserInteraction()
         
-        XCTAssertEqual(sut.timerLabelString(), "25:00")
+        XCTAssertEqual(spy.pauseCallCount, 0)
         
         spy.flushPomodoroTimes(at: 0)
         
-        XCTAssertEqual(sut.timerLabelString(), "24:59")
+        XCTAssertEqual(spy.pauseCallCount, 0)
         
         sut.simulateToggleTimerUserInteraction()
         
-        XCTAssertEqual(sut.timerLabelString(), "24:59")
+        XCTAssertEqual(spy.pauseCallCount, 1)
         
-        spy.completeSuccessfullyOnPomodoroToggle(at: 1)
+        sut.simulateToggleTimerUserInteraction()
         
-        XCTAssertEqual(sut.timerLabelString(), "24:59")
+        XCTAssertEqual(spy.pauseCallCount, 1)
+        
+        sut.simulateToggleTimerUserInteraction()
+        
+        XCTAssertEqual(spy.pauseCallCount, 2)
     }
     
     // MARK: - Helpers
@@ -107,7 +113,7 @@ final class TimeCoachAcceptanceTests: XCTestCase {
             breakStub: breakResponse)
         let spyTimerState = TimerStateSpy()
         
-        let sut = TimeCoach_Watch_AppApp(timerCoundown: spy, timerState: spyTimerState).timerView
+        let sut = TimeCoach_Watch_AppApp(pomodoroTimer: spy, timerState: spyTimerState).timerView
         
         trackForMemoryLeak(instance: spy, file: file, line: line)
         trackForMemoryLeak(instance: spyTimerState, file: file, line: line)

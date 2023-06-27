@@ -44,18 +44,18 @@ public final class TimerViewComposer {
     
     public static func newCreateTimer(
         customFont: String,
-        playPublisher: AnyPublisher<ElapsedSeconds, Error>,
-        skipPublisher: AnyPublisher<ElapsedSeconds, Error>,
+        playPublisher: @escaping () -> AnyPublisher<ElapsedSeconds, Error>,
+        skipPublisher: @escaping () -> AnyPublisher<ElapsedSeconds, Error>,
         stopPublisher: AnyPublisher<Void, Error>,
         pausePublisher: AnyPublisher<Void, Error>,
         withTimeLine: Bool
     ) -> TimerView {
         let viewModel = TimerViewModel()
 
-        let starTimerAdapter = TimerPresentationAdapter(loader: playPublisher)
+        let starTimerAdapter = TimerAdapter(loader: playPublisher)
         starTimerAdapter.presenter = viewModel
         
-        let skipTimerAdapter = TimerPresentationAdapter(loader: skipPublisher)
+        let skipTimerAdapter = TimerAdapter(loader: skipPublisher)
         skipTimerAdapter.presenter = viewModel
         
         let stopTimerAdapter = TimerVoidAdapter(loader: stopPublisher)
@@ -109,6 +109,43 @@ extension TimerVoidAdapter {
     }
     
     func pause() {
+        subscribe()
+    }
+}
+
+
+final class TimerAdapter {
+    private let loader: () -> AnyPublisher<ElapsedSeconds, Error>
+    private var cancellable: Cancellable?
+    var presenter: TimerViewModel?
+    
+    init(loader: @escaping () -> AnyPublisher<ElapsedSeconds, Error>) {
+        self.loader = loader
+    }
+    
+    private func subscribe() {
+        cancellable = loader()
+            .sink(
+                receiveCompletion: { [weak self] completion in
+                    switch completion {
+                    case .finished: break
+                        
+                    case let .failure(error):
+                        self?.presenter?.errorOnTimer(with: error)
+                    }
+                }, receiveValue: { [weak self] elapsed in
+                    self?.presenter?.delivered(elapsedTime: elapsed)
+                })
+    }
+}
+
+
+extension TimerAdapter {
+    func start() {
+        subscribe()
+    }
+    
+    func skip() {
         subscribe()
     }
 }
