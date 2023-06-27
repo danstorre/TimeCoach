@@ -31,8 +31,7 @@ class TimeCoachRoot {
     
     func newCreateTimer(withTimeLine: Bool = true) -> TimerView {
         let date = Date()
-        let timerCountdown = timerCoutdown ?? FoundationTimerCountdown(startingSet: .pomodoroSet(date: date),
-                                                                                 nextSet: .breakSet(date: date))
+        let timerCountdown = createTimerCountDown(from: date)
         let currentSubject = Self.createFirstValuePublisher(from: date)
         regularTimer = Self.createPomodorTimer(with: timerCountdown, and: currentSubject)
         
@@ -57,6 +56,11 @@ class TimeCoachRoot {
     }
     
     // MARK: Factory methods
+    func createTimerCountDown(from date: Date) -> TimerCoutdown {
+        timerCoutdown ?? FoundationTimerCountdown(startingSet: .pomodoroSet(date: date),
+                                                  nextSet: .breakSet(date: date))
+    }
+    
     static func createPomodorTimer(with timer: TimerCoutdown, and currentValue: RegularTimer.CurrentValuePublisher) -> RegularTimer {
         PomodoroTimer(timer: timer, timeReceiver: { result in
             switch result {
