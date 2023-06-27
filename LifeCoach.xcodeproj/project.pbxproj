@@ -19,7 +19,6 @@
 		FB4AA1382936F1730076FED9 /* TimerText.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4AA1372936F1730076FED9 /* TimerText.swift */; };
 		FB4AA1542937C0F30076FED9 /* ExtensionHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4AA1532937C0F30076FED9 /* ExtensionHelpers.swift */; };
 		FB4AA1642937CD000076FED9 /* ElapsedSeconds.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4AA1632937CD000076FED9 /* ElapsedSeconds.swift */; };
-		FB4AA16F2937D75A0076FED9 /* TimerCountdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4AA16E2937D75A0076FED9 /* TimerCountdown.swift */; };
 		FB4B895A2A3B950C0088DB5B /* CustomFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4B89592A3B950C0088DB5B /* CustomFont.swift */; };
 		FB4B895D2A3BB9D90088DB5B /* SaveTimerAcceptanceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4B895C2A3BB9D90088DB5B /* SaveTimerAcceptanceTests.swift */; };
 		FB4B895F2A3BBB090088DB5B /* LoadTimerAcceptanceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4B895E2A3BBB090088DB5B /* LoadTimerAcceptanceTests.swift */; };
@@ -45,7 +44,6 @@
 		FB53991D2A461CCF000B9CFD /* TimerViewComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB53991C2A461CCF000B9CFD /* TimerViewComposer.swift */; };
 		FB53991F2A461CEC000B9CFD /* TimerPresentationAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB53991E2A461CEC000B9CFD /* TimerPresentationAdapter.swift */; };
 		FB5399212A461D04000B9CFD /* ToggleStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5399202A461D04000B9CFD /* ToggleStrategy.swift */; };
-		FB53992C2A462008000B9CFD /* Combine+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB53992B2A462008000B9CFD /* Combine+Helpers.swift */; };
 		FB53992E2A46202D000B9CFD /* TimeCoachRoot.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB53992D2A46202D000B9CFD /* TimeCoachRoot.swift */; };
 		FB5399312A46209C000B9CFD /* PreviewTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5399302A46209C000B9CFD /* PreviewTimer.swift */; };
 		FB73E909293BA2A40087F9EF /* TimeCoachRoot.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB73E908293BA2A40087F9EF /* TimeCoachRoot.swift */; };
@@ -53,7 +51,6 @@
 		FB73E92B293BAE4F0087F9EF /* PomodoroLocalTimerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4AA1712937DE810076FED9 /* PomodoroLocalTimerTests.swift */; };
 		FB73E92C293BAEEB0087F9EF /* XCTestCase+MemoryLeakTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC9ADAE2919E8B500E0BEFC /* XCTestCase+MemoryLeakTracking.swift */; };
 		FB73E92D293BC1D80087F9EF /* LifeCoach.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBAD475028FC8BB0003D2F7A /* LifeCoach.framework */; };
-		FB960C6E293D2BED00ECBAD5 /* Combine+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB960C6D293D2BED00ECBAD5 /* Combine+Helpers.swift */; };
 		FB960C72293D462900ECBAD5 /* ToggleStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB960C71293D462900ECBAD5 /* ToggleStrategy.swift */; };
 		FB960C73293D479800ECBAD5 /* XCTestCase+MemoryLeakTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC9ADAE2919E8B500E0BEFC /* XCTestCase+MemoryLeakTracking.swift */; };
 		FB960C75293D484000ECBAD5 /* TimerPresentationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB960C74293D484000ECBAD5 /* TimerPresentationTests.swift */; };
@@ -248,7 +245,6 @@
 		FB4AA1562937C3970076FED9 /* Date+Formatters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Formatters.swift"; sourceTree = "<group>"; };
 		FB4AA1582937C3C50076FED9 /* Timer+DefaultStrings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Timer+DefaultStrings.swift"; sourceTree = "<group>"; };
 		FB4AA1632937CD000076FED9 /* ElapsedSeconds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElapsedSeconds.swift; sourceTree = "<group>"; };
-		FB4AA16E2937D75A0076FED9 /* TimerCountdown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerCountdown.swift; sourceTree = "<group>"; };
 		FB4AA1712937DE810076FED9 /* PomodoroLocalTimerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PomodoroLocalTimerTests.swift; sourceTree = "<group>"; };
 		FB4B89592A3B950C0088DB5B /* CustomFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomFont.swift; sourceTree = "<group>"; };
 		FB4B895C2A3BB9D90088DB5B /* SaveTimerAcceptanceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveTimerAcceptanceTests.swift; sourceTree = "<group>"; };
@@ -274,12 +270,10 @@
 		FB53991C2A461CCF000B9CFD /* TimerViewComposer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerViewComposer.swift; sourceTree = "<group>"; };
 		FB53991E2A461CEC000B9CFD /* TimerPresentationAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerPresentationAdapter.swift; sourceTree = "<group>"; };
 		FB5399202A461D04000B9CFD /* ToggleStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleStrategy.swift; sourceTree = "<group>"; };
-		FB53992B2A462008000B9CFD /* Combine+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Combine+Helpers.swift"; sourceTree = "<group>"; };
 		FB53992D2A46202D000B9CFD /* TimeCoachRoot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeCoachRoot.swift; sourceTree = "<group>"; };
 		FB5399302A46209C000B9CFD /* PreviewTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewTimer.swift; sourceTree = "<group>"; };
 		FB73E908293BA2A40087F9EF /* TimeCoachRoot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeCoachRoot.swift; sourceTree = "<group>"; };
 		FB73E921293BAE490087F9EF /* TimerInfrastructureTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TimerInfrastructureTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		FB960C6D293D2BED00ECBAD5 /* Combine+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Combine+Helpers.swift"; sourceTree = "<group>"; };
 		FB960C71293D462900ECBAD5 /* ToggleStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleStrategy.swift; sourceTree = "<group>"; };
 		FB960C74293D484000ECBAD5 /* TimerPresentationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerPresentationTests.swift; sourceTree = "<group>"; };
 		FB960C7F293D532E00ECBAD5 /* PreviewTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewTimer.swift; sourceTree = "<group>"; };
@@ -420,7 +414,6 @@
 		FB4AA14129379DC20076FED9 /* Timer Composition */ = {
 			isa = PBXGroup;
 			children = (
-				FB4B89572A3B949B0088DB5B /* Helpers */,
 				FB73E908293BA2A40087F9EF /* TimeCoachRoot.swift */,
 				FB4AA14229379DC90076FED9 /* TimerViewComposer.swift */,
 				FBED1E51293EE13F0061CAAF /* TimerView.swift */,
@@ -446,7 +439,6 @@
 		FB4AA15C2937C6D70076FED9 /* Timer Feature */ = {
 			isa = PBXGroup;
 			children = (
-				FB4AA16E2937D75A0076FED9 /* TimerCountdown.swift */,
 				FB4AA1632937CD000076FED9 /* ElapsedSeconds.swift */,
 				FBD56F732A3D0ECE002736AD /* RegularTimer.swift */,
 			);
@@ -464,14 +456,6 @@
 				FBE336A62A3D6CC200735D74 /* FoundationTimerCountdown.swift */,
 			);
 			path = "Timer Infrastructure";
-			sourceTree = "<group>";
-		};
-		FB4B89572A3B949B0088DB5B /* Helpers */ = {
-			isa = PBXGroup;
-			children = (
-				FB960C6D293D2BED00ECBAD5 /* Combine+Helpers.swift */,
-			);
-			path = Helpers;
 			sourceTree = "<group>";
 		};
 		FB4B895B2A3B96760088DB5B /* Timer Store */ = {
@@ -557,7 +541,6 @@
 		FB5399192A461C39000B9CFD /* Timer Composition */ = {
 			isa = PBXGroup;
 			children = (
-				FB53992A2A462003000B9CFD /* Helpers */,
 				FB53992D2A46202D000B9CFD /* TimeCoachRoot.swift */,
 				FB53991C2A461CCF000B9CFD /* TimerViewComposer.swift */,
 				FB53991A2A461C44000B9CFD /* TimerView.swift */,
@@ -565,14 +548,6 @@
 				FB5399202A461D04000B9CFD /* ToggleStrategy.swift */,
 			);
 			path = "Timer Composition";
-			sourceTree = "<group>";
-		};
-		FB53992A2A462003000B9CFD /* Helpers */ = {
-			isa = PBXGroup;
-			children = (
-				FB53992B2A462008000B9CFD /* Combine+Helpers.swift */,
-			);
-			path = Helpers;
 			sourceTree = "<group>";
 		};
 		FB53992F2A46208E000B9CFD /* Previews */ = {
@@ -1195,7 +1170,6 @@
 				FB5399212A461D04000B9CFD /* ToggleStrategy.swift in Sources */,
 				FB5399182A461BBF000B9CFD /* CustomFont.swift in Sources */,
 				FB53991F2A461CEC000B9CFD /* TimerPresentationAdapter.swift in Sources */,
-				FB53992C2A462008000B9CFD /* Combine+Helpers.swift in Sources */,
 				FB5399312A46209C000B9CFD /* PreviewTimer.swift in Sources */,
 				FB53989A2A45DA7C000B9CFD /* ContentView.swift in Sources */,
 				FB53991B2A461C44000B9CFD /* TimerView.swift in Sources */,
@@ -1246,7 +1220,6 @@
 				FB960C78293D48D800ECBAD5 /* Date+Formatters.swift in Sources */,
 				FBDBAC4C29762AFE009E440A /* PomodoroLocalTimer+TimerLoad.swift in Sources */,
 				FB4AA1542937C0F30076FED9 /* ExtensionHelpers.swift in Sources */,
-				FB4AA16F2937D75A0076FED9 /* TimerCountdown.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1268,7 +1241,6 @@
 				FBE9A9A72939534000D8BF29 /* TimerPresentationAdapter.swift in Sources */,
 				FBED1E54293F7E980061CAAF /* UserNotificationDelegate.swift in Sources */,
 				FBE9A9A82939535800D8BF29 /* TimerViewComposer.swift in Sources */,
-				FB960C6E293D2BED00ECBAD5 /* Combine+Helpers.swift in Sources */,
 				FB4B895A2A3B950C0088DB5B /* CustomFont.swift in Sources */,
 				FB960C72293D462900ECBAD5 /* ToggleStrategy.swift in Sources */,
 				FBE9A97A2939527C00D8BF29 /* TimeCoachApp.swift in Sources */,

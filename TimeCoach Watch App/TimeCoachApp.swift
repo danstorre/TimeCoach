@@ -16,15 +16,9 @@ struct TimeCoach_Watch_AppApp: App {
     init() {
         let root = TimeCoachRoot()
         self.root = root
-        self.timerView = root.createTimer()
+        self.timerView = root.newCreateTimer()
     }
 
-    init(timerCoundown: TimerCountdown, timerState: TimerSave & TimerLoad) {
-        let root = TimeCoachRoot(timerCoundown: timerCoundown, timerState: timerState)
-        self.root = root
-        self.timerView = root.createTimer(withTimeLine: false)
-    }
-    
     init(pomodoroTimer: TimerCoutdown, timerState: TimerSave & TimerLoad) {
         let root = TimeCoachRoot(timerCoutdown: pomodoroTimer, timerState: timerState)
         self.root = root

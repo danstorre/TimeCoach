@@ -14,7 +14,7 @@ struct TimeCoach_Watch_AppApp: App {
     init() {
         let root = TimeCoachRoot()
         self.root = root
-        self.timerView = root.createTimer()
+        self.timerView = root.newCreateTimer()
     }
     
     var body: some Scene {
