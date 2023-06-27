@@ -16,13 +16,13 @@ struct TimeCoach_Watch_AppApp: App {
     init() {
         let root = TimeCoachRoot()
         self.root = root
-        self.timerView = root.newCreateTimer()
+        self.timerView = root.createTimer()
     }
 
     init(pomodoroTimer: TimerCoutdown, timerState: TimerSave & TimerLoad) {
         let root = TimeCoachRoot(timerCoutdown: pomodoroTimer, timerState: timerState)
         self.root = root
-        self.timerView = root.newCreateTimer(withTimeLine: false)
+        self.timerView = root.createTimer(withTimeLine: false)
     }
     
     var body: some Scene {

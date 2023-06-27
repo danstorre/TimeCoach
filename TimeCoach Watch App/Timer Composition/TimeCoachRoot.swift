@@ -29,7 +29,7 @@ class TimeCoachRoot {
         self.timerCoutdown = timerCoutdown
     }
     
-    func newCreateTimer(withTimeLine: Bool = true) -> TimerView {
+    func createTimer(withTimeLine: Bool = true) -> TimerView {
         let date = Date()
         let timerCountdown = createTimerCountDown(from: date)
         let currentSubject = Self.createFirstValuePublisher(from: date)

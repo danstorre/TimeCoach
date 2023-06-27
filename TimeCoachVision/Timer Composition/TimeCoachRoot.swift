@@ -7,7 +7,7 @@ import UserNotifications
 class TimeCoachRoot {
     private var regularTimer: RegularTimer?
     
-    func newCreateTimer(withTimeLine: Bool = true) -> TimerView {
+    func createTimer(withTimeLine: Bool = true) -> TimerView {
         let date = Date()
         let foundationTimerCountdown = FoundationTimerCountdown(startingSet: .pomodoroSet(date: date),
                                                                 nextSet: .breakSet(date: date))
