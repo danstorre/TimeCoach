@@ -52,17 +52,10 @@ class TimeCoachRoot {
             }.eraseToAnyPublisher()
         }
         
-        let skipPublisher = { [regularTimer] in
-            Deferred {
-                regularTimer?.skip()
-                return currentSubject
-            }.eraseToAnyPublisher()
-        }
-        
         return TimerViewComposer.createTimer(
             customFont: CustomFont.timer.font,
             playPublisher: playPublisher,
-            skipPublisher: skipPublisher,
+            skipPublisher: regularTimer!.skipPublisher(currentSubject: currentSubject),
             stopPublisher: regularTimer!.stopPublisher(),
             pausePublisher: regularTimer!.pausePublisher(),
             withTimeLine: withTimeLine
@@ -104,5 +97,14 @@ private extension RegularTimer {
             self.pause()
             return PassthroughSubject<Void, Error>()
         }.eraseToAnyPublisher()
+    }
+    
+    func skipPublisher(currentSubject: CurrentValueSubject<ElapsedSeconds, Error>) -> () -> AnyPublisher<ElapsedSeconds, Error> {
+        {
+            Deferred {
+                skip()
+                return currentSubject
+            }.eraseToAnyPublisher()
+        }
     }
 }
