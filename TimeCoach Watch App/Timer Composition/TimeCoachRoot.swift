@@ -31,19 +31,12 @@ class TimeCoachRoot {
     
     func newCreateTimer(withTimeLine: Bool = true) -> TimerView {
         let date = Date()
-        let foundationTimerCountdown = timerCoutdown ?? FoundationTimerCountdown(startingSet: .pomodoroSet(date: date),
+        let timerCountdown = timerCoutdown ?? FoundationTimerCountdown(startingSet: .pomodoroSet(date: date),
                                                                                  nextSet: .breakSet(date: date))
         let currentSubject = CurrentValueSubject<ElapsedSeconds, Error>(ElapsedSeconds(0,
                                                                                        startDate: date,
                                                                                        endDate: date.adding(seconds: .pomodoroInSeconds)))
-        regularTimer = PomodoroTimer(timer: foundationTimerCountdown, timeReceiver: { result in
-            switch result {
-            case let .success(seconds):
-                currentSubject.send(seconds)
-            case let .failure(error):
-                currentSubject.send(completion: .failure(error))
-            }
-        })
+        regularTimer = Self.createPomodorTimer(with: timerCountdown, and: currentSubject)
         
         return TimerViewComposer.createTimer(
             customFont: CustomFont.timer.font,
@@ -64,6 +57,18 @@ class TimeCoachRoot {
     func goToForeground() {
         timerLoad.loadTime()
     }
+    
+    static func createPomodorTimer(with timer: TimerCoutdown, and currentValue: RegularTimer.CurrentValuePublisher) -> RegularTimer {
+        PomodoroTimer(timer: timer, timeReceiver: { result in
+            switch result {
+            case let .success(seconds):
+                currentValue.send(seconds)
+            case let .failure(error):
+                currentValue.send(completion: .failure(error))
+            }
+        })
+    }
+    
 }
 
 private extension LocalElapsedSeconds {
