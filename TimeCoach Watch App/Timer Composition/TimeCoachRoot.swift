@@ -45,11 +45,6 @@ class TimeCoachRoot {
             }
         })
         
-        let stopPublisher = Deferred { [regularTimer] in
-            regularTimer?.stop()
-            return PassthroughSubject<Void, Error>()
-        }.eraseToAnyPublisher()
-        
         let pausePublisher = Deferred { [regularTimer] in
             regularTimer?.pause()
             return PassthroughSubject<Void, Error>()
@@ -73,7 +68,7 @@ class TimeCoachRoot {
             customFont: CustomFont.timer.font,
             playPublisher: playPublisher,
             skipPublisher: skipPublisher,
-            stopPublisher: stopPublisher,
+            stopPublisher: regularTimer!.stopPublisher(),
             pausePublisher: pausePublisher,
             withTimeLine: withTimeLine
         )
@@ -97,5 +92,15 @@ private extension LocalElapsedSeconds {
     
     static func breakSet(date: Date) -> LocalElapsedSeconds {
         LocalElapsedSeconds(0, startDate: date, endDate: date.adding(seconds: .breakInSeconds))
+    }
+}
+
+
+private extension RegularTimer {
+    func stopPublisher() -> AnyPublisher<Void, Error> {
+        return Deferred {
+            self.stop()
+            return PassthroughSubject<Void, Error>()
+        }.eraseToAnyPublisher()
     }
 }
