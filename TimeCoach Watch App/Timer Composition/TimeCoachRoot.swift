@@ -75,38 +75,3 @@ private extension LocalElapsedSeconds {
         LocalElapsedSeconds(0, startDate: date, endDate: date.adding(seconds: .breakInSeconds))
     }
 }
-
-
-private extension RegularTimer {
-    func stopPublisher() -> AnyPublisher<Void, Error> {
-        return Deferred {
-            self.stop()
-            return PassthroughSubject<Void, Error>()
-        }.eraseToAnyPublisher()
-    }
-    
-    func pausePublisher() -> AnyPublisher<Void, Error> {
-        return Deferred {
-            self.pause()
-            return PassthroughSubject<Void, Error>()
-        }.eraseToAnyPublisher()
-    }
-    
-    func skipPublisher(currentSubject: CurrentValueSubject<ElapsedSeconds, Error>) -> () -> AnyPublisher<ElapsedSeconds, Error> {
-        {
-            Deferred {
-                skip()
-                return currentSubject
-            }.eraseToAnyPublisher()
-        }
-    }
-    
-    func playPublisher(currentSubject: CurrentValueSubject<ElapsedSeconds, Error>) -> () -> AnyPublisher<ElapsedSeconds, Error> {
-        {
-            Deferred {
-                start()
-                return currentSubject
-            }.eraseToAnyPublisher()
-        }
-    }
-}
