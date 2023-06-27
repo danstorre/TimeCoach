@@ -38,3 +38,9 @@ public struct TimerControls: View {
         .opacity(isLuminanceReduced ? 0.0 : 1.0)
     }
 }
+
+struct TimerControlsPreviews: PreviewProvider {
+    static var previews: some View {
+        TimerControls()
+    }
+}
