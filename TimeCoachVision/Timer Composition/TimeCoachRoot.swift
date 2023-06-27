@@ -23,36 +23,12 @@ class TimeCoachRoot {
             }
         })
         
-        let stopPublisher = Deferred { [regularTimer] in
-            regularTimer?.stop()
-            return PassthroughSubject<Void, Error>()
-        }.eraseToAnyPublisher()
-        
-        let pausePublisher = Deferred { [regularTimer] in
-            regularTimer?.pause()
-            return PassthroughSubject<Void, Error>()
-        }.eraseToAnyPublisher()
-        
-        let playPublisher = { [regularTimer] in
-            Deferred {
-                regularTimer?.start()
-                return currentSubject
-            }.eraseToAnyPublisher()
-        }
-        
-        let skipPublisher = { [regularTimer] in
-            Deferred {
-                regularTimer?.skip()
-                return currentSubject
-            }.eraseToAnyPublisher()
-        }
-        
         return TimerViewComposer.createTimer(
             customFont: CustomFont.timer.font,
-            playPublisher: playPublisher,
-            skipPublisher: skipPublisher,
-            stopPublisher: stopPublisher,
-            pausePublisher: pausePublisher,
+            playPublisher: regularTimer!.playPublisher(currentSubject: currentSubject),
+            skipPublisher: regularTimer!.skipPublisher(currentSubject: currentSubject),
+            stopPublisher: regularTimer!.stopPublisher(),
+            pausePublisher: regularTimer!.pausePublisher(),
             withTimeLine: withTimeLine
         )
     }

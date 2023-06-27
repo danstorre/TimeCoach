@@ -80,6 +80,7 @@
 		FBE6465A2A4A9FC1005022A2 /* TimerVoidAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE646552A4A9F3F005022A2 /* TimerVoidAdapter.swift */; };
 		FBE6465D2A4AA2DE005022A2 /* Combine+RegularTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE6465C2A4AA2DE005022A2 /* Combine+RegularTimer.swift */; };
 		FBE6465E2A4AA59F005022A2 /* FoundationTimerCountdownTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD56F772A3D184C002736AD /* FoundationTimerCountdownTests.swift */; };
+		FBE646642A4AA7CA005022A2 /* Combine+RegularTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE6465C2A4AA2DE005022A2 /* Combine+RegularTimer.swift */; };
 		FBE9A9752939527C00D8BF29 /* TimeCoach Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = FBE9A9742939527C00D8BF29 /* TimeCoach Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		FBE9A97A2939527C00D8BF29 /* TimeCoachApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE9A9792939527C00D8BF29 /* TimeCoachApp.swift */; };
 		FBE9A97E2939527E00D8BF29 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FBE9A97D2939527E00D8BF29 /* Assets.xcassets */; };
@@ -1135,6 +1136,7 @@
 				FB53989A2A45DA7C000B9CFD /* ContentView.swift in Sources */,
 				FB53991B2A461C44000B9CFD /* TimerView.swift in Sources */,
 				FB53992E2A46202D000B9CFD /* TimeCoachRoot.swift in Sources */,
+				FBE646642A4AA7CA005022A2 /* Combine+RegularTimer.swift in Sources */,
 				FB53991D2A461CCF000B9CFD /* TimerViewComposer.swift in Sources */,
 				FB5398982A45DA7C000B9CFD /* TimeCoachVisionApp.swift in Sources */,
 				FBE646592A4A9FBC005022A2 /* TimerAdapter.swift in Sources */,
