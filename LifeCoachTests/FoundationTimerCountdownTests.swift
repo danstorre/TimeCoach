@@ -93,6 +93,7 @@ final class FoundationTimerCountdownTests: XCTestCase {
         sut.pauseCountdown()
         
         XCTAssertEqual(sut.state, .pause)
+        XCTAssertEqual(sut.elapsedTime, 0)
     }
     
     func test_pause_onRunningState_doesNotDeliverAnyMoreTimesAndChangesStateToPause() {
@@ -104,6 +105,7 @@ final class FoundationTimerCountdownTests: XCTestCase {
 
         XCTAssertEqual(sut.state, .pause)
         XCTAssertEqual(receivedElapsedSeconds, [])
+        XCTAssertEqual(sut.elapsedTime, 0)
     }
     
     func test_skip_onPauseState_doesNotChangesStopStateResetsTimerAndDeliversNextTimerSet() {
