@@ -51,24 +51,27 @@ final class FoundationTimerCountdownTests: XCTestCase {
         let sut = makeSUT(startingSet: createAnyTimerSet(), nextSet: createAnyTimerSet())
         
         XCTAssertEqual(sut.state, .stop)
+        XCTAssertEqual(sut.elapsedTime, 0)
         
         sut.stopCountdown()
         
         XCTAssertEqual(sut.state, .stop)
+        XCTAssertEqual(sut.elapsedTime, 0)
     }
     
     func test_stop_OnPauseState_changesStateToStop() {
         let sut = makeSUT(startingSet: createAnyTimerSet(), nextSet: createAnyTimerSet())
         
         XCTAssertEqual(sut.state, .stop)
+        XCTAssertEqual(sut.elapsedTime, 0)
         
         sut.pauseCountdown()
-        
         XCTAssertEqual(sut.state, .pause)
+        XCTAssertEqual(sut.elapsedTime, 0)
         
         sut.stopCountdown()
-        
         XCTAssertEqual(sut.state, .stop)
+        XCTAssertEqual(sut.elapsedTime, 0)
     }
     
     func test_stop_onRunningState_ResetsTimerDeliversCurrentSetAndChangesStateToStop() {
@@ -81,6 +84,7 @@ final class FoundationTimerCountdownTests: XCTestCase {
         
         XCTAssertEqual(sut.state, .stop)
         XCTAssertEqual(receivedElapsedSeconds, [startingSet])
+        XCTAssertEqual(sut.elapsedTime, 0)
     }
     
     func test_pause_OnPauseState_DoesNotChangeStateFromPause() {
