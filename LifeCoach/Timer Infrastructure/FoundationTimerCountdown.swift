@@ -73,6 +73,7 @@ public final class FoundationTimerCountdown: TimerCoutdown {
     
     private func executeNextSet() {
         invalidatesTimer()
+        elapsedTimeInterval = 0
         state = .stop
         setA = currentSet
         currentSet = setB
