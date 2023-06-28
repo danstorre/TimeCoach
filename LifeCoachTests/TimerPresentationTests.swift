@@ -3,68 +3,23 @@ import LifeCoach
 
 final class TimerPresentationTests: XCTestCase {
 
-    func test_deliversCorrectTime() {
+    func test_init_noneMode_setsTimerStringToEmpty() {
         let sut = TimerViewModel()
+        sut.mode = .none
         
-        sut.delivered(elapsedTime: elapsedSecondsFromPomodoro(0))
-        
-        XCTAssertEqual(sut.timerString, "25:00")
-        
-        sut.delivered(elapsedTime: elapsedSecondsFromPomodoro(1))
-        
-        XCTAssertEqual(sut.timerString, "24:59")
-        
-        sut.delivered(elapsedTime: elapsedSecondsFromPomodoro(.pomodoroInSeconds + 1))
-        
-        XCTAssertEqual(sut.timerString, "00:00")
-        
-        sut.delivered(elapsedTime: elapsedSecondsFromBreak(.breakInSeconds + 1))
-        
-        XCTAssertEqual(sut.timerString, "00:00")
+        XCTAssertEqual(sut.timerString, .emptyTimer)
     }
     
-    func test_timerString_OnNoneMode_deliversCorrectTimerString() {
+    func test_init_fullMode_setsTimerStringToDefaultPomodoroString() {
         let sut = TimerViewModel()
         
-        XCTAssertEqual(sut.timerString, "25:00")
-        
-        sut.mode = TimerViewModel.TimePresentation.none
-        
-        XCTAssertEqual(sut.timerString, "--:--")
-        
-        sut.delivered(elapsedTime: elapsedSecondsFromPomodoro(0))
-        
-        XCTAssertEqual(sut.timerString, "--:--")
-        
-        sut.delivered(elapsedTime: elapsedSecondsFromPomodoro(1))
-        
-        XCTAssertEqual(sut.timerString, "--:--")
-        
-        sut.delivered(elapsedTime: elapsedSecondsFromPomodoro(61))
-        
-        XCTAssertEqual(sut.timerString, "--:--")
-        
-        sut.delivered(elapsedTime: elapsedSecondsFromPomodoro(.pomodoroInSeconds + 1))
-        
-        XCTAssertEqual(sut.timerString, "00:00")
-        
-        sut.delivered(elapsedTime: elapsedSecondsFromBreak(.breakInSeconds + 1))
-        
-        XCTAssertEqual(sut.timerString, "00:00")
+        XCTAssertEqual(sut.timerString, elapsedSecondsFromPomodoro(0).toString(mode: .full, afterSeconds: 0.0))
     }
     
-    func test_onNoneMode_AfterFinish_setsCorrectTimerString() {
+    func test_init_modeIsFull() {
         let sut = TimerViewModel()
         
-        XCTAssertEqual(sut.timerString, "25:00")
-        
-        sut.mode = TimerViewModel.TimePresentation.none
-        
-        XCTAssertEqual(sut.timerString, "--:--")
-        
-        sut.delivered(elapsedTime: elapsedSecondsFromPomodoro(.pomodoroInSeconds + 1))
-        
-        XCTAssertEqual(sut.timerString, "00:00")
+        XCTAssertEqual(sut.mode, .full)
     }
     
     func test_delivered_OnNoneMode_setsTimerStringToEmpty() {
@@ -83,25 +38,6 @@ final class TimerPresentationTests: XCTestCase {
         sut.delivered(elapsedTime: deliveredTime)
         
         XCTAssertEqual(sut.timerString, deliveredTime.toString(mode: .full, afterSeconds: 0))
-    }
-    
-    func test_init_noneMode_setsTimerStringToEmpty() {
-        let sut = TimerViewModel()
-        sut.mode = .none
-        
-        XCTAssertEqual(sut.timerString, .emptyTimer)
-    }
-    
-    func test_init_fullMode_setsTimerStringToDefaultPomodoroString() {
-        let sut = TimerViewModel()
-        
-        XCTAssertEqual(sut.timerString, elapsedSecondsFromPomodoro(0).toString(mode: .full, afterSeconds: 0.0))
-    }
-    
-    func test_init_modeIsFull() {
-        let sut = TimerViewModel()
-        
-        XCTAssertEqual(sut.mode, .full)
     }
     
     func test_timerString_onfullmode_afterNoneMode_setsTimerStringToCurrentTimer() {
