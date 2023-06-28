@@ -8,9 +8,18 @@ public class TimerViewModel: ObservableObject {
             if case .none = mode {
                 timerString = "--:--"
             }
+            
+            switch mode {
+            case .full:
+                timerString = currentTimerString
+            case .none:
+                timerString = "--:--"
+            }
         }
     }
     private var hasFinished = false
+    
+    private var currentTimerString: String = .defaultPomodoroTimerString
     
     public enum TimePresentation {
         case full
