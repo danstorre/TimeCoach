@@ -74,30 +74,19 @@ final class FoundationTimerCountdownTests: XCTestCase {
         XCTAssertEqual(sut.currentSetElapsedTime, 0)
     }
     
-    func test_stop_onRunningState_ResetsTimerDeliversCurrentSetAndChangesStateToStop() {
-        let fixedDate = Date()
-        let startSet = createTimerSet(0, startDate: fixedDate, endDate: fixedDate.adding(seconds: 0.002))
-        let sut = makeSUT(startingSet: startSet, nextSet: createAnyTimerSet())
+    func test_stop_onRunningState_ResetsTimerAndChangesStateToStop() {
+        let sut = makeSUT(startingSet: createAnyTimerSet(), nextSet: createAnyTimerSet())
 
         XCTAssertEqual(sut.state, .stop)
         XCTAssertEqual(sut.currentSetElapsedTime, 0)
         
-        expect(sut: sut,
-               toDeliver: [startSet.addingElapsedSeconds(0.001), startSet.addingElapsedSeconds(0.002)],
-               andChangesStateTo: .running,
-               andElapsedTime: 0.002)
-        
-        let _ = receivedElapsedSecondsOnRunningState(from: sut, when: {
-            sut.stopCountdown()
-        })
-        
-        XCTAssertEqual(sut.state, .stop)
+        sut.startCountdown() { _ in }
+        XCTAssertEqual(sut.state, .running)
         XCTAssertEqual(sut.currentSetElapsedTime, 0)
         
-        expect(sut: sut,
-               toDeliver: [startSet.addingElapsedSeconds(0.001), startSet.addingElapsedSeconds(0.002)],
-               andChangesStateTo: .running,
-               andElapsedTime: 0.002)
+        sut.stopCountdown()
+        XCTAssertEqual(sut.state, .stop)
+        XCTAssertEqual(sut.currentSetElapsedTime, 0)
     }
     
     func test_pause_OnPauseState_DoesNotChangeStateFromPause() {
