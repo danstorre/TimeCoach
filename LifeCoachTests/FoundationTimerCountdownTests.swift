@@ -118,6 +118,7 @@ final class FoundationTimerCountdownTests: XCTestCase {
         
         XCTAssertEqual(sut.state, .stop)
         XCTAssertEqual(receivedElapsedSeconds, [nextSet])
+        XCTAssertEqual(sut.elapsedTime, 0)
     }
     
     func test_skip_onRunningState_changesStateToStopResetsTimerAndSendsNextTimerSet() {
@@ -130,10 +131,12 @@ final class FoundationTimerCountdownTests: XCTestCase {
             let receivedElapsedSecondsOnSkip = receivedElapsedSecondsOnSkip(from: sut)
             XCTAssertEqual(sut.state, .stop)
             XCTAssertEqual(receivedElapsedSecondsOnSkip, [nextSet])
+            XCTAssertEqual(sut.elapsedTime, 0)
         })
 
         XCTAssertEqual(sut.state, .stop)
         XCTAssertEqual(receivedElapsedSecondsOnRunningState, [])
+        XCTAssertEqual(sut.elapsedTime, 0)
     }
     
     // MARK: - Helpers
