@@ -10,7 +10,7 @@ public final class FoundationTimerCountdown: TimerCoutdown {
     var currentSet: LocalElapsedSeconds
     var elapsedTimeInterval: TimeInterval = 0
     private let incrementing: Double
-    private var timerDelivery: StartCoundownCompletion?
+    var timerDelivery: StartCoundownCompletion?
     
     var currentTimer: Timer?
     var timeAtSave: CFTimeInterval? = nil

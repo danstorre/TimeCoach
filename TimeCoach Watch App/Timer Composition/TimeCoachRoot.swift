@@ -6,17 +6,13 @@ import UserNotifications
 
 class TimeCoachRoot {
     private var timerSave: TimerSave?
-    private var timerLoad: TimerLoad
+    private var timerLoad: TimerLoad?
     private var notificationDelegate: UNUserNotificationCenterDelegate
     
     private var regularTimer: RegularTimer?
     var timerCoutdown: TimerCoutdown?
     
     init() {
-        let pomodoro = PomodoroLocalTimer(startDate: .now,
-                                          primaryInterval: .pomodoroInSeconds,
-                                          secondaryTime: .breakInSeconds)
-        self.timerLoad = pomodoro
         self.notificationDelegate = UserNotificationDelegate()
         UNUserNotificationCenter.current().delegate = notificationDelegate
     }
@@ -36,6 +32,7 @@ class TimeCoachRoot {
         
         if let timerCountdown = timerCountdown as? FoundationTimerCountdown {
             self.timerSave = timerCountdown
+            self.timerLoad = timerCountdown
         }
         
         return TimerViewComposer.createTimer(
@@ -55,7 +52,7 @@ class TimeCoachRoot {
     }
     
     func goToForeground() {
-        timerLoad.loadTime()
+        timerLoad?.loadTime()
     }
     
 }
