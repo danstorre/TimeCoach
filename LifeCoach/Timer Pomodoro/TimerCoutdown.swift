@@ -8,7 +8,7 @@ public enum TimerState {
 
 public protocol TimerCoutdown {
     
-    var elapsedTime: TimeInterval { get }
+    var currentSetElapsedTime: TimeInterval { get }
     var state: TimerState { get }
     
     typealias Result = Swift.Result<LocalElapsedSeconds, Error>

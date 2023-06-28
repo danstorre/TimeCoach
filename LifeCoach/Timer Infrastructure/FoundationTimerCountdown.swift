@@ -14,7 +14,7 @@ public final class FoundationTimerCountdown: TimerCoutdown {
     
     private var currentTimer: Timer?
     
-    public var elapsedTime: TimeInterval {
+    public var currentSetElapsedTime: TimeInterval {
         elapsedTimeInterval
     }
     
