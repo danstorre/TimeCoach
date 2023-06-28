@@ -85,6 +85,13 @@ final class TimerPresentationTests: XCTestCase {
         XCTAssertEqual(sut.timerString, deliveredTime.toString(mode: .full))
     }
     
+    func test_init_noneMode_setsTimerStringToEmpty() {
+        let sut = TimerViewModel()
+        sut.mode = .none
+        
+        XCTAssertEqual(sut.timerString, "--:--")
+    }
+    
     private func elapsedSecondsFromPomodoro(_ seconds: TimeInterval) -> ElapsedSeconds {
         let now = Date.now
         return ElapsedSeconds(seconds, startDate: now, endDate: now.adding(seconds: .pomodoroInSeconds))
