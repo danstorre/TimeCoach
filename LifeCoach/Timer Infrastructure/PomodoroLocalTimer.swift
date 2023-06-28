@@ -15,7 +15,7 @@ public class PomodoroLocalTimer {
     private var threshold: TimeInterval = 0
     
     private let currentDate: () -> Date
-    public var timeAtSave: CFTimeInterval? = nil
+    var timeAtSave: CFTimeInterval? = nil
     
     public init(currentDate: @escaping () -> Date = Date.init,
          startDate: Date,

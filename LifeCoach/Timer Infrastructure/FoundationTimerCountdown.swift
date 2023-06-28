@@ -7,12 +7,13 @@ public final class FoundationTimerCountdown: TimerCoutdown {
     public private(set) var state: TimerState = .stop
     private var setA: LocalElapsedSeconds
     private var setB: LocalElapsedSeconds
-    private var currentSet: LocalElapsedSeconds
-    private var elapsedTimeInterval: TimeInterval = 0
+    var currentSet: LocalElapsedSeconds
+    var elapsedTimeInterval: TimeInterval = 0
     private let incrementing: Double
     private var timerDelivery: StartCoundownCompletion?
     
-    private var currentTimer: Timer?
+    var currentTimer: Timer?
+    var timeAtSave: CFTimeInterval? = nil
     
     public var currentSetElapsedTime: TimeInterval {
         elapsedTimeInterval

@@ -5,7 +5,7 @@ import Combine
 import UserNotifications
 
 class TimeCoachRoot {
-    private var timerSave: TimerSave
+    private var timerSave: TimerSave?
     private var timerLoad: TimerLoad
     private var notificationDelegate: UNUserNotificationCenterDelegate
     
@@ -16,7 +16,6 @@ class TimeCoachRoot {
         let pomodoro = PomodoroLocalTimer(startDate: .now,
                                           primaryInterval: .pomodoroInSeconds,
                                           secondaryTime: .breakInSeconds)
-        self.timerSave = pomodoro
         self.timerLoad = pomodoro
         self.notificationDelegate = UserNotificationDelegate()
         UNUserNotificationCenter.current().delegate = notificationDelegate
@@ -35,6 +34,10 @@ class TimeCoachRoot {
         let currentSubject = Self.createFirstValuePublisher(from: date)
         regularTimer = Self.createPomodorTimer(with: timerCountdown, and: currentSubject)
         
+        if let timerCountdown = timerCountdown as? FoundationTimerCountdown {
+            self.timerSave = timerCountdown
+        }
+        
         return TimerViewComposer.createTimer(
             customFont: CustomFont.timer.font,
             playPublisher: regularTimer!.playPublisher(currentSubject: currentSubject),
@@ -46,7 +49,7 @@ class TimeCoachRoot {
     }
     
     func goToBackground() {
-        timerSave.saveTime(completion: { time in
+        timerSave?.saveTime(completion: { time in
             UserNotificationDelegate.registerNotificationOn(remainingTime: time)
         })
     }
