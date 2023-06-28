@@ -6,6 +6,7 @@ final class FoundationTimerCountdownTests: XCTestCase {
     func test_init_stateIsStop() {
         let sut = makeSUT(startingSet: createAnyTimerSet(), nextSet: createAnyTimerSet())
         XCTAssertEqual(sut.state, .stop)
+        XCTAssertEqual(sut.elapsedTime, 0)
     }
     
     func test_start_deliversOneMilliSecondElapsedFromTheStartingSetAndChangesStateToRunning() {

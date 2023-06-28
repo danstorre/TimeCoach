@@ -14,6 +14,10 @@ public final class FoundationTimerCountdown: TimerCoutdown {
     
     private var currentTimer: Timer?
     
+    public var elapsedTime: TimeInterval {
+        elapsedTimeInterval
+    }
+    
     public init(startingSet: LocalElapsedSeconds, nextSet: LocalElapsedSeconds, incrementing: Double = 1.0) {
         self.setA = startingSet
         self.setB = nextSet

@@ -14,6 +14,7 @@ func breakResponse(_ seconds: TimeInterval) -> ElapsedSeconds {
 }
 
 class TimerCountdownSpy: TimerCoutdown {
+    var elapsedTime: TimeInterval { 0 }
     
     private(set) var receivedStartCountdownCompletions = [StartCoundownCompletion]()
     private(set) var receivedSkipCountdownCompletions = [SkipCountdownCompletion]()
