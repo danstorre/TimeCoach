@@ -89,6 +89,32 @@ final class FoundationTimerCountdownTests: XCTestCase {
         XCTAssertEqual(sut.currentSetElapsedTime, 0)
     }
     
+    func test_stop_onRunningState_deliversCurrentSet() {
+        let fixedDate = Date()
+        let startSet = LocalElapsedSeconds(0, startDate: fixedDate, endDate: fixedDate.adding(seconds: 0.002))
+        let sut = makeSUT(startingSet: startSet, nextSet: createAnyTimerSet(startingFrom: fixedDate), incrementing: 0.001)
+        var receivedElapsedSeconds = [LocalElapsedSeconds]()
+        
+        let expectation = expectation(description: "wait for startcountdown timer to finish")
+        expectation.expectedFulfillmentCount = 2
+        sut.startCountdown() { result in
+            if case let .success(elapsedSeconds) = result {
+                receivedElapsedSeconds.append(elapsedSeconds)
+            }
+            expectation.fulfill()
+        }
+        wait(for: [expectation], timeout: 0.1)
+        XCTAssertEqual(receivedElapsedSeconds, [startSet.addingElapsedSeconds(0.001), startSet.addingElapsedSeconds(0.002)])
+        
+        sut.startCountdown() { result in
+            if case let .success(elapsedSeconds) = result {
+                receivedElapsedSeconds.append(elapsedSeconds)
+            }
+        }
+        sut.stopCountdown()
+        XCTAssertEqual(receivedElapsedSeconds, [startSet.addingElapsedSeconds(0.001), startSet.addingElapsedSeconds(0.002), startSet])
+    }
+    
     func test_pause_OnPauseState_DoesNotChangeStateFromPause() {
         let sut = makeSUT(startingSet: createAnyTimerSet(), nextSet: createAnyTimerSet())
         
@@ -181,9 +207,10 @@ final class FoundationTimerCountdownTests: XCTestCase {
     }
     
     private func makeSUT(startingSet: LocalElapsedSeconds, nextSet: LocalElapsedSeconds,
+                         incrementing: Double = 0.001,
                          file: StaticString = #filePath,
                          line: UInt = #line) -> TimerCoutdown {
-        let sut = FoundationTimerCountdown(startingSet: startingSet, nextSet: nextSet, incrementing: 0.001)
+        let sut = FoundationTimerCountdown(startingSet: startingSet, nextSet: nextSet, incrementing: incrementing)
         
         trackForMemoryLeak(instance: sut, file: file, line: line)
         
@@ -223,5 +250,11 @@ final class FoundationTimerCountdownTests: XCTestCase {
     
     private func invalidatesTimer(on sut: TimerCoutdown) {
         (sut as? FoundationTimerCountdown)?.invalidatesTimer()
+    }
+}
+
+extension LocalElapsedSeconds: CustomStringConvertible {
+    public var description: String {
+        "elapsed seconds: \(elapsedSeconds)"
     }
 }
