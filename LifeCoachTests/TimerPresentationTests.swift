@@ -82,7 +82,7 @@ final class TimerPresentationTests: XCTestCase {
         let deliveredTime = elapsedSecondsFromPomodoro(0)
         sut.delivered(elapsedTime: deliveredTime)
         
-        XCTAssertEqual(sut.timerString, deliveredTime.toString(mode: .full))
+        XCTAssertEqual(sut.timerString, deliveredTime.toString(mode: .full, afterSeconds: 0))
     }
     
     func test_init_noneMode_setsTimerStringToEmpty() {
@@ -95,7 +95,7 @@ final class TimerPresentationTests: XCTestCase {
     func test_init_fullMode_setsTimerStringToDefaultPomodoroString() {
         let sut = TimerViewModel()
         
-        XCTAssertEqual(sut.timerString, elapsedSecondsFromPomodoro(0).toString(mode: .full))
+        XCTAssertEqual(sut.timerString, elapsedSecondsFromPomodoro(0).toString(mode: .full, afterSeconds: 0.0))
     }
     
     func test_init_modeIsFull() {
@@ -109,7 +109,7 @@ final class TimerPresentationTests: XCTestCase {
         sut.mode = .none
         sut.mode = .full
         
-        XCTAssertEqual(sut.timerString, elapsedSecondsFromPomodoro(0).toString(mode: .full))
+        XCTAssertEqual(sut.timerString, elapsedSecondsFromPomodoro(0).toString(mode: .full, afterSeconds: 0))
     }
     
     func test_timerString_onNoneMode_afterFullMode_setsTimerStringToEmpty() {
@@ -118,6 +118,20 @@ final class TimerPresentationTests: XCTestCase {
         sut.mode = .none
         
         XCTAssertEqual(sut.timerString, .emptyTimer)
+    }
+    
+    func test_delivered_onFullMode_afterNone_setsTimerStringToCurrentTimer() {
+        let sut = TimerViewModel()
+        sut.mode = .none
+        XCTAssertEqual(sut.timerString, .emptyTimer)
+        
+        let elapsedSeconds2: TimeInterval = 1.0
+        let deliveredTime2 = elapsedSecondsFromPomodoro(elapsedSeconds2)
+        sut.delivered(elapsedTime: deliveredTime2)
+        XCTAssertEqual(sut.timerString, .emptyTimer)
+        
+        sut.mode = .full
+        XCTAssertEqual(sut.timerString, deliveredTime2.toString(mode: .full, afterSeconds: elapsedSeconds2))
     }
     
     private func elapsedSecondsFromPomodoro(_ seconds: TimeInterval) -> ElapsedSeconds {
@@ -137,7 +151,7 @@ fileprivate extension String {
 }
 
 fileprivate extension ElapsedSeconds {
-    func toString(mode: TimerViewModel.TimePresentation) -> String {
-        makeTimerFormatter().string(from: startDate, to: endDate)!
+    func toString(mode: TimerViewModel.TimePresentation, afterSeconds seconds: TimeInterval) -> String {
+        makeTimerFormatter().string(from: startDate, to: endDate.adding(seconds: -seconds))!
     }
 }

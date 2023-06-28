@@ -5,10 +5,6 @@ public class TimerViewModel: ObservableObject {
     public var mode: TimePresentation = .full {
         didSet {
             guard !hasFinished else { return }
-            if case .none = mode {
-                timerString = "--:--"
-            }
-            
             switch mode {
             case .full:
                 timerString = currentTimerString
@@ -44,6 +40,7 @@ public class TimerViewModel: ObservableObject {
         }
         
         timerString = makeStringFrom(startDate: startDate, endDate: endDate, elapsedTime: elapsedTime)
+        currentTimerString = makeTimerFormatter().string(from: startDate, to: endDate)!
     }
     
     private func makeStringFrom(startDate: Date, endDate: Date, elapsedTime: ElapsedSeconds) -> String {
