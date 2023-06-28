@@ -33,9 +33,10 @@ public final class FoundationTimerCountdown: TimerCoutdown {
     }
     
     public func stopCountdown() {
+        timerDelivery?(.success(currentSet))
         invalidatesTimer()
         state = .stop
-        timerDelivery?(.success(currentSet))
+        elapsedTimeInterval = 0
     }
     
     public func pauseCountdown() {

@@ -75,16 +75,29 @@ final class FoundationTimerCountdownTests: XCTestCase {
     }
     
     func test_stop_onRunningState_ResetsTimerDeliversCurrentSetAndChangesStateToStop() {
-        let startingSet = createAnyTimerSet()
-        let sut = makeSUT(startingSet: startingSet, nextSet: createAnyTimerSet())
+        let fixedDate = Date()
+        let startSet = createTimerSet(0, startDate: fixedDate, endDate: fixedDate.adding(seconds: 0.002))
+        let sut = makeSUT(startingSet: startSet, nextSet: createAnyTimerSet())
+
+        XCTAssertEqual(sut.state, .stop)
+        XCTAssertEqual(sut.elapsedTime, 0)
         
-        let receivedElapsedSeconds = receivedElapsedSecondsOnRunningState(from: sut, when: {
+        expect(sut: sut,
+               toDeliver: [startSet.addingElapsedSeconds(0.001), startSet.addingElapsedSeconds(0.002)],
+               andChangesStateTo: .running,
+               andElapsedTime: 0.002)
+        
+        let _ = receivedElapsedSecondsOnRunningState(from: sut, when: {
             sut.stopCountdown()
         })
         
         XCTAssertEqual(sut.state, .stop)
-        XCTAssertEqual(receivedElapsedSeconds, [startingSet])
         XCTAssertEqual(sut.elapsedTime, 0)
+        
+        expect(sut: sut,
+               toDeliver: [startSet.addingElapsedSeconds(0.001), startSet.addingElapsedSeconds(0.002)],
+               andChangesStateTo: .running,
+               andElapsedTime: 0.002)
     }
     
     func test_pause_OnPauseState_DoesNotChangeStateFromPause() {
@@ -142,11 +155,14 @@ final class FoundationTimerCountdownTests: XCTestCase {
     // MARK: - Helpers
     private func receivedElapsedSecondsOnSkip(from sut: TimerCoutdown) -> [LocalElapsedSeconds] {
         var receivedElapsedSeconds = [LocalElapsedSeconds]()
+        let expectation = expectation(description: "wait for skip countdown to deliver time.")
         sut.skipCountdown() { result in
             if case let .success(deliveredElapsedSeconds) = result {
                 receivedElapsedSeconds.append(deliveredElapsedSeconds)
             }
+            expectation.fulfill()
         }
+        wait(for: [expectation], timeout: 0.1)
         return receivedElapsedSeconds
     }
     

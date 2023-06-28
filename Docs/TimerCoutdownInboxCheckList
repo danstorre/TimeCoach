@@ -13,9 +13,9 @@
    ✅ on countdown `pause` state, does nothing (countdown keeps in a `pause` state and does not fail)
    ✅ on countdown `running` state, changes countdown state to `pause` and does not send any other values.
 
- skipCountdown (side-effects)
-    on countdown `pause` state, changes countdown state to `stop` resets timer, and sends next countdown set.
-    on countdown `running` state, changes countdown state to `stop` resets timer, and sends next countdown set.
+✅ skipCountdown (side-effects)
+   ✅ on countdown `pause` state, changes countdown state to `stop` resets timer, and sends next countdown set.
+   ✅ on countdown `running` state, changes countdown state to `stop` resets timer, and sends next countdown set.
 
 - Side-effects must run serially to avoid race conditions.
 
