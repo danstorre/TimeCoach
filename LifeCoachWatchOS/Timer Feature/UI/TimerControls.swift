@@ -34,6 +34,7 @@ public struct TimerControls: View {
             }) {
                 Image(systemName: "playpause.fill")
             }
+            .buttonStyle(.borderedProminent)
         }
         .opacity(isLuminanceReduced ? 0.0 : 1.0)
     }

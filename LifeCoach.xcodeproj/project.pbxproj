@@ -44,6 +44,8 @@
 		FB5399212A461D04000B9CFD /* ToggleStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5399202A461D04000B9CFD /* ToggleStrategy.swift */; };
 		FB53992E2A46202D000B9CFD /* TimeCoachRoot.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB53992D2A46202D000B9CFD /* TimeCoachRoot.swift */; };
 		FB5399312A46209C000B9CFD /* PreviewTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5399302A46209C000B9CFD /* PreviewTimer.swift */; };
+		FB594CA62A4E1E5100C4A32C /* TImerControlsPresentationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB594CA52A4E1E5100C4A32C /* TImerControlsPresentationTests.swift */; };
+		FB594CA82A4E213F00C4A32C /* ControlsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB594CA72A4E213F00C4A32C /* ControlsViewModel.swift */; };
 		FB73E909293BA2A40087F9EF /* TimeCoachRoot.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB73E908293BA2A40087F9EF /* TimeCoachRoot.swift */; };
 		FB960C72293D462900ECBAD5 /* ToggleStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB960C71293D462900ECBAD5 /* ToggleStrategy.swift */; };
 		FB960C73293D479800ECBAD5 /* XCTestCase+MemoryLeakTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC9ADAE2919E8B500E0BEFC /* XCTestCase+MemoryLeakTracking.swift */; };
@@ -252,6 +254,8 @@
 		FB5399202A461D04000B9CFD /* ToggleStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleStrategy.swift; sourceTree = "<group>"; };
 		FB53992D2A46202D000B9CFD /* TimeCoachRoot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeCoachRoot.swift; sourceTree = "<group>"; };
 		FB5399302A46209C000B9CFD /* PreviewTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewTimer.swift; sourceTree = "<group>"; };
+		FB594CA52A4E1E5100C4A32C /* TImerControlsPresentationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TImerControlsPresentationTests.swift; sourceTree = "<group>"; };
+		FB594CA72A4E213F00C4A32C /* ControlsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlsViewModel.swift; sourceTree = "<group>"; };
 		FB73E908293BA2A40087F9EF /* TimeCoachRoot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeCoachRoot.swift; sourceTree = "<group>"; };
 		FB960C71293D462900ECBAD5 /* ToggleStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleStrategy.swift; sourceTree = "<group>"; };
 		FB960C74293D484000ECBAD5 /* TimerPresentationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerPresentationTests.swift; sourceTree = "<group>"; };
@@ -596,6 +600,7 @@
 				FB960C74293D484000ECBAD5 /* TimerPresentationTests.swift */,
 				FBD56F6A2A3CEF33002736AD /* PomodoroUseCaseTests.swift */,
 				FBD56F772A3D184C002736AD /* FoundationTimerCountdownTests.swift */,
+				FB594CA52A4E1E5100C4A32C /* TImerControlsPresentationTests.swift */,
 			);
 			path = LifeCoachTests;
 			sourceTree = "<group>";
@@ -671,6 +676,7 @@
 			children = (
 				FBE9A9AA293953B700D8BF29 /* Helpers */,
 				FB4AA14929379EDF0076FED9 /* TimerViewModel.swift */,
+				FB594CA72A4E213F00C4A32C /* ControlsViewModel.swift */,
 			);
 			path = "Timer Presentation";
 			sourceTree = "<group>";
@@ -1149,6 +1155,7 @@
 				FBD56F722A3D0E20002736AD /* PomodoroTimer.swift in Sources */,
 				FBD56F762A3D0EFA002736AD /* TimerCoutdown.swift in Sources */,
 				FBDBAC4829762AD1009E440A /* TimerLoad.swift in Sources */,
+				FB594CA82A4E213F00C4A32C /* ControlsViewModel.swift in Sources */,
 				FBDBAC4A29762AE5009E440A /* FoundationTimerCountdown+TimerSave.swift in Sources */,
 				FBD56F652A3BD489002736AD /* LocalElapsedSeconds.swift in Sources */,
 				FB4AA1642937CD000076FED9 /* ElapsedSeconds.swift in Sources */,
@@ -1168,6 +1175,7 @@
 				FBC9ADAF2919E8B500E0BEFC /* XCTestCase+MemoryLeakTracking.swift in Sources */,
 				FB960C75293D484000ECBAD5 /* TimerPresentationTests.swift in Sources */,
 				FBE6465E2A4AA59F005022A2 /* FoundationTimerCountdownTests.swift in Sources */,
+				FB594CA62A4E1E5100C4A32C /* TImerControlsPresentationTests.swift in Sources */,
 				FBD56F6B2A3CEF33002736AD /* PomodoroUseCaseTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
