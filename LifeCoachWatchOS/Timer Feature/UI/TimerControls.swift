@@ -7,7 +7,7 @@ public struct TimerControls: View {
     private var togglePlayback: (() -> Void)?
     private var skipHandler: (() -> Void)?
     private var stopHandler: (() -> Void)?
-    private let viewModel: ControlsViewModel
+    @ObservedObject private var viewModel: ControlsViewModel
     
     private var playing: Bool {
         switch viewModel.state {
@@ -17,7 +17,7 @@ public struct TimerControls: View {
     }
     
     public init(
-        viewModel: ControlsViewModel = ControlsViewModel(),
+        viewModel: ControlsViewModel,
         togglePlayback: (() -> Void)? = nil,
         skipHandler: (() -> Void)? = nil,
         stopHandler: (() -> Void)? = nil,
@@ -57,7 +57,7 @@ struct TimerControlsPreviews: PreviewProvider {
             VStack {
                 TimerControls(viewModel: Self.playing())
                 
-                TimerControls()
+                TimerControls(viewModel: ControlsViewModel())
             }
             
         }

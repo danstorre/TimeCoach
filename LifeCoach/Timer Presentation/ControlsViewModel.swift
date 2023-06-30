@@ -5,7 +5,7 @@ public enum ControlsState: Equatable {
     case play
 }
 
-public class ControlsViewModel {
-    public var state: ControlsState = .pause
+public class ControlsViewModel: ObservableObject {
+    @Published public var state: ControlsState = .pause
     public init() {}
 }

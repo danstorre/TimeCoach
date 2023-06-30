@@ -1,7 +1,7 @@
 import Foundation
 import SwiftUI
 
-struct ToggleButton: View {
+public struct ToggleButton: View {
     private let togglePlayback: (() -> Void)?
     private let playing: Bool
     
@@ -10,7 +10,7 @@ struct ToggleButton: View {
         self.playing = playing
     }
     
-    var body: some View {
+    public var body: some View {
         if playing {
             Button.init(action: {
                 togglePlayback?()

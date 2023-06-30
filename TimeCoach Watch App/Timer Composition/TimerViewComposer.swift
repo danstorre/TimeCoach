@@ -27,12 +27,18 @@ public final class TimerViewComposer {
         
         let pauseTimerAdapter = TimerVoidAdapter(loader: pausePublisher)
         
+        let controlsViewModel = ControlsViewModel()
         let toggleStrategy = ToggleStrategy(start: starTimerAdapter.start,
                                             pause: pauseTimerAdapter.pause,
                                             skip: skipTimerAdapter.skip,
                                             stop: stopTimerAdapter.stop)
         
+        toggleStrategy.onPlayChange = { playing in
+            controlsViewModel.state = playing ? .play : .pause
+        }
+        
         let timer = TimerView(
+            controlsViewModel: controlsViewModel,
             timerViewModel: viewModel,
             togglePlayback: toggleStrategy.toggle,
             skipHandler: toggleStrategy.skipHandler,

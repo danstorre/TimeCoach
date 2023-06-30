@@ -5,6 +5,7 @@ import TimeCoach_Watch_App
 extension TimerText: Inspectable {}
 extension TimerControls: Inspectable {}
 extension TimerTextTimeLine: Inspectable {}
+extension ToggleButton: Inspectable {}
 
 extension TimerView {
     func timerLabelString() -> String {
@@ -17,7 +18,7 @@ extension TimerView {
     }
     
     func simulateToggleTimerUserInteraction() {
-        tapButton(index: Self.togglePlaybackButtonIdentifier)
+        tapToggle()
     }
     
     func simulateSkipTimerUserInteraction() {
@@ -26,6 +27,16 @@ extension TimerView {
     
     func simulateStopTimerUserInteraction() {
         tapButton(index: Self.stopButtonIdentifier)
+    }
+    
+    private func tapToggle() {
+        do {
+            try inspect().find(ToggleButton.self)
+                .button()
+                .tap()
+        } catch {
+            fatalError("couldn't inspect toggle button")
+        }
     }
     
     private func tapButton(index: Int) {

@@ -1,11 +1,17 @@
 import Foundation
 
 class ToggleStrategy {
-    private var play: Bool = false
+    private var play: Bool = false {
+        didSet {
+            onPlayChange?(play)
+        }
+    }
     private let start: (() -> Void)?
     private let pause: (() -> Void)?
     private let skip: (() -> Void)?
     private let stop: (() -> Void)?
+    
+    var onPlayChange: ((Bool) -> Void)?
     
     init(start: (() -> Void)?, pause: (() -> Void)?, skip: (() -> Void)?, stop: (() -> Void)?) {
         self.start = start

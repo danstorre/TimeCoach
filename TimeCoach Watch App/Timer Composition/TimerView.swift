@@ -9,6 +9,7 @@ public struct TimerView: View {
     var withTimeLine = true
     
     public init(
+        controlsViewModel: ControlsViewModel,
         timerViewModel: TimerViewModel,
         togglePlayback: (() -> Void)? = nil,
         skipHandler: (() -> Void)? = nil,
@@ -23,7 +24,10 @@ public struct TimerView: View {
         }
         
         self.withTimeLine = withTimeLine
-        self.controls = TimerControls(togglePlayback: togglePlayback, skipHandler: skipHandler, stopHandler: stopHandler)
+        self.controls = TimerControls(viewModel: controlsViewModel,
+                                      togglePlayback: togglePlayback,
+                                      skipHandler: skipHandler,
+                                      stopHandler: stopHandler)
     }
     
     public var body: some View {
@@ -40,7 +44,8 @@ public struct TimerView: View {
 
 struct TimerView_Previews: PreviewProvider {
     static var previews: some View {
-        TimerView(timerViewModel: TimerViewModel())
+        TimerView(controlsViewModel: ControlsViewModel(),
+                  timerViewModel: TimerViewModel())
     }
 }
 
