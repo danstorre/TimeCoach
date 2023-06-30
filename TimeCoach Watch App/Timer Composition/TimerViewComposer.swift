@@ -9,8 +9,8 @@ import TimeCoachVisionOS
 
 public final class TimerViewComposer {
     public static func createTimer(
-        customFont: String,
-        breakColor: Color,
+        customFont: String = CustomFont.timer.font,
+        breakColor: Color = .blue,
         playPublisher: @escaping () -> AnyPublisher<ElapsedSeconds, Error>,
         skipPublisher: @escaping () -> AnyPublisher<ElapsedSeconds, Error>,
         stopPublisher: AnyPublisher<Void, Error>,

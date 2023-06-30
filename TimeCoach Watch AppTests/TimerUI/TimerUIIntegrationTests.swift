@@ -85,7 +85,6 @@ final class TimerUIIntegrationTests: XCTestCase {
         
         let timerView = TimerViewComposer
             .createTimer(
-                customFont: .timerFont,
                 playPublisher: { timeLoader.play() },
                 skipPublisher: { timeLoader.skip() },
                 stopPublisher: timeLoader.stop(),
