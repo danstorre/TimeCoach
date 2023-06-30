@@ -27,6 +27,7 @@ public final class FoundationTimerCountdown: TimerCoutdown {
     }
     
     public func startCountdown(completion: @escaping StartCoundownCompletion) {
+        guard hasNotHitThreshold() else { return }
         invalidatesTimer()
         state = .running
         timerDelivery = completion
