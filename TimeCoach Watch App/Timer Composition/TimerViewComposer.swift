@@ -1,5 +1,6 @@
 import Combine
 import LifeCoach
+import SwiftUI
 #if os(watchOS)
 import LifeCoachWatchOS
 #elseif os(xrOS)
@@ -9,6 +10,7 @@ import TimeCoachVisionOS
 public final class TimerViewComposer {
     public static func createTimer(
         customFont: String,
+        breakColor: Color,
         playPublisher: @escaping () -> AnyPublisher<ElapsedSeconds, Error>,
         skipPublisher: @escaping () -> AnyPublisher<ElapsedSeconds, Error>,
         stopPublisher: AnyPublisher<Void, Error>,
@@ -44,7 +46,8 @@ public final class TimerViewComposer {
             skipHandler: toggleStrategy.skipHandler,
             stopHandler: toggleStrategy.stopHandler,
             customFont: customFont,
-            withTimeLine: withTimeLine
+            withTimeLine: withTimeLine,
+            breakColor: breakColor
         )
         return timer
     }

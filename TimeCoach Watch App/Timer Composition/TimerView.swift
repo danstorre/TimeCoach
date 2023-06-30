@@ -15,12 +15,18 @@ public struct TimerView: View {
         skipHandler: (() -> Void)? = nil,
         stopHandler: (() -> Void)? = nil,
         customFont: String? = nil,
-        withTimeLine: Bool = false
+        withTimeLine: Bool = false,
+        breakColor: Color = .red
     ) {
         if withTimeLine {
-            self.timerWithTimeLine = TimerTextTimeLine(timerViewModel: timerViewModel, customFont: customFont)
+            self.timerWithTimeLine = TimerTextTimeLine(timerViewModel: timerViewModel,
+                                                       breakColor: breakColor,
+                                                       customFont: customFont)
         } else {
-            self.timerWithoutTimeLine = TimerText(timerViewModel: timerViewModel, mode: .full, customFont: customFont)
+            self.timerWithoutTimeLine = TimerText(timerViewModel: timerViewModel,
+                                                  mode: .full,
+                                                  breakColor: breakColor,
+                                                  customFont: customFont)
         }
         
         self.withTimeLine = withTimeLine
@@ -43,9 +49,49 @@ public struct TimerView: View {
 }
 
 struct TimerView_Previews: PreviewProvider {
-    static var previews: some View {
+    static func pomodoroTimerWithTimeLine() -> TimerView {
+        TimerView(controlsViewModel: ControlsViewModel(),
+                  timerViewModel: TimerViewModel(),
+                  withTimeLine: true)
+    }
+    
+    static func breakTimerWithTimeLine() -> TimerView {
+        let vm = TimerViewModel()
+        vm.isBreak = true
+        return TimerView(controlsViewModel: ControlsViewModel(),
+                  timerViewModel: vm,
+                  withTimeLine: true,
+                  breakColor: .blueTimer
+        )
+    }
+    
+    static func pomodoroTimerWithoutTimeLine() -> TimerView {
         TimerView(controlsViewModel: ControlsViewModel(),
                   timerViewModel: TimerViewModel())
+    }
+    
+    static func breakTimerWithoutTimeLine() -> TimerView {
+        let vm = TimerViewModel()
+        vm.isBreak = true
+        return TimerView(controlsViewModel: ControlsViewModel(),
+                  timerViewModel: vm,
+                  breakColor: .blueTimer
+        )
+    }
+    
+    static var previews: some View {
+        Group {
+            VStack {
+                pomodoroTimerWithTimeLine()
+                breakTimerWithTimeLine()
+            }
+
+            VStack {
+                pomodoroTimerWithoutTimeLine()
+                breakTimerWithoutTimeLine()
+            }
+        }
+        
     }
 }
 

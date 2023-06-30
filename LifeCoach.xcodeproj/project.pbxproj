@@ -48,6 +48,7 @@
 		FB594CA82A4E213F00C4A32C /* ControlsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB594CA72A4E213F00C4A32C /* ControlsViewModel.swift */; };
 		FB594CBE2A4E542200C4A32C /* ToggleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB594CBD2A4E542200C4A32C /* ToggleButton.swift */; };
 		FB594CBF2A4E547F00C4A32C /* ToggleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB594CBD2A4E542200C4A32C /* ToggleButton.swift */; };
+		FB594CC22A4E717000C4A32C /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB594CC12A4E717000C4A32C /* Colors.swift */; };
 		FB73E909293BA2A40087F9EF /* TimeCoachRoot.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB73E908293BA2A40087F9EF /* TimeCoachRoot.swift */; };
 		FB960C72293D462900ECBAD5 /* ToggleStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB960C71293D462900ECBAD5 /* ToggleStrategy.swift */; };
 		FB960C73293D479800ECBAD5 /* XCTestCase+MemoryLeakTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC9ADAE2919E8B500E0BEFC /* XCTestCase+MemoryLeakTracking.swift */; };
@@ -259,6 +260,7 @@
 		FB594CA52A4E1E5100C4A32C /* TImerControlsPresentationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TImerControlsPresentationTests.swift; sourceTree = "<group>"; };
 		FB594CA72A4E213F00C4A32C /* ControlsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlsViewModel.swift; sourceTree = "<group>"; };
 		FB594CBD2A4E542200C4A32C /* ToggleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleButton.swift; sourceTree = "<group>"; };
+		FB594CC12A4E717000C4A32C /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		FB73E908293BA2A40087F9EF /* TimeCoachRoot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeCoachRoot.swift; sourceTree = "<group>"; };
 		FB960C71293D462900ECBAD5 /* ToggleStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleStrategy.swift; sourceTree = "<group>"; };
 		FB960C74293D484000ECBAD5 /* TimerPresentationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerPresentationTests.swift; sourceTree = "<group>"; };
@@ -542,6 +544,14 @@
 			path = Previews;
 			sourceTree = "<group>";
 		};
+		FB594CC02A4E716800C4A32C /* Colors */ = {
+			isa = PBXGroup;
+			children = (
+				FB594CC12A4E717000C4A32C /* Colors.swift */,
+			);
+			path = Colors;
+			sourceTree = "<group>";
+		};
 		FB960C7E293D530900ECBAD5 /* Previews */ = {
 			isa = PBXGroup;
 			children = (
@@ -697,6 +707,7 @@
 		FBE9A9B22939579F00D8BF29 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				FB594CC02A4E716800C4A32C /* Colors */,
 				FBE9A9C62939580E00D8BF29 /* Fonts */,
 				FBE9A9802939527E00D8BF29 /* Preview Assets.xcassets */,
 				FBE9A97D2939527E00D8BF29 /* Assets.xcassets */,
@@ -1193,6 +1204,7 @@
 				FBED1E52293EE13F0061CAAF /* TimerView.swift in Sources */,
 				FBE9A9A72939534000D8BF29 /* TimerPresentationAdapter.swift in Sources */,
 				FBE646672A4AA924005022A2 /* TimeCoachRoot+Extension.swift in Sources */,
+				FB594CC22A4E717000C4A32C /* Colors.swift in Sources */,
 				FBED1E54293F7E980061CAAF /* UserNotificationDelegate.swift in Sources */,
 				FBE646562A4A9F3F005022A2 /* TimerVoidAdapter.swift in Sources */,
 				FBE9A9A82939535800D8BF29 /* TimerViewComposer.swift in Sources */,

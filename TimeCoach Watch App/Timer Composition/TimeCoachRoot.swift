@@ -1,4 +1,5 @@
 import Foundation
+import SwiftUI
 import LifeCoach
 import LifeCoachWatchOS
 import Combine
@@ -37,6 +38,7 @@ class TimeCoachRoot {
         
         return TimerViewComposer.createTimer(
             customFont: CustomFont.timer.font,
+            breakColor: .blueTimer,
             playPublisher: regularTimer!.playPublisher(currentSubject: currentSubject),
             skipPublisher: regularTimer!.skipPublisher(currentSubject: currentSubject),
             stopPublisher: regularTimer!.stopPublisher(),
@@ -55,4 +57,10 @@ class TimeCoachRoot {
         timerLoad?.loadTime()
     }
     
+}
+
+extension Color {
+    static var blueTimer: Color {
+        Color(Colors.blueTimer)
+    }
 }

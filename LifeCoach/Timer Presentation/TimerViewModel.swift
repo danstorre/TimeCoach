@@ -2,6 +2,8 @@ import SwiftUI
 
 public class TimerViewModel: ObservableObject {
     @Published public var timerString: String = .defaultPomodoroTimerString
+    public var isBreak: Bool = false
+    
     public var mode: TimePresentation = .full {
         didSet {
             guard !hasFinished else { return }
