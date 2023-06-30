@@ -18,14 +18,14 @@ final class FoundationTimerCountdownTests: XCTestCase {
                andElapsedTime: 0.001)
     }
     
-    func test_start_deliversTwoMilliSecondsElapsedFromTheStartingSetAndChangesStateToRunning() {
+    func test_start_deliversTwoMilliSecondsElapsedFromTheStartingSetAndChangesStateToStop() {
         let fixedDate = Date()
         let startSet = createTimerSet(0, startDate: fixedDate, endDate: fixedDate.adding(seconds: 0.002))
         let sut = makeSUT(startingSet: startSet, nextSet: createAnyTimerSet())
 
         expect(sut: sut,
                toDeliver: [startSet.addingElapsedSeconds(0.001), startSet.addingElapsedSeconds(0.002)],
-               andChangesStateTo: .running,
+               andChangesStateTo: .stop,
                andElapsedTime: 0.002)
     }
     
@@ -36,15 +36,15 @@ final class FoundationTimerCountdownTests: XCTestCase {
         assertsStartCountdownTwiceKeepsStateToRunning(sut: sut)
     }
     
-    func test_start_onThresholdHit_DeliversNextTimerSetResetsTimerAndChangesStateToStop() {
+    func test_start_onThresholdHit_DeliversZeroTimeResetsTimerAndChangesStateToStop() {
         let fixedDate = Date()
         let startingSet = createTimerSet(0, startDate: fixedDate, endDate: fixedDate.adding(seconds: 0.001))
         let nextSet = createTimerSet(0, startDate: fixedDate, endDate: fixedDate.adding(seconds: 0.002))
         let sut = makeSUT(startingSet: startingSet, nextSet: nextSet)
         
-        expect(sut: sut, toDeliver: [startingSet.addingElapsedSeconds(0.001), nextSet],
+        expect(sut: sut, toDeliver: [startingSet.addingElapsedSeconds(0.001)],
                andChangesStateTo: .stop,
-               andElapsedTime: 0)
+               andElapsedTime: 0.001)
     }
     
     func test_stop_onStopState_doesNotChangeStateFromStop() {
@@ -229,7 +229,7 @@ final class FoundationTimerCountdownTests: XCTestCase {
 
         XCTAssertEqual(receivedElapsedSeconds, deliverExpectation, file: file, line: line)
         XCTAssertEqual(sut.state, expectedState, file: file, line: line)
-        XCTAssertEqual(sut.currentSetElapsedTime, expectedElapsedTime, file: file, line: line)
+        XCTAssertEqual(sut.currentSetElapsedTime, expectedElapsedTime, "should have expected \(expectedElapsedTime) but got \(sut.currentSetElapsedTime) current set.", file: file, line: line)
     }
     
     private func createAnyTimerSet(startingFrom startDate: Date = Date()) -> LocalElapsedSeconds {

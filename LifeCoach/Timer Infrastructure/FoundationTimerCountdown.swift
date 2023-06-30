@@ -57,12 +57,14 @@ public final class FoundationTimerCountdown: TimerCoutdown {
     
     @objc
     private func elapsedCompletion() {
+        elapsedTimeInterval += incrementing
         guard hasNotHitThreshold() else {
-            executeNextSet()
+            invalidatesTimer()
+            state = .stop
+            let elapsed = currentSet.addingElapsedSeconds(elapsedTimeInterval)
+            timerDelivery?(.success(elapsed))
             return
         }
-        
-        elapsedTimeInterval += incrementing
         
         let elapsed = currentSet.addingElapsedSeconds(elapsedTimeInterval)
         timerDelivery?(.success(elapsed))
