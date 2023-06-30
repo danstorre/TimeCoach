@@ -24,6 +24,10 @@ public final class TimerViewComposer {
         
         let skipTimerAdapter = TimerAdapter(loader: skipPublisher)
         skipTimerAdapter.presenter = viewModel
+        let skipHandler = {
+            skipTimerAdapter.skip()
+            viewModel.isBreak = !viewModel.isBreak
+        }
         
         let stopTimerAdapter = TimerVoidAdapter(loader: stopPublisher)
         
@@ -32,7 +36,7 @@ public final class TimerViewComposer {
         let controlsViewModel = ControlsViewModel()
         let toggleStrategy = ToggleStrategy(start: starTimerAdapter.start,
                                             pause: pauseTimerAdapter.pause,
-                                            skip: skipTimerAdapter.skip,
+                                            skip: skipHandler,
                                             stop: stopTimerAdapter.stop)
         
         toggleStrategy.onPlayChange = { playing in
