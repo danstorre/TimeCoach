@@ -9,6 +9,7 @@ import TimeCoachVisionOS
 
 public final class TimerViewComposer {
     public static func createTimer(
+        viewModel: TimerViewModel = TimerViewModel(),
         customFont: String = CustomFont.timer.font,
         breakColor: Color = .blue,
         playPublisher: @escaping () -> AnyPublisher<ElapsedSeconds, Error>,
@@ -17,17 +18,13 @@ public final class TimerViewComposer {
         pausePublisher: AnyPublisher<Void, Error>,
         withTimeLine: Bool
     ) -> TimerView {
-        let viewModel = TimerViewModel()
-
         let starTimerAdapter = TimerAdapter(loader: playPublisher)
         starTimerAdapter.presenter = viewModel
         
         let skipTimerAdapter = TimerAdapter(loader: skipPublisher)
         skipTimerAdapter.presenter = viewModel
-        let skipHandler = {
-            skipTimerAdapter.skip()
-            viewModel.isBreak = !viewModel.isBreak
-        }
+        let skipHandler = Self.handlesSkip(withSkipAdapter: skipTimerAdapter,
+                                           and: viewModel)
         
         let stopTimerAdapter = TimerVoidAdapter(loader: stopPublisher)
         
@@ -52,6 +49,14 @@ public final class TimerViewComposer {
             breakColor: breakColor
         )
         return timer
+    }
+    
+    static func handlesSkip(withSkipAdapter skipTimerAdapter: TimerAdapter,
+                            and viewModel: TimerViewModel) -> () -> Void {
+        {
+            skipTimerAdapter.skip()
+            viewModel.isBreak = !viewModel.isBreak
+        }
     }
     
     static func change(controlsViewModel: ControlsViewModel) -> (Bool) -> Void {

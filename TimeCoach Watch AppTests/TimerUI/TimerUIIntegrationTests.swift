@@ -77,14 +77,29 @@ final class TimerUIIntegrationTests: XCTestCase {
         XCTAssertEqual(spy.commandsReceived, [.stop, .stop], "Should execute stop handler twice.")
     }
     
+    func test_onSkip_changesBreakState() {
+        let viewModel = TimerViewModel()
+        let (sut, _) = makeSUT(viewModel: viewModel)
+        
+        XCTAssertEqual(viewModel.isBreak, false)
+        
+        sut.simulateSkipTimerUserInteraction()
+        XCTAssertEqual(viewModel.isBreak, true)
+        
+        sut.simulateSkipTimerUserInteraction()
+        XCTAssertEqual(viewModel.isBreak, false)
+    }
+    
     // MARK: - Helpers
     private func makeSUT(
+        viewModel: TimerViewModel = TimerViewModel(),
         file: StaticString = #filePath, line: UInt = #line
     ) -> (sut: TimerView, spy: TimerPublisherSpy) {
         let timeLoader = TimerPublisherSpy()
         
         let timerView = TimerViewComposer
             .createTimer(
+                viewModel: viewModel,
                 playPublisher: { timeLoader.play() },
                 skipPublisher: { timeLoader.skip() },
                 stopPublisher: timeLoader.stop(),
