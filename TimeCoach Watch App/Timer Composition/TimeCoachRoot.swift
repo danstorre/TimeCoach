@@ -89,7 +89,10 @@ class TimerCoutdownAdapter: TimerCoutdown, HasTimerState {
     }
     
     func startCountdown(completion: @escaping StartCoundownCompletion) {
-        timer.startCountdown(completion: completion)
+        timer.startCountdown { [unowned self] result in
+            self.isRunning = self.isPlaying
+            completion(result)
+        }
         isRunning = isPlaying
     }
     
@@ -104,7 +107,10 @@ class TimerCoutdownAdapter: TimerCoutdown, HasTimerState {
     }
     
     func skipCountdown(completion: @escaping SkipCountdownCompletion) {
-        timer.skipCountdown(completion: completion)
+        timer.skipCountdown{ [unowned self] result in
+            self.isRunning = self.isPlaying
+            completion(result)
+        }
         isRunning = isPlaying
     }
 }
