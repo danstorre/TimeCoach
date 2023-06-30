@@ -60,9 +60,3 @@ class TimeCoachRoot {
         timerLoad?.loadTime()
     }
 }
-
-extension Color {
-    static var blueTimer: Color {
-        Color(Colors.blueTimer)
-    }
-}
