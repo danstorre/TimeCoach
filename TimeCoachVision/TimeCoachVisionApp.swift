@@ -18,8 +18,11 @@ struct TimeCoach_Watch_AppApp: App {
     }
     
     var body: some Scene {
-        WindowGroup {
+        WindowGroup("TimeCoach Pomodoro") {
             timerView
+                .padding()
+                .background(.regularMaterial, in: .rect(cornerRadius: 20))
+                .scaledToFill()
         }
     }
 }
