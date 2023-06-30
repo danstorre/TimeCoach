@@ -15,16 +15,20 @@ struct ToggleButton: View {
             Button.init(action: {
                 togglePlayback?()
             }) {
-                Image(systemName: "playpause.fill")
+                image
             }
             .buttonStyle(.borderedProminent)
         } else {
             Button.init(action: {
                 togglePlayback?()
             }) {
-                Image(systemName: "playpause.fill")
+                image
             }
             .buttonStyle(.automatic)
         }
+    }
+    
+    private var image: Image {
+        Image(systemName: "playpause.fill")
     }
 }
