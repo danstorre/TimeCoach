@@ -39,9 +39,7 @@ public final class TimerViewComposer {
                                             skip: skipHandler,
                                             stop: stopTimerAdapter.stop)
         
-        toggleStrategy.onPlayChange = { playing in
-            controlsViewModel.state = playing ? .play : .pause
-        }
+        toggleStrategy.onPlayChange = Self.change(controlsViewModel: controlsViewModel)
         
         let timer = TimerView(
             controlsViewModel: controlsViewModel,
@@ -54,5 +52,11 @@ public final class TimerViewComposer {
             breakColor: breakColor
         )
         return timer
+    }
+    
+    static func change(controlsViewModel: ControlsViewModel) -> (Bool) -> Void {
+        { playing in
+            controlsViewModel.state = playing ? .play : .pause
+        }
     }
 }
