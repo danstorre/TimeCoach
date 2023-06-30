@@ -34,7 +34,6 @@
 		FB5399042A461996000B9CFD /* LifeCoach.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBAD475028FC8BB0003D2F7A /* LifeCoach.framework */; };
 		FB53990A2A4619FD000B9CFD /* TimerLabelStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5399092A4619FD000B9CFD /* TimerLabelStyle.swift */; };
 		FB53990C2A461A76000B9CFD /* TimerControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB53990B2A461A76000B9CFD /* TimerControls.swift */; };
-		FB5399102A461B9D000B9CFD /* TimeCoach-VisionOS-App-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FB53990F2A461B9D000B9CFD /* TimeCoach-VisionOS-App-Info.plist */; };
 		FB5399162A461BBF000B9CFD /* pizzadude.dk License.txt in Resources */ = {isa = PBXBuildFile; fileRef = FB5399132A461BBF000B9CFD /* pizzadude.dk License.txt */; };
 		FB5399172A461BBF000B9CFD /* DIGITALDREAMFAT.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FB5399142A461BBF000B9CFD /* DIGITALDREAMFAT.ttf */; };
 		FB5399182A461BBF000B9CFD /* CustomFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5399152A461BBF000B9CFD /* CustomFont.swift */; };
@@ -72,6 +71,8 @@
 		FBBF061E2A4F28F40020695A /* ToggleStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB960C71293D462900ECBAD5 /* ToggleStrategy.swift */; };
 		FBBF06212A4F2CC30020695A /* TimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBBF06202A4F2CC30020695A /* TimerView.swift */; };
 		FBBF06232A4F2DA20020695A /* ToggleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBBF06222A4F2DA20020695A /* ToggleButton.swift */; };
+		FBBF06242A4F2FC80020695A /* TimeCoach-Watch-App-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FBE9A9DF293974FF00D8BF29 /* TimeCoach-Watch-App-Info.plist */; };
+		FBBF06262A4F41D60020695A /* TimeCoach-VisionOS-App-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FBBF06252A4F41D60020695A /* TimeCoach-VisionOS-App-Info.plist */; };
 		FBC612F3293AC2ED008D9EF8 /* TimerCountDownSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC612F2293AC2ED008D9EF8 /* TimerCountDownSpy.swift */; };
 		FBC9ADAF2919E8B500E0BEFC /* XCTestCase+MemoryLeakTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC9ADAE2919E8B500E0BEFC /* XCTestCase+MemoryLeakTracking.swift */; };
 		FBD56F652A3BD489002736AD /* LocalElapsedSeconds.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD56F642A3BD489002736AD /* LocalElapsedSeconds.swift */; };
@@ -257,7 +258,6 @@
 		FB5399022A46197E000B9CFD /* TimerText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerText.swift; sourceTree = "<group>"; };
 		FB5399092A4619FD000B9CFD /* TimerLabelStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerLabelStyle.swift; sourceTree = "<group>"; };
 		FB53990B2A461A76000B9CFD /* TimerControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerControls.swift; sourceTree = "<group>"; };
-		FB53990F2A461B9D000B9CFD /* TimeCoach-VisionOS-App-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "TimeCoach-VisionOS-App-Info.plist"; sourceTree = "<group>"; };
 		FB5399132A461BBF000B9CFD /* pizzadude.dk License.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "pizzadude.dk License.txt"; sourceTree = "<group>"; };
 		FB5399142A461BBF000B9CFD /* DIGITALDREAMFAT.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = DIGITALDREAMFAT.ttf; sourceTree = "<group>"; };
 		FB5399152A461BBF000B9CFD /* CustomFont.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomFont.swift; sourceTree = "<group>"; };
@@ -282,6 +282,7 @@
 		FBAD475A28FC8BB0003D2F7A /* LifeCoachTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LifeCoachTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FBBF06202A4F2CC30020695A /* TimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerView.swift; sourceTree = "<group>"; };
 		FBBF06222A4F2DA20020695A /* ToggleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleButton.swift; sourceTree = "<group>"; };
+		FBBF06252A4F41D60020695A /* TimeCoach-VisionOS-App-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "TimeCoach-VisionOS-App-Info.plist"; sourceTree = SOURCE_ROOT; };
 		FBC612F2293AC2ED008D9EF8 /* TimerCountDownSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerCountDownSpy.swift; sourceTree = "<group>"; };
 		FBC9ADAE2919E8B500E0BEFC /* XCTestCase+MemoryLeakTracking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+MemoryLeakTracking.swift"; sourceTree = "<group>"; };
 		FBD56F642A3BD489002736AD /* LocalElapsedSeconds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalElapsedSeconds.swift; sourceTree = "<group>"; };
@@ -489,7 +490,7 @@
 				FB53992F2A46208E000B9CFD /* Previews */,
 				FB53989D2A45DA7D000B9CFD /* Preview Content */,
 				FB5399112A461BA7000B9CFD /* Resources */,
-				FB53990F2A461B9D000B9CFD /* TimeCoach-VisionOS-App-Info.plist */,
+				FBBF06252A4F41D60020695A /* TimeCoach-VisionOS-App-Info.plist */,
 				FB5398972A45DA7C000B9CFD /* TimeCoachVisionApp.swift */,
 				FB5398992A45DA7C000B9CFD /* ContentView.swift */,
 			);
@@ -1067,7 +1068,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FB5399102A461B9D000B9CFD /* TimeCoach-VisionOS-App-Info.plist in Resources */,
+				FBBF06262A4F41D60020695A /* TimeCoach-VisionOS-App-Info.plist in Resources */,
+				FBBF06242A4F2FC80020695A /* TimeCoach-Watch-App-Info.plist in Resources */,
 				FB53989F2A45DA7D000B9CFD /* Preview Assets.xcassets in Resources */,
 				FB5399172A461BBF000B9CFD /* DIGITALDREAMFAT.ttf in Resources */,
 				FB5399162A461BBF000B9CFD /* pizzadude.dk License.txt in Resources */,
@@ -1496,6 +1498,7 @@
 				ENABLE_PREVIEWS = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "TimeCoach-VisionOS-App-Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1529,6 +1532,7 @@
 				ENABLE_PREVIEWS = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "TimeCoach-VisionOS-App-Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
