@@ -29,7 +29,7 @@ class TimeCoachRoot {
         let date = Date()
         let timerCountdown = createTimerCountDown(from: date)
         let currentSubject = Self.createFirstValuePublisher(from: date)
-        let timerPlayerAdapterState = TimerCoutdownAdapter(timer: timerCountdown)
+        let timerPlayerAdapterState = TimerCoutdownToTimerStateAdapter(timer: timerCountdown)
         regularTimer = Self.createPomodorTimer(with: timerPlayerAdapterState, and: currentSubject)
         
         if let timerCountdown = timerCountdown as? FoundationTimerCountdown {
@@ -61,7 +61,7 @@ class TimeCoachRoot {
     }
 }
 
-class TimerCoutdownAdapter: TimerCoutdown, HasTimerState {
+class TimerCoutdownToTimerStateAdapter: TimerCoutdown, HasTimerState {
     var isPlaying: Bool {
         switch timer.state {
         case .running: return true
@@ -115,7 +115,7 @@ class TimerCoutdownAdapter: TimerCoutdown, HasTimerState {
     }
 }
 
-extension TimerCoutdownAdapter {
+extension TimerCoutdownToTimerStateAdapter {
     func isPlayingPublisherProvider() -> () -> AnyPublisher<Bool, Never> {
         {
             self.$isRunning
