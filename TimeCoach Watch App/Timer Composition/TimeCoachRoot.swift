@@ -44,7 +44,7 @@ class TimeCoachRoot {
             skipPublisher: regularTimer!.skipPublisher(currentSubject: currentSubject),
             stopPublisher: regularTimer!.stopPublisher(),
             pausePublisher: regularTimer!.pausePublisher(),
-            isPlayingPublisher: { timerPlayerAdapterState.isRunningPublisher },
+            isPlayingPublisher: timerPlayerAdapterState.isPlayingPublisherProvider(),
             withTimeLine: withTimeLine,
             hasPlayerState: timerPlayerAdapterState
         )
@@ -79,7 +79,7 @@ class TimerCoutdownAdapter: TimerCoutdown, HasTimerState {
     
     @Published private var isRunning = false
     
-    lazy public private(set) var isRunningPublisher: AnyPublisher<Bool, Never>
+    lazy private(set) var isRunningPublisher: AnyPublisher<Bool, Never>
       = $isRunning
       .dropFirst()
       .eraseToAnyPublisher()
@@ -106,6 +106,16 @@ class TimerCoutdownAdapter: TimerCoutdown, HasTimerState {
     func skipCountdown(completion: @escaping SkipCountdownCompletion) {
         timer.skipCountdown(completion: completion)
         isRunning = isPlaying
+    }
+}
+
+extension TimerCoutdownAdapter {
+    func isPlayingPublisherProvider() -> () -> AnyPublisher<Bool, Never> {
+        {
+            self.$isRunning
+                .dropFirst()
+                .eraseToAnyPublisher()
+        }
     }
 }
 
