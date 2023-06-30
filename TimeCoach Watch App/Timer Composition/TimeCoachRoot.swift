@@ -29,7 +29,8 @@ class TimeCoachRoot {
         let date = Date()
         let timerCountdown = createTimerCountDown(from: date)
         let currentSubject = Self.createFirstValuePublisher(from: date)
-        regularTimer = Self.createPomodorTimer(with: timerCountdown, and: currentSubject)
+        let timerPlayerAdapterState = TimerCoutdownAdapter(timer: timerCountdown)
+        regularTimer = Self.createPomodorTimer(with: timerPlayerAdapterState, and: currentSubject)
         
         if let timerCountdown = timerCountdown as? FoundationTimerCountdown {
             self.timerSave = timerCountdown
@@ -44,7 +45,7 @@ class TimeCoachRoot {
             stopPublisher: regularTimer!.stopPublisher(),
             pausePublisher: regularTimer!.pausePublisher(),
             withTimeLine: withTimeLine,
-            hasPlayerState: AdapterHasTimerState(timer: timerCountdown)
+            hasPlayerState: timerPlayerAdapterState
         )
     }
     
@@ -57,11 +58,9 @@ class TimeCoachRoot {
     func goToForeground() {
         timerLoad?.loadTime()
     }
-    
 }
 
-class AdapterHasTimerState: HasTimerState {
-    private let timer: TimerCoutdown
+class TimerCoutdownAdapter: TimerCoutdown, HasTimerState {
     var isPlaying: Bool {
         switch timer.state {
         case .running: return true
@@ -69,8 +68,43 @@ class AdapterHasTimerState: HasTimerState {
         }
     }
     
+    private let timer: TimerCoutdown
+    var currentSetElapsedTime: TimeInterval {
+        timer.currentSetElapsedTime
+    }
+    var state: LifeCoach.TimerState {
+        timer.state
+    }
+    
+    @Published private var isRunning = false
+    
+    lazy public private(set) var isRunningPublisher: AnyPublisher<Bool, Never>
+      = $isRunning
+      .dropFirst()
+      .eraseToAnyPublisher()
+    
     init(timer: TimerCoutdown) {
         self.timer = timer
+    }
+    
+    func startCountdown(completion: @escaping StartCoundownCompletion) {
+        timer.startCountdown(completion: completion)
+        isRunning = isPlaying
+    }
+    
+    func stopCountdown() {
+        timer.stopCountdown()
+        isRunning = isPlaying
+    }
+    
+    func pauseCountdown() {
+        timer.pauseCountdown()
+        isRunning = isPlaying
+    }
+    
+    func skipCountdown(completion: @escaping SkipCountdownCompletion) {
+        timer.skipCountdown(completion: completion)
+        isRunning = isPlaying
     }
 }
 
