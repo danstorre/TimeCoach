@@ -20,11 +20,6 @@ class TimerCoutdownToTimerStateAdapter: TimerCoutdown, HasTimerState {
     
     @Published private var isRunning = false
     
-    lazy private(set) var isRunningPublisher: AnyPublisher<Bool, Never>
-      = $isRunning
-      .dropFirst()
-      .eraseToAnyPublisher()
-    
     init(timer: TimerCoutdown) {
         self.timer = timer
     }
