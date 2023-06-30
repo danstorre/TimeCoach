@@ -18,7 +18,7 @@ class TimerCoutdownToTimerStateAdapter: TimerCoutdown, HasTimerState {
         timer.state
     }
     
-    @Published private var isRunning = false
+    @Published var isRunning = false
     
     init(timer: TimerCoutdown) {
         self.timer = timer
@@ -48,15 +48,5 @@ class TimerCoutdownToTimerStateAdapter: TimerCoutdown, HasTimerState {
             completion(result)
         }
         isRunning = isPlaying
-    }
-}
-
-extension TimerCoutdownToTimerStateAdapter {
-    func isPlayingPublisherProvider() -> () -> AnyPublisher<Bool, Never> {
-        {
-            self.$isRunning
-                .dropFirst()
-                .eraseToAnyPublisher()
-        }
     }
 }
