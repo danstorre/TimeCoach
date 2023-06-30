@@ -53,13 +53,4 @@ public class TimerViewModel: ObservableObject {
             return makeTimerFormatter().string(from: startDate, to: endDate)!
         }
     }
-    
-    private func makeTimerFrom(mode: TimePresentation) -> DateComponentsFormatter {
-        switch mode {
-        case .none:
-            return makeMinuteTimerFormatter()
-        case .full:
-            return makeTimerFormatter()
-        }
-    }
 }
