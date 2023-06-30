@@ -8,8 +8,6 @@ class ToggleStrategy {
     private let skip: (() -> Void)?
     private let stop: (() -> Void)?
     
-    var onPlayChange: ((Bool) -> Void)?
-    
     init(start: (() -> Void)?, pause: (() -> Void)?, skip: (() -> Void)?, stop: (() -> Void)?, hasPlayerState: HasTimerState) {
         self.start = start
         self.pause = pause
