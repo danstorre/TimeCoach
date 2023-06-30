@@ -1,4 +1,5 @@
 import Foundation
+import LifeCoach
 
 class ToggleStrategy {
     private var hasPlayerState: HasTimerState

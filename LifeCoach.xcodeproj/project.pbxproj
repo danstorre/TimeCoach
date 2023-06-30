@@ -58,6 +58,7 @@
 		FB960C78293D48D800ECBAD5 /* Date+Formatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4AA1562937C3970076FED9 /* Date+Formatters.swift */; };
 		FB960C80293D532E00ECBAD5 /* PreviewTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB960C7F293D532E00ECBAD5 /* PreviewTimer.swift */; };
 		FBA1CE202A4CF8E7008F030B /* LifeCoach.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBAD475028FC8BB0003D2F7A /* LifeCoach.framework */; };
+		FBA8DD7A2A4E916A009E48D5 /* HasTimerState.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA8DD792A4E916A009E48D5 /* HasTimerState.swift */; };
 		FBAA4CB2293DB20E00B3BBF1 /* LifeCoachWatchOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB06B52D292BF71C00AE6079 /* LifeCoachWatchOS.framework */; };
 		FBAA4CB5293DB24700B3BBF1 /* LifeCoach.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBAD475028FC8BB0003D2F7A /* LifeCoach.framework */; };
 		FBAD475528FC8BB0003D2F7A /* LifeCoach.docc in Sources */ = {isa = PBXBuildFile; fileRef = FBAD475428FC8BB0003D2F7A /* LifeCoach.docc */; };
@@ -265,6 +266,7 @@
 		FB960C71293D462900ECBAD5 /* ToggleStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleStrategy.swift; sourceTree = "<group>"; };
 		FB960C74293D484000ECBAD5 /* TimerPresentationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerPresentationTests.swift; sourceTree = "<group>"; };
 		FB960C7F293D532E00ECBAD5 /* PreviewTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewTimer.swift; sourceTree = "<group>"; };
+		FBA8DD792A4E916A009E48D5 /* HasTimerState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HasTimerState.swift; sourceTree = "<group>"; };
 		FBAD475028FC8BB0003D2F7A /* LifeCoach.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LifeCoach.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FBAD475428FC8BB0003D2F7A /* LifeCoach.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = LifeCoach.docc; sourceTree = "<group>"; };
 		FBAD475A28FC8BB0003D2F7A /* LifeCoachTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LifeCoachTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -429,6 +431,7 @@
 			children = (
 				FB4AA1632937CD000076FED9 /* ElapsedSeconds.swift */,
 				FBD56F732A3D0ECE002736AD /* RegularTimer.swift */,
+				FBA8DD792A4E916A009E48D5 /* HasTimerState.swift */,
 			);
 			path = "Timer Feature";
 			sourceTree = "<group>";
@@ -1167,6 +1170,7 @@
 			files = (
 				FBD56F742A3D0ECE002736AD /* RegularTimer.swift in Sources */,
 				FBD56F672A3CE66F002736AD /* LocalElapsedSeconds+Extensions.swift in Sources */,
+				FBA8DD7A2A4E916A009E48D5 /* HasTimerState.swift in Sources */,
 				FB960C77293D48D200ECBAD5 /* Timer+DefaultStrings.swift in Sources */,
 				FB960C76293D48CB00ECBAD5 /* TimerViewModel.swift in Sources */,
 				FBD56F722A3D0E20002736AD /* PomodoroTimer.swift in Sources */,

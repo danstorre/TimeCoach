@@ -7,10 +7,6 @@ import LifeCoachWatchOS
 import TimeCoachVisionOS
 #endif
 
-public protocol HasTimerState {
-    var isPlaying: Bool { get }
-}
-
 public final class TimerViewComposer {
     public static func createTimer(
         viewModel: TimerViewModel = TimerViewModel(),
