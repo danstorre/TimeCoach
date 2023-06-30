@@ -7,6 +7,10 @@ import LifeCoachWatchOS
 import TimeCoachVisionOS
 #endif
 
+public protocol HasTimerState {
+    var isPlaying: Bool { get }
+}
+
 public final class TimerViewComposer {
     public static func createTimer(
         viewModel: TimerViewModel = TimerViewModel(),
@@ -16,7 +20,8 @@ public final class TimerViewComposer {
         skipPublisher: @escaping () -> AnyPublisher<ElapsedSeconds, Error>,
         stopPublisher: AnyPublisher<Void, Error>,
         pausePublisher: AnyPublisher<Void, Error>,
-        withTimeLine: Bool
+        withTimeLine: Bool,
+        hasPlayerState: HasTimerState
     ) -> TimerView {
         let starTimerAdapter = TimerAdapter(loader: playPublisher)
         starTimerAdapter.presenter = viewModel
@@ -34,7 +39,8 @@ public final class TimerViewComposer {
         let toggleStrategy = ToggleStrategy(start: starTimerAdapter.start,
                                             pause: pauseTimerAdapter.pause,
                                             skip: skipHandler,
-                                            stop: stopTimerAdapter.stop)
+                                            stop: stopTimerAdapter.stop,
+                                            hasPlayerState: hasPlayerState)
         
         toggleStrategy.onPlayChange = Self.change(controlsViewModel: controlsViewModel)
         

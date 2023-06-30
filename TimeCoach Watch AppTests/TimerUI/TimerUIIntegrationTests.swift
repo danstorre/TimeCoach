@@ -104,7 +104,8 @@ final class TimerUIIntegrationTests: XCTestCase {
                 skipPublisher: { timeLoader.skip() },
                 stopPublisher: timeLoader.stop(),
                 pausePublisher: timeLoader.pause(),
-                withTimeLine: false // the integration tests do not contemplate the time line since this an watchOS specific trait.
+                withTimeLine: false, // the integration tests do not contemplate the time line since this an watchOS specific trait.
+                hasPlayerState: timeLoader
             )
     
         trackForMemoryLeak(instance: timeLoader, file: file, line: line)
@@ -112,7 +113,10 @@ final class TimerUIIntegrationTests: XCTestCase {
         return (timerView, timeLoader)
     }
     
-    private class TimerPublisherSpy {
+    private class TimerPublisherSpy: HasTimerState {
+        private var plays: Bool = false
+        var isPlaying: Bool { plays }
+        
         private(set) var commandsReceived = [Command]()
         enum Command: Equatable, CustomStringConvertible {
             case pause, play, skip, stop
@@ -135,6 +139,7 @@ final class TimerUIIntegrationTests: XCTestCase {
         func play() -> AnyPublisher<ElapsedSeconds, Error> {
             let elapsed = makeElapsedSeconds(0, startDate: Date(), endDate: Date())
             return PlayPublisher(elapsed).map { elapsed in
+                self.plays = true
                 self.commandsReceived.append(.play)
                 return elapsed
             }.eraseToAnyPublisher()
@@ -143,6 +148,7 @@ final class TimerUIIntegrationTests: XCTestCase {
         func skip() -> AnyPublisher<ElapsedSeconds, Error> {
             let elapsedTime = makeElapsedSeconds(0, startDate: Date(), endDate: Date())
             return SkipPublisher(elapsedTime).map { elapsed in
+                self.plays = false
                 self.commandsReceived.append(.skip)
                 return elapsed
             }.eraseToAnyPublisher()
@@ -150,12 +156,14 @@ final class TimerUIIntegrationTests: XCTestCase {
         
         func stop() -> AnyPublisher<Void, Error> {
             return StopPublisher({}()).map {
+                self.plays = false
                 return self.commandsReceived.append(.stop)
             }.eraseToAnyPublisher()
         }
         
         func pause() -> AnyPublisher<Void, Error> {
             return PausePublisher({}()).map {
+                self.plays = false
                 return self.commandsReceived.append(.pause)
             }.eraseToAnyPublisher()
         }

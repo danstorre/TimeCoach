@@ -1,11 +1,7 @@
 import Foundation
 
 class ToggleStrategy {
-    private var play: Bool = false {
-        didSet {
-            onPlayChange?(play)
-        }
-    }
+    private var hasPlayerState: HasTimerState
     private let start: (() -> Void)?
     private let pause: (() -> Void)?
     private let skip: (() -> Void)?
@@ -13,35 +9,33 @@ class ToggleStrategy {
     
     var onPlayChange: ((Bool) -> Void)?
     
-    init(start: (() -> Void)?, pause: (() -> Void)?, skip: (() -> Void)?, stop: (() -> Void)?) {
+    init(start: (() -> Void)?, pause: (() -> Void)?, skip: (() -> Void)?, stop: (() -> Void)?, hasPlayerState: HasTimerState) {
         self.start = start
         self.pause = pause
         self.skip = skip
         self.stop = stop
+        self.hasPlayerState = hasPlayerState
     }
     
     func toggle() {
-        if play {
+        if hasPlayerState.isPlaying {
             pause?()
         } else {
             start?()
         }
-        play = !play
     }
     
     func skipHandler() {
-        if play {
+        if hasPlayerState.isPlaying {
             pause?()
-            play = false
         }
         
         skip?()
     }
     
     func stopHandler() {
-        if play {
+        if hasPlayerState.isPlaying {
             pause?()
-            play = false
         }
         
         stop?()

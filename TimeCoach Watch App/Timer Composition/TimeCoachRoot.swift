@@ -43,7 +43,8 @@ class TimeCoachRoot {
             skipPublisher: regularTimer!.skipPublisher(currentSubject: currentSubject),
             stopPublisher: regularTimer!.stopPublisher(),
             pausePublisher: regularTimer!.pausePublisher(),
-            withTimeLine: withTimeLine
+            withTimeLine: withTimeLine,
+            hasPlayerState: AdapterHasTimerState(timer: timerCountdown)
         )
     }
     
@@ -57,6 +58,20 @@ class TimeCoachRoot {
         timerLoad?.loadTime()
     }
     
+}
+
+class AdapterHasTimerState: HasTimerState {
+    private let timer: TimerCoutdown
+    var isPlaying: Bool {
+        switch timer.state {
+        case .running: return true
+        case .pause, .stop: return false
+        }
+    }
+    
+    init(timer: TimerCoutdown) {
+        self.timer = timer
+    }
 }
 
 extension Color {

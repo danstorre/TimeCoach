@@ -24,18 +24,22 @@ class TimerCountdownSpy: TimerCoutdown {
     var state: LifeCoach.TimerState = .pause
     
     func startCountdown(completion: @escaping StartCoundownCompletion) {
+        state = .running
         receivedStartCountdownCompletions.append(completion)
     }
     
     func stopCountdown() {
+        state = .stop
         stopCallCount += 1
     }
     
     func pauseCountdown() {
+        state = .pause
         pauseCallCount += 1
     }
     
     func skipCountdown(completion: @escaping SkipCountdownCompletion) {
+        state = .stop
         receivedSkipCountdownCompletions.append(completion)
     }
     
