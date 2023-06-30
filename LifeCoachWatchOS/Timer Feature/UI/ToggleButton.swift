@@ -32,3 +32,16 @@ struct ToggleButton: View {
         Image(systemName: "playpause.fill")
     }
 }
+
+struct ToggleButtonPreviews: PreviewProvider {
+    
+    static var previews: some View {
+        Group {
+            VStack {
+                ToggleButton(togglePlayback: nil, playing: false)
+                
+                ToggleButton(togglePlayback: nil, playing: true)
+            }
+        }
+    }
+}
