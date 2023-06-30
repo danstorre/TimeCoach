@@ -44,6 +44,7 @@ class TimeCoachRoot {
             skipPublisher: regularTimer!.skipPublisher(currentSubject: currentSubject),
             stopPublisher: regularTimer!.stopPublisher(),
             pausePublisher: regularTimer!.pausePublisher(),
+            isPlayingPublisher: { timerPlayerAdapterState.isRunningPublisher },
             withTimeLine: withTimeLine,
             hasPlayerState: timerPlayerAdapterState
         )

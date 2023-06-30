@@ -9,6 +9,7 @@ import TimeCoachVisionOS
 
 public final class TimerViewComposer {
     public static func createTimer(
+        controlsViewModel: ControlsViewModel = ControlsViewModel(),
         viewModel: TimerViewModel = TimerViewModel(),
         customFont: String = CustomFont.timer.font,
         breakColor: Color = .blue,
@@ -16,6 +17,7 @@ public final class TimerViewComposer {
         skipPublisher: @escaping () -> AnyPublisher<ElapsedSeconds, Error>,
         stopPublisher: AnyPublisher<Void, Error>,
         pausePublisher: AnyPublisher<Void, Error>,
+        isPlayingPublisher: @escaping () -> AnyPublisher<Bool,Never>,
         withTimeLine: Bool,
         hasPlayerState: HasTimerState
     ) -> TimerView {
@@ -31,7 +33,8 @@ public final class TimerViewComposer {
         
         let pauseTimerAdapter = TimerVoidAdapter(loader: pausePublisher)
         
-        let controlsViewModel = ControlsViewModel()
+        let controlsViewModel = Self.subscribeChangesFrom(isPlayingPublisher: isPlayingPublisher,
+                                                          to: controlsViewModel)
         let toggleStrategy = ToggleStrategy(start: starTimerAdapter.start,
                                             pause: pauseTimerAdapter.pause,
                                             skip: skipHandler,
@@ -57,5 +60,18 @@ public final class TimerViewComposer {
             skipTimerAdapter.skip()
             viewModel.isBreak = !viewModel.isBreak
         }
+    }
+    
+    static func subscribeChangesFrom(isPlayingPublisher: () -> AnyPublisher<Bool,Never>,
+                                     to controlsViewModel: ControlsViewModel) -> ControlsViewModel {
+        isPlayingPublisher()
+            .subscribe(Subscribers.Sink(receiveCompletion: { result in
+                if case .failure = result {
+                    controlsViewModel.state = .pause
+                }
+            }, receiveValue: { isPlaying in
+                controlsViewModel.state = isPlaying ? .play : .pause
+            }))
+        return controlsViewModel
     }
 }

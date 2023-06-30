@@ -78,32 +78,50 @@ final class TimerUIIntegrationTests: XCTestCase {
     }
     
     func test_onSkip_changesBreakState() {
-        let viewModel = TimerViewModel()
-        let (sut, _) = makeSUT(viewModel: viewModel)
+        let timerViewModel = TimerViewModel()
+        let (sut, _) = makeSUT(timerViewModel: timerViewModel)
         
-        XCTAssertEqual(viewModel.isBreak, false)
-        
-        sut.simulateSkipTimerUserInteraction()
-        XCTAssertEqual(viewModel.isBreak, true)
+        XCTAssertEqual(timerViewModel.isBreak, false)
         
         sut.simulateSkipTimerUserInteraction()
-        XCTAssertEqual(viewModel.isBreak, false)
+        XCTAssertEqual(timerViewModel.isBreak, true)
+        
+        sut.simulateSkipTimerUserInteraction()
+        XCTAssertEqual(timerViewModel.isBreak, false)
+    }
+    
+    func test_onIsPlaying_changesControlsViewModel() {
+        let controlsViewModel = ControlsViewModel()
+        let (sut, spy) = makeSUT(controlsViewModel: controlsViewModel)
+        
+        XCTAssertEqual(controlsViewModel.state, .pause)
+        
+        sut.simulateToggleTimerUserInteraction()
+        spy.changesStateTo(playing: true)
+        XCTAssertEqual(controlsViewModel.state, .play)
+        
+        sut.simulateToggleTimerUserInteraction()
+        spy.changesStateTo(playing: false)
+        XCTAssertEqual(controlsViewModel.state, .pause)
     }
     
     // MARK: - Helpers
     private func makeSUT(
-        viewModel: TimerViewModel = TimerViewModel(),
+        controlsViewModel: ControlsViewModel = ControlsViewModel(),
+        timerViewModel: TimerViewModel = TimerViewModel(),
         file: StaticString = #filePath, line: UInt = #line
     ) -> (sut: TimerView, spy: TimerPublisherSpy) {
         let timeLoader = TimerPublisherSpy()
         
         let timerView = TimerViewComposer
             .createTimer(
-                viewModel: viewModel,
+                controlsViewModel: controlsViewModel,
+                viewModel: timerViewModel,
                 playPublisher: { timeLoader.play() },
                 skipPublisher: { timeLoader.skip() },
                 stopPublisher: timeLoader.stop(),
                 pausePublisher: timeLoader.pause(),
+                isPlayingPublisher: timeLoader.isPlayingPublisher(),
                 withTimeLine: false, // the integration tests do not contemplate the time line since this an watchOS specific trait.
                 hasPlayerState: timeLoader
             )
@@ -135,6 +153,7 @@ final class TimerUIIntegrationTests: XCTestCase {
         typealias SkipPublisher = CurrentValueSubject<ElapsedSeconds, Error>
         typealias StopPublisher = CurrentValueSubject<Void, Error>
         typealias PausePublisher = CurrentValueSubject<Void, Error>
+        typealias IsPlayingPublisher = CurrentValueSubject<Bool, Never>
         
         func play() -> AnyPublisher<ElapsedSeconds, Error> {
             let elapsed = makeElapsedSeconds(0, startDate: Date(), endDate: Date())
@@ -166,6 +185,16 @@ final class TimerUIIntegrationTests: XCTestCase {
                 self.plays = false
                 return self.commandsReceived.append(.pause)
             }.eraseToAnyPublisher()
+        }
+        
+        var isPlayingPusblisher = IsPlayingPublisher(false)
+        
+        func isPlayingPublisher() -> () -> AnyPublisher<Bool, Never> {
+            return { self.isPlayingPusblisher.eraseToAnyPublisher() }
+        }
+        
+        func changesStateTo(playing: Bool) {
+            isPlayingPusblisher.send(playing)
         }
     }
 }
