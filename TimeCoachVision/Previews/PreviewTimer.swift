@@ -5,6 +5,7 @@ import LifeCoach
 struct PreviewTimer: View {
     var body: some View {
         TimerView(
+            controlsViewModel: ControlsViewModel(),
             timerViewModel: TimerViewModel(),
             customFont: CustomFont.timer.font
         )

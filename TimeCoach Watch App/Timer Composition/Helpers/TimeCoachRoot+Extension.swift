@@ -17,7 +17,7 @@ extension TimeCoachRoot {
                                                   nextSet: .breakSet(date: date))
         #elseif os(xrOS)
         FoundationTimerCountdown(startingSet: .pomodoroSet(date: date),
-                                                  nextSet: .breakSet(date: date))
+                                 nextSet: .breakSet(date: date))
         #endif
     }
     
