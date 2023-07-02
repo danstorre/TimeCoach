@@ -1,21 +1,21 @@
 ✅ startCountdown (side-effects)
-   ✅ on countdown `pause` state, changes countdown state to `running` and sends with `1 elapsed second` after one second has passed from the current set.
-   ✅ on countdown `pause` state, changes countdown state to `running` and sends with `2 elapsed second` after two seconds has passed from the current set.
-   ✅ on countdown `running` state, does nothing (countdown keeps `running` state and does not fail)
-   ✅ on countdown threshold, changes countdown state to `stop` resets timer and sends next countdown set.
+   ✅ on countdown `pause` state\nchanges countdown state to `running` and sends with `1 elapsed second` after one second has passed from the current set.
+   ✅ on countdown `pause` state\nchanges countdown state to `running` and sends with `2 elapsed second` after two seconds has passed from the current set.
+   ✅ on countdown `running` state\ndoes nothing (countdown keeps `running` state and does not fail)
+   ✅ on countdown threshold\nchanges countdown state to `stop` resets timer and sends next countdown set.
 
 ✅ stopCountdown (side-effects)
-   ✅ on countdown `stop` state, does nothing (countdown keeps in a `pause` state and does not fail)
-   ✅ on countdown `pause` state, changes countdown state to `stop` resets timer and sends `0 elapsed seconds` from the current set.
-   ✅ on countdown `running` state, changes countdown state to `stop` resets timer and sends `0 elapsed seconds` from the current set.
+   ✅ on countdown `stop` state\ndoes nothing (countdown keeps in a `pause` state and does not fail)
+   ✅ on countdown `pause` state\nchanges countdown state to `stop` resets timer and sends `0 elapsed seconds` from the current set.
+   ✅ on countdown `running` state\nchanges countdown state to `stop` resets timer and sends `0 elapsed seconds` from the current set.
 
 ✅ pauseCountdown (side-effects)
-   ✅ on countdown `pause` state, does nothing (countdown keeps in a `pause` state and does not fail)
-   ✅ on countdown `running` state, changes countdown state to `pause` and does not send any other values.
+   ✅ on countdown `pause` state\ndoes nothing (countdown keeps in a `pause` state and does not fail)
+   ✅ on countdown `running` state\nchanges countdown state to `pause` and does not send any other values.
 
 ✅ skipCountdown (side-effects)
-   ✅ on countdown `pause` state, changes countdown state to `stop` resets timer, and sends next countdown set.
-   ✅ on countdown `running` state, changes countdown state to `stop` resets timer, and sends next countdown set.
+   ✅ on countdown `pause` state\nchanges countdown state to `stop` resets timer\nand sends next countdown set.
+   ✅ on countdown `running` state\nchanges countdown state to `stop` resets timer\nand sends next countdown set.
 
 - Side-effects must run serially to avoid race conditions.
 
