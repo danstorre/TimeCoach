@@ -40,22 +40,13 @@ struct TimerView_Previews: PreviewProvider {
     }
     
     static func pomodoroTimerWithoutTimeLine() -> TimerView {
-        let timerWithoutTimeLine = TimerText(timerViewModel: TimerViewModel(),
-                                             mode: .full,
-                                             breakColor: .blueTimer)
-        
-        return TimerView(timerWithoutTimeLine: timerWithoutTimeLine, controls: Self.defaultTimerControls())
+        return TimerView(timerWithoutTimeLine: Self.timerText(), controls: Self.defaultTimerControls())
     }
     
     static func breakTimerWithoutTimeLine() -> TimerView {
         let vm = TimerViewModel()
         vm.isBreak = true
-        
-        let timerWithoutTimeLine = TimerText(timerViewModel: vm,
-                                             mode: .full,
-                                             breakColor: .blueTimer)
-        
-        return TimerView(timerWithoutTimeLine: timerWithoutTimeLine, controls: Self.defaultTimerControls())
+        return TimerView(timerWithoutTimeLine: Self.timerText(with: vm), controls: Self.defaultTimerControls())
     }
     
     static var previews: some View {

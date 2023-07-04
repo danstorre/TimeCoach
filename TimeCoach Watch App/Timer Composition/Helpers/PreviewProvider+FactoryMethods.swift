@@ -12,4 +12,10 @@ extension PreviewProvider {
                                  breakColor: .blueTimer,
                                  customFont: CustomFont.timer.font)
     }
+    
+    static func timerText(with viewModel: TimerViewModel = TimerViewModel()) -> TimerText {
+        return TimerText(timerViewModel: viewModel,
+                         mode: .full,
+                         breakColor: .blueTimer)
+    }
 }
