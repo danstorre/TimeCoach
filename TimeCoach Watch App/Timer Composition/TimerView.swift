@@ -6,21 +6,18 @@ public struct TimerView: View {
     public var timerWithTimeLine: TimerTextTimeLine?
     public var timerWithoutTimeLine: TimerText?
     public var controls: TimerControls
-    var withTimeLine = true
     
     init(timerWithTimeLine: TimerTextTimeLine? = nil,
          timerWithoutTimeLine: TimerText? = nil,
-         controls: TimerControls,
-         withTimeLine timeline: Bool) {
+         controls: TimerControls) {
         self.timerWithTimeLine = timerWithTimeLine
         self.timerWithoutTimeLine = timerWithoutTimeLine
         self.controls = controls
-        self.withTimeLine = timeline
     }
     
     public var body: some View {
         VStack {
-            if withTimeLine {
+            if let timerWithTimeLine = timerWithTimeLine {
                 timerWithTimeLine
             } else {
                 timerWithoutTimeLine
@@ -107,7 +104,6 @@ extension TimerView {
                                                   customFont: customFont)
         }
         
-        self.withTimeLine = withTimeLine
         self.controls = TimerControls(viewModel: controlsViewModel,
                                       togglePlayback: togglePlayback,
                                       skipHandler: skipHandler,

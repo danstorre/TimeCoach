@@ -115,16 +115,16 @@ public final class TimerViewComposer {
         
         if withTimeLine {
             let timerWithTimeLine = TimerTextTimeLine(timerViewModel: timerViewModel,
-                                                       breakColor: breakColor,
-                                                       customFont: customFont)
+                                                      breakColor: breakColor,
+                                                      customFont: customFont)
             
-            return TimerView(timerWithTimeLine: timerWithTimeLine, controls: controls, withTimeLine: withTimeLine)
+            return TimerView(timerWithTimeLine: timerWithTimeLine, controls: controls)
         } else {
             let timerWithoutTimeLine = TimerText(timerViewModel: timerViewModel,
-                                                  mode: .full,
-                                                  breakColor: breakColor,
-                                                  customFont: customFont)
-            return TimerView(timerWithoutTimeLine: timerWithoutTimeLine, controls: controls, withTimeLine: withTimeLine)
+                                                 mode: .full,
+                                                 breakColor: breakColor,
+                                                 customFont: customFont)
+            return TimerView(timerWithoutTimeLine: timerWithoutTimeLine, controls: controls)
         }
     }
 }
