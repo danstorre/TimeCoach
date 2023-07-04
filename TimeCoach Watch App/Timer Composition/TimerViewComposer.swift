@@ -8,7 +8,7 @@ import TimeCoachVisionOS
 #endif
 
 public final class TimerViewComposer {
-    public static func createTimer(
+    public static func createTimer2(
         controlsViewModel: ControlsViewModel = ControlsViewModel(),
         viewModel: TimerViewModel = TimerViewModel(),
         customFont: String = CustomFont.timer.font,
@@ -75,7 +75,7 @@ public final class TimerViewComposer {
         return controlsViewModel
     }
     
-    public static func createTimer2(
+    public static func createTimer(
         controlsViewModel: ControlsViewModel = ControlsViewModel(),
         viewModel: TimerViewModel = TimerViewModel(),
         customFont: String = CustomFont.timer.font,
