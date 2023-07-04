@@ -29,7 +29,7 @@ public final class TimerViewComposer {
         return controlsViewModel
     }
     
-    public static func createTimer(
+    public static func createTimer2(
         controlsViewModel: ControlsViewModel = ControlsViewModel(),
         viewModel timerViewModel: TimerViewModel = TimerViewModel(isBreak: false),
         customFont: String = CustomFont.timer.font,
@@ -80,5 +80,79 @@ public final class TimerViewComposer {
                                                  customFont: customFont)
             return TimerView(timerWithoutTimeLine: timerWithoutTimeLine, controls: controls)
         }
+    }
+    
+    public static func createTimer(
+        controlsViewModel: ControlsViewModel = ControlsViewModel(),
+        viewModel timerViewModel: TimerViewModel = TimerViewModel(isBreak: false),
+        customFont: String = CustomFont.timer.font,
+        breakColor: Color = .blue,
+        playPublisher: @escaping () -> AnyPublisher<ElapsedSeconds, Error>,
+        skipPublisher: @escaping () -> AnyPublisher<ElapsedSeconds, Error>,
+        stopPublisher: AnyPublisher<Void, Error>,
+        pausePublisher: AnyPublisher<Void, Error>,
+        isPlayingPublisher: @escaping () -> AnyPublisher<Bool,Never>,
+        withTimeLine: Bool,
+        hasPlayerState: HasTimerState
+    ) -> TimerView {
+        let controlsViewModel = Self.subscribeChangesFrom(isPlayingPublisher: isPlayingPublisher,
+                                                          to: controlsViewModel)
+        
+        let controls = Self.timerControls(controlsViewModel: controlsViewModel,
+                                          timerViewModel: timerViewModel,
+                                          playPublisher: playPublisher,
+                                          skipPublisher: skipPublisher,
+                                          stopPublisher: stopPublisher,
+                                          pausePublisher: pausePublisher,
+                                          isPlayingPublisher: isPlayingPublisher,
+                                          hasPlayerState: hasPlayerState)
+        
+        if withTimeLine {
+            let timerWithTimeLine = TimerTextTimeLine(timerViewModel: timerViewModel,
+                                                      breakColor: breakColor,
+                                                      customFont: customFont)
+            
+            return TimerView(timerWithTimeLine: timerWithTimeLine, controls: controls)
+        } else {
+            let timerWithoutTimeLine = TimerText(timerViewModel: timerViewModel,
+                                                 mode: .full,
+                                                 breakColor: breakColor,
+                                                 customFont: customFont)
+            return TimerView(timerWithoutTimeLine: timerWithoutTimeLine, controls: controls)
+        }
+    }
+    
+    static func timerControls(controlsViewModel: ControlsViewModel = ControlsViewModel(),
+                              timerViewModel: TimerViewModel,
+                              playPublisher: @escaping () -> AnyPublisher<ElapsedSeconds, Error>,
+                              skipPublisher: @escaping () -> AnyPublisher<ElapsedSeconds, Error>,
+                              stopPublisher: AnyPublisher<Void, Error>,
+                              pausePublisher: AnyPublisher<Void, Error>,
+                              isPlayingPublisher: @escaping () -> AnyPublisher<Bool,Never>,
+                              hasPlayerState: HasTimerState) -> TimerControls {
+        let starTimerAdapter = TimerAdapter(loader: playPublisher)
+        starTimerAdapter.presenter = timerViewModel
+        
+        let skipTimerAdapter = TimerAdapter(loader: skipPublisher)
+        skipTimerAdapter.presenter = timerViewModel
+        let skipHandler = Self.handlesSkip(withSkipAdapter: skipTimerAdapter,
+                                           and: timerViewModel)
+        
+        let stopTimerAdapter = TimerVoidAdapter(loader: stopPublisher)
+        
+        let pauseTimerAdapter = TimerVoidAdapter(loader: pausePublisher)
+        
+        let controlsViewModel = Self.subscribeChangesFrom(isPlayingPublisher: isPlayingPublisher,
+                                                          to: controlsViewModel)
+        let toggleStrategy = ToggleStrategy(start: starTimerAdapter.start,
+                                            pause: pauseTimerAdapter.pause,
+                                            skip: skipHandler,
+                                            stop: stopTimerAdapter.stop,
+                                            hasPlayerState: hasPlayerState)
+        
+        return TimerControls(viewModel: controlsViewModel,
+                             togglePlayback: toggleStrategy.toggle,
+                             skipHandler: toggleStrategy.skipHandler,
+                             stopHandler: toggleStrategy.stopHandler)
     }
 }
