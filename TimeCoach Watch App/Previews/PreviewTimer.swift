@@ -4,24 +4,24 @@ import LifeCoach
 
 struct PreviewTimer_Previews: PreviewProvider {
     static func pomodoroTimer() -> TimerView {
-        TimerView(
-            controlsViewModel: ControlsViewModel(),
-            timerViewModel: TimerViewModel(),
-            customFont: CustomFont.timer.font,
-            breakColor: .blueTimer
-        )
+        let timerWithTimeLine = TimerTextTimeLine(timerViewModel: TimerViewModel(),
+                                                  breakColor: .blueTimer,
+                                                  customFont: CustomFont.timer.font)
+        let controls = TimerControls(viewModel: ControlsViewModel())
+        
+        return TimerView(timerWithTimeLine: timerWithTimeLine, controls: controls)
     }
     
     static func breakTimer() -> TimerView {
         let timerVm = TimerViewModel()
         timerVm.isBreak = true
         
-        return TimerView(
-            controlsViewModel: ControlsViewModel(),
-            timerViewModel: timerVm,
-            customFont: CustomFont.timer.font,
-            breakColor: .blueTimer
-        )
+        let timerWithTimeLine = TimerTextTimeLine(timerViewModel: timerVm,
+                                                  breakColor: .blueTimer,
+                                                  customFont: CustomFont.timer.font)
+        let controls = TimerControls(viewModel: ControlsViewModel())
+        
+        return TimerView(timerWithTimeLine: timerWithTimeLine, controls: controls)
     }
     
     static var previews: some View {
