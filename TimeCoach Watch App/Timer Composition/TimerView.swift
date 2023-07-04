@@ -8,34 +8,6 @@ public struct TimerView: View {
     public var controls: TimerControls
     var withTimeLine = true
     
-    public init(
-        controlsViewModel: ControlsViewModel,
-        timerViewModel: TimerViewModel,
-        togglePlayback: (() -> Void)? = nil,
-        skipHandler: (() -> Void)? = nil,
-        stopHandler: (() -> Void)? = nil,
-        customFont: String? = nil,
-        withTimeLine: Bool = false,
-        breakColor: Color = .red
-    ) {
-        if withTimeLine {
-            self.timerWithTimeLine = TimerTextTimeLine(timerViewModel: timerViewModel,
-                                                       breakColor: breakColor,
-                                                       customFont: customFont)
-        } else {
-            self.timerWithoutTimeLine = TimerText(timerViewModel: timerViewModel,
-                                                  mode: .full,
-                                                  breakColor: breakColor,
-                                                  customFont: customFont)
-        }
-        
-        self.withTimeLine = withTimeLine
-        self.controls = TimerControls(viewModel: controlsViewModel,
-                                      togglePlayback: togglePlayback,
-                                      skipHandler: skipHandler,
-                                      stopHandler: stopHandler)
-    }
-    
     public var body: some View {
         VStack {
             if withTimeLine {
@@ -101,4 +73,34 @@ extension TimerView {
     public static let skipButtonIdentifier: Int = 1
     
     public static let stopButtonIdentifier: Int = 0
+}
+
+extension TimerView {
+    public init(
+        controlsViewModel: ControlsViewModel,
+        timerViewModel: TimerViewModel,
+        togglePlayback: (() -> Void)? = nil,
+        skipHandler: (() -> Void)? = nil,
+        stopHandler: (() -> Void)? = nil,
+        customFont: String? = nil,
+        withTimeLine: Bool = false,
+        breakColor: Color = .red
+    ) {
+        if withTimeLine {
+            self.timerWithTimeLine = TimerTextTimeLine(timerViewModel: timerViewModel,
+                                                       breakColor: breakColor,
+                                                       customFont: customFont)
+        } else {
+            self.timerWithoutTimeLine = TimerText(timerViewModel: timerViewModel,
+                                                  mode: .full,
+                                                  breakColor: breakColor,
+                                                  customFont: customFont)
+        }
+        
+        self.withTimeLine = withTimeLine
+        self.controls = TimerControls(viewModel: controlsViewModel,
+                                      togglePlayback: togglePlayback,
+                                      skipHandler: skipHandler,
+                                      stopHandler: stopHandler)
+    }
 }
