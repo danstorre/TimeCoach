@@ -108,16 +108,23 @@ public final class TimerViewComposer {
                                             stop: stopTimerAdapter.stop,
                                             hasPlayerState: hasPlayerState)
         
-        let timer = TimerView(
-            controlsViewModel: controlsViewModel,
-            timerViewModel: timerViewModel,
-            togglePlayback: toggleStrategy.toggle,
-            skipHandler: toggleStrategy.skipHandler,
-            stopHandler: toggleStrategy.stopHandler,
-            customFont: customFont,
-            withTimeLine: withTimeLine,
-            breakColor: breakColor
-        )
-        return timer
+        let controls = TimerControls(viewModel: controlsViewModel,
+                                     togglePlayback: toggleStrategy.toggle,
+                                     skipHandler: toggleStrategy.skipHandler,
+                                     stopHandler: toggleStrategy.stopHandler)
+        
+        if withTimeLine {
+            let timerWithTimeLine = TimerTextTimeLine(timerViewModel: timerViewModel,
+                                                       breakColor: breakColor,
+                                                       customFont: customFont)
+            
+            return TimerView(timerWithTimeLine: timerWithTimeLine, controls: controls, withTimeLine: withTimeLine)
+        } else {
+            let timerWithoutTimeLine = TimerText(timerViewModel: timerViewModel,
+                                                  mode: .full,
+                                                  breakColor: breakColor,
+                                                  customFont: customFont)
+            return TimerView(timerWithoutTimeLine: timerWithoutTimeLine, controls: controls, withTimeLine: withTimeLine)
+        }
     }
 }
