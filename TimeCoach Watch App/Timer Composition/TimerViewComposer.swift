@@ -80,12 +80,10 @@ public final class TimerViewComposer {
         let starTimerAdapter = TimerAdapter(loader: playPublisher,
                                             errorOnTimer: timerViewModel.errorOnTimer(with:),
                                             deliveredElapsedTime: timerViewModel.delivered(elapsedTime:))
-        starTimerAdapter.presenter = timerViewModel
         
         let skipTimerAdapter = TimerAdapter(loader: skipPublisher,
                                             errorOnTimer: timerViewModel.errorOnTimer(with:),
                                             deliveredElapsedTime: timerViewModel.delivered(elapsedTime:))
-        skipTimerAdapter.presenter = timerViewModel
         let skipHandler = Self.handlesSkip(withSkipAdapter: skipTimerAdapter,
                                            and: timerViewModel)
         

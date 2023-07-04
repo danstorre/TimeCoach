@@ -5,8 +5,6 @@ import Combine
 final class TimerAdapter {
     private let loader: () -> AnyPublisher<ElapsedSeconds, Error>
     private var cancellable: Cancellable?
-    var presenter: TimerViewModel?
-    
     private let errorOnTimer: (Error) -> Void
     private let deliveredElapsedTime: (ElapsedSeconds) -> Void
     
