@@ -31,7 +31,7 @@ public final class TimerViewComposer {
     
     public static func createTimer(
         controlsViewModel: ControlsViewModel = ControlsViewModel(),
-        viewModel timerViewModel: TimerViewModel = TimerViewModel(),
+        viewModel timerViewModel: TimerViewModel = TimerViewModel(isBreak: false),
         customFont: String = CustomFont.timer.font,
         breakColor: Color = .blue,
         playPublisher: @escaping () -> AnyPublisher<ElapsedSeconds, Error>,

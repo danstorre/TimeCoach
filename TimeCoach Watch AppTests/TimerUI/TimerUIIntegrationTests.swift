@@ -78,7 +78,7 @@ final class TimerUIIntegrationTests: XCTestCase {
     }
     
     func test_onSkip_changesBreakState() {
-        let timerViewModel = TimerViewModel()
+        let timerViewModel = TimerViewModel(isBreak: false)
         let (sut, _) = makeSUT(timerViewModel: timerViewModel)
         
         XCTAssertEqual(timerViewModel.isBreak, false)
@@ -108,7 +108,7 @@ final class TimerUIIntegrationTests: XCTestCase {
     // MARK: - Helpers
     private func makeSUT(
         controlsViewModel: ControlsViewModel = ControlsViewModel(),
-        timerViewModel: TimerViewModel = TimerViewModel(),
+        timerViewModel: TimerViewModel = TimerViewModel(isBreak: false),
         file: StaticString = #filePath, line: UInt = #line
     ) -> (sut: TimerView, spy: TimerPublisherSpy) {
         let timeLoader = TimerPublisherSpy()

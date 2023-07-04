@@ -35,7 +35,7 @@ public struct TimerTextTimeLine: View {
 
 struct TimerTextTimeLinePreviews: PreviewProvider {
     static var previews: some View {
-        TimerTextTimeLine(timerViewModel: TimerViewModel(),
+        TimerTextTimeLine(timerViewModel: TimerViewModel(isBreak: false),
                           breakColor: .blue)
     }
 }

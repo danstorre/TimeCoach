@@ -9,8 +9,7 @@ struct PreviewTimer_Previews: PreviewProvider {
     }
     
     static func breakTimer() -> TimerView {
-        let timerVm = TimerViewModel()
-        timerVm.isBreak = true
+        let timerVm = TimerViewModel(isBreak: true)
         return TimerView(timerWithTimeLine: Self.timerTextTimeLine(with: timerVm),
                          controls: Self.defaultTimerControls())
     }

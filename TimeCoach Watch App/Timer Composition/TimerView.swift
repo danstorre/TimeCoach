@@ -34,8 +34,7 @@ struct TimerView_Previews: PreviewProvider {
     }
     
     static func breakTimerWithTimeLine() -> TimerView {
-        let vm = TimerViewModel()
-        vm.isBreak = true
+        let vm = TimerViewModel(isBreak: true)
         return TimerView(timerWithTimeLine: Self.timerTextTimeLine(with: vm), controls: Self.defaultTimerControls())
     }
     
@@ -44,8 +43,7 @@ struct TimerView_Previews: PreviewProvider {
     }
     
     static func breakTimerWithoutTimeLine() -> TimerView {
-        let vm = TimerViewModel()
-        vm.isBreak = true
+        let vm = TimerViewModel(isBreak: true)
         return TimerView(timerWithoutTimeLine: Self.timerText(with: vm), controls: Self.defaultTimerControls())
     }
     
