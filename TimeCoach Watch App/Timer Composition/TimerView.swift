@@ -8,6 +8,16 @@ public struct TimerView: View {
     public var controls: TimerControls
     var withTimeLine = true
     
+    init(timerWithTimeLine: TimerTextTimeLine? = nil,
+         timerWithoutTimeLine: TimerText? = nil,
+         controls: TimerControls,
+         withTimeLine timeline: Bool) {
+        self.timerWithTimeLine = timerWithTimeLine
+        self.timerWithoutTimeLine = timerWithoutTimeLine
+        self.controls = controls
+        self.withTimeLine = timeline
+    }
+    
     public var body: some View {
         VStack {
             if withTimeLine {
