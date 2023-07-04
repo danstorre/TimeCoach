@@ -9,7 +9,7 @@ struct PreviewTimer_Previews: PreviewProvider {
                                                   customFont: CustomFont.timer.font)
         let controls = TimerControls(viewModel: ControlsViewModel())
         
-        return TimerView(timerWithTimeLine: timerWithTimeLine, controls: controls)
+        return TimerView(timerWithTimeLine: timerWithTimeLine, controls: Self.defaultTimerControls())
     }
     
     static func breakTimer() -> TimerView {
@@ -21,7 +21,7 @@ struct PreviewTimer_Previews: PreviewProvider {
                                                   customFont: CustomFont.timer.font)
         let controls = TimerControls(viewModel: ControlsViewModel())
         
-        return TimerView(timerWithTimeLine: timerWithTimeLine, controls: controls)
+        return TimerView(timerWithTimeLine: timerWithTimeLine, controls: Self.defaultTimerControls())
     }
     
     static var previews: some View {

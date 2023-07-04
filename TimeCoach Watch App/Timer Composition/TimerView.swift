@@ -32,9 +32,8 @@ struct TimerView_Previews: PreviewProvider {
     static func pomodoroTimerWithTimeLine() -> TimerView {
         let timerWithTimeLine = TimerTextTimeLine(timerViewModel: TimerViewModel(),
                                                   breakColor: .blueTimer)
-        let controls = TimerControls(viewModel: ControlsViewModel())
         
-        return TimerView(timerWithTimeLine: timerWithTimeLine, controls: controls)
+        return TimerView(timerWithTimeLine: timerWithTimeLine, controls: Self.defaultTimerControls())
     }
     
     static func breakTimerWithTimeLine() -> TimerView {
@@ -43,18 +42,16 @@ struct TimerView_Previews: PreviewProvider {
         
         let timerWithTimeLine = TimerTextTimeLine(timerViewModel: vm,
                                                   breakColor: .blueTimer)
-        let controls = TimerControls(viewModel: ControlsViewModel())
         
-        return TimerView(timerWithTimeLine: timerWithTimeLine, controls: controls)
+        return TimerView(timerWithTimeLine: timerWithTimeLine, controls: Self.defaultTimerControls())
     }
     
     static func pomodoroTimerWithoutTimeLine() -> TimerView {
         let timerWithoutTimeLine = TimerText(timerViewModel: TimerViewModel(),
                                              mode: .full,
                                              breakColor: .blueTimer)
-        let controls = TimerControls(viewModel: ControlsViewModel())
         
-        return TimerView(timerWithoutTimeLine: timerWithoutTimeLine, controls: controls)
+        return TimerView(timerWithoutTimeLine: timerWithoutTimeLine, controls: Self.defaultTimerControls())
     }
     
     static func breakTimerWithoutTimeLine() -> TimerView {
@@ -64,9 +61,8 @@ struct TimerView_Previews: PreviewProvider {
         let timerWithoutTimeLine = TimerText(timerViewModel: vm,
                                              mode: .full,
                                              breakColor: .blueTimer)
-        let controls = TimerControls(viewModel: ControlsViewModel())
         
-        return TimerView(timerWithoutTimeLine: timerWithoutTimeLine, controls: controls)
+        return TimerView(timerWithoutTimeLine: timerWithoutTimeLine, controls: Self.defaultTimerControls())
     }
     
     static var previews: some View {
@@ -91,4 +87,11 @@ extension TimerView {
     public static let skipButtonIdentifier: Int = 1
     
     public static let stopButtonIdentifier: Int = 0
+}
+
+
+extension PreviewProvider {
+    static func defaultTimerControls() -> TimerControls {
+        TimerControls(viewModel: ControlsViewModel())
+    }
 }
