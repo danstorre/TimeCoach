@@ -30,20 +30,13 @@ public struct TimerView: View {
 struct TimerView_Previews: PreviewProvider {
     
     static func pomodoroTimerWithTimeLine() -> TimerView {
-        let timerWithTimeLine = TimerTextTimeLine(timerViewModel: TimerViewModel(),
-                                                  breakColor: .blueTimer)
-        
-        return TimerView(timerWithTimeLine: timerWithTimeLine, controls: Self.defaultTimerControls())
+        return TimerView(timerWithTimeLine: Self.timerTextTimeLine(), controls: Self.defaultTimerControls())
     }
     
     static func breakTimerWithTimeLine() -> TimerView {
         let vm = TimerViewModel()
         vm.isBreak = true
-        
-        let timerWithTimeLine = TimerTextTimeLine(timerViewModel: vm,
-                                                  breakColor: .blueTimer)
-        
-        return TimerView(timerWithTimeLine: timerWithTimeLine, controls: Self.defaultTimerControls())
+        return TimerView(timerWithTimeLine: Self.timerTextTimeLine(with: vm), controls: Self.defaultTimerControls())
     }
     
     static func pomodoroTimerWithoutTimeLine() -> TimerView {
