@@ -7,8 +7,11 @@ final class TimerAdapter {
     private var cancellable: Cancellable?
     var presenter: TimerViewModel?
     
-    init(loader: @escaping () -> AnyPublisher<ElapsedSeconds, Error>) {
+    let errorOnTimer: (Error) -> Void
+    
+    init(loader: @escaping () -> AnyPublisher<ElapsedSeconds, Error>, errorOnTimer: @escaping (Error) -> Void) {
         self.loader = loader
+        self.errorOnTimer = errorOnTimer
     }
     
     private func subscribe() {
@@ -19,7 +22,7 @@ final class TimerAdapter {
                     case .finished: break
                         
                     case let .failure(error):
-                        self?.presenter?.errorOnTimer(with: error)
+                        self?.errorOnTimer(error)
                     }
                 }, receiveValue: { [weak self] elapsed in
                     self?.presenter?.delivered(elapsedTime: elapsed)
