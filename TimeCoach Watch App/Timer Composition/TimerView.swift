@@ -88,10 +88,3 @@ extension TimerView {
     
     public static let stopButtonIdentifier: Int = 0
 }
-
-
-extension PreviewProvider {
-    static func defaultTimerControls() -> TimerControls {
-        TimerControls(viewModel: ControlsViewModel())
-    }
-}

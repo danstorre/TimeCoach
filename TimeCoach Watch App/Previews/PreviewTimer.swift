@@ -7,8 +7,7 @@ struct PreviewTimer_Previews: PreviewProvider {
         let timerWithTimeLine = TimerTextTimeLine(timerViewModel: TimerViewModel(),
                                                   breakColor: .blueTimer,
                                                   customFont: CustomFont.timer.font)
-        let controls = TimerControls(viewModel: ControlsViewModel())
-        
+    
         return TimerView(timerWithTimeLine: timerWithTimeLine, controls: Self.defaultTimerControls())
     }
     
@@ -19,7 +18,6 @@ struct PreviewTimer_Previews: PreviewProvider {
         let timerWithTimeLine = TimerTextTimeLine(timerViewModel: timerVm,
                                                   breakColor: .blueTimer,
                                                   customFont: CustomFont.timer.font)
-        let controls = TimerControls(viewModel: ControlsViewModel())
         
         return TimerView(timerWithTimeLine: timerWithTimeLine, controls: Self.defaultTimerControls())
     }
