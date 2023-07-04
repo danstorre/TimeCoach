@@ -77,7 +77,7 @@ public final class TimerViewComposer {
     
     public static func createTimer(
         controlsViewModel: ControlsViewModel = ControlsViewModel(),
-        viewModel: TimerViewModel = TimerViewModel(),
+        viewModel timerViewModel: TimerViewModel = TimerViewModel(),
         customFont: String = CustomFont.timer.font,
         breakColor: Color = .blue,
         playPublisher: @escaping () -> AnyPublisher<ElapsedSeconds, Error>,
@@ -89,12 +89,12 @@ public final class TimerViewComposer {
         hasPlayerState: HasTimerState
     ) -> TimerView {
         let starTimerAdapter = TimerAdapter(loader: playPublisher)
-        starTimerAdapter.presenter = viewModel
+        starTimerAdapter.presenter = timerViewModel
         
         let skipTimerAdapter = TimerAdapter(loader: skipPublisher)
-        skipTimerAdapter.presenter = viewModel
+        skipTimerAdapter.presenter = timerViewModel
         let skipHandler = Self.handlesSkip(withSkipAdapter: skipTimerAdapter,
-                                           and: viewModel)
+                                           and: timerViewModel)
         
         let stopTimerAdapter = TimerVoidAdapter(loader: stopPublisher)
         
@@ -110,7 +110,7 @@ public final class TimerViewComposer {
         
         let timer = TimerView(
             controlsViewModel: controlsViewModel,
-            timerViewModel: viewModel,
+            timerViewModel: timerViewModel,
             togglePlayback: toggleStrategy.toggle,
             skipHandler: toggleStrategy.skipHandler,
             stopHandler: toggleStrategy.stopHandler,
