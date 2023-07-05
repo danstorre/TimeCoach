@@ -45,8 +45,16 @@ public final class TimerViewComposer {
         let controlsViewModel = Self.subscribeChangesFrom(isPlayingPublisher: isPlayingPublisher,
                                                           to: controlsViewModel)
         
+        let skipTimerAdapter = TimerAdapter(loader: skipPublisher,
+                                            errorOnTimer: timerViewModel.errorOnTimer(with:),
+                                            deliveredElapsedTime: timerViewModel.delivered(elapsedTime:))
+        let skipHandler = Self.handlesSkip(withSkipAdapter: skipTimerAdapter,
+                                           and: timerViewModel)
+        
         let controls = Self.timerControls(controlsViewModel: controlsViewModel,
-                                          timerViewModel: timerViewModel,
+                                          errorOnTimer: timerViewModel.errorOnTimer(with:),
+                                          deliveredElapsedTime: timerViewModel.delivered(elapsedTime:),
+                                          skipHandler: skipHandler,
                                           playPublisher: playPublisher,
                                           skipPublisher: skipPublisher,
                                           stopPublisher: stopPublisher,
@@ -70,7 +78,9 @@ public final class TimerViewComposer {
     }
     
     static func timerControls(controlsViewModel: ControlsViewModel = ControlsViewModel(),
-                              timerViewModel: TimerViewModel,
+                              errorOnTimer: @escaping (Error) -> Void,
+                              deliveredElapsedTime: @escaping (ElapsedSeconds) -> Void,
+                              skipHandler: @escaping () -> Void,
                               playPublisher: @escaping () -> AnyPublisher<ElapsedSeconds, Error>,
                               skipPublisher: @escaping () -> AnyPublisher<ElapsedSeconds, Error>,
                               stopPublisher: AnyPublisher<Void, Error>,
@@ -78,14 +88,8 @@ public final class TimerViewComposer {
                               isPlayingPublisher: @escaping () -> AnyPublisher<Bool,Never>,
                               hasPlayerState: HasTimerState) -> TimerControls {
         let starTimerAdapter = TimerAdapter(loader: playPublisher,
-                                            errorOnTimer: timerViewModel.errorOnTimer(with:),
-                                            deliveredElapsedTime: timerViewModel.delivered(elapsedTime:))
-        
-        let skipTimerAdapter = TimerAdapter(loader: skipPublisher,
-                                            errorOnTimer: timerViewModel.errorOnTimer(with:),
-                                            deliveredElapsedTime: timerViewModel.delivered(elapsedTime:))
-        let skipHandler = Self.handlesSkip(withSkipAdapter: skipTimerAdapter,
-                                           and: timerViewModel)
+                                            errorOnTimer: errorOnTimer,
+                                            deliveredElapsedTime: deliveredElapsedTime)
         
         let stopTimerAdapter = TimerVoidAdapter(loader: stopPublisher)
         
