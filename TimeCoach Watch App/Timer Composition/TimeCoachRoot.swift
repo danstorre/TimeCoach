@@ -37,16 +37,18 @@ class TimeCoachRoot {
             self.timerLoad = timerCountdown
         }
         
+        let timerControlPublishers = TimerControlsPublishers(playPublisher: regularTimer!.playPublisher(currentSubject: currentSubject),
+                                                             skipPublisher: regularTimer!.skipPublisher(currentSubject: currentSubject),
+                                                             stopPublisher: regularTimer!.stopPublisher(),
+                                                             pausePublisher: regularTimer!.pausePublisher(),
+                                                             hasPlayerState: timerPlayerAdapterState)
+        
         return TimerViewComposer.createTimer(
             customFont: CustomFont.timer.font,
             breakColor: .blueTimer,
-            playPublisher: regularTimer!.playPublisher(currentSubject: currentSubject),
-            skipPublisher: regularTimer!.skipPublisher(currentSubject: currentSubject),
-            stopPublisher: regularTimer!.stopPublisher(),
-            pausePublisher: regularTimer!.pausePublisher(),
+            timerControlPublishers: timerControlPublishers,
             isPlayingPublisher: timerPlayerAdapterState.isPlayingPublisherProvider(),
-            withTimeLine: withTimeLine,
-            hasPlayerState: timerPlayerAdapterState
+            withTimeLine: withTimeLine
         )
     }
     

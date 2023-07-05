@@ -113,17 +113,21 @@ final class TimerUIIntegrationTests: XCTestCase {
     ) -> (sut: TimerView, spy: TimerPublisherSpy) {
         let timeLoader = TimerPublisherSpy()
         
+        let timerControlPublishers = TimerControlsPublishers(
+            playPublisher: { timeLoader.play() },
+            skipPublisher: { timeLoader.skip() },
+            stopPublisher: timeLoader.stop(),
+            pausePublisher: timeLoader.pause(),
+            hasPlayerState: timeLoader
+        )
+        
         let timerView = TimerViewComposer
             .createTimer(
                 controlsViewModel: controlsViewModel,
                 viewModel: timerViewModel,
-                playPublisher: { timeLoader.play() },
-                skipPublisher: { timeLoader.skip() },
-                stopPublisher: timeLoader.stop(),
-                pausePublisher: timeLoader.pause(),
+                timerControlPublishers: timerControlPublishers,
                 isPlayingPublisher: timeLoader.isPlayingPublisher(),
-                withTimeLine: false, // the integration tests do not contemplate the time line since this an watchOS specific trait.
-                hasPlayerState: timeLoader
+                withTimeLine: false // the integration tests do not contemplate the time line since this an watchOS specific trait.
             )
     
         trackForMemoryLeak(instance: timeLoader, file: file, line: line)
