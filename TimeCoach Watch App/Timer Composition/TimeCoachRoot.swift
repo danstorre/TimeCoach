@@ -44,8 +44,6 @@ class TimeCoachRoot {
                                                              hasPlayerState: timerPlayerAdapterState)
         
         return TimerViewComposer.createTimer(
-            customFont: CustomFont.timer.font,
-            breakColor: .blueTimer,
             timerControlPublishers: timerControlPublishers,
             isPlayingPublisher: timerPlayerAdapterState.isPlayingPublisherProvider(),
             withTimeLine: withTimeLine

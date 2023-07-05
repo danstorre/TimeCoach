@@ -32,8 +32,7 @@ public final class TimerViewComposer {
     public static func createTimer(
         controlsViewModel: ControlsViewModel = ControlsViewModel(),
         viewModel timerViewModel: TimerViewModel = TimerViewModel(isBreak: false),
-        customFont: String = CustomFont.timer.font,
-        breakColor: Color = .blue,
+        timerStyle: TimerStyle = .init(),
         timerControlPublishers: TimerControlsPublishers,
         isPlayingPublisher: @escaping () -> AnyPublisher<Bool,Never>,
         withTimeLine: Bool
@@ -54,15 +53,15 @@ public final class TimerViewComposer {
         
         if withTimeLine {
             let timerWithTimeLine = TimerTextTimeLine(timerViewModel: timerViewModel,
-                                                      breakColor: breakColor,
-                                                      customFont: customFont)
+                                                      breakColor: timerStyle.breakColor,
+                                                      customFont: timerStyle.customFont)
             
             return TimerView(timerWithTimeLine: timerWithTimeLine, controls: controls)
         } else {
             let timerWithoutTimeLine = TimerText(timerViewModel: timerViewModel,
                                                  mode: .full,
-                                                 breakColor: breakColor,
-                                                 customFont: customFont)
+                                                 breakColor: timerStyle.breakColor,
+                                                 customFont: timerStyle.customFont)
             return TimerView(timerWithoutTimeLine: timerWithoutTimeLine, controls: controls)
         }
     }
@@ -89,4 +88,11 @@ public final class TimerViewComposer {
                              skipHandler: toggleStrategy.skipHandler,
                              stopHandler: toggleStrategy.stopHandler)
     }
+}
+
+public struct TimerStyle {
+    let customFont: String = CustomFont.timer.font
+    let breakColor: Color = .blueTimer
+    
+    public init() {}
 }
