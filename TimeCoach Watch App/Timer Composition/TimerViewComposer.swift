@@ -52,13 +52,15 @@ public final class TimerViewComposer {
         let skipHandler = Self.handlesSkip(withSkipAdapter: skipTimerAdapter,
                                            and: timerViewModel)
         
+        let timerControlPublishers = TimerControlsPublishers(playPublisher: playPublisher,
+                                                             stopPublisher: stopPublisher,
+                                                             pausePublisher: pausePublisher)
+        
         let controls = Self.timerControls(controlsViewModel: controlsViewModel,
                                           errorOnTimer: timerViewModel.errorOnTimer(with:),
                                           deliveredElapsedTime: timerViewModel.delivered(elapsedTime:),
+                                          timerControlsPublishers: timerControlPublishers,
                                           skipHandler: skipHandler,
-                                          playPublisher: playPublisher,
-                                          stopPublisher: stopPublisher,
-                                          pausePublisher: pausePublisher,
                                           hasPlayerState: hasPlayerState)
         
         if withTimeLine {
@@ -79,18 +81,16 @@ public final class TimerViewComposer {
     private static func timerControls(controlsViewModel: ControlsViewModel = ControlsViewModel(),
                                       errorOnTimer: @escaping (Error) -> Void,
                                       deliveredElapsedTime: @escaping (ElapsedSeconds) -> Void,
+                                      timerControlsPublishers: TimerControlsPublishers,
                                       skipHandler: @escaping () -> Void,
-                                      playPublisher: @escaping () -> AnyPublisher<ElapsedSeconds, Error>,
-                                      stopPublisher: AnyPublisher<Void, Error>,
-                                      pausePublisher: AnyPublisher<Void, Error>,
                                       hasPlayerState: HasTimerState) -> TimerControls {
-        let starTimerAdapter = TimerAdapter(loader: playPublisher,
+        let starTimerAdapter = TimerAdapter(loader: timerControlsPublishers.playPublisher,
                                             errorOnTimer: errorOnTimer,
                                             deliveredElapsedTime: deliveredElapsedTime)
         
-        let stopTimerAdapter = TimerVoidAdapter(loader: stopPublisher)
+        let stopTimerAdapter = TimerVoidAdapter(loader: timerControlsPublishers.stopPublisher)
         
-        let pauseTimerAdapter = TimerVoidAdapter(loader: pausePublisher)
+        let pauseTimerAdapter = TimerVoidAdapter(loader: timerControlsPublishers.pausePublisher)
         
         let toggleStrategy = ToggleStrategy(start: starTimerAdapter.start,
                                             pause: pauseTimerAdapter.pause,
@@ -103,4 +103,11 @@ public final class TimerViewComposer {
                              skipHandler: toggleStrategy.skipHandler,
                              stopHandler: toggleStrategy.stopHandler)
     }
+}
+
+
+private struct TimerControlsPublishers {
+    let playPublisher: () -> AnyPublisher<ElapsedSeconds, Error>
+    let stopPublisher: AnyPublisher<Void, Error>
+    let pausePublisher: AnyPublisher<Void, Error>
 }
