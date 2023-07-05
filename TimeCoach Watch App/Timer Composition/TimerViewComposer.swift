@@ -57,7 +57,6 @@ public final class TimerViewComposer {
                                           deliveredElapsedTime: timerViewModel.delivered(elapsedTime:),
                                           skipHandler: skipHandler,
                                           playPublisher: playPublisher,
-                                          skipPublisher: skipPublisher,
                                           stopPublisher: stopPublisher,
                                           pausePublisher: pausePublisher,
                                           hasPlayerState: hasPlayerState)
@@ -82,7 +81,6 @@ public final class TimerViewComposer {
                                       deliveredElapsedTime: @escaping (ElapsedSeconds) -> Void,
                                       skipHandler: @escaping () -> Void,
                                       playPublisher: @escaping () -> AnyPublisher<ElapsedSeconds, Error>,
-                                      skipPublisher: @escaping () -> AnyPublisher<ElapsedSeconds, Error>,
                                       stopPublisher: AnyPublisher<Void, Error>,
                                       pausePublisher: AnyPublisher<Void, Error>,
                                       hasPlayerState: HasTimerState) -> TimerControls {
