@@ -49,19 +49,7 @@ public final class TimerViewComposer {
                                           timerControlPublishers: timerControlPublishers,
                                           skipHandler: skipHandler)
         
-        if withTimeLine {
-            let timerWithTimeLine = TimerTextTimeLine(timerViewModel: timerViewModel,
-                                                      breakColor: timerStyle.breakColor,
-                                                      customFont: timerStyle.customFont)
-            
-            return TimerView(timerWithTimeLine: timerWithTimeLine, controls: controls)
-        } else {
-            let timerWithoutTimeLine = TimerText(timerViewModel: timerViewModel,
-                                                 mode: .full,
-                                                 breakColor: timerStyle.breakColor,
-                                                 customFont: timerStyle.customFont)
-            return TimerView(timerWithoutTimeLine: timerWithoutTimeLine, controls: controls)
-        }
+        return timerView(withTimeLine, timerViewModel, timerStyle, controls)
     }
     
     private static func timerControls(controlsViewModel: ControlsViewModel = ControlsViewModel(),
@@ -86,6 +74,23 @@ public final class TimerViewComposer {
                              skipHandler: toggleStrategy.skipHandler,
                              stopHandler: toggleStrategy.stopHandler)
     }
+    
+    private static func timerView(_ withTimeLine: Bool, _ timerViewModel: TimerViewModel, _ timerStyle: TimerStyle, _ controls: TimerControls) -> TimerView {
+        if withTimeLine {
+            let timerWithTimeLine = TimerTextTimeLine(timerViewModel: timerViewModel,
+                                                      breakColor: timerStyle.breakColor,
+                                                      customFont: timerStyle.customFont)
+            
+            return TimerView(timerWithTimeLine: timerWithTimeLine, controls: controls)
+        } else {
+            let timerWithoutTimeLine = TimerText(timerViewModel: timerViewModel,
+                                                 mode: .full,
+                                                 breakColor: timerStyle.breakColor,
+                                                 customFont: timerStyle.customFont)
+            return TimerView(timerWithoutTimeLine: timerWithoutTimeLine, controls: controls)
+        }
+    }
+    
 }
 
 public struct TimerStyle {
