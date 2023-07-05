@@ -46,7 +46,6 @@ public final class TimerViewComposer {
                                                           to: controlsViewModel)
         
         let skipTimerAdapter = TimerAdapter(loader: skipPublisher,
-                                            errorOnTimer: timerViewModel.errorOnTimer(with:),
                                             deliveredElapsedTime: timerViewModel.delivered(elapsedTime:))
         
         let skipHandler = Self.handlesSkip(withSkipAdapter: skipTimerAdapter,
@@ -57,7 +56,6 @@ public final class TimerViewComposer {
                                                              pausePublisher: pausePublisher)
         
         let controls = Self.timerControls(controlsViewModel: controlsViewModel,
-                                          errorOnTimer: timerViewModel.errorOnTimer(with:),
                                           deliveredElapsedTime: timerViewModel.delivered(elapsedTime:),
                                           timerControlsPublishers: timerControlPublishers,
                                           skipHandler: skipHandler,
@@ -79,13 +77,11 @@ public final class TimerViewComposer {
     }
     
     private static func timerControls(controlsViewModel: ControlsViewModel = ControlsViewModel(),
-                                      errorOnTimer: @escaping (Error) -> Void,
                                       deliveredElapsedTime: @escaping (ElapsedSeconds) -> Void,
                                       timerControlsPublishers: TimerControlsPublishers,
                                       skipHandler: @escaping () -> Void,
                                       hasPlayerState: HasTimerState) -> TimerControls {
         let starTimerAdapter = TimerAdapter(loader: timerControlsPublishers.playPublisher,
-                                            errorOnTimer: errorOnTimer,
                                             deliveredElapsedTime: deliveredElapsedTime)
         
         let stopTimerAdapter = TimerVoidAdapter(loader: timerControlsPublishers.stopPublisher)

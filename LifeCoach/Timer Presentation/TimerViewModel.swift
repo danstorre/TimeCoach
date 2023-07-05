@@ -28,10 +28,6 @@ public class TimerViewModel: ObservableObject {
         self.isBreak = isBreak
     }
     
-    public func errorOnTimer(with: Error) {
-        
-    }
-    
     public func delivered(elapsedTime: ElapsedSeconds) {
         hasFinished = false
         let startDate = elapsedTime.startDate

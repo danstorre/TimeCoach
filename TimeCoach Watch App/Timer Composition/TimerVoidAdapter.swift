@@ -14,14 +14,7 @@ final class TimerVoidAdapter {
     private func subscribe() {
         cancellable = loader
             .sink(
-                receiveCompletion: { [weak self] completion in
-                    switch completion {
-                    case .finished: break
-                        
-                    case let .failure(error):
-                        self?.presenter?.errorOnTimer(with: error)
-                    }
-                }, receiveValue: {})
+                receiveCompletion: { _ in }, receiveValue: {})
     }
 }
 
