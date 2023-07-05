@@ -77,15 +77,15 @@ public final class TimerViewComposer {
         }
     }
     
-    static func timerControls(controlsViewModel: ControlsViewModel = ControlsViewModel(),
-                              errorOnTimer: @escaping (Error) -> Void,
-                              deliveredElapsedTime: @escaping (ElapsedSeconds) -> Void,
-                              skipHandler: @escaping () -> Void,
-                              playPublisher: @escaping () -> AnyPublisher<ElapsedSeconds, Error>,
-                              skipPublisher: @escaping () -> AnyPublisher<ElapsedSeconds, Error>,
-                              stopPublisher: AnyPublisher<Void, Error>,
-                              pausePublisher: AnyPublisher<Void, Error>,
-                              hasPlayerState: HasTimerState) -> TimerControls {
+    private static func timerControls(controlsViewModel: ControlsViewModel = ControlsViewModel(),
+                                      errorOnTimer: @escaping (Error) -> Void,
+                                      deliveredElapsedTime: @escaping (ElapsedSeconds) -> Void,
+                                      skipHandler: @escaping () -> Void,
+                                      playPublisher: @escaping () -> AnyPublisher<ElapsedSeconds, Error>,
+                                      skipPublisher: @escaping () -> AnyPublisher<ElapsedSeconds, Error>,
+                                      stopPublisher: AnyPublisher<Void, Error>,
+                                      pausePublisher: AnyPublisher<Void, Error>,
+                                      hasPlayerState: HasTimerState) -> TimerControls {
         let starTimerAdapter = TimerAdapter(loader: playPublisher,
                                             errorOnTimer: errorOnTimer,
                                             deliveredElapsedTime: deliveredElapsedTime)
