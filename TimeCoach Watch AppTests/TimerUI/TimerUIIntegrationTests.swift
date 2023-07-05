@@ -133,12 +133,11 @@ final class TimerUIIntegrationTests: XCTestCase {
     }
     
     private class TimerPublisherSpy {
-        private var plays: Bool = false {
+        private var isPlaying: Bool = false {
             didSet {
-                self.changesStateTo(playing: plays)
+                self.changesStateTo(playing: isPlaying)
             }
         }
-        var isPlaying: Bool { plays }
         
         private(set) var commandsReceived = [Command]()
         enum Command: Equatable, CustomStringConvertible {
@@ -163,7 +162,7 @@ final class TimerUIIntegrationTests: XCTestCase {
         func play() -> AnyPublisher<ElapsedSeconds, Error> {
             let elapsed = makeElapsedSeconds(0, startDate: Date(), endDate: Date())
             return PlayPublisher(elapsed).map { elapsed in
-                self.plays = true
+                self.isPlaying = true
                 self.commandsReceived.append(.play)
                 return elapsed
             }.eraseToAnyPublisher()
@@ -172,7 +171,7 @@ final class TimerUIIntegrationTests: XCTestCase {
         func skip() -> AnyPublisher<ElapsedSeconds, Error> {
             let elapsedTime = makeElapsedSeconds(0, startDate: Date(), endDate: Date())
             return SkipPublisher(elapsedTime).map { elapsed in
-                self.plays = false
+                self.isPlaying = false
                 self.commandsReceived.append(.skip)
                 return elapsed
             }.eraseToAnyPublisher()
@@ -180,14 +179,14 @@ final class TimerUIIntegrationTests: XCTestCase {
         
         func stop() -> AnyPublisher<Void, Error> {
             return StopPublisher({}()).map {
-                self.plays = false
+                self.isPlaying = false
                 return self.commandsReceived.append(.stop)
             }.eraseToAnyPublisher()
         }
         
         func pause() -> AnyPublisher<Void, Error> {
             return PausePublisher({}()).map {
-                self.plays = false
+                self.isPlaying = false
                 return self.commandsReceived.append(.pause)
             }.eraseToAnyPublisher()
         }
