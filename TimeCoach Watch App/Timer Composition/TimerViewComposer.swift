@@ -48,6 +48,7 @@ public final class TimerViewComposer {
         let skipTimerAdapter = TimerAdapter(loader: skipPublisher,
                                             errorOnTimer: timerViewModel.errorOnTimer(with:),
                                             deliveredElapsedTime: timerViewModel.delivered(elapsedTime:))
+        
         let skipHandler = Self.handlesSkip(withSkipAdapter: skipTimerAdapter,
                                            and: timerViewModel)
         
@@ -59,7 +60,6 @@ public final class TimerViewComposer {
                                           skipPublisher: skipPublisher,
                                           stopPublisher: stopPublisher,
                                           pausePublisher: pausePublisher,
-                                          isPlayingPublisher: isPlayingPublisher,
                                           hasPlayerState: hasPlayerState)
         
         if withTimeLine {
@@ -85,7 +85,6 @@ public final class TimerViewComposer {
                               skipPublisher: @escaping () -> AnyPublisher<ElapsedSeconds, Error>,
                               stopPublisher: AnyPublisher<Void, Error>,
                               pausePublisher: AnyPublisher<Void, Error>,
-                              isPlayingPublisher: @escaping () -> AnyPublisher<Bool,Never>,
                               hasPlayerState: HasTimerState) -> TimerControls {
         let starTimerAdapter = TimerAdapter(loader: playPublisher,
                                             errorOnTimer: errorOnTimer,
@@ -95,8 +94,6 @@ public final class TimerViewComposer {
         
         let pauseTimerAdapter = TimerVoidAdapter(loader: pausePublisher)
         
-        let controlsViewModel = Self.subscribeChangesFrom(isPlayingPublisher: isPlayingPublisher,
-                                                          to: controlsViewModel)
         let toggleStrategy = ToggleStrategy(start: starTimerAdapter.start,
                                             pause: pauseTimerAdapter.pause,
                                             skip: skipHandler,
