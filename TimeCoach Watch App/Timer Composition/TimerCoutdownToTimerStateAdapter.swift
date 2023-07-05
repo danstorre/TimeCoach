@@ -2,7 +2,7 @@ import Foundation
 import LifeCoach
 import Combine
 
-class TimerCoutdownToTimerStateAdapter: TimerCoutdown, HasTimerState {
+class TimerCoutdownToTimerStateAdapter: TimerCoutdown {
     var isPlaying: Bool {
         switch timer.state {
         case .running: return true

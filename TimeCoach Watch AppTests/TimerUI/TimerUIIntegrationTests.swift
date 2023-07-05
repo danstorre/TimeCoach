@@ -132,7 +132,7 @@ final class TimerUIIntegrationTests: XCTestCase {
         return (timerView, timeLoader)
     }
     
-    private class TimerPublisherSpy: HasTimerState {
+    private class TimerPublisherSpy {
         private var plays: Bool = false {
             didSet {
                 self.changesStateTo(playing: plays)
