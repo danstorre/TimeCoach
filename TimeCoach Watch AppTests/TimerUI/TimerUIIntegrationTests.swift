@@ -193,7 +193,7 @@ final class TimerUIIntegrationTests: XCTestCase {
         
         var isPlayingPusblisher = IsPlayingPublisher(false)
         
-        func changesStateTo(playing: Bool) {
+        private func changesStateTo(playing: Bool) {
             isPlayingPusblisher.send(playing)
         }
     }
