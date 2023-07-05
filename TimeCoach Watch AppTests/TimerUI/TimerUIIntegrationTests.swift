@@ -92,16 +92,14 @@ final class TimerUIIntegrationTests: XCTestCase {
     
     func test_onIsPlaying_changesControlsViewModel() {
         let controlsViewModel = ControlsViewModel()
-        let (sut, spy) = makeSUT(controlsViewModel: controlsViewModel)
+        let (sut, _) = makeSUT(controlsViewModel: controlsViewModel)
         
         XCTAssertEqual(controlsViewModel.state, .pause)
         
         sut.simulateToggleTimerUserInteraction()
-        spy.changesStateTo(playing: true)
         XCTAssertEqual(controlsViewModel.state, .play)
         
         sut.simulateToggleTimerUserInteraction()
-        spy.changesStateTo(playing: false)
         XCTAssertEqual(controlsViewModel.state, .pause)
     }
     
@@ -118,7 +116,7 @@ final class TimerUIIntegrationTests: XCTestCase {
             skipPublisher: { timeLoader.skip() },
             stopPublisher: timeLoader.stop(),
             pausePublisher: timeLoader.pause(),
-            hasPlayerState: timeLoader
+            isPlaying: timeLoader.isPlayingPusblisher.eraseToAnyPublisher()
         )
         
         let timerView = TimerViewComposer
@@ -126,7 +124,6 @@ final class TimerUIIntegrationTests: XCTestCase {
                 controlsViewModel: controlsViewModel,
                 viewModel: timerViewModel,
                 timerControlPublishers: timerControlPublishers,
-                isPlayingPublisher: timeLoader.isPlayingPublisher(),
                 withTimeLine: false // the integration tests do not contemplate the time line since this an watchOS specific trait.
             )
     
@@ -136,7 +133,11 @@ final class TimerUIIntegrationTests: XCTestCase {
     }
     
     private class TimerPublisherSpy: HasTimerState {
-        private var plays: Bool = false
+        private var plays: Bool = false {
+            didSet {
+                self.changesStateTo(playing: plays)
+            }
+        }
         var isPlaying: Bool { plays }
         
         private(set) var commandsReceived = [Command]()
@@ -192,10 +193,6 @@ final class TimerUIIntegrationTests: XCTestCase {
         }
         
         var isPlayingPusblisher = IsPlayingPublisher(false)
-        
-        func isPlayingPublisher() -> () -> AnyPublisher<Bool, Never> {
-            return { self.isPlayingPusblisher.eraseToAnyPublisher() }
-        }
         
         func changesStateTo(playing: Bool) {
             isPlayingPusblisher.send(playing)

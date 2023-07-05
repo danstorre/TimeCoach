@@ -7,13 +7,13 @@ public struct TimerControlsPublishers {
     let stopPublisher: AnyPublisher<Void, Error>
     let pausePublisher: AnyPublisher<Void, Error>
     
-    let hasPlayerState: HasTimerState
+    let isPlaying: AnyPublisher<Bool, Never>
     
-    public init(playPublisher: @escaping () -> AnyPublisher<ElapsedSeconds, Error>, skipPublisher: @escaping () -> AnyPublisher<ElapsedSeconds, Error>, stopPublisher: AnyPublisher<Void, Error>, pausePublisher: AnyPublisher<Void, Error>, hasPlayerState: HasTimerState) {
+    public init(playPublisher: @escaping () -> AnyPublisher<ElapsedSeconds, Error>, skipPublisher: @escaping () -> AnyPublisher<ElapsedSeconds, Error>, stopPublisher: AnyPublisher<Void, Error>, pausePublisher: AnyPublisher<Void, Error>, isPlaying: AnyPublisher<Bool, Never>) {
         self.playPublisher = playPublisher
         self.skipPublisher = skipPublisher
         self.stopPublisher = stopPublisher
         self.pausePublisher = pausePublisher
-        self.hasPlayerState = hasPlayerState
+        self.isPlaying = isPlaying
     }
 }

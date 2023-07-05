@@ -16,9 +16,9 @@ public final class TimerViewComposer {
         }
     }
     
-    static func subscribeChangesFrom(isPlayingPublisher: () -> AnyPublisher<Bool,Never>,
+    static func subscribeChangesFrom(isPlayingPublisher: AnyPublisher<Bool,Never>,
                                      to controlsViewModel: ControlsViewModel) -> ControlsViewModel {
-        isPlayingPublisher()
+        isPlayingPublisher
             .subscribe(Subscribers.Sink(receiveCompletion: { result in
                 if case .failure = result {
                     controlsViewModel.state = .pause
@@ -34,10 +34,9 @@ public final class TimerViewComposer {
         viewModel timerViewModel: TimerViewModel = TimerViewModel(isBreak: false),
         timerStyle: TimerStyle = .init(),
         timerControlPublishers: TimerControlsPublishers,
-        isPlayingPublisher: @escaping () -> AnyPublisher<Bool,Never>,
         withTimeLine: Bool
     ) -> TimerView {
-        let controlsViewModel = Self.subscribeChangesFrom(isPlayingPublisher: isPlayingPublisher,
+        let controlsViewModel = Self.subscribeChangesFrom(isPlayingPublisher: timerControlPublishers.isPlaying,
                                                           to: controlsViewModel)
         
         let skipTimerAdapter = TimerAdapter(loader: timerControlPublishers.skipPublisher,
@@ -81,7 +80,7 @@ public final class TimerViewComposer {
                                             pause: pauseTimerAdapter.pause,
                                             skip: skipHandler,
                                             stop: stopTimerAdapter.stop,
-                                            hasPlayerState: timerControlPublishers.hasPlayerState)
+                                            isPlaying: timerControlPublishers.isPlaying)
         
         return TimerControls(viewModel: controlsViewModel,
                              togglePlayback: toggleStrategy.toggle,

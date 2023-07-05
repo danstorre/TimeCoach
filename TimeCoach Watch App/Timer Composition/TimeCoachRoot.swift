@@ -41,11 +41,10 @@ class TimeCoachRoot {
                                                              skipPublisher: regularTimer!.skipPublisher(currentSubject: currentSubject),
                                                              stopPublisher: regularTimer!.stopPublisher(),
                                                              pausePublisher: regularTimer!.pausePublisher(),
-                                                             hasPlayerState: timerPlayerAdapterState)
+                                                             isPlaying: timerPlayerAdapterState.isPlayingPublisherProvider())
         
         return TimerViewComposer.createTimer(
             timerControlPublishers: timerControlPublishers,
-            isPlayingPublisher: timerPlayerAdapterState.isPlayingPublisherProvider(),
             withTimeLine: withTimeLine
         )
     }
