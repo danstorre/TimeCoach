@@ -79,8 +79,6 @@ final class TimerUIIntegrationTests: XCTestCase {
     
     // MARK: - Helpers
     private func makeSUT(
-        controlsViewModel: ControlsViewModel = ControlsViewModel(),
-        timerViewModel: TimerViewModel = TimerViewModel(isBreak: false),
         file: StaticString = #filePath, line: UInt = #line
     ) -> (sut: TimerView, spy: TimerPublisherSpy) {
         let timeLoader = TimerPublisherSpy()
@@ -95,8 +93,6 @@ final class TimerUIIntegrationTests: XCTestCase {
         
         let timerView = TimerViewComposer
             .createTimer(
-                controlsViewModel: controlsViewModel,
-                viewModel: timerViewModel,
                 timerControlPublishers: timerControlPublishers,
                 withTimeLine: false // the integration tests do not contemplate the time line since this an watchOS specific trait.
             )

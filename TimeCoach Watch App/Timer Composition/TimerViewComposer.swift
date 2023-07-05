@@ -30,14 +30,13 @@ public final class TimerViewComposer {
     }
     
     public static func createTimer(
-        controlsViewModel: ControlsViewModel = ControlsViewModel(),
-        viewModel timerViewModel: TimerViewModel = TimerViewModel(isBreak: false),
         timerStyle: TimerStyle = .init(),
         timerControlPublishers: TimerControlsPublishers,
         withTimeLine: Bool
     ) -> TimerView {
+        let timerViewModel = TimerViewModel(isBreak: false)
         let controlsViewModel = Self.subscribeChangesFrom(isPlayingPublisher: timerControlPublishers.isPlaying,
-                                                          to: controlsViewModel)
+                                                          to: ControlsViewModel())
         
         let skipTimerAdapter = TimerAdapter(loader: timerControlPublishers.skipPublisher,
                                             deliveredElapsedTime: timerViewModel.delivered(elapsedTime:))
