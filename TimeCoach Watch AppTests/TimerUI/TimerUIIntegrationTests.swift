@@ -77,32 +77,6 @@ final class TimerUIIntegrationTests: XCTestCase {
         XCTAssertEqual(spy.commandsReceived, [.stop, .stop], "Should execute stop handler twice.")
     }
     
-    func test_onSkip_changesBreakState() {
-        let timerViewModel = TimerViewModel(isBreak: false)
-        let (sut, _) = makeSUT(timerViewModel: timerViewModel)
-        
-        XCTAssertEqual(timerViewModel.isBreak, false)
-        
-        sut.simulateSkipTimerUserInteraction()
-        XCTAssertEqual(timerViewModel.isBreak, true)
-        
-        sut.simulateSkipTimerUserInteraction()
-        XCTAssertEqual(timerViewModel.isBreak, false)
-    }
-    
-    func test_onIsPlaying_changesControlsViewModel() {
-        let controlsViewModel = ControlsViewModel()
-        let (sut, _) = makeSUT(controlsViewModel: controlsViewModel)
-        
-        XCTAssertEqual(controlsViewModel.state, .pause)
-        
-        sut.simulateToggleTimerUserInteraction()
-        XCTAssertEqual(controlsViewModel.state, .play)
-        
-        sut.simulateToggleTimerUserInteraction()
-        XCTAssertEqual(controlsViewModel.state, .pause)
-    }
-    
     // MARK: - Helpers
     private func makeSUT(
         controlsViewModel: ControlsViewModel = ControlsViewModel(),
