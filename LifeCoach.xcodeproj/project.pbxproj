@@ -155,13 +155,6 @@
 			remoteGlobalIDString = FBAD474F28FC8BB0003D2F7A;
 			remoteInfo = LifeCoach;
 		};
-		FBAA4CB7293DB24700B3BBF1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = FBAD474728FC8BB0003D2F7A /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = FBAD474F28FC8BB0003D2F7A;
-			remoteInfo = LifeCoach;
-		};
 		FBAD475C28FC8BB0003D2F7A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = FBAD474728FC8BB0003D2F7A /* Project object */;
@@ -182,13 +175,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = FBE9A9732939527C00D8BF29;
 			remoteInfo = "TimeCoach Watch App";
-		};
-		FBE9A9AD2939543600D8BF29 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = FBAD474728FC8BB0003D2F7A /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = FB06B52C292BF71C00AE6079;
-			remoteInfo = LifeCoachWatchOS;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -989,8 +975,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				FBE9A9AE2939543600D8BF29 /* PBXTargetDependency */,
-				FBAA4CB8293DB24700B3BBF1 /* PBXTargetDependency */,
 			);
 			name = "TimeCoach Watch App";
 			productName = "TimeCoach Watch App";
@@ -1349,11 +1333,6 @@
 			target = FBAD474F28FC8BB0003D2F7A /* LifeCoach */;
 			targetProxy = FB5399062A461996000B9CFD /* PBXContainerItemProxy */;
 		};
-		FBAA4CB8293DB24700B3BBF1 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = FBAD474F28FC8BB0003D2F7A /* LifeCoach */;
-			targetProxy = FBAA4CB7293DB24700B3BBF1 /* PBXContainerItemProxy */;
-		};
 		FBAD475D28FC8BB0003D2F7A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = FBAD474F28FC8BB0003D2F7A /* LifeCoach */;
@@ -1368,11 +1347,6 @@
 			isa = PBXTargetDependency;
 			target = FBE9A9732939527C00D8BF29 /* TimeCoach Watch App */;
 			targetProxy = FBE9A9872939527E00D8BF29 /* PBXContainerItemProxy */;
-		};
-		FBE9A9AE2939543600D8BF29 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = FB06B52C292BF71C00AE6079 /* LifeCoachWatchOS */;
-			targetProxy = FBE9A9AD2939543600D8BF29 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
