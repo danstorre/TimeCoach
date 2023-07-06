@@ -14,16 +14,15 @@ class TimeCoachRoot {
         let timerPlayerAdapterState = TimerCoutdownToTimerStateAdapter(timer: timerCountdown)
         regularTimer = Self.createPomodorTimer(with: timerPlayerAdapterState, and: currentSubject)
         
+        let timerControlPublishers = TimerControlsPublishers(playPublisher: regularTimer!.playPublisher(currentSubject: currentSubject),
+                                                             skipPublisher: regularTimer!.skipPublisher(currentSubject: currentSubject),
+                                                             stopPublisher: regularTimer!.stopPublisher(),
+                                                             pausePublisher: regularTimer!.pausePublisher(),
+                                                             isPlaying: timerPlayerAdapterState.isPlayingPublisherProvider())
+        
         return TimerViewComposer.createTimer(
-            customFont: CustomFont.timer.font,
-            breakColor: .blueTimer,
-            playPublisher: regularTimer!.playPublisher(currentSubject: currentSubject),
-            skipPublisher: regularTimer!.skipPublisher(currentSubject: currentSubject),
-            stopPublisher: regularTimer!.stopPublisher(),
-            pausePublisher: regularTimer!.pausePublisher(),
-            isPlayingPublisher: timerPlayerAdapterState.isPlayingPublisherProvider(),
-            withTimeLine: withTimeLine,
-            hasPlayerState: timerPlayerAdapterState
+            timerControlPublishers: timerControlPublishers,
+            withTimeLine: withTimeLine
         )
     }
 }

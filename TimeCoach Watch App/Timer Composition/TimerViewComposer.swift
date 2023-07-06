@@ -76,6 +76,8 @@ public final class TimerViewComposer {
     }
     
     private static func timerView(_ withTimeLine: Bool, _ timerViewModel: TimerViewModel, _ timerStyle: TimerStyle, _ controls: TimerControls) -> TimerView {
+        
+#if os(watchOS)
         if withTimeLine {
             let timerWithTimeLine = TimerTextTimeLine(timerViewModel: timerViewModel,
                                                       breakColor: timerStyle.breakColor,
@@ -89,6 +91,13 @@ public final class TimerViewComposer {
                                                  customFont: timerStyle.customFont)
             return TimerView(timerWithoutTimeLine: timerWithoutTimeLine, controls: controls)
         }
+#elseif os(xrOS)
+        let timerWithoutTimeLine = TimerText(timerViewModel: timerViewModel,
+                                             mode: .full,
+                                             breakColor: timerStyle.breakColor,
+                                             customFont: timerStyle.customFont)
+        return TimerView(timerWithoutTimeLine: timerWithoutTimeLine, controls: controls)
+#endif
     }
     
 }

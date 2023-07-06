@@ -39,12 +39,13 @@
 		FB5399182A461BBF000B9CFD /* CustomFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5399152A461BBF000B9CFD /* CustomFont.swift */; };
 		FB53991F2A461CEC000B9CFD /* TimerPresentationAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB53991E2A461CEC000B9CFD /* TimerPresentationAdapter.swift */; };
 		FB53992E2A46202D000B9CFD /* TimeCoachRoot.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB53992D2A46202D000B9CFD /* TimeCoachRoot.swift */; };
-		FB5399312A46209C000B9CFD /* PreviewTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5399302A46209C000B9CFD /* PreviewTimer.swift */; };
 		FB594CA62A4E1E5100C4A32C /* TImerControlsPresentationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB594CA52A4E1E5100C4A32C /* TImerControlsPresentationTests.swift */; };
 		FB594CA82A4E213F00C4A32C /* ControlsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB594CA72A4E213F00C4A32C /* ControlsViewModel.swift */; };
 		FB594CBE2A4E542200C4A32C /* ToggleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB594CBD2A4E542200C4A32C /* ToggleButton.swift */; };
 		FB594CBF2A4E547F00C4A32C /* ToggleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB594CBD2A4E542200C4A32C /* ToggleButton.swift */; };
 		FB594CC22A4E717000C4A32C /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB594CC12A4E717000C4A32C /* Colors.swift */; };
+		FB60C6802A57146B0048AF8F /* TimerStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD1279C2A5703730081C69C /* TimerStyle.swift */; };
+		FB60C6812A5714790048AF8F /* TimerControlsPublishers.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB62AD422A55BD8400B2BBC1 /* TimerControlsPublishers.swift */; };
 		FB62AD432A55BD8400B2BBC1 /* TimerControlsPublishers.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB62AD422A55BD8400B2BBC1 /* TimerControlsPublishers.swift */; };
 		FB73E909293BA2A40087F9EF /* TimeCoachRoot.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB73E908293BA2A40087F9EF /* TimeCoachRoot.swift */; };
 		FB960C72293D462900ECBAD5 /* ToggleStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB960C71293D462900ECBAD5 /* ToggleStrategy.swift */; };
@@ -265,7 +266,6 @@
 		FB5399152A461BBF000B9CFD /* CustomFont.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomFont.swift; sourceTree = "<group>"; };
 		FB53991E2A461CEC000B9CFD /* TimerPresentationAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerPresentationAdapter.swift; sourceTree = "<group>"; };
 		FB53992D2A46202D000B9CFD /* TimeCoachRoot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeCoachRoot.swift; sourceTree = "<group>"; };
-		FB5399302A46209C000B9CFD /* PreviewTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewTimer.swift; sourceTree = "<group>"; };
 		FB594CA52A4E1E5100C4A32C /* TImerControlsPresentationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TImerControlsPresentationTests.swift; sourceTree = "<group>"; };
 		FB594CA72A4E213F00C4A32C /* ControlsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlsViewModel.swift; sourceTree = "<group>"; };
 		FB594CBD2A4E542200C4A32C /* ToggleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleButton.swift; sourceTree = "<group>"; };
@@ -558,7 +558,6 @@
 		FB53992F2A46208E000B9CFD /* Previews */ = {
 			isa = PBXGroup;
 			children = (
-				FB5399302A46209C000B9CFD /* PreviewTimer.swift */,
 			);
 			path = Previews;
 			sourceTree = "<group>";
@@ -1161,15 +1160,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FB60C6812A5714790048AF8F /* TimerControlsPublishers.swift in Sources */,
 				FBE6465A2A4A9FC1005022A2 /* TimerVoidAdapter.swift in Sources */,
 				FBBF061A2A4F288E0020695A /* Colors.swift in Sources */,
 				FB5399182A461BBF000B9CFD /* CustomFont.swift in Sources */,
+				FB60C6802A57146B0048AF8F /* TimerStyle.swift in Sources */,
 				FB53991F2A461CEC000B9CFD /* TimerPresentationAdapter.swift in Sources */,
 				FBE646652A4AA84F005022A2 /* TimerViewComposer.swift in Sources */,
 				FBBF06192A4F287E0020695A /* TimerCoutdownToTimerStateAdapter.swift in Sources */,
 				FBBF061D2A4F28D90020695A /* LocalElapsedSecondsSets+Extension.swift in Sources */,
 				FBBF06212A4F2CC30020695A /* TimerView.swift in Sources */,
-				FB5399312A46209C000B9CFD /* PreviewTimer.swift in Sources */,
 				FB53989A2A45DA7C000B9CFD /* ContentView.swift in Sources */,
 				FB53992E2A46202D000B9CFD /* TimeCoachRoot.swift in Sources */,
 				FBE646642A4AA7CA005022A2 /* Combine+RegularTimer.swift in Sources */,

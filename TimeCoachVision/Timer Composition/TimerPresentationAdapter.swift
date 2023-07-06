@@ -15,13 +15,7 @@ final class TimerPresentationAdapter {
     private func subscribe() {
         cancellable = loader
             .sink(
-                receiveCompletion: { [weak self] completion in
-                    switch completion {
-                    case .finished: break
-                        
-                    case let .failure(error):
-                        self?.presenter?.errorOnTimer(with: error)
-                    }
+                receiveCompletion: { _ in 
                 }, receiveValue: { [weak self] elapsed in
                     self?.presenter?.delivered(elapsedTime: elapsed)
                 })
