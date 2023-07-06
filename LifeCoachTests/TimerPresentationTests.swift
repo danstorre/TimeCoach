@@ -4,26 +4,26 @@ import LifeCoach
 final class TimerPresentationTests: XCTestCase {
 
     func test_init_noneMode_setsTimerStringToEmpty() {
-        let sut = TimerViewModel()
+        let sut = makeSUT()
         sut.mode = .none
         
         XCTAssertEqual(sut.timerString, .emptyTimer)
     }
     
     func test_init_fullMode_setsTimerStringToDefaultPomodoroString() {
-        let sut = TimerViewModel()
+        let sut = makeSUT()
         
         XCTAssertEqual(sut.timerString, elapsedSecondsFromPomodoro(0).toString(mode: .full))
     }
     
     func test_init_modeIsFull() {
-        let sut = TimerViewModel()
+        let sut = makeSUT()
         
         XCTAssertEqual(sut.mode, .full)
     }
     
     func test_delivered_onNoneMode_setsTimerStringToEmpty() {
-        let sut = TimerViewModel()
+        let sut = makeSUT()
         sut.mode = .none
         
         sut.delivered(elapsedTime: elapsedSecondsFromPomodoro(0))
@@ -32,7 +32,7 @@ final class TimerPresentationTests: XCTestCase {
     }
     
     func test_delivered_onFullMode_setsTimerStringToDeliveredTimer() {
-        let sut = TimerViewModel()
+        let sut = makeSUT()
         
         let deliveredTime = elapsedSecondsFromPomodoro(0)
         sut.delivered(elapsedTime: deliveredTime)
@@ -41,7 +41,7 @@ final class TimerPresentationTests: XCTestCase {
     }
     
     func test_timerString_onFullmode_afterNoneMode_setsTimerStringToCurrentTimer() {
-        let sut = TimerViewModel()
+        let sut = makeSUT()
         sut.mode = .none
         sut.mode = .full
         
@@ -49,7 +49,7 @@ final class TimerPresentationTests: XCTestCase {
     }
     
     func test_timerString_onNoneMode_afterFullMode_setsTimerStringToEmpty() {
-        let sut = TimerViewModel()
+        let sut = makeSUT()
         sut.mode = .full
         sut.mode = .none
         
@@ -57,7 +57,7 @@ final class TimerPresentationTests: XCTestCase {
     }
     
     func test_delivered_onFullMode_afterNoneMode_setsTimerStringToCurrentTimer() {
-        let sut = TimerViewModel()
+        let sut = makeSUT()
         sut.mode = .none
         XCTAssertEqual(sut.timerString, .emptyTimer)
         
@@ -70,7 +70,7 @@ final class TimerPresentationTests: XCTestCase {
     }
     
     func test_delivered_onNoneMode_afterFullMode_setsTimerStringToEmpty() {
-        let sut = TimerViewModel()
+        let sut = makeSUT()
         sut.mode = .full
         XCTAssertEqual(sut.timerString, elapsedSecondsFromPomodoro(0).toString(mode: .full))
         
@@ -92,6 +92,9 @@ final class TimerPresentationTests: XCTestCase {
         return ElapsedSeconds(seconds, startDate: now, endDate: now.adding(seconds: .breakInSeconds))
     }
 
+    private func makeSUT() -> TimerViewModel {
+        TimerViewModel(isBreak: false)
+    }
 }
 
 fileprivate extension String {

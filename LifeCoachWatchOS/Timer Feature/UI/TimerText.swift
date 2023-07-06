@@ -41,12 +41,11 @@ extension TimerText {
 
 struct TimerText_Previews: PreviewProvider {
     static func pomodoroTimer() -> TimerText {
-        TimerText(timerViewModel: TimerViewModel(), breakColor: .blue)
+        TimerText(timerViewModel: TimerViewModel(isBreak: false), breakColor: .blue)
     }
     
     static func breakTimer() -> TimerText {
-        let vm = TimerViewModel()
-        vm.isBreak = true
+        let vm = TimerViewModel(isBreak: true)
         return TimerText(timerViewModel: vm, breakColor: .blue)
     }
     

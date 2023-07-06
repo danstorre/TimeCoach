@@ -77,53 +77,24 @@ final class TimerUIIntegrationTests: XCTestCase {
         XCTAssertEqual(spy.commandsReceived, [.stop, .stop], "Should execute stop handler twice.")
     }
     
-    func test_onSkip_changesBreakState() {
-        let timerViewModel = TimerViewModel()
-        let (sut, _) = makeSUT(timerViewModel: timerViewModel)
-        
-        XCTAssertEqual(timerViewModel.isBreak, false)
-        
-        sut.simulateSkipTimerUserInteraction()
-        XCTAssertEqual(timerViewModel.isBreak, true)
-        
-        sut.simulateSkipTimerUserInteraction()
-        XCTAssertEqual(timerViewModel.isBreak, false)
-    }
-    
-    func test_onIsPlaying_changesControlsViewModel() {
-        let controlsViewModel = ControlsViewModel()
-        let (sut, spy) = makeSUT(controlsViewModel: controlsViewModel)
-        
-        XCTAssertEqual(controlsViewModel.state, .pause)
-        
-        sut.simulateToggleTimerUserInteraction()
-        spy.changesStateTo(playing: true)
-        XCTAssertEqual(controlsViewModel.state, .play)
-        
-        sut.simulateToggleTimerUserInteraction()
-        spy.changesStateTo(playing: false)
-        XCTAssertEqual(controlsViewModel.state, .pause)
-    }
-    
     // MARK: - Helpers
     private func makeSUT(
-        controlsViewModel: ControlsViewModel = ControlsViewModel(),
-        timerViewModel: TimerViewModel = TimerViewModel(),
         file: StaticString = #filePath, line: UInt = #line
     ) -> (sut: TimerView, spy: TimerPublisherSpy) {
         let timeLoader = TimerPublisherSpy()
         
+        let timerControlPublishers = TimerControlsPublishers(
+            playPublisher: { timeLoader.play() },
+            skipPublisher: { timeLoader.skip() },
+            stopPublisher: timeLoader.stop(),
+            pausePublisher: timeLoader.pause(),
+            isPlaying: timeLoader.isPlayingPusblisher.eraseToAnyPublisher()
+        )
+        
         let timerView = TimerViewComposer
             .createTimer(
-                controlsViewModel: controlsViewModel,
-                viewModel: timerViewModel,
-                playPublisher: { timeLoader.play() },
-                skipPublisher: { timeLoader.skip() },
-                stopPublisher: timeLoader.stop(),
-                pausePublisher: timeLoader.pause(),
-                isPlayingPublisher: timeLoader.isPlayingPublisher(),
-                withTimeLine: false, // the integration tests do not contemplate the time line since this an watchOS specific trait.
-                hasPlayerState: timeLoader
+                timerControlPublishers: timerControlPublishers,
+                withTimeLine: false // the integration tests do not contemplate the time line since this an watchOS specific trait.
             )
     
         trackForMemoryLeak(instance: timeLoader, file: file, line: line)
@@ -131,9 +102,12 @@ final class TimerUIIntegrationTests: XCTestCase {
         return (timerView, timeLoader)
     }
     
-    private class TimerPublisherSpy: HasTimerState {
-        private var plays: Bool = false
-        var isPlaying: Bool { plays }
+    private class TimerPublisherSpy {
+        private var isPlaying: Bool = false {
+            didSet {
+                self.changesStateTo(playing: isPlaying)
+            }
+        }
         
         private(set) var commandsReceived = [Command]()
         enum Command: Equatable, CustomStringConvertible {
@@ -158,7 +132,7 @@ final class TimerUIIntegrationTests: XCTestCase {
         func play() -> AnyPublisher<ElapsedSeconds, Error> {
             let elapsed = makeElapsedSeconds(0, startDate: Date(), endDate: Date())
             return PlayPublisher(elapsed).map { elapsed in
-                self.plays = true
+                self.isPlaying = true
                 self.commandsReceived.append(.play)
                 return elapsed
             }.eraseToAnyPublisher()
@@ -167,7 +141,7 @@ final class TimerUIIntegrationTests: XCTestCase {
         func skip() -> AnyPublisher<ElapsedSeconds, Error> {
             let elapsedTime = makeElapsedSeconds(0, startDate: Date(), endDate: Date())
             return SkipPublisher(elapsedTime).map { elapsed in
-                self.plays = false
+                self.isPlaying = false
                 self.commandsReceived.append(.skip)
                 return elapsed
             }.eraseToAnyPublisher()
@@ -175,25 +149,21 @@ final class TimerUIIntegrationTests: XCTestCase {
         
         func stop() -> AnyPublisher<Void, Error> {
             return StopPublisher({}()).map {
-                self.plays = false
+                self.isPlaying = false
                 return self.commandsReceived.append(.stop)
             }.eraseToAnyPublisher()
         }
         
         func pause() -> AnyPublisher<Void, Error> {
             return PausePublisher({}()).map {
-                self.plays = false
+                self.isPlaying = false
                 return self.commandsReceived.append(.pause)
             }.eraseToAnyPublisher()
         }
         
         var isPlayingPusblisher = IsPlayingPublisher(false)
         
-        func isPlayingPublisher() -> () -> AnyPublisher<Bool, Never> {
-            return { self.isPlayingPusblisher.eraseToAnyPublisher() }
-        }
-        
-        func changesStateTo(playing: Bool) {
+        private func changesStateTo(playing: Bool) {
             isPlayingPusblisher.send(playing)
         }
     }

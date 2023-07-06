@@ -1,23 +1,27 @@
 import Foundation
 import LifeCoach
+import Combine
 
 class ToggleStrategy {
-    private var hasPlayerState: HasTimerState
+    private var isPlaying: Bool = false
     private let start: (() -> Void)?
     private let pause: (() -> Void)?
     private let skip: (() -> Void)?
     private let stop: (() -> Void)?
     
-    init(start: (() -> Void)?, pause: (() -> Void)?, skip: (() -> Void)?, stop: (() -> Void)?, hasPlayerState: HasTimerState) {
+    private var cancellables: Set<AnyCancellable> = Set()
+    
+    init(start: (() -> Void)?, pause: (() -> Void)?, skip: (() -> Void)?, stop: (() -> Void)?,
+         isPlaying: AnyPublisher<Bool, Never>) {
         self.start = start
         self.pause = pause
         self.skip = skip
         self.stop = stop
-        self.hasPlayerState = hasPlayerState
+        isPlayingSubscription(isPlaying: isPlaying).store(in: &cancellables)
     }
     
     func toggle() {
-        if hasPlayerState.isPlaying {
+        if isPlaying {
             pause?()
         } else {
             start?()
@@ -25,7 +29,7 @@ class ToggleStrategy {
     }
     
     func skipHandler() {
-        if hasPlayerState.isPlaying {
+        if isPlaying {
             pause?()
         }
         
@@ -33,10 +37,19 @@ class ToggleStrategy {
     }
     
     func stopHandler() {
-        if hasPlayerState.isPlaying {
+        if isPlaying {
             pause?()
         }
         
         stop?()
     }
+}
+
+extension ToggleStrategy {
+  func isPlayingSubscription(isPlaying: AnyPublisher<Bool, Never>) -> AnyCancellable {
+    isPlaying
+      .sink {[weak self] isPlaying in
+        self?.isPlaying = isPlaying
+      }
+  }
 }

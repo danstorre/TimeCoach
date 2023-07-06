@@ -45,6 +45,7 @@
 		FB594CBE2A4E542200C4A32C /* ToggleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB594CBD2A4E542200C4A32C /* ToggleButton.swift */; };
 		FB594CBF2A4E547F00C4A32C /* ToggleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB594CBD2A4E542200C4A32C /* ToggleButton.swift */; };
 		FB594CC22A4E717000C4A32C /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB594CC12A4E717000C4A32C /* Colors.swift */; };
+		FB62AD432A55BD8400B2BBC1 /* TimerControlsPublishers.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB62AD422A55BD8400B2BBC1 /* TimerControlsPublishers.swift */; };
 		FB73E909293BA2A40087F9EF /* TimeCoachRoot.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB73E908293BA2A40087F9EF /* TimeCoachRoot.swift */; };
 		FB960C72293D462900ECBAD5 /* ToggleStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB960C71293D462900ECBAD5 /* ToggleStrategy.swift */; };
 		FB960C73293D479800ECBAD5 /* XCTestCase+MemoryLeakTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC9ADAE2919E8B500E0BEFC /* XCTestCase+MemoryLeakTracking.swift */; };
@@ -54,7 +55,6 @@
 		FB960C78293D48D800ECBAD5 /* Date+Formatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4AA1562937C3970076FED9 /* Date+Formatters.swift */; };
 		FB960C80293D532E00ECBAD5 /* PreviewTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB960C7F293D532E00ECBAD5 /* PreviewTimer.swift */; };
 		FBA1CE202A4CF8E7008F030B /* LifeCoach.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBAD475028FC8BB0003D2F7A /* LifeCoach.framework */; };
-		FBA8DD7A2A4E916A009E48D5 /* HasTimerState.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA8DD792A4E916A009E48D5 /* HasTimerState.swift */; };
 		FBA8DD7D2A4F10D9009E48D5 /* TimerCoutdownToTimerStateAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA8DD7C2A4F10D9009E48D5 /* TimerCoutdownToTimerStateAdapter.swift */; };
 		FBA8DD812A4F11B0009E48D5 /* ColorSwiftUI+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA8DD802A4F11B0009E48D5 /* ColorSwiftUI+Extension.swift */; };
 		FBA8DD832A4F120E009E48D5 /* TimerStateAdapter+Publishers.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA8DD822A4F120E009E48D5 /* TimerStateAdapter+Publishers.swift */; };
@@ -81,6 +81,7 @@
 		FBD56F722A3D0E20002736AD /* PomodoroTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD56F712A3D0E20002736AD /* PomodoroTimer.swift */; };
 		FBD56F742A3D0ECE002736AD /* RegularTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD56F732A3D0ECE002736AD /* RegularTimer.swift */; };
 		FBD56F762A3D0EFA002736AD /* TimerCoutdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD56F752A3D0EFA002736AD /* TimerCoutdown.swift */; };
+		FBD58E1A2A549DF8006A7A96 /* PreviewProvider+FactoryMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD58E192A549DF8006A7A96 /* PreviewProvider+FactoryMethods.swift */; };
 		FBDBAC4629762AC7009E440A /* TimerSave.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDBAC4529762AC7009E440A /* TimerSave.swift */; };
 		FBDBAC4829762AD1009E440A /* TimerLoad.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDBAC4729762AD1009E440A /* TimerLoad.swift */; };
 		FBDBAC4A29762AE5009E440A /* FoundationTimerCountdown+TimerSave.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDBAC4929762AE5009E440A /* FoundationTimerCountdown+TimerSave.swift */; };
@@ -268,11 +269,11 @@
 		FB594CA72A4E213F00C4A32C /* ControlsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlsViewModel.swift; sourceTree = "<group>"; };
 		FB594CBD2A4E542200C4A32C /* ToggleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleButton.swift; sourceTree = "<group>"; };
 		FB594CC12A4E717000C4A32C /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		FB62AD422A55BD8400B2BBC1 /* TimerControlsPublishers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerControlsPublishers.swift; sourceTree = "<group>"; };
 		FB73E908293BA2A40087F9EF /* TimeCoachRoot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeCoachRoot.swift; sourceTree = "<group>"; };
 		FB960C71293D462900ECBAD5 /* ToggleStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleStrategy.swift; sourceTree = "<group>"; };
 		FB960C74293D484000ECBAD5 /* TimerPresentationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerPresentationTests.swift; sourceTree = "<group>"; };
 		FB960C7F293D532E00ECBAD5 /* PreviewTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewTimer.swift; sourceTree = "<group>"; };
-		FBA8DD792A4E916A009E48D5 /* HasTimerState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HasTimerState.swift; sourceTree = "<group>"; };
 		FBA8DD7C2A4F10D9009E48D5 /* TimerCoutdownToTimerStateAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerCoutdownToTimerStateAdapter.swift; sourceTree = "<group>"; };
 		FBA8DD802A4F11B0009E48D5 /* ColorSwiftUI+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ColorSwiftUI+Extension.swift"; sourceTree = "<group>"; };
 		FBA8DD822A4F120E009E48D5 /* TimerStateAdapter+Publishers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimerStateAdapter+Publishers.swift"; sourceTree = "<group>"; };
@@ -292,6 +293,7 @@
 		FBD56F732A3D0ECE002736AD /* RegularTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegularTimer.swift; sourceTree = "<group>"; };
 		FBD56F752A3D0EFA002736AD /* TimerCoutdown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerCoutdown.swift; sourceTree = "<group>"; };
 		FBD56F772A3D184C002736AD /* FoundationTimerCountdownTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoundationTimerCountdownTests.swift; sourceTree = "<group>"; };
+		FBD58E192A549DF8006A7A96 /* PreviewProvider+FactoryMethods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PreviewProvider+FactoryMethods.swift"; sourceTree = "<group>"; };
 		FBDBAC4529762AC7009E440A /* TimerSave.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerSave.swift; sourceTree = "<group>"; };
 		FBDBAC4729762AD1009E440A /* TimerLoad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerLoad.swift; sourceTree = "<group>"; };
 		FBDBAC4929762AE5009E440A /* FoundationTimerCountdown+TimerSave.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FoundationTimerCountdown+TimerSave.swift"; sourceTree = "<group>"; };
@@ -445,7 +447,6 @@
 			children = (
 				FB4AA1632937CD000076FED9 /* ElapsedSeconds.swift */,
 				FBD56F732A3D0ECE002736AD /* RegularTimer.swift */,
-				FBA8DD792A4E916A009E48D5 /* HasTimerState.swift */,
 			);
 			path = "Timer Feature";
 			sourceTree = "<group>";
@@ -668,6 +669,8 @@
 				FBA8DD802A4F11B0009E48D5 /* ColorSwiftUI+Extension.swift */,
 				FBA8DD822A4F120E009E48D5 /* TimerStateAdapter+Publishers.swift */,
 				FBA8DD842A4F13F0009E48D5 /* LocalElapsedSecondsSets+Extension.swift */,
+				FBD58E192A549DF8006A7A96 /* PreviewProvider+FactoryMethods.swift */,
+				FB62AD422A55BD8400B2BBC1 /* TimerControlsPublishers.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -1192,7 +1195,6 @@
 			files = (
 				FBD56F742A3D0ECE002736AD /* RegularTimer.swift in Sources */,
 				FBD56F672A3CE66F002736AD /* LocalElapsedSeconds+Extensions.swift in Sources */,
-				FBA8DD7A2A4E916A009E48D5 /* HasTimerState.swift in Sources */,
 				FB960C77293D48D200ECBAD5 /* Timer+DefaultStrings.swift in Sources */,
 				FB960C76293D48CB00ECBAD5 /* TimerViewModel.swift in Sources */,
 				FBD56F722A3D0E20002736AD /* PomodoroTimer.swift in Sources */,
@@ -1242,8 +1244,10 @@
 				FBE9A97A2939527C00D8BF29 /* TimeCoachApp.swift in Sources */,
 				FBE6465D2A4AA2DE005022A2 /* Combine+RegularTimer.swift in Sources */,
 				FBE646582A4A9F77005022A2 /* TimerAdapter.swift in Sources */,
+				FBD58E1A2A549DF8006A7A96 /* PreviewProvider+FactoryMethods.swift in Sources */,
 				FB960C80293D532E00ECBAD5 /* PreviewTimer.swift in Sources */,
 				FB73E909293BA2A40087F9EF /* TimeCoachRoot.swift in Sources */,
+				FB62AD432A55BD8400B2BBC1 /* TimerControlsPublishers.swift in Sources */,
 				FBA8DD832A4F120E009E48D5 /* TimerStateAdapter+Publishers.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

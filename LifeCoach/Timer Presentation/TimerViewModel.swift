@@ -2,7 +2,7 @@ import SwiftUI
 
 public class TimerViewModel: ObservableObject {
     @Published public var timerString: String = .defaultPomodoroTimerString
-    public var isBreak: Bool = false
+    public var isBreak: Bool
     
     public var mode: TimePresentation = .full {
         didSet {
@@ -24,10 +24,8 @@ public class TimerViewModel: ObservableObject {
         case none
     }
     
-    public init() {}
-    
-    public func errorOnTimer(with: Error) {
-        
+    public init(isBreak: Bool) {
+        self.isBreak = isBreak
     }
     
     public func delivered(elapsedTime: ElapsedSeconds) {

@@ -6,39 +6,18 @@ public struct TimerView: View {
     public var timerWithTimeLine: TimerTextTimeLine?
     public var timerWithoutTimeLine: TimerText?
     public var controls: TimerControls
-    var withTimeLine = true
     
-    public init(
-        controlsViewModel: ControlsViewModel,
-        timerViewModel: TimerViewModel,
-        togglePlayback: (() -> Void)? = nil,
-        skipHandler: (() -> Void)? = nil,
-        stopHandler: (() -> Void)? = nil,
-        customFont: String? = nil,
-        withTimeLine: Bool = false,
-        breakColor: Color = .red
-    ) {
-        if withTimeLine {
-            self.timerWithTimeLine = TimerTextTimeLine(timerViewModel: timerViewModel,
-                                                       breakColor: breakColor,
-                                                       customFont: customFont)
-        } else {
-            self.timerWithoutTimeLine = TimerText(timerViewModel: timerViewModel,
-                                                  mode: .full,
-                                                  breakColor: breakColor,
-                                                  customFont: customFont)
-        }
-        
-        self.withTimeLine = withTimeLine
-        self.controls = TimerControls(viewModel: controlsViewModel,
-                                      togglePlayback: togglePlayback,
-                                      skipHandler: skipHandler,
-                                      stopHandler: stopHandler)
+    init(timerWithTimeLine: TimerTextTimeLine? = nil,
+         timerWithoutTimeLine: TimerText? = nil,
+         controls: TimerControls) {
+        self.timerWithTimeLine = timerWithTimeLine
+        self.timerWithoutTimeLine = timerWithoutTimeLine
+        self.controls = controls
     }
     
     public var body: some View {
         VStack {
-            if withTimeLine {
+            if let timerWithTimeLine = timerWithTimeLine {
                 timerWithTimeLine
             } else {
                 timerWithoutTimeLine
@@ -49,34 +28,23 @@ public struct TimerView: View {
 }
 
 struct TimerView_Previews: PreviewProvider {
+    
     static func pomodoroTimerWithTimeLine() -> TimerView {
-        TimerView(controlsViewModel: ControlsViewModel(),
-                  timerViewModel: TimerViewModel(),
-                  withTimeLine: true)
+        return TimerView(timerWithTimeLine: Self.timerTextTimeLine(), controls: Self.defaultTimerControls())
     }
     
     static func breakTimerWithTimeLine() -> TimerView {
-        let vm = TimerViewModel()
-        vm.isBreak = true
-        return TimerView(controlsViewModel: ControlsViewModel(),
-                  timerViewModel: vm,
-                  withTimeLine: true,
-                  breakColor: .blueTimer
-        )
+        let vm = TimerViewModel(isBreak: true)
+        return TimerView(timerWithTimeLine: Self.timerTextTimeLine(with: vm), controls: Self.defaultTimerControls())
     }
     
     static func pomodoroTimerWithoutTimeLine() -> TimerView {
-        TimerView(controlsViewModel: ControlsViewModel(),
-                  timerViewModel: TimerViewModel())
+        return TimerView(timerWithoutTimeLine: Self.timerText(), controls: Self.defaultTimerControls())
     }
     
     static func breakTimerWithoutTimeLine() -> TimerView {
-        let vm = TimerViewModel()
-        vm.isBreak = true
-        return TimerView(controlsViewModel: ControlsViewModel(),
-                  timerViewModel: vm,
-                  breakColor: .blueTimer
-        )
+        let vm = TimerViewModel(isBreak: true)
+        return TimerView(timerWithoutTimeLine: Self.timerText(with: vm), controls: Self.defaultTimerControls())
     }
     
     static var previews: some View {
