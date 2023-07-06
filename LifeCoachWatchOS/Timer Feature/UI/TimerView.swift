@@ -1,5 +1,4 @@
 import LifeCoach
-import LifeCoachWatchOS
 import SwiftUI
 
 public struct TimerView: View {
@@ -7,9 +6,9 @@ public struct TimerView: View {
     public var timerWithoutTimeLine: TimerText?
     public var controls: TimerControls
     
-    init(timerWithTimeLine: TimerTextTimeLine? = nil,
-         timerWithoutTimeLine: TimerText? = nil,
-         controls: TimerControls) {
+    public init(timerWithTimeLine: TimerTextTimeLine? = nil,
+                timerWithoutTimeLine: TimerText? = nil,
+                controls: TimerControls) {
         self.timerWithTimeLine = timerWithTimeLine
         self.timerWithoutTimeLine = timerWithoutTimeLine
         self.controls = controls
@@ -58,6 +57,9 @@ struct TimerView_Previews: PreviewProvider {
                 pomodoroTimerWithoutTimeLine()
                 breakTimerWithoutTimeLine()
             }
+            
+            TimerView(timerWithTimeLine: Self.timerTextTimeLine(),
+                             controls: Self.defaultTimerControls())
         }
         
     }

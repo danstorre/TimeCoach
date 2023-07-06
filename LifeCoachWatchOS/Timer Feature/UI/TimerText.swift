@@ -5,6 +5,7 @@ public struct TimerText: View {
     @Environment(\.isLuminanceReduced) var isLuminanceReduced
     @ObservedObject var timerViewModel: TimerViewModel
     public var customFont: String?
+    
     let breakColor: Color
     
     public init(timerViewModel: TimerViewModel,

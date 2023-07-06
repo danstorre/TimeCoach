@@ -3,6 +3,7 @@ import Combine
 import XCTest
 import LifeCoach
 import TimeCoach_Watch_App
+import LifeCoachWatchOS
 
 final class TimerUIIntegrationTests: XCTestCase {
     func test_onInitialLoad_shouldDisplayCorrectCustomFont() {

@@ -1,4 +1,5 @@
 import Foundation
+import LifeCoachWatchOS
 @testable import TimeCoach_Watch_App
 
 extension String {
