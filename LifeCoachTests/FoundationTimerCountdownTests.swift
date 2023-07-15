@@ -29,11 +29,10 @@ final class FoundationTimerCountdownTests: XCTestCase {
                andElapsedTime: 0.002)
     }
     
-    func test_start_afterFinishDoesNotChangeState() {
+    func test_start_afterFinishTheFirstSetTimerDoesNotChangeState() {
         let fixedDate = Date()
         let startSet = createTimerSet(0, startDate: fixedDate, endDate: fixedDate.adding(seconds: 0.001))
         let sut = makeSUT(startingSet: startSet, nextSet: createAnyTimerSet())
-
         expect(sut: sut,
                toDeliver: [startSet.addingElapsedSeconds(0.001)],
                andChangesStateTo: .stop,
@@ -232,6 +231,7 @@ final class FoundationTimerCountdownTests: XCTestCase {
         var receivedElapsedSeconds = [LocalElapsedSeconds]()
         let expectation = expectation(description: "wait for start countdown to deliver time.")
         expectation.expectedFulfillmentCount = deliverExpectation.count
+        
         sut.startCountdown() { result in
             if case let .success(deliveredElapsedSeconds) = result {
                 receivedElapsedSeconds.append(deliveredElapsedSeconds)
