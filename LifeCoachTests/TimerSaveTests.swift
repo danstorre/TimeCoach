@@ -13,7 +13,7 @@ class LocalTimer {
     
     func save(state: TimerState) throws {
         try store.deleteState()
-        store.insert(state: state.local)
+        try store.insert(state: state.local)
     }
 }
 
@@ -43,6 +43,7 @@ class LocaTimerSpy {
     private(set) var deleteMessageCount = 0
     private(set) var receivedMessages = [AnyMessage]()
     private var deletionResult: Result<Void, Error>?
+    private var insertionResult: Result<Void, Error>?
     
     enum AnyMessage: Equatable, CustomStringConvertible {
         case deleteState
@@ -72,8 +73,13 @@ class LocaTimerSpy {
         deletionResult = .success(())
     }
     
-    func insert(state: LocalTimerState) {
+    func insert(state: LocalTimerState) throws {
         receivedMessages.append(.insert(state: state))
+        try insertionResult?.get()
+    }
+    
+    func failInsertion(with error: NSError) {
+        insertionResult = .failure(error)
     }
 }
 
@@ -116,6 +122,20 @@ final class TimerSaveStateUseCaseTests: XCTestCase {
         try? sut.save(state: anyTimerState.model)
         
         XCTAssertEqual(spy.receivedMessages, [.deleteState, .insert(state: anyTimerState.local)])
+    }
+    
+    func test_save_OnStoreInsertionErrorShouldDeliverError() {
+        let anyTimerState = makeAnyState()
+        let expectedError = anyNSError()
+        let (sut, spy) = makeSUT()
+        spy.failInsertion(with: expectedError)
+        
+        do {
+            try sut.save(state: anyTimerState.model)
+            XCTFail("should have failed insertion with \(expectedError)")
+        } catch {
+            XCTAssertEqual(error as NSError, expectedError)
+        }
     }
     
     // MARK:- Helper Methods
