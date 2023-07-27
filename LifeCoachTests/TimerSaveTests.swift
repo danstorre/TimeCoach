@@ -7,7 +7,7 @@ class LocalTimer {
         self.store = store
     }
     
-    func save(elapsedSeconds: ElapsedSeconds) {
+    func save(elapsedSeconds: ElapsedSeconds) throws {
         store.deleteState()
     }
 }
@@ -17,6 +17,10 @@ class LocaTimerSpy {
     
     func deleteState() {
         deleteMessageCount += 1
+    }
+    
+    func failDeletion(with error: NSError) {
+        
     }
 }
 
@@ -33,12 +37,32 @@ final class TimerSaveStateUseCaseTests: XCTestCase {
         let spy = LocaTimerSpy()
         let sut = LocalTimer(store: spy)
         
-        sut.save(elapsedSeconds: anyElapsedSeconds)
+        try? sut.save(elapsedSeconds: anyElapsedSeconds)
         
         XCTAssertEqual(spy.deleteMessageCount, 1)
     }
     
+    func test_save_onStoreDeletionErrorShouldDeliverError() {
+        let anyElapsedSeconds = makeAnyLocalElapsedSeconds()
+        let expectedError = anyNSError()
+        let spy = LocaTimerSpy()
+        let sut = LocalTimer(store: spy)
+        
+        spy.failDeletion(with: expectedError)
+        
+        do {
+            try sut.save(elapsedSeconds: anyElapsedSeconds)
+        } catch {
+            XCTAssertEqual(error as NSError, expectedError)
+        }
+    }
+    
+    // MARK:- Helper Methods
     private func makeAnyLocalElapsedSeconds(seconds: TimeInterval = 1, startDate: Date = Date(), endDate: Date = Date()) -> ElapsedSeconds {
         ElapsedSeconds(seconds, startDate: startDate, endDate: endDate)
+    }
+    
+    private func anyNSError() -> NSError {
+        NSError(domain: "any", code: 1)
     }
 }
