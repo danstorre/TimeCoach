@@ -14,7 +14,7 @@ class TimerCoutdownToTimerStateAdapter: TimerCoutdown {
     var currentSetElapsedTime: TimeInterval {
         timer.currentSetElapsedTime
     }
-    var state: LifeCoach.TimerState {
+    var state: LifeCoach.TimerCoutdownState {
         timer.state
     }
     

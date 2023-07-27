@@ -180,7 +180,7 @@ final class PomodoroUseCaseTests: XCTestCase {
     
     private class TimerSpy: TimerCoutdown {
         var currentSetElapsedTime: TimeInterval { 0 }
-        var state: LifeCoach.TimerState { .pause }
+        var state: LifeCoach.TimerCoutdownState { .pause }
         
         private(set) var messagesReceived = [TimerCountdownMessages]()
         enum TimerCountdownMessages: Equatable, CustomStringConvertible {

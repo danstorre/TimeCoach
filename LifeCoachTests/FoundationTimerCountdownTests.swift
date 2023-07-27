@@ -224,7 +224,7 @@ final class FoundationTimerCountdownTests: XCTestCase {
     }
     
     private func expect(sut: TimerCoutdown, toDeliver deliverExpectation: [LocalElapsedSeconds],
-                        andChangesStateTo expectedState: TimerState,
+                        andChangesStateTo expectedState: TimerCoutdownState,
                         andElapsedTime expectedElapsedTime: TimeInterval,
                         file: StaticString = #filePath,
                         line: UInt = #line) {

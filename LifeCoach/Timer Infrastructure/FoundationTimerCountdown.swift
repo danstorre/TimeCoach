@@ -4,7 +4,7 @@ public final class FoundationTimerCountdown: TimerCoutdown {
     public typealias StartCoundownCompletion = (Result<LocalElapsedSeconds, Error>) -> Void
     public typealias SkipCoundownCompletion = (Result<LocalElapsedSeconds, Error>) -> Void
     
-    public private(set) var state: TimerState = .stop
+    public private(set) var state: TimerCoutdownState = .stop
     private var setA: LocalElapsedSeconds
     private var setB: LocalElapsedSeconds
     var currentSet: LocalElapsedSeconds

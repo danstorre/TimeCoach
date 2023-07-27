@@ -1,6 +1,6 @@
 import Foundation
 
-public enum TimerState {
+public enum TimerCoutdownState {
     case pause
     case running
     case stop
@@ -9,7 +9,7 @@ public enum TimerState {
 public protocol TimerCoutdown {
     
     var currentSetElapsedTime: TimeInterval { get }
-    var state: TimerState { get }
+    var state: TimerCoutdownState { get }
     
     typealias Result = Swift.Result<LocalElapsedSeconds, Error>
     typealias StartCoundownCompletion = (Result) -> Void
