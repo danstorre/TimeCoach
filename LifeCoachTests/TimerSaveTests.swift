@@ -8,14 +8,14 @@ class LocalTimer {
     }
     
     func save(elapsedSeconds: ElapsedSeconds) {
-        store.deleteElapsedSeconds()
+        store.deleteState()
     }
 }
 
 class LocaTimerSpy {
     private(set) var deleteMessageCount = 0
     
-    func deleteElapsedSeconds() {
+    func deleteState() {
         deleteMessageCount += 1
     }
 }
@@ -28,7 +28,7 @@ final class TimerSaveStateUseCaseTests: XCTestCase {
         XCTAssertEqual(spy.deleteMessageCount, 0)
     }
     
-    func test_save_sendsDeleteMessageToStore() {
+    func test_save_sendsDeleteStateMessageToStore() {
         let anyElapsedSeconds = makeAnyLocalElapsedSeconds()
         let spy = LocaTimerSpy()
         let sut = LocalTimer(store: spy)
