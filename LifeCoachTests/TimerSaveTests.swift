@@ -69,16 +69,14 @@ class LocaTimerSpy {
 
 final class TimerSaveStateUseCaseTests: XCTestCase {
     func test_init_doesNotSendDeleteCommandToStore() {
-        let spy = LocaTimerSpy()
-        let _ = LocalTimer(store: spy)
+        let (_, spy) = makeSUT()
         
         XCTAssertEqual(spy.deleteMessageCount, 0)
     }
     
     func test_save_sendsDeleteStateMessageToStore() {
         let anyElapsedSeconds = makeAnyLocalElapsedSeconds()
-        let spy = LocaTimerSpy()
-        let sut = LocalTimer(store: spy)
+        let (sut, spy) = makeSUT()
         
         try? sut.save(elapsedSeconds: anyElapsedSeconds.model)
         
@@ -88,8 +86,7 @@ final class TimerSaveStateUseCaseTests: XCTestCase {
     func test_save_onStoreDeletionErrorShouldDeliverError() {
         let anyElapsedSeconds = makeAnyLocalElapsedSeconds()
         let expectedError = anyNSError()
-        let spy = LocaTimerSpy()
-        let sut = LocalTimer(store: spy)
+        let (sut, spy) = makeSUT()
         spy.failDeletion(with: expectedError)
         
         do {
@@ -102,8 +99,7 @@ final class TimerSaveStateUseCaseTests: XCTestCase {
     func test_save_onStoreDeletionSucces_sendMessageInsertionWithCorrectStateToStore() {
         let anyElapsedSeconds = makeAnyLocalElapsedSeconds()
         let expectedLocalState = LocalTimerState(localElapsedSeconds: anyElapsedSeconds.local)
-        let spy = LocaTimerSpy()
-        let sut = LocalTimer(store: spy)
+        let (sut, spy) = makeSUT()
         spy.completesDeletionSuccessfully()
         
         try? sut.save(elapsedSeconds: anyElapsedSeconds.model)
@@ -112,6 +108,16 @@ final class TimerSaveStateUseCaseTests: XCTestCase {
     }
     
     // MARK:- Helper Methods
+    private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> (sut: LocalTimer, spy: LocaTimerSpy) {
+        let spy = LocaTimerSpy()
+        let sut = LocalTimer(store: spy)
+        
+        trackForMemoryLeak(instance: sut, file: file, line: line)
+        trackForMemoryLeak(instance: spy, file: file, line: line)
+        
+        return (sut, spy)
+    }
+    
     private func makeAnyLocalElapsedSeconds(seconds: TimeInterval = 1,
                                             startDate: Date = Date(),
                                             endDate: Date = Date()) -> (model: ElapsedSeconds, local: LocalElapsedSeconds) {
