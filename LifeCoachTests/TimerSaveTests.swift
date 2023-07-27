@@ -42,7 +42,7 @@ extension LocalTimerState: CustomStringConvertible {
 class LocaTimerSpy {
     private(set) var deleteMessageCount = 0
     private(set) var receivedMessages = [AnyMessage]()
-    private var deletionError: Error?
+    private var deletionResult: Result<Void, Error>?
     
     enum AnyMessage: Equatable, CustomStringConvertible {
         case deleteState
@@ -61,17 +61,15 @@ class LocaTimerSpy {
     func deleteState() throws {
         deleteMessageCount += 1
         receivedMessages.append(.deleteState)
-        if let deletionError = deletionError {
-            throw deletionError
-        }
+        try deletionResult?.get()
     }
     
     func failDeletion(with error: NSError) {
-        deletionError = error
+        deletionResult = .failure(error)
     }
     
     func completesDeletionSuccessfully() {
-        
+        deletionResult = .success(())
     }
     
     func insert(state: LocalTimerState) {
