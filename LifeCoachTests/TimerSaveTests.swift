@@ -12,7 +12,7 @@ class LocalTimer {
     }
     
     func save(state: TimerState) throws {
-        store.deleteState()
+        try store.deleteState()
         store.insert(state: state.local)
     }
 }
@@ -41,8 +41,8 @@ extension LocalTimerState: CustomStringConvertible {
 
 class LocaTimerSpy {
     private(set) var deleteMessageCount = 0
-    
     private(set) var receivedMessages = [AnyMessage]()
+    private var deletionError: Error?
     
     enum AnyMessage: Equatable, CustomStringConvertible {
         case deleteState
@@ -58,14 +58,16 @@ class LocaTimerSpy {
         }
     }
     
-    func deleteState() {
+    func deleteState() throws {
         deleteMessageCount += 1
-        
         receivedMessages.append(.deleteState)
+        if let deletionError = deletionError {
+            throw deletionError
+        }
     }
     
     func failDeletion(with error: NSError) {
-        
+        deletionError = error
     }
     
     func completesDeletionSuccessfully() {
@@ -81,16 +83,18 @@ final class TimerSaveStateUseCaseTests: XCTestCase {
     func test_init_doesNotSendDeleteCommandToStore() {
         let (_, spy) = makeSUT()
         
-        XCTAssertEqual(spy.deleteMessageCount, 0)
+        XCTAssertEqual(spy.receivedMessages, [])
     }
     
-    func test_save_sendsDeleteStateMessageToStore() {
+    func test_save_onStoreDeletionError_doesNotSendInsertionMessageToStore() {
         let anyTimerState = makeAnyState()
+        let expectedError = anyNSError()
         let (sut, spy) = makeSUT()
+        spy.failDeletion(with: expectedError)
         
         try? sut.save(state: anyTimerState.model)
         
-        XCTAssertEqual(spy.deleteMessageCount, 1)
+        XCTAssertEqual(spy.receivedMessages, [.deleteState])
     }
     
     func test_save_onStoreDeletionErrorShouldDeliverError() {
