@@ -1,49 +1,8 @@
 import XCTest
 import LifeCoach
 
-struct TimerState {
-    let elapsedSeconds: ElapsedSeconds
-}
-
-protocol LocalTimerStore {
-    func deleteState() throws
-    func insert(state: LocalTimerState) throws
-}
-
-protocol SaveTimerState {
-    func save(state: TimerState) throws
-}
-
-class LocalTimer: SaveTimerState {
-    private let store: LocalTimerStore
-    init(store: LocalTimerStore) {
-        self.store = store
-    }
-    
-    func save(state: TimerState) throws {
-        try store.deleteState()
-        try store.insert(state: state.local)
-    }
-}
-
-extension ElapsedSeconds {
-    var local: LocalElapsedSeconds {
-        LocalElapsedSeconds(elapsedSeconds, startDate: startDate, endDate: endDate)
-    }
-}
-
-extension TimerState {
-    var local: LocalTimerState {
-        LocalTimerState(localElapsedSeconds: elapsedSeconds.local)
-    }
-}
-
-struct LocalTimerState: Equatable {
-    let localElapsedSeconds: LocalElapsedSeconds
-}
-
 extension LocalTimerState: CustomStringConvertible {
-    var description: String {
+    public var description: String {
         "localState: \(localElapsedSeconds)"
     }
 }
