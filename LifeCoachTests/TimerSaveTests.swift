@@ -10,7 +10,11 @@ protocol LocalTimerStore {
     func insert(state: LocalTimerState) throws
 }
 
-class LocalTimer {
+protocol SaveTimerState {
+    func save(state: TimerState) throws
+}
+
+class LocalTimer: SaveTimerState {
     private let store: LocalTimerStore
     init(store: LocalTimerStore) {
         self.store = store
@@ -101,7 +105,7 @@ final class TimerSaveStateUseCaseTests: XCTestCase {
     }
     
     // MARK:- Helper Methods
-    private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> (sut: LocalTimer, spy: LocaTimerSpy) {
+    private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> (sut: SaveTimerState, spy: LocaTimerSpy) {
         let spy = LocaTimerSpy()
         let sut = LocalTimer(store: spy)
         
@@ -111,7 +115,7 @@ final class TimerSaveStateUseCaseTests: XCTestCase {
         return (sut, spy)
     }
     
-    private func expect(_ sut: LocalTimer, toFinishWithError expectedError: NSError?, when action: () -> Void,
+    private func expect(_ sut: SaveTimerState, toFinishWithError expectedError: NSError?, when action: () -> Void,
                         file: StaticString = #filePath, line: UInt = #line) {
         action()
         
