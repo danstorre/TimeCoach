@@ -81,6 +81,10 @@ class LocaTimerSpy {
     func failInsertion(with error: NSError) {
         insertionResult = .failure(error)
     }
+    
+    func completesInsertionSuccesfully() {
+        insertionResult = .success(())
+    }
 }
 
 final class TimerSaveStateUseCaseTests: XCTestCase {
@@ -105,7 +109,7 @@ final class TimerSaveStateUseCaseTests: XCTestCase {
         let expectedError = anyNSError()
         let (sut, spy) = makeSUT()
         
-        expect(sut, toFailWith: expectedError, when: {
+        expect(sut, toFinishWithError: expectedError, when: {
             spy.failDeletion(with: expectedError)
         })
     }
@@ -124,9 +128,18 @@ final class TimerSaveStateUseCaseTests: XCTestCase {
         let expectedError = anyNSError()
         let (sut, spy) = makeSUT()
         
-        expect(sut, toFailWith: expectedError, when: {
+        expect(sut, toFinishWithError: expectedError, when: {
             spy.completesDeletionSuccessfully()
             spy.failInsertion(with: expectedError)
+        })
+    }
+    
+    func test_save_deliversSuccesOnDeletionAndInsertionSuccess() {
+        let (sut, spy) = makeSUT()
+        
+        expect(sut, toFinishWithError: .none, when: {
+            spy.completesDeletionSuccessfully()
+            spy.completesInsertionSuccesfully()
         })
     }
     
@@ -141,7 +154,7 @@ final class TimerSaveStateUseCaseTests: XCTestCase {
         return (sut, spy)
     }
     
-    private func expect(_ sut: LocalTimer, toFailWith expectedError: NSError, when action: () -> Void,
+    private func expect(_ sut: LocalTimer, toFinishWithError expectedError: NSError?, when action: () -> Void,
                         file: StaticString = #filePath, line: UInt = #line) {
         action()
         
