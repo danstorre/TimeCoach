@@ -59,6 +59,7 @@ class LocaTimerSpy {
         }
     }
     
+    // MARK: State Deletion
     func deleteState() throws {
         deleteMessageCount += 1
         receivedMessages.append(.deleteState)
@@ -73,6 +74,7 @@ class LocaTimerSpy {
         deletionResult = .success(())
     }
     
+    // MARK: State Insertion
     func insert(state: LocalTimerState) throws {
         receivedMessages.append(.insert(state: state))
         try insertionResult?.get()
