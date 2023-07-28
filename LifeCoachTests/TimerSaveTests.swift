@@ -102,16 +102,12 @@ final class TimerSaveStateUseCaseTests: XCTestCase {
     }
     
     func test_save_onStoreDeletionErrorShouldDeliverError() {
-        let anyTimerState = makeAnyState()
         let expectedError = anyNSError()
         let (sut, spy) = makeSUT()
-        spy.failDeletion(with: expectedError)
         
-        do {
-            try sut.save(state: anyTimerState.model)
-        } catch {
-            XCTAssertEqual(error as NSError, expectedError)
-        }
+        expect(sut, toFailWith: expectedError, when: {
+            spy.failDeletion(with: expectedError)
+        })
     }
     
     func test_save_onStoreDeletionSucces_sendMessageInsertionWithCorrectStateToStore() {
@@ -125,17 +121,13 @@ final class TimerSaveStateUseCaseTests: XCTestCase {
     }
     
     func test_save_OnStoreInsertionErrorShouldDeliverError() {
-        let anyTimerState = makeAnyState()
         let expectedError = anyNSError()
         let (sut, spy) = makeSUT()
-        spy.failInsertion(with: expectedError)
         
-        do {
-            try sut.save(state: anyTimerState.model)
-            XCTFail("should have failed insertion with \(expectedError)")
-        } catch {
-            XCTAssertEqual(error as NSError, expectedError)
-        }
+        expect(sut, toFailWith: expectedError, when: {
+            spy.completesDeletionSuccessfully()
+            spy.failInsertion(with: expectedError)
+        })
     }
     
     // MARK:- Helper Methods
@@ -147,6 +139,17 @@ final class TimerSaveStateUseCaseTests: XCTestCase {
         trackForMemoryLeak(instance: spy, file: file, line: line)
         
         return (sut, spy)
+    }
+    
+    private func expect(_ sut: LocalTimer, toFailWith expectedError: NSError, when action: () -> Void,
+                        file: StaticString = #filePath, line: UInt = #line) {
+        action()
+        
+        do {
+            try sut.save(state: makeAnyState().model)
+        } catch {
+            XCTAssertEqual(error as NSError, expectedError, file: file, line: line)
+        }
     }
     
     private func makeAnyState(seconds: TimeInterval = 1,
