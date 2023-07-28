@@ -5,9 +5,14 @@ struct TimerState {
     let elapsedSeconds: ElapsedSeconds
 }
 
+protocol LocalTimerStore {
+    func deleteState() throws
+    func insert(state: LocalTimerState) throws
+}
+
 class LocalTimer {
-    private let store: LocaTimerSpy
-    init(store: LocaTimerSpy) {
+    private let store: LocalTimerStore
+    init(store: LocalTimerStore) {
         self.store = store
     }
     
@@ -39,7 +44,7 @@ extension LocalTimerState: CustomStringConvertible {
     }
 }
 
-class LocaTimerSpy {
+class LocaTimerSpy: LocalTimerStore {
     private(set) var deleteMessageCount = 0
     private(set) var receivedMessages = [AnyMessage]()
     private var deletionResult: Result<Void, Error>?
