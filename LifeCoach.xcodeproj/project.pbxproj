@@ -564,7 +564,6 @@
 				FBDBAC4929762AE5009E440A /* FoundationTimerCountdown+TimerSave.swift */,
 				FBDBAC4B29762AFE009E440A /* FoundationTimerCountdown+TimerLoad.swift */,
 				FBD56F642A3BD489002736AD /* LocalElapsedSeconds.swift */,
-				FBD56F662A3CE66F002736AD /* LocalElapsedSeconds+Extensions.swift */,
 				FBE336A62A3D6CC200735D74 /* FoundationTimerCountdown.swift */,
 			);
 			path = "Timer Pomodoro Infrastructure";
@@ -777,6 +776,7 @@
 		FBD822552A7566CC002702F4 /* Timer Store Infrastructure */ = {
 			isa = PBXGroup;
 			children = (
+				FBD56F662A3CE66F002736AD /* LocalElapsedSeconds+Extensions.swift */,
 				FBD822532A75667C002702F4 /* LocalTimer.swift */,
 				FBD822562A756704002702F4 /* LocalTimerStore.swift */,
 			);

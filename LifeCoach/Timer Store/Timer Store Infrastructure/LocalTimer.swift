@@ -1,7 +1,7 @@
 import Foundation
 
 public protocol LoadTimerState {
-    func load() throws
+    func load() throws -> TimerState
 }
 
 public class LocalTimer: SaveTimerState, LoadTimerState {
@@ -16,8 +16,8 @@ public class LocalTimer: SaveTimerState, LoadTimerState {
         try store.insert(state: state.local)
     }
     
-    public func load() throws {
-        try store.retrieve()
+    public func load() throws -> TimerState {
+        try store.retrieve().toModel
     }
 }
 
@@ -30,5 +30,11 @@ private extension ElapsedSeconds {
 private extension TimerState {
     var local: LocalTimerState {
         LocalTimerState(localElapsedSeconds: elapsedSeconds.local)
+    }
+}
+
+private extension LocalTimerState {
+    var toModel: TimerState {
+        TimerState(elapsedSeconds: localElapsedSeconds.toElapseSeconds)
     }
 }

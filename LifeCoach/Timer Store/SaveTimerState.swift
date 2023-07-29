@@ -1,6 +1,6 @@
 import Foundation
 
-public struct TimerState {
+public struct TimerState: Equatable {
     let elapsedSeconds: ElapsedSeconds
     
     public init(elapsedSeconds: ElapsedSeconds) {
