@@ -103,6 +103,7 @@
 		FBD822522A73406F002702F4 /* SaveTimerState.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD822512A73406F002702F4 /* SaveTimerState.swift */; };
 		FBD822542A75667C002702F4 /* LocalTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD822532A75667C002702F4 /* LocalTimer.swift */; };
 		FBD822572A756704002702F4 /* LocalTimerStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD822562A756704002702F4 /* LocalTimerStore.swift */; };
+		FBD8225B2A75A6E3002702F4 /* TimerLoadTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD8225A2A75A6E3002702F4 /* TimerLoadTests.swift */; };
 		FBDBAC4629762AC7009E440A /* TimerSave.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDBAC4529762AC7009E440A /* TimerSave.swift */; };
 		FBDBAC4829762AD1009E440A /* TimerLoad.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDBAC4729762AD1009E440A /* TimerLoad.swift */; };
 		FBDBAC4A29762AE5009E440A /* FoundationTimerCountdown+TimerSave.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDBAC4929762AE5009E440A /* FoundationTimerCountdown+TimerSave.swift */; };
@@ -340,6 +341,7 @@
 		FBD822512A73406F002702F4 /* SaveTimerState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveTimerState.swift; sourceTree = "<group>"; };
 		FBD822532A75667C002702F4 /* LocalTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalTimer.swift; sourceTree = "<group>"; };
 		FBD822562A756704002702F4 /* LocalTimerStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalTimerStore.swift; sourceTree = "<group>"; };
+		FBD8225A2A75A6E3002702F4 /* TimerLoadTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerLoadTests.swift; sourceTree = "<group>"; };
 		FBDBAC4529762AC7009E440A /* TimerSave.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerSave.swift; sourceTree = "<group>"; };
 		FBDBAC4729762AD1009E440A /* TimerLoad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerLoad.swift; sourceTree = "<group>"; };
 		FBDBAC4929762AE5009E440A /* FoundationTimerCountdown+TimerSave.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FoundationTimerCountdown+TimerSave.swift"; sourceTree = "<group>"; };
@@ -733,11 +735,11 @@
 			isa = PBXGroup;
 			children = (
 				FBC9ADAD2919E8A700E0BEFC /* Helpers */,
+				FBD8225C2A75A6E8002702F4 /* Timer Store */,
 				FB960C74293D484000ECBAD5 /* TimerPresentationTests.swift */,
 				FBD56F6A2A3CEF33002736AD /* PomodoroUseCaseTests.swift */,
 				FBD56F772A3D184C002736AD /* FoundationTimerCountdownTests.swift */,
 				FB594CA52A4E1E5100C4A32C /* TImerControlsPresentationTests.swift */,
-				FBBA19582A71EFA700240081 /* TimerSaveTests.swift */,
 			);
 			path = LifeCoachTests;
 			sourceTree = "<group>";
@@ -773,6 +775,15 @@
 				FBD822562A756704002702F4 /* LocalTimerStore.swift */,
 			);
 			path = "Timer Store Infrastructure";
+			sourceTree = "<group>";
+		};
+		FBD8225C2A75A6E8002702F4 /* Timer Store */ = {
+			isa = PBXGroup;
+			children = (
+				FBBA19582A71EFA700240081 /* TimerSaveTests.swift */,
+				FBD8225A2A75A6E3002702F4 /* TimerLoadTests.swift */,
+			);
+			path = "Timer Store";
 			sourceTree = "<group>";
 		};
 		FBE6465B2A4AA2D2005022A2 /* Helpers */ = {
@@ -1387,6 +1398,7 @@
 				FB960C75293D484000ECBAD5 /* TimerPresentationTests.swift in Sources */,
 				FBBA19592A71EFA700240081 /* TimerSaveTests.swift in Sources */,
 				FBE6465E2A4AA59F005022A2 /* FoundationTimerCountdownTests.swift in Sources */,
+				FBD8225B2A75A6E3002702F4 /* TimerLoadTests.swift in Sources */,
 				FB594CA62A4E1E5100C4A32C /* TImerControlsPresentationTests.swift in Sources */,
 				FBD56F6B2A3CEF33002736AD /* PomodoroUseCaseTests.swift in Sources */,
 			);
