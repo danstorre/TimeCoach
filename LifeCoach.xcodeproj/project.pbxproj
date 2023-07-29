@@ -571,7 +571,6 @@
 			children = (
 				FBD822552A7566CC002702F4 /* Timer Store Infrastructure */,
 				FBD822512A73406F002702F4 /* SaveTimerState.swift */,
-				FBD822532A75667C002702F4 /* LocalTimer.swift */,
 				FBDBAC4529762AC7009E440A /* TimerSave.swift */,
 				FBDBAC4729762AD1009E440A /* TimerLoad.swift */,
 			);
@@ -772,6 +771,7 @@
 		FBD822552A7566CC002702F4 /* Timer Store Infrastructure */ = {
 			isa = PBXGroup;
 			children = (
+				FBD822532A75667C002702F4 /* LocalTimer.swift */,
 				FBD822562A756704002702F4 /* LocalTimerStore.swift */,
 			);
 			path = "Timer Store Infrastructure";
