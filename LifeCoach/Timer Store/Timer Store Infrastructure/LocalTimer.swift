@@ -1,6 +1,10 @@
 import Foundation
 
-public class LocalTimer: SaveTimerState {
+public protocol LoadTimerState {
+    func load()
+}
+
+public class LocalTimer: SaveTimerState, LoadTimerState {
     private let store: LocalTimerStore
     
     public init(store: LocalTimerStore) {
@@ -10,6 +14,10 @@ public class LocalTimer: SaveTimerState {
     public func save(state: TimerState) throws {
         try store.deleteState()
         try store.insert(state: state.local)
+    }
+    
+    public func load() {
+        store.retrieve()
     }
 }
 

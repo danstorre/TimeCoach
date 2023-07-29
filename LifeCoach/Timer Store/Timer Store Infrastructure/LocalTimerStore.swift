@@ -1,6 +1,7 @@
 import Foundation
 
 public protocol LocalTimerStore {
+    func retrieve()
     func deleteState() throws
     func insert(state: LocalTimerState) throws
 }
