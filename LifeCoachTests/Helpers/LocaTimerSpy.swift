@@ -6,6 +6,7 @@ class LocaTimerSpy: LocalTimerStore {
     private(set) var receivedMessages = [AnyMessage]()
     private var deletionResult: Result<Void, Error>?
     private var insertionResult: Result<Void, Error>?
+    private var retrieveResult: Result<Void, Error>?
     
     enum AnyMessage: Equatable, CustomStringConvertible {
         case deleteState
@@ -53,7 +54,12 @@ class LocaTimerSpy: LocalTimerStore {
         insertionResult = .success(())
     }
     
-    func retrieve() {
+    func retrieve() throws {
         receivedMessages.append(.retrieve)
+        try retrieveResult?.get()
+    }
+    
+    func failRetrieve(with error: NSError) {
+        retrieveResult = .failure(error)
     }
 }

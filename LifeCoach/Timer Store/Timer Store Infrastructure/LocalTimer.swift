@@ -1,7 +1,7 @@
 import Foundation
 
 public protocol LoadTimerState {
-    func load()
+    func load() throws
 }
 
 public class LocalTimer: SaveTimerState, LoadTimerState {
@@ -16,8 +16,8 @@ public class LocalTimer: SaveTimerState, LoadTimerState {
         try store.insert(state: state.local)
     }
     
-    public func load() {
-        store.retrieve()
+    public func load() throws {
+        try store.retrieve()
     }
 }
 

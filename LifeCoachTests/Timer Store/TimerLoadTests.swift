@@ -11,9 +11,23 @@ final class TimerLoadTests: XCTestCase {
     func test_load_sendRetrieveMessageToStore() {
         let (sut, spy) = makeSUT()
         
-        sut.load()
+        try? sut.load()
         
         XCTAssertEqual(spy.receivedMessages, [.retrieve])
+    }
+    
+    func test_load_onStoreRetrieveFailure_DeliversError() {
+        let (sut, spy) = makeSUT()
+        let expectedError = anyNSError()
+        spy.failRetrieve(with: expectedError)
+        
+        do {
+            try sut.load()
+            
+            XCTFail("Should have throw an error: \(expectedError).")
+        } catch {
+            XCTAssertEqual(error as NSError, expectedError)
+        }
     }
     
     // MARK:- Helper Methods

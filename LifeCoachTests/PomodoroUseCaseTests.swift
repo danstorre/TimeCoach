@@ -174,10 +174,6 @@ final class PomodoroUseCaseTests: XCTestCase {
         return (sut, spy)
     }
     
-    private func anyNSError() -> NSError {
-        NSError(domain: "any", code: 1)
-    }
-    
     private class TimerSpy: TimerCoutdown {
         var currentSetElapsedTime: TimeInterval { 0 }
         var state: LifeCoach.TimerCoutdownState { .pause }
