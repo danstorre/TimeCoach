@@ -8,7 +8,7 @@ public class PomodoroTimer: RegularTimer {
         case timerError
     }
     
-    public typealias Result = Swift.Result<ElapsedSeconds, Error>
+    public typealias Result = Swift.Result<TimerSet, Error>
     
     public init(timer: TimerCoutdown, timeReceiver: @escaping (Result) -> Void) {
         self.timer = timer

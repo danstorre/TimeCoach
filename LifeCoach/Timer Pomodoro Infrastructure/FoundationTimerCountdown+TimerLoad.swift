@@ -8,7 +8,7 @@ extension FoundationTimerCountdown: TimerLoad {
         let startDate = currentSet.startDate
         let finishDate = currentSet.endDate
         timerDelivery?(
-            .success(LocalElapsedSeconds(elapsedTimeInterval, startDate: startDate, endDate: finishDate))
+            .success(LocalTimerSet(elapsedTimeInterval, startDate: startDate, endDate: finishDate))
         )
         startCountdown(completion: timerDelivery ?? { _ in })
         self.timeAtSave = nil

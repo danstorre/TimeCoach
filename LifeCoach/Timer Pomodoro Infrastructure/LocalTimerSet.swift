@@ -1,6 +1,6 @@
 import Foundation
 
-public struct LocalElapsedSeconds: Equatable {
+public struct LocalTimerSet: Equatable {
     public let elapsedSeconds: TimeInterval
     public let startDate: Date
     public let endDate: Date

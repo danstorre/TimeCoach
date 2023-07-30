@@ -28,7 +28,7 @@ public class TimerViewModel: ObservableObject {
         self.isBreak = isBreak
     }
     
-    public func delivered(elapsedTime: ElapsedSeconds) {
+    public func delivered(elapsedTime: TimerSet) {
         hasFinished = false
         let startDate = elapsedTime.startDate
         let endDate = elapsedTime.endDate.adding(seconds: -elapsedTime.elapsedSeconds)
@@ -43,7 +43,7 @@ public class TimerViewModel: ObservableObject {
         currentTimerString = makeTimerFormatter().string(from: startDate, to: endDate)!
     }
     
-    private func makeStringFrom(startDate: Date, endDate: Date, elapsedTime: ElapsedSeconds) -> String {
+    private func makeStringFrom(startDate: Date, endDate: Date, elapsedTime: TimerSet) -> String {
         switch mode {
         case .none:
             return "--:--"

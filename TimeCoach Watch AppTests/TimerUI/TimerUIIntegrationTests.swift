@@ -124,13 +124,13 @@ final class TimerUIIntegrationTests: XCTestCase {
             }
         }
         
-        typealias PlayPublisher = CurrentValueSubject<ElapsedSeconds, Error>
-        typealias SkipPublisher = CurrentValueSubject<ElapsedSeconds, Error>
+        typealias PlayPublisher = CurrentValueSubject<TimerSet, Error>
+        typealias SkipPublisher = CurrentValueSubject<TimerSet, Error>
         typealias StopPublisher = CurrentValueSubject<Void, Error>
         typealias PausePublisher = CurrentValueSubject<Void, Error>
         typealias IsPlayingPublisher = CurrentValueSubject<Bool, Never>
         
-        func play() -> AnyPublisher<ElapsedSeconds, Error> {
+        func play() -> AnyPublisher<TimerSet, Error> {
             let elapsed = makeElapsedSeconds(0, startDate: Date(), endDate: Date())
             return PlayPublisher(elapsed).map { elapsed in
                 self.isPlaying = true
@@ -139,7 +139,7 @@ final class TimerUIIntegrationTests: XCTestCase {
             }.eraseToAnyPublisher()
         }
         
-        func skip() -> AnyPublisher<ElapsedSeconds, Error> {
+        func skip() -> AnyPublisher<TimerSet, Error> {
             let elapsedTime = makeElapsedSeconds(0, startDate: Date(), endDate: Date())
             return SkipPublisher(elapsedTime).map { elapsed in
                 self.isPlaying = false
@@ -180,6 +180,6 @@ private func makeElapsedSeconds(
     _ seconds: TimeInterval,
     startDate: Date,
     endDate: Date
-) -> ElapsedSeconds {
-    ElapsedSeconds(seconds, startDate: startDate, endDate: endDate)
+) -> TimerSet {
+    TimerSet(seconds, startDate: startDate, endDate: endDate)
 }

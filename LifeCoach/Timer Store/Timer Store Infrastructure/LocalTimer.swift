@@ -21,9 +21,9 @@ public class LocalTimer: SaveTimerState, LoadTimerState {
     }
 }
 
-private extension ElapsedSeconds {
-    var local: LocalElapsedSeconds {
-        LocalElapsedSeconds(elapsedSeconds, startDate: startDate, endDate: endDate)
+private extension TimerSet {
+    var local: LocalTimerSet {
+        LocalTimerSet(elapsedSeconds, startDate: startDate, endDate: endDate)
     }
 }
 

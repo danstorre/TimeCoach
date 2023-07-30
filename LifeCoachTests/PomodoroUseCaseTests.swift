@@ -150,15 +150,15 @@ final class PomodoroUseCaseTests: XCTestCase {
         }
     }
     
-    private func createAnyLocalElapsedSeconds() -> LocalElapsedSeconds {
-        LocalElapsedSeconds(1, startDate: Date(), endDate: Date())
+    private func createAnyLocalElapsedSeconds() -> LocalTimerSet {
+        LocalTimerSet(1, startDate: Date(), endDate: Date())
     }
     
     private func makeDeliveredTime(_ elapsedSeconds: TimeInterval,
                                    startDate: Date,
-                                   endDate: Date) -> (model: ElapsedSeconds, local: LocalElapsedSeconds) {
-        let model = ElapsedSeconds(elapsedSeconds, startDate: startDate, endDate: endDate)
-        let local = LocalElapsedSeconds(elapsedSeconds, startDate: startDate, endDate: endDate)
+                                   endDate: Date) -> (model: TimerSet, local: LocalTimerSet) {
+        let model = TimerSet(elapsedSeconds, startDate: startDate, endDate: endDate)
+        let local = LocalTimerSet(elapsedSeconds, startDate: startDate, endDate: endDate)
         return (model, local)
     }
     
@@ -206,7 +206,7 @@ final class PomodoroUseCaseTests: XCTestCase {
             startCountdownCompletions[index](.failure(error))
         }
         
-        func startDelivers(time localTime: LocalElapsedSeconds, at index: Int = 0) {
+        func startDelivers(time localTime: LocalTimerSet, at index: Int = 0) {
             startCountdownCompletions[index](.success(localTime))
         }
         
@@ -233,7 +233,7 @@ final class PomodoroUseCaseTests: XCTestCase {
             skipCountdownCompletions[index](.failure(error))
         }
         
-        func skipDelivers(time localTime: LocalElapsedSeconds, at index: Int = 0) {
+        func skipDelivers(time localTime: LocalTimerSet, at index: Int = 0) {
             skipCountdownCompletions[index](.success(localTime))
         }
     }

@@ -8,8 +8,8 @@ class TimerNotificationScheduler {
         self.scheduler = scheduler
     }
     
-    func scheduleNotification(from elapsedSeconds: ElapsedSeconds) {
-        scheduler.setSchedule(at: elapsedSeconds.endDate)
+    func scheduleNotification(from set: TimerSet) {
+        scheduler.setSchedule(at: set.endDate)
     }
 }
 
@@ -39,7 +39,7 @@ final class TimerNotificationsTests: XCTestCase {
     func test_scheduleNotification_onSameDateAsStartDate_shouldSendMessageToSchedulerWithCorrectValues() {
         let startDate = Date()
         let endDate = startDate.adding(seconds: 1)
-        let elapsedSeconds = ElapsedSeconds(0, startDate: startDate, endDate: endDate)
+        let elapsedSeconds = TimerSet(0, startDate: startDate, endDate: endDate)
         let spy = Spy()
         let sut = TimerNotificationScheduler(scheduler: spy)
         

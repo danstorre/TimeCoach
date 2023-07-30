@@ -33,7 +33,7 @@ extension TimeCoachRoot {
     }
     
     static func createFirstValuePublisher(from date: Date) -> RegularTimer.CurrentValuePublisher {
-        CurrentValueSubject<ElapsedSeconds, Error>(ElapsedSeconds(0,
+        CurrentValueSubject<TimerSet, Error>(TimerSet(0,
                                                                   startDate: date,
                                                                   endDate: date.adding(seconds: .pomodoroInSeconds)))
     }

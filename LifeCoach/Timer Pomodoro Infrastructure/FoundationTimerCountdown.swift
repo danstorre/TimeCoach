@@ -1,13 +1,13 @@
 import Foundation
 
 public final class FoundationTimerCountdown: TimerCoutdown {
-    public typealias StartCoundownCompletion = (Result<LocalElapsedSeconds, Error>) -> Void
-    public typealias SkipCoundownCompletion = (Result<LocalElapsedSeconds, Error>) -> Void
+    public typealias StartCoundownCompletion = (Result<LocalTimerSet, Error>) -> Void
+    public typealias SkipCoundownCompletion = (Result<LocalTimerSet, Error>) -> Void
     
     public private(set) var state: TimerCoutdownState = .stop
-    private var setA: LocalElapsedSeconds
-    private var setB: LocalElapsedSeconds
-    var currentSet: LocalElapsedSeconds
+    private var setA: LocalTimerSet
+    private var setB: LocalTimerSet
+    var currentSet: LocalTimerSet
     var elapsedTimeInterval: TimeInterval = 0
     private let incrementing: Double
     var timerDelivery: StartCoundownCompletion?
@@ -19,7 +19,7 @@ public final class FoundationTimerCountdown: TimerCoutdown {
         elapsedTimeInterval
     }
     
-    public init(startingSet: LocalElapsedSeconds, nextSet: LocalElapsedSeconds, incrementing: Double = 1.0) {
+    public init(startingSet: LocalTimerSet, nextSet: LocalTimerSet, incrementing: Double = 1.0) {
         self.setA = startingSet
         self.setB = nextSet
         self.currentSet = startingSet
@@ -91,8 +91,8 @@ public final class FoundationTimerCountdown: TimerCoutdown {
     }
 }
 
-public extension LocalElapsedSeconds {
-    func addingElapsedSeconds(_ seconds: Double) -> LocalElapsedSeconds {
-        LocalElapsedSeconds(elapsedSeconds + Double(seconds), startDate: startDate, endDate: endDate)
+public extension LocalTimerSet {
+    func addingElapsedSeconds(_ seconds: Double) -> LocalTimerSet {
+        LocalTimerSet(elapsedSeconds + Double(seconds), startDate: startDate, endDate: endDate)
     }
 }

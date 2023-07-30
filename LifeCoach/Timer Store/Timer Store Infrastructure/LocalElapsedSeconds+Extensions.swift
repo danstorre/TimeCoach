@@ -1,7 +1,7 @@
 import Foundation
 
-extension LocalElapsedSeconds {
-    public var toElapseSeconds: ElapsedSeconds {
-        ElapsedSeconds(elapsedSeconds, startDate: startDate, endDate: endDate)
+extension LocalTimerSet {
+    public var toElapseSeconds: TimerSet {
+        TimerSet(elapsedSeconds, startDate: startDate, endDate: endDate)
     }
 }

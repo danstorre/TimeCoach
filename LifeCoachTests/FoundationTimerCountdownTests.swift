@@ -105,10 +105,10 @@ final class FoundationTimerCountdownTests: XCTestCase {
     
     func test_stop_afterStartCountdown_deliversCurrentSet() {
         let fixedDate = Date()
-        let startSet = LocalElapsedSeconds(0, startDate: fixedDate, endDate: fixedDate.adding(seconds: 0.002))
+        let startSet = LocalTimerSet(0, startDate: fixedDate, endDate: fixedDate.adding(seconds: 0.002))
         let sut = makeSUT(startingSet: startSet, nextSet: createAnyTimerSet(), incrementing: 0.001)
         
-        var receivedElapsedSeconds = [LocalElapsedSeconds]()
+        var receivedElapsedSeconds = [LocalTimerSet]()
         
         sut.startCountdown() { result in
             if case let .success(elapsedSeconds) = result {
@@ -174,8 +174,8 @@ final class FoundationTimerCountdownTests: XCTestCase {
     }
     
     // MARK: - Helpers
-    private func receivedElapsedSecondsOnSkip(from sut: TimerCoutdown) -> [LocalElapsedSeconds] {
-        var receivedElapsedSeconds = [LocalElapsedSeconds]()
+    private func receivedElapsedSecondsOnSkip(from sut: TimerCoutdown) -> [LocalTimerSet] {
+        var receivedElapsedSeconds = [LocalTimerSet]()
         let expectation = expectation(description: "wait for skip countdown to deliver time.")
         sut.skipCountdown() { result in
             if case let .success(deliveredElapsedSeconds) = result {
@@ -187,8 +187,8 @@ final class FoundationTimerCountdownTests: XCTestCase {
         return receivedElapsedSeconds
     }
     
-    private func receivedElapsedSecondsOnRunningState(from sut: TimerCoutdown, when action: () -> Void) -> [LocalElapsedSeconds] {
-        var receivedElapsedSeconds = [LocalElapsedSeconds]()
+    private func receivedElapsedSecondsOnRunningState(from sut: TimerCoutdown, when action: () -> Void) -> [LocalTimerSet] {
+        var receivedElapsedSeconds = [LocalTimerSet]()
         sut.startCountdown() { result in
             if case let .success(deliveredElapsedSeconds) = result {
                 receivedElapsedSeconds.append(deliveredElapsedSeconds)
@@ -212,7 +212,7 @@ final class FoundationTimerCountdownTests: XCTestCase {
         XCTAssertEqual(sut.state, .running)
     }
     
-    private func makeSUT(startingSet: LocalElapsedSeconds, nextSet: LocalElapsedSeconds,
+    private func makeSUT(startingSet: LocalTimerSet, nextSet: LocalTimerSet,
                          incrementing: Double = 0.001,
                          file: StaticString = #filePath,
                          line: UInt = #line) -> TimerCoutdown {
@@ -223,12 +223,12 @@ final class FoundationTimerCountdownTests: XCTestCase {
         return sut
     }
     
-    private func expect(sut: TimerCoutdown, toDeliver deliverExpectation: [LocalElapsedSeconds],
+    private func expect(sut: TimerCoutdown, toDeliver deliverExpectation: [LocalTimerSet],
                         andChangesStateTo expectedState: TimerCoutdownState,
                         andElapsedTime expectedElapsedTime: TimeInterval,
                         file: StaticString = #filePath,
                         line: UInt = #line) {
-        var receivedElapsedSeconds = [LocalElapsedSeconds]()
+        var receivedElapsedSeconds = [LocalTimerSet]()
         let expectation = expectation(description: "wait for start countdown to deliver time.")
         expectation.expectedFulfillmentCount = deliverExpectation.count
         
@@ -247,12 +247,12 @@ final class FoundationTimerCountdownTests: XCTestCase {
         XCTAssertEqual(sut.currentSetElapsedTime, expectedElapsedTime, "should have expected \(expectedElapsedTime) but got \(sut.currentSetElapsedTime) current set.", file: file, line: line)
     }
     
-    private func createAnyTimerSet(startingFrom startDate: Date = Date()) -> LocalElapsedSeconds {
+    private func createAnyTimerSet(startingFrom startDate: Date = Date()) -> LocalTimerSet {
         createTimerSet(0, startDate: startDate, endDate: startDate.adding(seconds: 1))
     }
     
-    private func createTimerSet(_ elapsedSeconds: TimeInterval, startDate: Date, endDate: Date) -> LocalElapsedSeconds {
-        LocalElapsedSeconds(elapsedSeconds, startDate: startDate, endDate: endDate)
+    private func createTimerSet(_ elapsedSeconds: TimeInterval, startDate: Date, endDate: Date) -> LocalTimerSet {
+        LocalTimerSet(elapsedSeconds, startDate: startDate, endDate: endDate)
     }
     
     private func invalidatesTimer(on sut: TimerCoutdown) {
@@ -260,7 +260,7 @@ final class FoundationTimerCountdownTests: XCTestCase {
     }
 }
 
-extension LocalElapsedSeconds: CustomStringConvertible {
+extension LocalTimerSet: CustomStringConvertible {
     public var description: String {
         "elapsed seconds: \(elapsedSeconds)"
     }

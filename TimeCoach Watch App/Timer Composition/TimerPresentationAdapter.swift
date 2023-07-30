@@ -4,11 +4,11 @@ import LifeCoach
 import LifeCoachWatchOS
 
 final class TimerPresentationAdapter {
-    private let loader: AnyPublisher<ElapsedSeconds, Error>
+    private let loader: AnyPublisher<TimerSet, Error>
     private var cancellable: Cancellable?
     var presenter: TimerViewModel?
     
-    init(loader: AnyPublisher<ElapsedSeconds, Error>) {
+    init(loader: AnyPublisher<TimerSet, Error>) {
         self.loader = loader
     }
     

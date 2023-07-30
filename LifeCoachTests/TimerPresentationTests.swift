@@ -82,14 +82,14 @@ final class TimerPresentationTests: XCTestCase {
         XCTAssertEqual(sut.timerString, .emptyTimer)
     }
     
-    private func elapsedSecondsFromPomodoro(_ seconds: TimeInterval) -> ElapsedSeconds {
+    private func elapsedSecondsFromPomodoro(_ seconds: TimeInterval) -> TimerSet {
         let now = Date.now
-        return ElapsedSeconds(seconds, startDate: now, endDate: now.adding(seconds: .pomodoroInSeconds))
+        return TimerSet(seconds, startDate: now, endDate: now.adding(seconds: .pomodoroInSeconds))
     }
     
-    private func elapsedSecondsFromBreak(_ seconds: TimeInterval) -> ElapsedSeconds {
+    private func elapsedSecondsFromBreak(_ seconds: TimeInterval) -> TimerSet {
         let now = Date.now
-        return ElapsedSeconds(seconds, startDate: now, endDate: now.adding(seconds: .breakInSeconds))
+        return TimerSet(seconds, startDate: now, endDate: now.adding(seconds: .breakInSeconds))
     }
 
     private func makeSUT() -> TimerViewModel {
@@ -101,7 +101,7 @@ fileprivate extension String {
     static var emptyTimer: String { "--:--" }
 }
 
-fileprivate extension ElapsedSeconds {
+fileprivate extension TimerSet {
     func toString(mode: TimerViewModel.TimePresentation) -> String {
         makeTimerFormatter().string(from: startDate, to: endDate.adding(seconds: -elapsedSeconds))!
     }

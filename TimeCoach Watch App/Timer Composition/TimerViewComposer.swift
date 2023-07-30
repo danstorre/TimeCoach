@@ -53,7 +53,7 @@ public final class TimerViewComposer {
     }
     
     private static func timerControls(controlsViewModel: ControlsViewModel = ControlsViewModel(),
-                                      deliveredElapsedTime: @escaping (ElapsedSeconds) -> Void,
+                                      deliveredElapsedTime: @escaping (TimerSet) -> Void,
                                       timerControlPublishers: TimerControlsPublishers,
                                       skipHandler: @escaping () -> Void) -> TimerControls {
         let starTimerAdapter = TimerAdapter(loader: timerControlPublishers.playPublisher,

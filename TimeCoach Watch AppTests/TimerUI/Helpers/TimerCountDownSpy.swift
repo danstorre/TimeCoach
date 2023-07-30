@@ -3,14 +3,14 @@ import Combine
 import LifeCoach
 import LifeCoachWatchOS
 
-func pomodoroResponse(_ seconds: TimeInterval) -> ElapsedSeconds {
+func pomodoroResponse(_ seconds: TimeInterval) -> TimerSet {
     let start = Date.now
-    return ElapsedSeconds(seconds, startDate: start, endDate: start.adding(seconds: .pomodoroInSeconds))
+    return TimerSet(seconds, startDate: start, endDate: start.adding(seconds: .pomodoroInSeconds))
 }
 
-func breakResponse(_ seconds: TimeInterval) -> ElapsedSeconds {
+func breakResponse(_ seconds: TimeInterval) -> TimerSet {
     let start = Date.now
-    return ElapsedSeconds(seconds, startDate: start, endDate: start.adding(seconds: .breakInSeconds))
+    return TimerSet(seconds, startDate: start, endDate: start.adding(seconds: .breakInSeconds))
 }
 
 class TimerCountdownSpy: TimerCoutdown {
@@ -43,15 +43,15 @@ class TimerCountdownSpy: TimerCoutdown {
         receivedSkipCountdownCompletions.append(completion)
     }
     
-    private var stubs: [() -> ElapsedSeconds] = []
-    private var pomodoroStubs: [() -> ElapsedSeconds] = []
-    private var breakStubs: [() -> ElapsedSeconds] = []
+    private var stubs: [() -> TimerSet] = []
+    private var pomodoroStubs: [() -> TimerSet] = []
+    private var breakStubs: [() -> TimerSet] = []
     
-    init(stubs: [() -> ElapsedSeconds]) {
+    init(stubs: [() -> TimerSet]) {
         self.stubs = stubs
     }
     
-    init(pomodoroStub: [() -> ElapsedSeconds], breakStub: [() -> ElapsedSeconds]) {
+    init(pomodoroStub: [() -> TimerSet], breakStub: [() -> TimerSet]) {
         self.pomodoroStubs = pomodoroStub
         self.breakStubs = breakStub
     }
@@ -77,7 +77,7 @@ class TimerCountdownSpy: TimerCoutdown {
     }
     
     static func delivers(after seconds: ClosedRange<TimeInterval>,
-                         _ stub: @escaping (TimeInterval) -> ElapsedSeconds) -> TimerCountdownSpy {
+                         _ stub: @escaping (TimeInterval) -> TimerSet) -> TimerCountdownSpy {
         let start: Int = Int(seconds.lowerBound)
         let end: Int = Int(seconds.upperBound)
         let array: [TimeInterval] = (start...end).map { TimeInterval($0) }
@@ -91,9 +91,9 @@ class TimerCountdownSpy: TimerCoutdown {
     
     static func delivers(
         afterPomoroSeconds pomodoroSeconds: ClosedRange<TimeInterval>,
-        pomodoroStub: @escaping (TimeInterval) -> ElapsedSeconds,
+        pomodoroStub: @escaping (TimeInterval) -> TimerSet,
         afterBreakSeconds breakSeconds: ClosedRange<TimeInterval>,
-        breakStub: @escaping (TimeInterval) -> ElapsedSeconds)
+        breakStub: @escaping (TimeInterval) -> TimerSet)
     -> TimerCountdownSpy {
         let pomodoroStart: Int = Int(pomodoroSeconds.lowerBound)
         let pomodoroEnd: Int = Int(pomodoroSeconds.upperBound)
@@ -121,8 +121,8 @@ class TimerCountdownSpy: TimerCoutdown {
 }
 
 
-extension ElapsedSeconds {
-    func toLocal() -> LocalElapsedSeconds {
-        LocalElapsedSeconds(elapsedSeconds, startDate: startDate, endDate: endDate)
+extension TimerSet {
+    func toLocal() -> LocalTimerSet {
+        LocalTimerSet(elapsedSeconds, startDate: startDate, endDate: endDate)
     }
 }
