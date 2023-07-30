@@ -12,8 +12,9 @@ class TimerNotificationScheduler {
     
     func scheduleNotification(from set: TimerSet) {
         let currentDate = currentDate()
+        let scheduleTime = set.endDate + set.startDate.distance(to: currentDate)
         
-        scheduler.setSchedule(at: set.endDate + set.startDate.distance(to: currentDate))
+        scheduler.setSchedule(at: scheduleTime - set.elapsedSeconds)
     }
 }
 
@@ -62,6 +63,22 @@ final class TimerNotificationsTests: XCTestCase {
         sut.scheduleNotification(from: timerSet)
         
         XCTAssertEqual(spy.receivedMessages, [.scheduleExecution(at: endDate.adding(seconds: 1))])
+    }
+    
+    func test_scheduleNotification_onSameDateAsStartDateAndOneElapsedSecondOnTimer_sendsCorrectMessageToScheduler() {
+        let startDate = Date()
+        let endDate = startDate.adding(seconds: 1)
+        let elapsedSecondsOnTimer: TimeInterval = 1
+        let timerSet = TimerSet(elapsedSecondsOnTimer, startDate: startDate, endDate: endDate)
+        let secondsAfterTimerStartDate: TimeInterval = 1
+        let spy = Spy()
+        let sut = TimerNotificationScheduler(currentDate: { startDate.adding(seconds: secondsAfterTimerStartDate) }, scheduler: spy)
+        
+        sut.scheduleNotification(from: timerSet)
+        
+        XCTAssertEqual(spy.receivedMessages, [
+            .scheduleExecution(at: endDate.adding(seconds: secondsAfterTimerStartDate) - elapsedSecondsOnTimer)
+        ])
     }
 }
 
