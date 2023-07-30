@@ -54,7 +54,7 @@ final class SchedulerNotificationTests: XCTestCase {
         XCTAssertEqual(spy.removeAllPendingNotificationRequestsCallCount, 1)
     }
     
-    func test_schedule_schedulesAtriggerOnRemainingTimeFromDateGiven() {
+    func test_schedule_schedulesCorrectTrigger() {
         let samplesAddingToCurrentDate: [TimeInterval] = [1, 2, 100]
         
         samplesAddingToCurrentDate.forEach { sample in
