@@ -63,12 +63,11 @@ final class TimerNotificationsTests: XCTestCase {
         let endTimerDate = startDate.adding(seconds: 1)
         let elapsedSecondsOnTimer: TimeInterval = 1
         let timerSet = TimerSet(elapsedSecondsOnTimer, startDate: startDate, endDate: endTimerDate)
-        let secondsAfterTimerStartDate: TimeInterval = 1
         
-        let spyReceivedMessages = receivedMessagesFromSpyOnScheduleAfter(seconds: secondsAfterTimerStartDate, with: timerSet)
+        let spyReceivedMessages = receivedMessagesFromSpyOnScheduleAfter(seconds: 0, with: timerSet)
         
         XCTAssertEqual(spyReceivedMessages, [
-            .scheduleExecution(at: endTimerDate.adding(seconds: secondsAfterTimerStartDate) - elapsedSecondsOnTimer)
+            .scheduleExecution(at: endTimerDate - elapsedSecondsOnTimer)
         ])
     }
     
