@@ -3,13 +3,17 @@ import LifeCoach
 
 class TimerNotificationScheduler {
     private let scheduler: Spy
+    private let currentDate: () -> Date
     
-    init(scheduler: Spy) {
+    init(currentDate: @escaping () -> Date = Date.init, scheduler: Spy) {
         self.scheduler = scheduler
+        self.currentDate = currentDate
     }
     
     func scheduleNotification(from set: TimerSet) {
-        scheduler.setSchedule(at: set.endDate)
+        let currentDate = currentDate()
+        
+        scheduler.setSchedule(at: set.endDate + set.startDate.distance(to: currentDate))
     }
 }
 
@@ -41,11 +45,23 @@ final class TimerNotificationsTests: XCTestCase {
         let endDate = startDate.adding(seconds: 1)
         let timerSet = TimerSet(0, startDate: startDate, endDate: endDate)
         let spy = Spy()
-        let sut = TimerNotificationScheduler(scheduler: spy)
+        let sut = TimerNotificationScheduler(currentDate: { startDate }, scheduler: spy)
         
         sut.scheduleNotification(from: timerSet)
         
         XCTAssertEqual(spy.receivedMessages, [.scheduleExecution(at: endDate)])
+    }
+    
+    func test_scheduleNotification_oneSecondAfterStartDateOfTimerSet_sendsCorrectMessageToScheduler() {
+        let startDate = Date()
+        let endDate = startDate.adding(seconds: 1)
+        let timerSet = TimerSet(0, startDate: startDate, endDate: endDate)
+        let spy = Spy()
+        let sut = TimerNotificationScheduler(currentDate: { startDate.adding(seconds: 1) }, scheduler: spy)
+        
+        sut.scheduleNotification(from: timerSet)
+        
+        XCTAssertEqual(spy.receivedMessages, [.scheduleExecution(at: endDate.adding(seconds: 1))])
     }
 }
 
