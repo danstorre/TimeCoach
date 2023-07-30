@@ -1,7 +1,11 @@
 import XCTest
 import LifeCoach
 
-class TimerNotificationScheduler {
+protocol TimerNotificationScheduler {
+    func scheduleNotification(from set: TimerSet)
+}
+
+class DefaultTimerNotificationScheduler: TimerNotificationScheduler {
     private let scheduler: Spy
     private let currentDate: () -> Date
     
@@ -35,8 +39,7 @@ class Spy {
 
 final class TimerNotificationsTests: XCTestCase {
     func test_init_doesNotScheduleTimer() {
-        let spy = Spy()
-        let _ = TimerNotificationScheduler(scheduler: spy)
+        let (_, spy) = makeSUT(timerSet: createAnyTimerSet(), currentDate: Date.init)
         
         XCTAssertEqual(spy.scheduleCallCount, 0)
     }
@@ -115,13 +118,18 @@ final class TimerNotificationsTests: XCTestCase {
                          currentDate: @escaping () -> Date,
                          file: StaticString = #filePath, line: UInt = #line) -> (sut: TimerNotificationScheduler, spy: Spy) {
         let spy = Spy()
-        let sut = TimerNotificationScheduler(currentDate: currentDate, scheduler: spy)
+        let sut = DefaultTimerNotificationScheduler(currentDate: currentDate, scheduler: spy)
         
         trackForMemoryLeak(instance: sut, file: file, line: line)
         trackForMemoryLeak(instance: spy, file: file, line: line)
         
         return (sut, spy)
     }
+    
+    private func createAnyTimerSet(startingFrom startDate: Date = Date()) -> TimerSet {
+        TimerSet(0, startDate: startDate, endDate: startDate.adding(seconds: 1))
+    }
+    
 }
 
 extension Date {
