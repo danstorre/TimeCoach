@@ -22,7 +22,7 @@ class UserNotificationsScheduler {
         content.title = "timer's up!"
         content.interruptionLevel = .critical
         
-        let notification = UNNotificationRequest(identifier: "", content: content, trigger: trigger)
+        let notification = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
         
         notificationCenter.add(notification)
     }
@@ -82,6 +82,20 @@ final class SchedulerNotificationTests: XCTestCase {
         }
     }
     
+    func test_schedule_schedulesCorrectNotificationRequest() {
+        let samplesAddingToCurrentDate: [TimeInterval] = [1, 2, 100]
+        
+        samplesAddingToCurrentDate.forEach { sample in
+            let currentDate = Date()
+            let mock = UNUserNotificationCenterTestDouble()
+            let sut = UserNotificationsScheduler(currentDate: { currentDate }, with: mock)
+            let timeScheduled = currentDate.adding(seconds: sample)
+            sut.setSchedule(at: timeScheduled)
+            
+            mock.assertCorrectNotificationRequest()
+        }
+    }
+    
     // MARK: - Helpers
     class UNUserNotificationCenterTestDouble: NotificationScheduler {
         private(set) var removeAllDeliveredNotificationsCallCount = 0
@@ -112,6 +126,10 @@ final class SchedulerNotificationTests: XCTestCase {
             content.interruptionLevel = .critical
             
             XCTAssertEqual(receivedNotifications.first?.content, content, file: file, line: line)
+        }
+        
+        func assertCorrectNotificationRequest(file: StaticString = #filePath, line: UInt = #line) {
+            XCTAssertFalse(receivedNotifications.first!.identifier.isEmpty, "notification identifier should not be empty", file: file, line: line)
         }
     }
     
