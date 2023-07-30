@@ -3,18 +3,32 @@ import XCTest
 import UserNotifications
 
 class UserNotificationsScheduler {
-    init(with: NotificationScheduler) {
-        
+    private let notificationCenter: NotificationScheduler
+    
+    init(with notificationCenter: NotificationScheduler) {
+        self.notificationCenter = notificationCenter
     }
     
+    func setSchedule() {
+        notificationCenter.removeAllDeliveredNotifications()
+    }
 }
 
 final class SchedulerNotificationTests: XCTestCase {
-    func test_init_doesNotRemoveAllPendingNotifications() throws {
+    func test_init_doesNotRemoveAllDeliveredNotifications() throws {
         let fake = UNUserNotificationCenterSpy()
         let _ = UserNotificationsScheduler(with: fake)
         
         XCTAssertEqual(fake.removeAllDeliveredNotificationsCallCount, 0)
+    }
+    
+    func test_schedule_sendsMessageToRemoveAllDeliveredNotifications() {
+        let fake = UNUserNotificationCenterSpy()
+        let sut = UserNotificationsScheduler(with: fake)
+        
+        sut.setSchedule()
+        
+        XCTAssertEqual(fake.removeAllDeliveredNotificationsCallCount, 1)
     }
     
     // MARK: - Helpers
