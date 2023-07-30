@@ -49,7 +49,7 @@ final class TimerNotificationsTests: XCTestCase {
         let startDate = Date()
         let endTimerDate = startDate.adding(seconds: 1)
         let timerSet = TimerSet(0, startDate: startDate, endDate: endTimerDate)
-        let secondsAfterTimerStartDate: TimeInterval = 0
+        let secondsAfterTimerStartDate: TimeInterval = 1
         
         let spyReceivedMessages = receivedMessagesFromSpyOnScheduleAfter(seconds: secondsAfterTimerStartDate, with: timerSet)
         
