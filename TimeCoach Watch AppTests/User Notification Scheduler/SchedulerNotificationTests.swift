@@ -25,28 +25,28 @@ class UserNotificationsScheduler {
 
 final class SchedulerNotificationTests: XCTestCase {
     func test_init_doesNotRemoveAllDeliveredNotifications() throws {
-        let fake = UNUserNotificationCenterSpy()
-        let _ = UserNotificationsScheduler(with: fake)
+        let spy = UNUserNotificationCenterSpy()
+        let _ = UserNotificationsScheduler(with: spy)
         
-        XCTAssertEqual(fake.removeAllDeliveredNotificationsCallCount, 0)
+        XCTAssertEqual(spy.removeAllDeliveredNotificationsCallCount, 0)
     }
     
     func test_schedule_sendsMessageToRemoveAllDeliveredNotifications() {
-        let fake = UNUserNotificationCenterSpy()
-        let sut = UserNotificationsScheduler(with: fake)
+        let spy = UNUserNotificationCenterSpy()
+        let sut = UserNotificationsScheduler(with: spy)
         
         sut.setSchedule(at: anyScheduledDate())
         
-        XCTAssertEqual(fake.removeAllDeliveredNotificationsCallCount, 1)
+        XCTAssertEqual(spy.removeAllDeliveredNotificationsCallCount, 1)
     }
     
     func test_schedule_sendsMessageToRemoveAllPendingNotifications() {
-        let fake = UNUserNotificationCenterSpy()
-        let sut = UserNotificationsScheduler(with: fake)
+        let spy = UNUserNotificationCenterSpy()
+        let sut = UserNotificationsScheduler(with: spy)
         
         sut.setSchedule(at: anyScheduledDate())
         
-        XCTAssertEqual(fake.removeAllPendingNotificationRequestsCallCount, 1)
+        XCTAssertEqual(spy.removeAllPendingNotificationRequestsCallCount, 1)
     }
     
     func test_schedule_schedulesAtriggerOnRemainingTimeFromDateGiven() {
@@ -54,14 +54,12 @@ final class SchedulerNotificationTests: XCTestCase {
         
         samplesAddingToCurrentDate.forEach { sample in
             let currentDate = Date()
-            let fake = UNUserNotificationCenterSpy()
-            let sut = UserNotificationsScheduler(currentDate: { currentDate }, with: fake)
+            let mock = UNUserNotificationCenterSpy()
+            let sut = UserNotificationsScheduler(currentDate: { currentDate }, with: mock)
             let timeScheduled = currentDate.adding(seconds: sample)
             sut.setSchedule(at: timeScheduled)
             
-            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: sample, repeats: false)
-            
-            XCTAssertEqual(fake.receivedNotifications.first?.trigger, trigger)
+            mock.assertCorrectTrigger(from: sample)
         }
     }
     
@@ -82,6 +80,12 @@ final class SchedulerNotificationTests: XCTestCase {
         func add(_ notification: UNNotificationRequest) {
             receivedNotifications.append(notification)
         }
+        
+        func assertCorrectTrigger(from sample: TimeInterval, file: StaticString = #filePath, line: UInt = #line) {
+            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: sample, repeats: false)
+            
+            XCTAssertEqual(receivedNotifications.first?.trigger, trigger, file: file, line: line)
+        }
     }
     
     private func anyScheduledDate() -> Date {
@@ -100,5 +104,12 @@ protocol NotificationScheduler {
 extension Date {
     func adding(seconds: TimeInterval) -> Date {
         self + seconds
+    }
+}
+
+
+extension UNTimeIntervalNotificationTrigger: CustomStringConvertible {
+    open override var description: String {
+        return "timeInterval \(timeInterval)"
     }
 }
