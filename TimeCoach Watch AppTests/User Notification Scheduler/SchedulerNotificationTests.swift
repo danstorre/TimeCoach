@@ -21,7 +21,7 @@ final class SchedulerNotificationTests: XCTestCase {
     func test_schedule_sendsMessageToRemoveAllPendingNotifications() {
         let (sut, spy) = makeSUT()
         
-        try? sut.setSchedule(at: anyScheduledDate())
+        try? sut.setSchedule(at: Date().addingTimeInterval(1))
         
         XCTAssertEqual(spy.removeAllPendingNotificationRequestsCallCount, 1)
     }
@@ -62,6 +62,21 @@ final class SchedulerNotificationTests: XCTestCase {
             try? sut.setSchedule(at: timeScheduled)
             
             mock.assertCorrectNotificationRequest()
+        }
+    }
+    
+    func test_schedule_onInvalidDateDeliversError() {
+        let expectedError = UserNotificationsScheduler.Error.invalidDate
+        let currentDate = Date()
+        let invalidDate = currentDate.addingTimeInterval(-1)
+        let (sut, _) = makeSUT(on: { currentDate })
+        
+        do {
+            try sut.setSchedule(at: invalidDate)
+            
+            XCTFail("setSchedule should have failed on invalid date.")
+        } catch {
+            XCTAssertEqual(error as? UserNotificationsScheduler.Error, expectedError)
         }
     }
     

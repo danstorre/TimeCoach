@@ -6,12 +6,19 @@ public class UserNotificationsScheduler: Scheduler {
     private let currentDate: () -> Date
     private let notificationCenter: NotificationScheduler
     
+    public enum Error: Swift.Error {
+        case invalidDate
+    }
+    
     public init(currentDate: @escaping () -> Date = Date.init, with notificationCenter: NotificationScheduler) {
         self.notificationCenter = notificationCenter
         self.currentDate = currentDate
     }
     
-    public func setSchedule(at date: Date) {
+    public func setSchedule(at date: Date) throws {
+        guard currentDate().distance(to: date) >= 1 else {
+            throw Error.invalidDate
+        }
         notificationCenter.removeAllDeliveredNotifications()
         notificationCenter.removeAllPendingNotificationRequests()
         
