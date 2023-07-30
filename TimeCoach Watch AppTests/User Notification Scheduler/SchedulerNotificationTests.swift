@@ -107,8 +107,7 @@ extension Date {
     }
 }
 
-
-extension UNTimeIntervalNotificationTrigger: CustomStringConvertible {
+extension UNTimeIntervalNotificationTrigger {
     open override var description: String {
         return "timeInterval \(timeInterval)"
     }
