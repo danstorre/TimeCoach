@@ -512,13 +512,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		FB2A10E02A6B169E004A1784 /* Timer Widget */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "Timer Widget";
-			sourceTree = "<group>";
-		};
 		FB2A10EA2A6B1854004A1784 /* TimeCoachWidget */ = {
 			isa = PBXGroup;
 			children = (
@@ -888,7 +881,6 @@
 		FBE9A9782939527C00D8BF29 /* TimeCoach Watch App */ = {
 			isa = PBXGroup;
 			children = (
-				FB2A10E02A6B169E004A1784 /* Timer Widget */,
 				FB4AA14129379DC20076FED9 /* Timer Composition */,
 				FB960C7E293D530900ECBAD5 /* Previews */,
 				FBE9A9B22939579F00D8BF29 /* Resources */,
