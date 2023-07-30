@@ -2,7 +2,7 @@ import LifeCoach
 import XCTest
 import UserNotifications
 
-class UserNotificationsScheduler {
+class UserNotificationsScheduler: Scheduler {
     private let currentDate: () -> Date
     private let notificationCenter: NotificationScheduler
     
@@ -30,15 +30,13 @@ class UserNotificationsScheduler {
 
 final class SchedulerNotificationTests: XCTestCase {
     func test_init_doesNotRemoveAllDeliveredNotifications() throws {
-        let spy = UNUserNotificationCenterTestDouble()
-        let _ = UserNotificationsScheduler(with: spy)
+        let (_, spy) = makeSUT()
         
         XCTAssertEqual(spy.removeAllDeliveredNotificationsCallCount, 0)
     }
     
     func test_schedule_sendsMessageToRemoveAllDeliveredNotifications() {
-        let spy = UNUserNotificationCenterTestDouble()
-        let sut = UserNotificationsScheduler(with: spy)
+        let (sut, spy) = makeSUT()
         
         sut.setSchedule(at: anyScheduledDate())
         
@@ -46,8 +44,7 @@ final class SchedulerNotificationTests: XCTestCase {
     }
     
     func test_schedule_sendsMessageToRemoveAllPendingNotifications() {
-        let spy = UNUserNotificationCenterTestDouble()
-        let sut = UserNotificationsScheduler(with: spy)
+        let (sut, spy) = makeSUT()
         
         sut.setSchedule(at: anyScheduledDate())
         
@@ -59,8 +56,7 @@ final class SchedulerNotificationTests: XCTestCase {
         
         samplesAddingToCurrentDate.forEach { sample in
             let currentDate = Date()
-            let mock = UNUserNotificationCenterTestDouble()
-            let sut = UserNotificationsScheduler(currentDate: { currentDate }, with: mock)
+            let (sut, mock) = makeSUT(on: { currentDate })
             let timeScheduled = currentDate.adding(seconds: sample)
             sut.setSchedule(at: timeScheduled)
             
@@ -73,8 +69,7 @@ final class SchedulerNotificationTests: XCTestCase {
         
         samplesAddingToCurrentDate.forEach { sample in
             let currentDate = Date()
-            let mock = UNUserNotificationCenterTestDouble()
-            let sut = UserNotificationsScheduler(currentDate: { currentDate }, with: mock)
+            let (sut, mock) = makeSUT(on: { currentDate })
             let timeScheduled = currentDate.adding(seconds: sample)
             sut.setSchedule(at: timeScheduled)
             
@@ -87,8 +82,7 @@ final class SchedulerNotificationTests: XCTestCase {
         
         samplesAddingToCurrentDate.forEach { sample in
             let currentDate = Date()
-            let mock = UNUserNotificationCenterTestDouble()
-            let sut = UserNotificationsScheduler(currentDate: { currentDate }, with: mock)
+            let (sut, mock) = makeSUT(on: { currentDate })
             let timeScheduled = currentDate.adding(seconds: sample)
             sut.setSchedule(at: timeScheduled)
             
@@ -97,6 +91,16 @@ final class SchedulerNotificationTests: XCTestCase {
     }
     
     // MARK: - Helpers
+    private func makeSUT(on currentDate: @escaping () -> Date = Date.init, file: StaticString = #filePath, line: UInt = #line) -> (Scheduler, UNUserNotificationCenterTestDouble) {
+        let mock = UNUserNotificationCenterTestDouble()
+        let sut = UserNotificationsScheduler(currentDate: currentDate, with: mock)
+        
+        trackForMemoryLeak(instance: mock, file: file, line: line)
+        trackForMemoryLeak(instance: sut, file: file, line: line)
+        
+        return (sut, mock)
+    }
+    
     class UNUserNotificationCenterTestDouble: NotificationScheduler {
         private(set) var removeAllDeliveredNotificationsCallCount = 0
         private(set) var removeAllPendingNotificationRequestsCallCount = 0
