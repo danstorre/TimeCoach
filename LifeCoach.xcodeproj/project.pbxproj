@@ -554,6 +554,10 @@
 		FB4AA15C2937C6D70076FED9 /* Timer Feature */ = {
 			isa = PBXGroup;
 			children = (
+				FB4AA16B2937D7290076FED9 /* Timer Pomodoro Infrastructure */,
+				FB4B895B2A3B96760088DB5B /* Timer Store */,
+				FBE9A9A92939538200D8BF29 /* Timer Presentation */,
+				FBD56F702A3D0E0E002736AD /* Timer Pomodoro */,
 				FB4AA1632937CD000076FED9 /* TimerSet.swift */,
 				FBD56F732A3D0ECE002736AD /* RegularTimer.swift */,
 			);
@@ -725,10 +729,6 @@
 			isa = PBXGroup;
 			children = (
 				FBD56F6C2A3CEF50002736AD /* Helpers */,
-				FB4AA16B2937D7290076FED9 /* Timer Pomodoro Infrastructure */,
-				FB4B895B2A3B96760088DB5B /* Timer Store */,
-				FBE9A9A92939538200D8BF29 /* Timer Presentation */,
-				FBD56F702A3D0E0E002736AD /* Timer Pomodoro */,
 				FB4AA15C2937C6D70076FED9 /* Timer Feature */,
 				FBAD475428FC8BB0003D2F7A /* LifeCoach.docc */,
 			);
