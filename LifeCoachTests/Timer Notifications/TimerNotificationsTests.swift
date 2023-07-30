@@ -1,31 +1,6 @@
 import XCTest
 import LifeCoach
 
-protocol TimerNotificationScheduler {
-    func scheduleNotification(from set: TimerSet)
-}
-
-class DefaultTimerNotificationScheduler: TimerNotificationScheduler {
-    private let scheduler: Scheduler
-    private let currentDate: () -> Date
-    
-    init(currentDate: @escaping () -> Date = Date.init, scheduler: Scheduler) {
-        self.scheduler = scheduler
-        self.currentDate = currentDate
-    }
-    
-    func scheduleNotification(from set: TimerSet) {
-        let currentDate = currentDate()
-        let scheduleTime = set.endDate + set.startDate.distance(to: currentDate)
-        
-        scheduler.setSchedule(at: scheduleTime - set.elapsedSeconds)
-    }
-}
-
-protocol Scheduler {
-    func setSchedule(at scheduledDate: Date)
-}
-
 final class TimerNotificationsTests: XCTestCase {
     func test_init_doesNotScheduleTimer() {
         let (_, spy) = makeSUT(timerSet: createAnyTimerSet(), currentDate: Date.init)
