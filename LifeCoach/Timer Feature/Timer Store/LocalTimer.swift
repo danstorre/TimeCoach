@@ -1,9 +1,5 @@
 import Foundation
 
-public protocol LoadTimerState {
-    func load() throws -> TimerState
-}
-
 public class LocalTimer: SaveTimerState, LoadTimerState {
     private let store: LocalTimerStore
     
