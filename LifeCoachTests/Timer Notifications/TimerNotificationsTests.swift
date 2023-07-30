@@ -66,19 +66,34 @@ final class TimerNotificationsTests: XCTestCase {
         }
     }
     
+    func test_scheduleNotification_onSchedulerErrorDeliversError() {
+        let anyTimerSet = createAnyTimerSet()
+        let (sut, spy) = makeSUT(timerSet: anyTimerSet)
+        let expectedError = anyNSError()
+        spy.failScheduleWith(expectedError)
+        
+        do {
+            try sut.scheduleNotification(from: anyTimerSet)
+            
+            XCTFail("scheduleNotification should have failed")
+        } catch {
+            XCTAssertEqual(error as NSError, expectedError)
+        }
+    }
+    
     // MARK: - Helpers
     private func receivedMessagesFromSpyOnScheduleAfter(seconds secondsAfterTimerStartDate: TimeInterval,
                                                         with timerSet: TimerSet,
                                                         file: StaticString = #filePath, line: UInt = #line) -> [SpyScheduler.AnyMessage] {
         let (sut, spy) = makeSUT(timerSet: timerSet, currentDate: { timerSet.startDate.adding(seconds: secondsAfterTimerStartDate) })
         
-        sut.scheduleNotification(from: timerSet)
+        try? sut.scheduleNotification(from: timerSet)
         
         return spy.receivedMessages
     }
     
     private func makeSUT(timerSet: TimerSet,
-                         currentDate: @escaping () -> Date,
+                         currentDate: @escaping () -> Date = Date.init,
                          file: StaticString = #filePath, line: UInt = #line) -> (sut: TimerNotificationScheduler, spy: SpyScheduler) {
         let spy = SpyScheduler()
         let sut = DefaultTimerNotificationScheduler(currentDate: currentDate, scheduler: spy)
@@ -95,16 +110,22 @@ final class TimerNotificationsTests: XCTestCase {
     
     private class SpyScheduler: Scheduler {
         private(set) var receivedMessages = [AnyMessage]()
+        private(set) var receivedResult: Result<Void,Error>?
         
         enum AnyMessage: Equatable {
             case scheduleExecution(at: Date)
         }
         
-        func setSchedule(at scheduledDate: Date) {
+        func setSchedule(at scheduledDate: Date) throws {
             receivedMessages.append(.scheduleExecution(at: scheduledDate))
+            
+            try receivedResult?.get()
+        }
+        
+        func failScheduleWith(_ error: Error) {
+            receivedResult = .failure(error)
         }
     }
-    
 }
 
 extension Date {

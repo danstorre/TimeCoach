@@ -13,7 +13,7 @@ final class SchedulerNotificationTests: XCTestCase {
     func test_schedule_sendsMessageToRemoveAllDeliveredNotifications() {
         let (sut, spy) = makeSUT()
         
-        sut.setSchedule(at: anyScheduledDate())
+        try? sut.setSchedule(at: anyScheduledDate())
         
         XCTAssertEqual(spy.removeAllDeliveredNotificationsCallCount, 1)
     }
@@ -21,7 +21,7 @@ final class SchedulerNotificationTests: XCTestCase {
     func test_schedule_sendsMessageToRemoveAllPendingNotifications() {
         let (sut, spy) = makeSUT()
         
-        sut.setSchedule(at: anyScheduledDate())
+        try? sut.setSchedule(at: anyScheduledDate())
         
         XCTAssertEqual(spy.removeAllPendingNotificationRequestsCallCount, 1)
     }
@@ -33,7 +33,7 @@ final class SchedulerNotificationTests: XCTestCase {
             let currentDate = Date()
             let (sut, mock) = makeSUT(on: { currentDate })
             let timeScheduled = currentDate.adding(seconds: sample)
-            sut.setSchedule(at: timeScheduled)
+            try? sut.setSchedule(at: timeScheduled)
             
             mock.assertCorrectTrigger(from: sample)
         }
@@ -46,7 +46,7 @@ final class SchedulerNotificationTests: XCTestCase {
             let currentDate = Date()
             let (sut, mock) = makeSUT(on: { currentDate })
             let timeScheduled = currentDate.adding(seconds: sample)
-            sut.setSchedule(at: timeScheduled)
+            try? sut.setSchedule(at: timeScheduled)
             
             mock.assertCorrectContent(from: sample)
         }
@@ -59,7 +59,7 @@ final class SchedulerNotificationTests: XCTestCase {
             let currentDate = Date()
             let (sut, mock) = makeSUT(on: { currentDate })
             let timeScheduled = currentDate.adding(seconds: sample)
-            sut.setSchedule(at: timeScheduled)
+            try? sut.setSchedule(at: timeScheduled)
             
             mock.assertCorrectNotificationRequest()
         }

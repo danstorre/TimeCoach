@@ -1,5 +1,5 @@
 import Foundation
 
 public protocol Scheduler {
-    func setSchedule(at scheduledDate: Date)
+    func setSchedule(at scheduledDate: Date) throws
 }
