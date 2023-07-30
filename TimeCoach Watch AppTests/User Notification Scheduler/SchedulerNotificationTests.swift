@@ -17,7 +17,12 @@ class UserNotificationsScheduler {
         
         let timeInterval = currentDate().distance(to: date)
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: timeInterval, repeats: false)
-        let notification = UNNotificationRequest(identifier: "", content: .init(), trigger: trigger)
+        
+        let content = UNMutableNotificationContent()
+        content.title = "timer's up!"
+        content.interruptionLevel = .critical
+        
+        let notification = UNNotificationRequest(identifier: "", content: content, trigger: trigger)
         
         notificationCenter.add(notification)
     }
@@ -63,6 +68,20 @@ final class SchedulerNotificationTests: XCTestCase {
         }
     }
     
+    func test_schedule_schedulesCorrectContent() {
+        let samplesAddingToCurrentDate: [TimeInterval] = [1, 2, 100]
+        
+        samplesAddingToCurrentDate.forEach { sample in
+            let currentDate = Date()
+            let mock = UNUserNotificationCenterTestDouble()
+            let sut = UserNotificationsScheduler(currentDate: { currentDate }, with: mock)
+            let timeScheduled = currentDate.adding(seconds: sample)
+            sut.setSchedule(at: timeScheduled)
+            
+            mock.assertCorrectContent(from: sample)
+        }
+    }
+    
     // MARK: - Helpers
     class UNUserNotificationCenterTestDouble: NotificationScheduler {
         private(set) var removeAllDeliveredNotificationsCallCount = 0
@@ -85,6 +104,14 @@ final class SchedulerNotificationTests: XCTestCase {
             let trigger = UNTimeIntervalNotificationTrigger(timeInterval: sample, repeats: false)
             
             XCTAssertEqual(receivedNotifications.first?.trigger, trigger, file: file, line: line)
+        }
+        
+        func assertCorrectContent(from sample: TimeInterval, file: StaticString = #filePath, line: UInt = #line) {
+            let content = UNMutableNotificationContent()
+            content.title = "timer's up!"
+            content.interruptionLevel = .critical
+            
+            XCTAssertEqual(receivedNotifications.first?.content, content, file: file, line: line)
         }
     }
     
