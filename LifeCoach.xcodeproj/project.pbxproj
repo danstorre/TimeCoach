@@ -63,6 +63,8 @@
 		FB53991F2A461CEC000B9CFD /* TimerPresentationAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB53991E2A461CEC000B9CFD /* TimerPresentationAdapter.swift */; };
 		FB53992E2A46202D000B9CFD /* TimeCoachRoot.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB53992D2A46202D000B9CFD /* TimeCoachRoot.swift */; };
 		FB5925FF2A76F8A40011D53E /* TimerNotificationScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5925FE2A76F8A40011D53E /* TimerNotificationScheduler.swift */; };
+		FB5926012A76F8E50011D53E /* DefaultTimerNotificationScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5926002A76F8E50011D53E /* DefaultTimerNotificationScheduler.swift */; };
+		FB5926042A76F9040011D53E /* Scheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5926032A76F9040011D53E /* Scheduler.swift */; };
 		FB594CA62A4E1E5100C4A32C /* TImerControlsPresentationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB594CA52A4E1E5100C4A32C /* TImerControlsPresentationTests.swift */; };
 		FB594CA82A4E213F00C4A32C /* ControlsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB594CA72A4E213F00C4A32C /* ControlsViewModel.swift */; };
 		FB594CBE2A4E542200C4A32C /* ToggleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB594CBD2A4E542200C4A32C /* ToggleButton.swift */; };
@@ -312,6 +314,8 @@
 		FB53991E2A461CEC000B9CFD /* TimerPresentationAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerPresentationAdapter.swift; sourceTree = "<group>"; };
 		FB53992D2A46202D000B9CFD /* TimeCoachRoot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeCoachRoot.swift; sourceTree = "<group>"; };
 		FB5925FE2A76F8A40011D53E /* TimerNotificationScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerNotificationScheduler.swift; sourceTree = "<group>"; };
+		FB5926002A76F8E50011D53E /* DefaultTimerNotificationScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultTimerNotificationScheduler.swift; sourceTree = "<group>"; };
+		FB5926032A76F9040011D53E /* Scheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scheduler.swift; sourceTree = "<group>"; };
 		FB594CA52A4E1E5100C4A32C /* TImerControlsPresentationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TImerControlsPresentationTests.swift; sourceTree = "<group>"; };
 		FB594CA72A4E213F00C4A32C /* ControlsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlsViewModel.swift; sourceTree = "<group>"; };
 		FB594CBD2A4E542200C4A32C /* ToggleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleButton.swift; sourceTree = "<group>"; };
@@ -557,7 +561,6 @@
 			isa = PBXGroup;
 			children = (
 				FB5925FD2A76F8880011D53E /* Timer Notification Scheduler */,
-				FB4AA16B2937D7290076FED9 /* Timer Pomodoro Infrastructure */,
 				FB4B895B2A3B96760088DB5B /* Timer Store */,
 				FBE9A9A92939538200D8BF29 /* Timer Presentation */,
 				FBD56F702A3D0E0E002736AD /* Timer Pomodoro */,
@@ -567,15 +570,14 @@
 			path = "Timer Feature";
 			sourceTree = "<group>";
 		};
-		FB4AA16B2937D7290076FED9 /* Timer Pomodoro Infrastructure */ = {
+		FB4AA16B2937D7290076FED9 /* Infrastructure */ = {
 			isa = PBXGroup;
 			children = (
 				FBDBAC4929762AE5009E440A /* FoundationTimerCountdown+TimerSave.swift */,
 				FBDBAC4B29762AFE009E440A /* FoundationTimerCountdown+TimerLoad.swift */,
-				FBD56F642A3BD489002736AD /* LocalTimerSet.swift */,
 				FBE336A62A3D6CC200735D74 /* FoundationTimerCountdown.swift */,
 			);
-			path = "Timer Pomodoro Infrastructure";
+			path = Infrastructure;
 			sourceTree = "<group>";
 		};
 		FB4B895B2A3B96760088DB5B /* Timer Store */ = {
@@ -680,6 +682,8 @@
 		FB5925FD2A76F8880011D53E /* Timer Notification Scheduler */ = {
 			isa = PBXGroup;
 			children = (
+				FB5926032A76F9040011D53E /* Scheduler.swift */,
+				FB5926002A76F8E50011D53E /* DefaultTimerNotificationScheduler.swift */,
 				FB5925FE2A76F8A40011D53E /* TimerNotificationScheduler.swift */,
 			);
 			path = "Timer Notification Scheduler";
@@ -781,8 +785,10 @@
 		FBD56F702A3D0E0E002736AD /* Timer Pomodoro */ = {
 			isa = PBXGroup;
 			children = (
-				FBD56F712A3D0E20002736AD /* PomodoroTimer.swift */,
+				FB4AA16B2937D7290076FED9 /* Infrastructure */,
+				FBD56F642A3BD489002736AD /* LocalTimerSet.swift */,
 				FBD56F752A3D0EFA002736AD /* TimerCoutdown.swift */,
+				FBD56F712A3D0E20002736AD /* PomodoroTimer.swift */,
 			);
 			path = "Timer Pomodoro";
 			sourceTree = "<group>";
@@ -1411,6 +1417,8 @@
 				FBAD475528FC8BB0003D2F7A /* LifeCoach.docc in Sources */,
 				FBE336A72A3D6CC200735D74 /* FoundationTimerCountdown.swift in Sources */,
 				FBDBAC4629762AC7009E440A /* TimerSave.swift in Sources */,
+				FB5926012A76F8E50011D53E /* DefaultTimerNotificationScheduler.swift in Sources */,
+				FB5926042A76F9040011D53E /* Scheduler.swift in Sources */,
 				FB960C78293D48D800ECBAD5 /* Date+Formatters.swift in Sources */,
 				FBDBAC4C29762AFE009E440A /* FoundationTimerCountdown+TimerLoad.swift in Sources */,
 				FBD822522A73406F002702F4 /* SaveTimerState.swift in Sources */,
