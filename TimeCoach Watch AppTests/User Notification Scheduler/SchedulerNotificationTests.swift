@@ -15,7 +15,8 @@ class UserNotificationsScheduler {
         notificationCenter.removeAllDeliveredNotifications()
         notificationCenter.removeAllPendingNotificationRequests()
         
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
+        let timeInterval = currentDate().distance(to: date)
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: timeInterval, repeats: false)
         let notification = UNNotificationRequest(identifier: "", content: .init(), trigger: trigger)
         
         notificationCenter.add(notification)
@@ -48,17 +49,20 @@ final class SchedulerNotificationTests: XCTestCase {
         XCTAssertEqual(fake.removeAllPendingNotificationRequestsCallCount, 1)
     }
     
-    func test_schedule_scheduleAtriggerOnRemainingTime() {
-        let currentDate = Date()
-        let fake = UNUserNotificationCenterSpy()
-        let sut = UserNotificationsScheduler(currentDate: { currentDate }, with: fake)
+    func test_schedule_schedulesAtriggerOnRemainingTimeFromDateGiven() {
+        let samplesAddingToCurrentDate: [TimeInterval] = [1, 2, 100]
         
-        let timeScheduled = currentDate.adding(seconds: 1)
-        sut.setSchedule(at: timeScheduled)
-        
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
-        
-        XCTAssertEqual(fake.receivedNotifications.first?.trigger, trigger)
+        samplesAddingToCurrentDate.forEach { sample in
+            let currentDate = Date()
+            let fake = UNUserNotificationCenterSpy()
+            let sut = UserNotificationsScheduler(currentDate: { currentDate }, with: fake)
+            let timeScheduled = currentDate.adding(seconds: sample)
+            sut.setSchedule(at: timeScheduled)
+            
+            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: sample, repeats: false)
+            
+            XCTAssertEqual(fake.receivedNotifications.first?.trigger, trigger)
+        }
     }
     
     // MARK: - Helpers
