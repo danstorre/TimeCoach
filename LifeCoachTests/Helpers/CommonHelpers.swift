@@ -8,18 +8,18 @@ func anyNSError() -> NSError {
 func makeAnyState(seconds: TimeInterval = 1,
                           startDate: Date = Date(),
                           endDate: Date = Date()) -> (model: TimerState, local: LocalTimerState) {
-    let elapsedSeconds = makeAnyLocalElapsedSeconds(seconds: seconds, startDate: startDate, endDate: endDate)
+    let elapsedSeconds = makeAnyLocalTimerSet(seconds: seconds, startDate: startDate, endDate: endDate)
     let model = TimerState(elapsedSeconds: elapsedSeconds.model)
-    let local = LocalTimerState(localElapsedSeconds: elapsedSeconds.local)
+    let local = LocalTimerState(localTimerSet: elapsedSeconds.local)
     
     return (model, local)
 }
 
-func makeAnyLocalElapsedSeconds(seconds: TimeInterval = 1,
+func makeAnyLocalTimerSet(seconds: TimeInterval = 1,
                                         startDate: Date = Date(),
                                         endDate: Date = Date()) -> (model: TimerSet, local: LocalTimerSet) {
     let modelElapsedSeconds = TimerSet(seconds, startDate: startDate, endDate: endDate)
-    let localElapsedSeconds = LocalTimerSet(seconds, startDate: startDate, endDate: endDate)
+    let localTimerSet = LocalTimerSet(seconds, startDate: startDate, endDate: endDate)
     
-    return (modelElapsedSeconds, localElapsedSeconds)
+    return (modelElapsedSeconds, localTimerSet)
 }

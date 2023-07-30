@@ -39,11 +39,11 @@ final class TimerNotificationsTests: XCTestCase {
     func test_scheduleNotification_onSameDateAsStartDate_shouldSendMessageToSchedulerWithCorrectValues() {
         let startDate = Date()
         let endDate = startDate.adding(seconds: 1)
-        let elapsedSeconds = TimerSet(0, startDate: startDate, endDate: endDate)
+        let timerSet = TimerSet(0, startDate: startDate, endDate: endDate)
         let spy = Spy()
         let sut = TimerNotificationScheduler(scheduler: spy)
         
-        sut.scheduleNotification(from: elapsedSeconds)
+        sut.scheduleNotification(from: timerSet)
         
         XCTAssertEqual(spy.receivedMessages, [.scheduleExecution(at: endDate)])
     }

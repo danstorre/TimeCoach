@@ -7,9 +7,9 @@ public protocol LocalTimerStore {
 }
 
 public struct LocalTimerState: Equatable {
-    public let localElapsedSeconds: LocalTimerSet
+    public let localTimerSet: LocalTimerSet
     
-    public init(localElapsedSeconds: LocalTimerSet) {
-        self.localElapsedSeconds = localElapsedSeconds
+    public init(localTimerSet: LocalTimerSet) {
+        self.localTimerSet = localTimerSet
     }
 }

@@ -17,8 +17,8 @@ class LocaTimerSpy: LocalTimerStore {
             switch self {
             case .deleteState:
                 return "deleteState"
-            case let .insert(state: localElapsedSeconds):
-                return "insert: \(localElapsedSeconds)"
+            case let .insert(state: localTimerSet):
+                return "insert: \(localTimerSet)"
             case .retrieve:
                 return "retrieve"
             }

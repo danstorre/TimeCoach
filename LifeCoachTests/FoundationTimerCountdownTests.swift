@@ -13,7 +13,7 @@ final class FoundationTimerCountdownTests: XCTestCase {
         let startSet = createAnyTimerSet()
         let sut = makeSUT(startingSet: startSet, nextSet: createAnyTimerSet())
         
-        expect(sut: sut, toDeliver: [startSet.addingElapsedSeconds(0.001)],
+        expect(sut: sut, toDeliver: [startSet.adding(0.001)],
                andChangesStateTo: .running,
                andElapsedTime: 0.001)
     }
@@ -24,7 +24,7 @@ final class FoundationTimerCountdownTests: XCTestCase {
         let sut = makeSUT(startingSet: startSet, nextSet: createAnyTimerSet())
 
         expect(sut: sut,
-               toDeliver: [startSet.addingElapsedSeconds(0.001), startSet.addingElapsedSeconds(0.002)],
+               toDeliver: [startSet.adding(0.001), startSet.adding(0.002)],
                andChangesStateTo: .stop,
                andElapsedTime: 0.002)
     }
@@ -34,7 +34,7 @@ final class FoundationTimerCountdownTests: XCTestCase {
         let startSet = createTimerSet(0, startDate: fixedDate, endDate: fixedDate.adding(seconds: 0.001))
         let sut = makeSUT(startingSet: startSet, nextSet: createAnyTimerSet())
         expect(sut: sut,
-               toDeliver: [startSet.addingElapsedSeconds(0.001)],
+               toDeliver: [startSet.adding(0.001)],
                andChangesStateTo: .stop,
                andElapsedTime: 0.001)
         
@@ -56,7 +56,7 @@ final class FoundationTimerCountdownTests: XCTestCase {
         let nextSet = createTimerSet(0, startDate: fixedDate, endDate: fixedDate.adding(seconds: 0.002))
         let sut = makeSUT(startingSet: startingSet, nextSet: nextSet)
         
-        expect(sut: sut, toDeliver: [startingSet.addingElapsedSeconds(0.001)],
+        expect(sut: sut, toDeliver: [startingSet.adding(0.001)],
                andChangesStateTo: .stop,
                andElapsedTime: 0.001)
     }

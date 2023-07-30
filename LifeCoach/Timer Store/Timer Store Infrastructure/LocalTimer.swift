@@ -29,12 +29,12 @@ private extension TimerSet {
 
 private extension TimerState {
     var local: LocalTimerState {
-        LocalTimerState(localElapsedSeconds: elapsedSeconds.local)
+        LocalTimerState(localTimerSet: elapsedSeconds.local)
     }
 }
 
 private extension LocalTimerState {
     var toModel: TimerState {
-        TimerState(elapsedSeconds: localElapsedSeconds.toElapseSeconds)
+        TimerState(elapsedSeconds: localTimerSet.toElapseSeconds)
     }
 }

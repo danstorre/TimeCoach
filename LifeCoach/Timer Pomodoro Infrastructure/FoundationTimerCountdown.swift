@@ -62,12 +62,12 @@ public final class FoundationTimerCountdown: TimerCoutdown {
         guard hasNotHitThreshold() else {
             invalidatesTimer()
             state = .stop
-            let elapsed = currentSet.addingElapsedSeconds(elapsedTimeInterval)
+            let elapsed = currentSet.adding(elapsedTimeInterval)
             timerDelivery?(.success(elapsed))
             return
         }
         
-        let elapsed = currentSet.addingElapsedSeconds(elapsedTimeInterval)
+        let elapsed = currentSet.adding(elapsedTimeInterval)
         timerDelivery?(.success(elapsed))
     }
     
@@ -92,7 +92,7 @@ public final class FoundationTimerCountdown: TimerCoutdown {
 }
 
 public extension LocalTimerSet {
-    func addingElapsedSeconds(_ seconds: Double) -> LocalTimerSet {
+    func adding(_ seconds: Double) -> LocalTimerSet {
         LocalTimerSet(elapsedSeconds + Double(seconds), startDate: startDate, endDate: endDate)
     }
 }
