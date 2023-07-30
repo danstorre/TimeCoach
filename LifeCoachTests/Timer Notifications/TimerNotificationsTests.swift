@@ -5,7 +5,7 @@ final class TimerNotificationsTests: XCTestCase {
     func test_init_doesNotScheduleTimer() {
         let (_, spy) = makeSUT(timerSet: createAnyTimerSet(), currentDate: Date.init)
         
-        XCTAssertEqual(spy.scheduleCallCount, 0)
+        XCTAssertEqual(spy.receivedMessages, [])
     }
     
     func test_scheduleNotification_onSameDateAsStartDate_shouldSendMessageToSchedulerWithCorrectValues() {
@@ -94,7 +94,6 @@ final class TimerNotificationsTests: XCTestCase {
     }
     
     private class SpyScheduler: Scheduler {
-        private(set) var scheduleCallCount = 0
         private(set) var receivedMessages = [AnyMessage]()
         
         enum AnyMessage: Equatable {
@@ -102,8 +101,6 @@ final class TimerNotificationsTests: XCTestCase {
         }
         
         func setSchedule(at scheduledDate: Date) {
-            scheduleCallCount += 1
-            
             receivedMessages.append(.scheduleExecution(at: scheduledDate))
         }
     }
