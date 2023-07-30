@@ -1,32 +1,7 @@
 import LifeCoach
 import XCTest
 import UserNotifications
-
-class UserNotificationsScheduler: Scheduler {
-    private let currentDate: () -> Date
-    private let notificationCenter: NotificationScheduler
-    
-    init(currentDate: @escaping () -> Date = Date.init, with notificationCenter: NotificationScheduler) {
-        self.notificationCenter = notificationCenter
-        self.currentDate = currentDate
-    }
-    
-    func setSchedule(at date: Date) {
-        notificationCenter.removeAllDeliveredNotifications()
-        notificationCenter.removeAllPendingNotificationRequests()
-        
-        let timeInterval = currentDate().distance(to: date)
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: timeInterval, repeats: false)
-        
-        let content = UNMutableNotificationContent()
-        content.title = "timer's up!"
-        content.interruptionLevel = .critical
-        
-        let notification = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
-        
-        notificationCenter.add(notification)
-    }
-}
+import TimeCoach_Watch_App
 
 final class SchedulerNotificationTests: XCTestCase {
     func test_init_doesNotRemoveAllDeliveredNotifications() throws {
@@ -141,14 +116,6 @@ final class SchedulerNotificationTests: XCTestCase {
         Date().adding(seconds: 1)
     }
 }
-
-protocol NotificationScheduler {
-    func removeAllDeliveredNotifications()
-    func removeAllPendingNotificationRequests()
-    
-    func add(_ notification: UNNotificationRequest)
-}
-
 
 extension Date {
     func adding(seconds: TimeInterval) -> Date {
