@@ -43,41 +43,40 @@ final class TimerNotificationsTests: XCTestCase {
     
     func test_scheduleNotification_onSameDateAsStartDate_shouldSendMessageToSchedulerWithCorrectValues() {
         let startDate = Date()
-        let endDate = startDate.adding(seconds: 1)
-        let timerSet = TimerSet(0, startDate: startDate, endDate: endDate)
-        let spy = Spy()
-        let sut = TimerNotificationScheduler(currentDate: { startDate }, scheduler: spy)
+        let endTimerDate = startDate.adding(seconds: 1)
+        let timerSet = TimerSet(0, startDate: startDate, endDate: endTimerDate)
         
-        sut.scheduleNotification(from: timerSet)
+        let spyReceivedMessages = receivedMessagesOfSpyAfter(seconds: 0, with: timerSet)
         
-        XCTAssertEqual(spy.receivedMessages, [.scheduleExecution(at: endDate)])
+        XCTAssertEqual(spyReceivedMessages, [
+            .scheduleExecution(at: endTimerDate)
+        ])
     }
     
     func test_scheduleNotification_oneSecondAfterStartDateOfTimerSet_sendsCorrectMessageToScheduler() {
         let startDate = Date()
-        let endDate = startDate.adding(seconds: 1)
-        let timerSet = TimerSet(0, startDate: startDate, endDate: endDate)
-        let spy = Spy()
-        let sut = TimerNotificationScheduler(currentDate: { startDate.adding(seconds: 1) }, scheduler: spy)
+        let endTimerDate = startDate.adding(seconds: 1)
+        let timerSet = TimerSet(0, startDate: startDate, endDate: endTimerDate)
+        let secondsAfterTimerStartDate: TimeInterval = 0
         
-        sut.scheduleNotification(from: timerSet)
+        let spyReceivedMessages = receivedMessagesOfSpyAfter(seconds: secondsAfterTimerStartDate, with: timerSet)
         
-        XCTAssertEqual(spy.receivedMessages, [.scheduleExecution(at: endDate.adding(seconds: 1))])
+        XCTAssertEqual(spyReceivedMessages, [
+            .scheduleExecution(at: endTimerDate.adding(seconds: secondsAfterTimerStartDate))
+        ])
     }
     
     func test_scheduleNotification_onSameDateAsStartDateAndOneElapsedSecondOnTimer_sendsCorrectMessageToScheduler() {
         let startDate = Date()
-        let endDate = startDate.adding(seconds: 1)
+        let endTimerDate = startDate.adding(seconds: 1)
         let elapsedSecondsOnTimer: TimeInterval = 1
-        let timerSet = TimerSet(elapsedSecondsOnTimer, startDate: startDate, endDate: endDate)
+        let timerSet = TimerSet(elapsedSecondsOnTimer, startDate: startDate, endDate: endTimerDate)
         let secondsAfterTimerStartDate: TimeInterval = 1
-        let spy = Spy()
-        let sut = TimerNotificationScheduler(currentDate: { startDate.adding(seconds: secondsAfterTimerStartDate) }, scheduler: spy)
         
-        sut.scheduleNotification(from: timerSet)
+        let spyReceivedMessages = receivedMessagesOfSpyAfter(seconds: secondsAfterTimerStartDate, with: timerSet)
         
-        XCTAssertEqual(spy.receivedMessages, [
-            .scheduleExecution(at: endDate.adding(seconds: secondsAfterTimerStartDate) - elapsedSecondsOnTimer)
+        XCTAssertEqual(spyReceivedMessages, [
+            .scheduleExecution(at: endTimerDate.adding(seconds: secondsAfterTimerStartDate) - elapsedSecondsOnTimer)
         ])
     }
     
@@ -92,16 +91,23 @@ final class TimerNotificationsTests: XCTestCase {
             let secondsAfterTimerStartDateSamples: [TimeInterval] = [0, 1, 100]
             
             secondsAfterTimerStartDateSamples.forEach { secondsAfterTimerStartDate in
-                let spy = Spy()
-                let sut = TimerNotificationScheduler(currentDate: { startTimerDate.adding(seconds: secondsAfterTimerStartDate) }, scheduler: spy)
+                let spyReceivedMessages = receivedMessagesOfSpyAfter(seconds: secondsAfterTimerStartDate, with: timerSet)
                 
-                sut.scheduleNotification(from: timerSet)
-                
-                XCTAssertEqual(spy.receivedMessages, [
+                XCTAssertEqual(spyReceivedMessages, [
                     .scheduleExecution(at: endTimerDate.adding(seconds: secondsAfterTimerStartDate) - elapsedSecondsOfTimer)
                 ])
             }
         }
+    }
+    
+    // MARK: - Helpers
+    private func receivedMessagesOfSpyAfter(seconds secondsAfterTimerStartDate: TimeInterval, with timerSet: TimerSet) -> [Spy.AnyMessage] {
+        let spy = Spy()
+        let sut = TimerNotificationScheduler(currentDate: { timerSet.startDate.adding(seconds: secondsAfterTimerStartDate) }, scheduler: spy)
+        
+        sut.scheduleNotification(from: timerSet)
+        
+        return spy.receivedMessages
     }
 }
 
