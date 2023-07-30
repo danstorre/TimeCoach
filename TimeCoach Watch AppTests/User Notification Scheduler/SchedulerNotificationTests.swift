@@ -25,14 +25,14 @@ class UserNotificationsScheduler {
 
 final class SchedulerNotificationTests: XCTestCase {
     func test_init_doesNotRemoveAllDeliveredNotifications() throws {
-        let spy = UNUserNotificationCenterSpy()
+        let spy = UNUserNotificationCenterTestDouble()
         let _ = UserNotificationsScheduler(with: spy)
         
         XCTAssertEqual(spy.removeAllDeliveredNotificationsCallCount, 0)
     }
     
     func test_schedule_sendsMessageToRemoveAllDeliveredNotifications() {
-        let spy = UNUserNotificationCenterSpy()
+        let spy = UNUserNotificationCenterTestDouble()
         let sut = UserNotificationsScheduler(with: spy)
         
         sut.setSchedule(at: anyScheduledDate())
@@ -41,7 +41,7 @@ final class SchedulerNotificationTests: XCTestCase {
     }
     
     func test_schedule_sendsMessageToRemoveAllPendingNotifications() {
-        let spy = UNUserNotificationCenterSpy()
+        let spy = UNUserNotificationCenterTestDouble()
         let sut = UserNotificationsScheduler(with: spy)
         
         sut.setSchedule(at: anyScheduledDate())
@@ -54,7 +54,7 @@ final class SchedulerNotificationTests: XCTestCase {
         
         samplesAddingToCurrentDate.forEach { sample in
             let currentDate = Date()
-            let mock = UNUserNotificationCenterSpy()
+            let mock = UNUserNotificationCenterTestDouble()
             let sut = UserNotificationsScheduler(currentDate: { currentDate }, with: mock)
             let timeScheduled = currentDate.adding(seconds: sample)
             sut.setSchedule(at: timeScheduled)
@@ -64,7 +64,7 @@ final class SchedulerNotificationTests: XCTestCase {
     }
     
     // MARK: - Helpers
-    class UNUserNotificationCenterSpy: NotificationScheduler {
+    class UNUserNotificationCenterTestDouble: NotificationScheduler {
         private(set) var removeAllDeliveredNotificationsCallCount = 0
         private(set) var removeAllPendingNotificationRequestsCallCount = 0
         private(set) var receivedNotifications = [UNNotificationRequest]()
