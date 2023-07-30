@@ -80,6 +80,29 @@ final class TimerNotificationsTests: XCTestCase {
             .scheduleExecution(at: endDate.adding(seconds: secondsAfterTimerStartDate) - elapsedSecondsOnTimer)
         ])
     }
+    
+    func test_scheduleNotification_sendsCorrectMessageToScheduler() {
+        let startTimerDate = Date()
+        let endTimerDate = startTimerDate.adding(seconds: 2)
+        let elapsedSecondsOnTimerSamples: [TimeInterval] = [0, 1, 2]
+
+        elapsedSecondsOnTimerSamples.forEach { elapsedSecondsOfTimer in
+            let timerSet = TimerSet(elapsedSecondsOfTimer, startDate: startTimerDate, endDate: endTimerDate)
+            
+            let secondsAfterTimerStartDateSamples: [TimeInterval] = [0, 1, 100]
+            
+            secondsAfterTimerStartDateSamples.forEach { secondsAfterTimerStartDate in
+                let spy = Spy()
+                let sut = TimerNotificationScheduler(currentDate: { startTimerDate.adding(seconds: secondsAfterTimerStartDate) }, scheduler: spy)
+                
+                sut.scheduleNotification(from: timerSet)
+                
+                XCTAssertEqual(spy.receivedMessages, [
+                    .scheduleExecution(at: endTimerDate.adding(seconds: secondsAfterTimerStartDate) - elapsedSecondsOfTimer)
+                ])
+            }
+        }
+    }
 }
 
 extension Date {
