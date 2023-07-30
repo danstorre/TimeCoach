@@ -101,7 +101,9 @@ final class TimerNotificationsTests: XCTestCase {
     }
     
     // MARK: - Helpers
-    private func receivedMessagesFromSpyOnScheduleAfter(seconds secondsAfterTimerStartDate: TimeInterval, with timerSet: TimerSet) -> [Spy.AnyMessage] {
+    private func receivedMessagesFromSpyOnScheduleAfter(seconds secondsAfterTimerStartDate: TimeInterval,
+                                                        with timerSet: TimerSet,
+                                                        file: StaticString = #filePath, line: UInt = #line) -> [Spy.AnyMessage] {
         let (sut, spy) = makeSUT(timerSet: timerSet, currentDate: { timerSet.startDate.adding(seconds: secondsAfterTimerStartDate) })
         
         sut.scheduleNotification(from: timerSet)
@@ -109,10 +111,14 @@ final class TimerNotificationsTests: XCTestCase {
         return spy.receivedMessages
     }
     
-    private func makeSUT(timerSet: TimerSet, currentDate: @escaping () -> Date) -> (sut: TimerNotificationScheduler, spy: Spy) {
+    private func makeSUT(timerSet: TimerSet,
+                         currentDate: @escaping () -> Date,
+                         file: StaticString = #filePath, line: UInt = #line) -> (sut: TimerNotificationScheduler, spy: Spy) {
         let spy = Spy()
         let sut = TimerNotificationScheduler(currentDate: currentDate, scheduler: spy)
         
+        trackForMemoryLeak(instance: sut, file: file, line: line)
+        trackForMemoryLeak(instance: spy, file: file, line: line)
         
         return (sut, spy)
     }
