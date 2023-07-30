@@ -6,10 +6,10 @@ protocol TimerNotificationScheduler {
 }
 
 class DefaultTimerNotificationScheduler: TimerNotificationScheduler {
-    private let scheduler: Spy
+    private let scheduler: Scheduler
     private let currentDate: () -> Date
     
-    init(currentDate: @escaping () -> Date = Date.init, scheduler: Spy) {
+    init(currentDate: @escaping () -> Date = Date.init, scheduler: Scheduler) {
         self.scheduler = scheduler
         self.currentDate = currentDate
     }
@@ -22,19 +22,8 @@ class DefaultTimerNotificationScheduler: TimerNotificationScheduler {
     }
 }
 
-class Spy {
-    private(set) var scheduleCallCount = 0
-    private(set) var receivedMessages = [AnyMessage]()
-    
-    enum AnyMessage: Equatable {
-        case scheduleExecution(at: Date)
-    }
-    
-    func setSchedule(at scheduledDate: Date) {
-        scheduleCallCount += 1
-        
-        receivedMessages.append(.scheduleExecution(at: scheduledDate))
-    }
+protocol Scheduler {
+    func setSchedule(at scheduledDate: Date)
 }
 
 final class TimerNotificationsTests: XCTestCase {
@@ -106,7 +95,7 @@ final class TimerNotificationsTests: XCTestCase {
     // MARK: - Helpers
     private func receivedMessagesFromSpyOnScheduleAfter(seconds secondsAfterTimerStartDate: TimeInterval,
                                                         with timerSet: TimerSet,
-                                                        file: StaticString = #filePath, line: UInt = #line) -> [Spy.AnyMessage] {
+                                                        file: StaticString = #filePath, line: UInt = #line) -> [SpyScheduler.AnyMessage] {
         let (sut, spy) = makeSUT(timerSet: timerSet, currentDate: { timerSet.startDate.adding(seconds: secondsAfterTimerStartDate) })
         
         sut.scheduleNotification(from: timerSet)
@@ -116,8 +105,8 @@ final class TimerNotificationsTests: XCTestCase {
     
     private func makeSUT(timerSet: TimerSet,
                          currentDate: @escaping () -> Date,
-                         file: StaticString = #filePath, line: UInt = #line) -> (sut: TimerNotificationScheduler, spy: Spy) {
-        let spy = Spy()
+                         file: StaticString = #filePath, line: UInt = #line) -> (sut: TimerNotificationScheduler, spy: SpyScheduler) {
+        let spy = SpyScheduler()
         let sut = DefaultTimerNotificationScheduler(currentDate: currentDate, scheduler: spy)
         
         trackForMemoryLeak(instance: sut, file: file, line: line)
@@ -128,6 +117,21 @@ final class TimerNotificationsTests: XCTestCase {
     
     private func createAnyTimerSet(startingFrom startDate: Date = Date()) -> TimerSet {
         TimerSet(0, startDate: startDate, endDate: startDate.adding(seconds: 1))
+    }
+    
+    private class SpyScheduler: Scheduler {
+        private(set) var scheduleCallCount = 0
+        private(set) var receivedMessages = [AnyMessage]()
+        
+        enum AnyMessage: Equatable {
+            case scheduleExecution(at: Date)
+        }
+        
+        func setSchedule(at scheduledDate: Date) {
+            scheduleCallCount += 1
+            
+            receivedMessages.append(.scheduleExecution(at: scheduledDate))
+        }
     }
     
 }
