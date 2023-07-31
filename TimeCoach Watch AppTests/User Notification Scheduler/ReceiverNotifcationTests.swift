@@ -46,7 +46,7 @@ private final class FakeKeyedArchiver: NSKeyedArchiver {
 private extension UserNotificationsReceiver {
     @discardableResult
     func receiveNotification() -> UNNotificationPresentationOptions? {
-        let anyNotification = UNNotification(coder: FakeKeyedArchiver())
+        let anyNotification = try? InstanceHelper.create(UNNotification.self)
         
         var receivedOption: UNNotificationPresentationOptions?
         userNotificationCenter(UNUserNotificationCenter.current(),

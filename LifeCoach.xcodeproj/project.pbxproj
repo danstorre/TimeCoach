@@ -126,6 +126,8 @@
 		FBE593E22A78296600069F1C /* TimerNotificationReceiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE593E12A78296600069F1C /* TimerNotificationReceiver.swift */; };
 		FBE593E42A7836C200069F1C /* ReceiverNotifcationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE593E32A7836C200069F1C /* ReceiverNotifcationTests.swift */; };
 		FBE593E62A78498000069F1C /* UserNotificationsReceiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE593E52A78498000069F1C /* UserNotificationsReceiver.swift */; };
+		FBE593F72A784D6600069F1C /* InstanceHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = FBE593F62A784D6600069F1C /* InstanceHelper.m */; };
+		FBE593F92A784E6000069F1C /* InstanceHelper+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE593F82A784E6000069F1C /* InstanceHelper+Extensions.swift */; };
 		FBE646562A4A9F3F005022A2 /* TimerVoidAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE646552A4A9F3F005022A2 /* TimerVoidAdapter.swift */; };
 		FBE646582A4A9F77005022A2 /* TimerAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE646572A4A9F77005022A2 /* TimerAdapter.swift */; };
 		FBE646592A4A9FBC005022A2 /* TimerAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE646572A4A9F77005022A2 /* TimerAdapter.swift */; };
@@ -381,6 +383,10 @@
 		FBE593E12A78296600069F1C /* TimerNotificationReceiver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerNotificationReceiver.swift; sourceTree = "<group>"; };
 		FBE593E32A7836C200069F1C /* ReceiverNotifcationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiverNotifcationTests.swift; sourceTree = "<group>"; };
 		FBE593E52A78498000069F1C /* UserNotificationsReceiver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNotificationsReceiver.swift; sourceTree = "<group>"; };
+		FBE593F42A784D6500069F1C /* TimeCoach Watch AppTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TimeCoach Watch AppTests-Bridging-Header.h"; sourceTree = "<group>"; };
+		FBE593F52A784D6600069F1C /* InstanceHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InstanceHelper.h; sourceTree = "<group>"; };
+		FBE593F62A784D6600069F1C /* InstanceHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InstanceHelper.m; sourceTree = "<group>"; };
+		FBE593F82A784E6000069F1C /* InstanceHelper+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "InstanceHelper+Extensions.swift"; sourceTree = "<group>"; };
 		FBE646552A4A9F3F005022A2 /* TimerVoidAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerVoidAdapter.swift; sourceTree = "<group>"; };
 		FBE646572A4A9F77005022A2 /* TimerAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerAdapter.swift; sourceTree = "<group>"; };
 		FBE6465C2A4AA2DE005022A2 /* Combine+RegularTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Combine+RegularTimer.swift"; sourceTree = "<group>"; };
@@ -869,6 +875,17 @@
 			path = "Timer Notifications";
 			sourceTree = "<group>";
 		};
+		FBE593F32A784D4D00069F1C /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				FBE593F52A784D6600069F1C /* InstanceHelper.h */,
+				FBE593F62A784D6600069F1C /* InstanceHelper.m */,
+				FBE593F42A784D6500069F1C /* TimeCoach Watch AppTests-Bridging-Header.h */,
+				FBE593F82A784E6000069F1C /* InstanceHelper+Extensions.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
 		FBE6465B2A4AA2D2005022A2 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
@@ -908,6 +925,7 @@
 		FBE9A9892939527F00D8BF29 /* TimeCoach Watch AppTests */ = {
 			isa = PBXGroup;
 			children = (
+				FBE593F32A784D4D00069F1C /* Helpers */,
 				FB59260E2A76FECC0011D53E /* User Notification Scheduler */,
 				FBE9A92E2939247A00D8BF29 /* TimerUI */,
 			);
@@ -1237,6 +1255,7 @@
 					};
 					FBE9A9852939527E00D8BF29 = {
 						CreatedOnToolsVersion = 14.0;
+						LastSwiftMigration = 1430;
 						TestTargetID = FBE9A9732939527C00D8BF29;
 					};
 				};
@@ -1532,6 +1551,7 @@
 				FBE593E42A7836C200069F1C /* ReceiverNotifcationTests.swift in Sources */,
 				FBE9A9DE29396EA100D8BF29 /* TimeCoachAcceptanceTests.swift in Sources */,
 				FBE9A9A5293952EB00D8BF29 /* TimerUIIntegrationTests.swift in Sources */,
+				FBE593F92A784E6000069F1C /* InstanceHelper+Extensions.swift in Sources */,
 				FB5926102A76FEFC0011D53E /* SchedulerNotificationTests.swift in Sources */,
 				FBE9A9A6293952EE00D8BF29 /* TimerView+Simulations.swift in Sources */,
 				FB4B89622A3BBB6D0088DB5B /* TimerStateSpy.swift in Sources */,
@@ -1539,6 +1559,7 @@
 				FBC612F3293AC2ED008D9EF8 /* TimerCountDownSpy.swift in Sources */,
 				FB4B89692A3BBC700088DB5B /* TimeCoach_Watch_AppApp+Helpers.swift in Sources */,
 				FB960C73293D479800ECBAD5 /* XCTestCase+MemoryLeakTracking.swift in Sources */,
+				FBE593F72A784D6600069F1C /* InstanceHelper.m in Sources */,
 				FB4B896B2A3BBCFD0088DB5B /* TimerView+ViewInspectorHelpers.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2348,6 +2369,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = AEWQUX8MPM;
@@ -2357,6 +2379,8 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
 				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "TimeCoach Watch AppTests/Helpers/TimeCoach Watch AppTests-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TimeCoach Watch App.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/TimeCoach Watch App";
@@ -2369,6 +2393,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = AEWQUX8MPM;
@@ -2378,6 +2403,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
 				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "TimeCoach Watch AppTests/Helpers/TimeCoach Watch AppTests-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TimeCoach Watch App.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/TimeCoach Watch App";
