@@ -1,20 +1,7 @@
 import XCTest
 import LifeCoach
 import UserNotifications
-
-class UserNotificationsReceiver: NSObject, UNUserNotificationCenterDelegate {
-    private let receiver: TimerNotificationReceiver
-    
-    init(receiver: TimerNotificationReceiver) {
-        self.receiver = receiver
-    }
-    
-    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        receiver.receiveNotification()
-        
-        completionHandler(.banner)
-    }
-}
+import TimeCoach_Watch_App
 
 final class ReceiverNotificationTests: XCTestCase {
     func test_init_shouldNotSendMessageToReceiver() {
