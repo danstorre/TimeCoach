@@ -31,4 +31,13 @@ final class TimerNoticationReceiverTests: XCTestCase {
         
         XCTAssertEqual(executedCompletion, 1)
     }
+    
+    // MARK: - Helpers
+    private func makeSUT(completion: @escaping () -> Void) -> TimerNotificationReceiver {
+        let sut = TimerNotificationReceiver(completion: completion)
+        
+        trackForMemoryLeak(instance: sut)
+        
+        return sut
+    }
 }
