@@ -2,7 +2,7 @@ import XCTest
 import LifeCoach
 import UserNotifications
 
-class UserNotificationsReceiver {
+class UserNotificationsReceiver: NSObject, UNUserNotificationCenterDelegate {
     private let receiver: TimerNotificationReceiver
     
     init(receiver: TimerNotificationReceiver) {
