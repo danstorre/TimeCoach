@@ -21,7 +21,7 @@ final class SchedulerNotificationTests: XCTestCase {
     func test_schedule_sendsMessageToRemoveAllPendingNotifications() {
         let (sut, spy) = makeSUT()
         
-        try? sut.setSchedule(at: Date().addingTimeInterval(1))
+        try? sut.setSchedule(at: anyScheduledDate())
         
         XCTAssertEqual(spy.removeAllPendingNotificationRequestsCallCount, 1)
     }
