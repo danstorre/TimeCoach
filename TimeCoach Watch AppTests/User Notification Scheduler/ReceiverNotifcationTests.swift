@@ -16,24 +16,16 @@ class UserNotificationsReceiver {
     }
 }
 
-class MockReceiver: TimerNotificationReceiver {
-    private(set) var receiveCallCount = 0
-    
-    func receiveNotification() {
-        receiveCallCount += 1
-    }
-}
-
 final class ReceiverNotificationTests: XCTestCase {
     func test_init_shouldNotSendMessageToReceiver() {
-        let spy = MockReceiver()
+        let spy = SpyReceiver()
         let _ = UserNotificationsReceiver(receiver: spy)
         
         XCTAssertEqual(spy.receiveCallCount, 0)
     }
     
     func test_receive_sendsMessageToReceiver() {
-        let spy = MockReceiver()
+        let spy = SpyReceiver()
         let sut = UserNotificationsReceiver(receiver: spy)
         
         sut.receiveNotification()
@@ -42,12 +34,20 @@ final class ReceiverNotificationTests: XCTestCase {
     }
     
     func test_receive_receivesCorrectNotificationType() {
-        let spy = MockReceiver()
+        let spy = SpyReceiver()
         let sut = UserNotificationsReceiver(receiver: spy)
         
         let receivedNoticicationType = sut.receiveNotification()
         
         assertNotificationType(with: receivedNoticicationType)
+    }
+    
+    private class SpyReceiver: TimerNotificationReceiver {
+        private(set) var receiveCallCount = 0
+        
+        func receiveNotification() {
+            receiveCallCount += 1
+        }
     }
 }
 
