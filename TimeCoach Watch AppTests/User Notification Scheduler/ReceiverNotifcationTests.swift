@@ -1,10 +1,11 @@
 import XCTest
+import LifeCoach
 import UserNotifications
 
 class UserNotificationsReceiver {
-    private let receiver: MockReceiver
+    private let receiver: TimerNotificationReceiver
     
-    init(receiver: MockReceiver) {
+    init(receiver: TimerNotificationReceiver) {
         self.receiver = receiver
     }
     
@@ -15,7 +16,7 @@ class UserNotificationsReceiver {
     }
 }
 
-class MockReceiver {
+class MockReceiver: TimerNotificationReceiver {
     private(set) var receiveCallCount = 0
     
     func receiveNotification() {
