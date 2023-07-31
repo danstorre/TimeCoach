@@ -1,22 +1,6 @@
 import LifeCoach
 import XCTest
 
-protocol TimerNotificationReceiver {
-    func receiveNotification()
-}
-
-class DefaultTimerNotificationReceiver: TimerNotificationReceiver {
-    private let completion: () -> Void
-    
-    init(completion: @escaping () -> Void) {
-        self.completion = completion
-    }
-    
-    func receiveNotification() {
-        completion()
-    }
-}
-
 final class TimerNoticationReceiverTests: XCTestCase {
     func test_init_doesNotExecuteCompletion() throws {
         var executedCompletion = 0
