@@ -1,6 +1,5 @@
-@testable import LifeCoach
+import LifeCoach
 import XCTest
-
 
 class TimerNotificationReceiver {
     private let completion: () -> Void
