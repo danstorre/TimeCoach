@@ -549,7 +549,6 @@
 		FB4AA14129379DC20076FED9 /* Timer Composition */ = {
 			isa = PBXGroup;
 			children = (
-				FBB3D8802A770EB200A8BBAD /* Notifications */,
 				FBE6465B2A4AA2D2005022A2 /* Helpers */,
 				FB73E908293BA2A40087F9EF /* TimeCoachRoot.swift */,
 				FB4AA14229379DC90076FED9 /* TimerViewComposer.swift */,
@@ -821,8 +820,8 @@
 		FBB3D8802A770EB200A8BBAD /* Notifications */ = {
 			isa = PBXGroup;
 			children = (
-				FBB3D8812A770EBC00A8BBAD /* UserNotificationsScheduler.swift */,
 				FBB3D8832A770F1F00A8BBAD /* NotificationScheduler.swift */,
+				FBB3D8812A770EBC00A8BBAD /* UserNotificationsScheduler.swift */,
 				FBE593E52A78498000069F1C /* UserNotificationsReceiver.swift */,
 			);
 			path = Notifications;
@@ -913,6 +912,7 @@
 		FBE9A9782939527C00D8BF29 /* TimeCoach Watch App */ = {
 			isa = PBXGroup;
 			children = (
+				FBB3D8802A770EB200A8BBAD /* Notifications */,
 				FB4AA14129379DC20076FED9 /* Timer Composition */,
 				FB960C7E293D530900ECBAD5 /* Previews */,
 				FBE9A9B22939579F00D8BF29 /* Resources */,
