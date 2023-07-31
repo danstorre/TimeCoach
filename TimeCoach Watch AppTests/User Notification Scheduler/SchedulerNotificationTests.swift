@@ -11,17 +11,19 @@ final class SchedulerNotificationTests: XCTestCase {
     }
     
     func test_schedule_sendsMessageToRemoveAllDeliveredNotifications() {
-        let (sut, spy) = makeSUT()
+        let currentDate = Date()
+        let (sut, spy) = makeSUT(on: { currentDate })
         
-        try? sut.setSchedule(at: anyScheduledDate())
+        try? sut.setSchedule(at: currentDate.adding(seconds: 1))
         
         XCTAssertEqual(spy.removeAllDeliveredNotificationsCallCount, 1)
     }
     
     func test_schedule_sendsMessageToRemoveAllPendingNotifications() {
-        let (sut, spy) = makeSUT()
+        let currentDate = Date()
+        let (sut, spy) = makeSUT(on: { currentDate })
         
-        try? sut.setSchedule(at: anyScheduledDate())
+        try? sut.setSchedule(at: currentDate.adding(seconds: 1))
         
         XCTAssertEqual(spy.removeAllPendingNotificationRequestsCallCount, 1)
     }
