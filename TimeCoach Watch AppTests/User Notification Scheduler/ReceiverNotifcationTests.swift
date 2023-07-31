@@ -10,6 +10,8 @@ class UserNotificationsReceiver {
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         receiver.receiveNotification()
+        
+        completionHandler(.banner)
     }
 }
 
@@ -37,6 +39,15 @@ final class ReceiverNotificationTests: XCTestCase {
         
         XCTAssertEqual(spy.receiveCallCount, 1)
     }
+    
+    func test_receive_receivesCorrectNotificationType() {
+        let spy = MockReceiver()
+        let sut = UserNotificationsReceiver(receiver: spy)
+        
+        let receivedNoticicationType = sut.receiveNotification()
+        
+        assertNotificationType(with: receivedNoticicationType)
+    }
 }
 
 private final class FakeKeyedArchiver: NSKeyedArchiver {
@@ -44,11 +55,32 @@ private final class FakeKeyedArchiver: NSKeyedArchiver {
     override func decodeInt64(forKey key: String) -> Int64 { 0 }
 }
 
-extension UserNotificationsReceiver {
-    func receiveNotification() {
+private extension UserNotificationsReceiver {
+    @discardableResult
+    func receiveNotification() -> UNNotificationPresentationOptions? {
         let anyNotification = UNNotification(coder: FakeKeyedArchiver())
+        
+        var receivedOption: UNNotificationPresentationOptions?
         userNotificationCenter(UNUserNotificationCenter.current(),
                                willPresent: anyNotification!,
-                               withCompletionHandler: { _ in})
+                               withCompletionHandler: { option in receivedOption = option })
+        
+        return receivedOption
+    }
+}
+
+private extension ReceiverNotificationTests {
+    func assertNotificationType(with type: UNNotificationPresentationOptions?, file: StaticString = #filePath, line: UInt = #line) {
+        XCTAssertEqual(type, .banner, file: file, line: line)
+    }
+}
+
+extension UNNotificationPresentationOptions: CustomStringConvertible {
+    public var description: String {
+        if rawValue == 16 {
+            return "banner"
+        }
+        
+        return "unknown Option"
     }
 }
