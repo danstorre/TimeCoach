@@ -1,7 +1,11 @@
 import LifeCoach
 import XCTest
 
-class TimerNotificationReceiver {
+protocol TimerNotificationReceiver {
+    func receiveNotification()
+}
+
+class DefaultTimerNotificationReceiver: TimerNotificationReceiver {
     private let completion: () -> Void
     
     init(completion: @escaping () -> Void) {
@@ -16,16 +20,14 @@ class TimerNotificationReceiver {
 final class TimerNoticationReceiverTests: XCTestCase {
     func test_init_doesNotExecuteCompletion() throws {
         var executedCompletion = 0
-        let completion: () -> Void = { executedCompletion += 1 }
-        let _ = TimerNotificationReceiver(completion: completion)
+        let _ = makeSUT(completion: { executedCompletion += 1 })
         
         XCTAssertEqual(executedCompletion, 0)
     }
     
     func test_receivingNotification_executesCompletion() {
         var executedCompletion = 0
-        let completion: () -> Void = { executedCompletion += 1 }
-        let sut = TimerNotificationReceiver(completion: completion)
+        let sut = makeSUT(completion: { executedCompletion += 1 })
         
         sut.receiveNotification()
         
@@ -34,7 +36,7 @@ final class TimerNoticationReceiverTests: XCTestCase {
     
     // MARK: - Helpers
     private func makeSUT(completion: @escaping () -> Void) -> TimerNotificationReceiver {
-        let sut = TimerNotificationReceiver(completion: completion)
+        let sut = DefaultTimerNotificationReceiver(completion: completion)
         
         trackForMemoryLeak(instance: sut)
         
