@@ -16,6 +16,15 @@ final class TimerLoadTests: XCTestCase {
         XCTAssertEqual(spy.receivedMessages, [.retrieve])
     }
     
+    func test_load_onEmptyStoreDeliversEmpty() {
+        let (sut, spy) = makeSUT()
+        spy.completesRetrieveSuccessfully(with: nil)
+        
+        let result = try? sut.load()
+        
+        XCTAssertNil(result, "sut should have return empty")
+    }
+    
     func test_load_onStoreRetrieveFailureDeliversError() {
         let (sut, spy) = makeSUT()
         let expectedError = anyNSError()

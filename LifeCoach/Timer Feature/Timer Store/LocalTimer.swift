@@ -12,8 +12,8 @@ public class LocalTimer: SaveTimerState, LoadTimerState {
         try store.insert(state: state.local)
     }
     
-    public func load() throws -> TimerState {
-        try store.retrieve().toModel
+    public func load() throws -> TimerState? {
+        try store.retrieve()?.toModel
     }
 }
 

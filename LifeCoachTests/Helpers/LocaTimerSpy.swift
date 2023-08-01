@@ -6,7 +6,7 @@ class LocaTimerSpy: LocalTimerStore {
     private(set) var receivedMessages = [AnyMessage]()
     private var deletionResult: Result<Void, Error>?
     private var insertionResult: Result<Void, Error>?
-    private var retrieveResult: Result<LocalTimerState, Error>?
+    private var retrieveResult: Result<LocalTimerState?, Error>?
     
     enum AnyMessage: Equatable, CustomStringConvertible {
         case deleteState
@@ -57,7 +57,7 @@ class LocaTimerSpy: LocalTimerStore {
     // MARK: State Retrieval
     private struct UnexpectedError: Error {}
     
-    func retrieve() throws -> LifeCoach.LocalTimerState {
+    func retrieve() throws -> LifeCoach.LocalTimerState? {
         receivedMessages.append(.retrieve)
         return try (retrieveResult ?? .failure(UnexpectedError())).get()
     }
@@ -66,7 +66,7 @@ class LocaTimerSpy: LocalTimerStore {
         retrieveResult = .failure(error)
     }
     
-    func completesRetrieveSuccessfully(with state: LocalTimerState) {
+    func completesRetrieveSuccessfully(with state: LocalTimerState?) {
         retrieveResult = .success(state)
     }
 }
