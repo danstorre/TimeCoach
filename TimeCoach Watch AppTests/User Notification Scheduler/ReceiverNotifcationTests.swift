@@ -38,11 +38,6 @@ final class ReceiverNotificationTests: XCTestCase {
     }
 }
 
-private final class FakeKeyedArchiver: NSKeyedArchiver {
-    override func decodeObject(forKey _: String) -> Any { "" }
-    override func decodeInt64(forKey key: String) -> Int64 { 0 }
-}
-
 private extension UserNotificationsReceiver {
     @discardableResult
     func receiveNotification() -> UNNotificationPresentationOptions? {
