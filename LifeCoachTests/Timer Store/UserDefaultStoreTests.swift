@@ -76,9 +76,8 @@ final class UserDefaultTimerStoreTests: XCTestCase {
     
     func test_retrieve_onEmptyStoreDeliversEmpty() {
         let sut = makeSUT()
-        let result = try? sut.retrieve()
         
-        XCTAssertNil(result, "retrieve should return empty.")
+        expect(sut: sut, toRetrieve: .none, when: {})
     }
     
     func test_retrieve_onErrorDeliversError() {
@@ -95,11 +94,9 @@ final class UserDefaultTimerStoreTests: XCTestCase {
         let anyTimerState = makeAnyLocalTimerState(elapsedSeconds: 0)
         let sut = makeSUT()
         
-        try? sut.insert(state: anyTimerState)
-        
-        let result = try? sut.retrieve()
-        
-        XCTAssertEqual(result, anyTimerState, "latest inserted value should have been retrieved.")
+        expect(sut: sut, toRetrieve: anyTimerState, when: {
+            try? sut.insert(state: anyTimerState)
+        })
     }
     
     func test_insert_doneTwiceDeliversLatestInsertedValues() {
@@ -107,12 +104,10 @@ final class UserDefaultTimerStoreTests: XCTestCase {
         let latestTimerState = makeAnyLocalTimerState(elapsedSeconds: 1)
         let sut = makeSUT()
         
-        try? sut.insert(state: firstTimerState)
-        try? sut.insert(state: latestTimerState)
-        
-        let result = try? sut.retrieve()
-        
-        XCTAssertEqual(result, latestTimerState, "latest inserted value should have been retrieved.")
+        expect(sut: sut, toRetrieve: latestTimerState, when: {
+            try? sut.insert(state: firstTimerState)
+            try? sut.insert(state: latestTimerState)
+        })
     }
     
     func test_insert_onErrorDeliversError() {
@@ -136,6 +131,17 @@ final class UserDefaultTimerStoreTests: XCTestCase {
     }
     
     // MARK: - Helpers
+    private func expect(sut: UserDefaultsTimerStore, toRetrieve expectedState: LocalTimerState?,
+                        when action: () -> Void, file: StaticString = #filePath, line: UInt = #line) {
+        action()
+        
+        let result = try? sut.retrieve()
+        
+        XCTAssertEqual(result, expectedState,
+                       "expected \(String(describing: expectedState)), got \(String(describing: result))",
+                       file: file, line: line)
+    }
+    
     private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> UserDefaultsTimerStore {
         let sut = UserDefaultsTimerStore(storeID: testTimerStateStoreID)
         trackForMemoryLeak(instance: sut, file: file, line: line)
