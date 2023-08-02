@@ -65,30 +65,30 @@ final class UserDefaultTimerStoreTests: XCTestCase {
     }
     
     func test_insert_onEmptyStoreDeletesPreviousInsertedLocalTimerState() {
-        let localTimerSet = LocalTimerSet(0, startDate: Date(), endDate: Date())
-        let localState = LocalTimerState(localTimerSet: localTimerSet)
+        let firstTimerSet = LocalTimerSet(0, startDate: Date(), endDate: Date())
+        let firstTimerState = LocalTimerState(localTimerSet: firstTimerSet)
         let sut = UserDefaultsTimerStore(storeID: testTimerStateStoreID)
         
-        sut.insert(state: localState)
+        sut.insert(state: firstTimerState)
         
         let result = sut.retrieve()
         
-        XCTAssertEqual(result, localState, "latest inserted value should have been retrieved.")
+        XCTAssertEqual(result, firstTimerState, "latest inserted value should have been retrieved.")
     }
     
     func test_insert_doneTwiceDeliversLatestInsertedValues() {
-        let localTimerSet = LocalTimerSet(0, startDate: Date(), endDate: Date())
-        let localTimerSetb = LocalTimerSet(1, startDate: Date(), endDate: Date())
-        let localState = LocalTimerState(localTimerSet: localTimerSet)
-        let localStateb = LocalTimerState(localTimerSet: localTimerSetb)
+        let firstTimerSet = LocalTimerSet(0, startDate: Date(), endDate: Date())
+        let firstTimerState = LocalTimerState(localTimerSet: firstTimerSet)
+        let latestTimerSet = LocalTimerSet(1, startDate: Date(), endDate: Date())
+        let latestTimerState = LocalTimerState(localTimerSet: latestTimerSet)
         let sut = UserDefaultsTimerStore(storeID: testTimerStateStoreID)
         
-        sut.insert(state: localState)
-        sut.insert(state: localStateb)
+        sut.insert(state: firstTimerState)
+        sut.insert(state: latestTimerState)
         
         let result = sut.retrieve()
         
-        XCTAssertEqual(result, localStateb, "latest inserted value should have been retrieved.")
+        XCTAssertEqual(result, latestTimerState, "latest inserted value should have been retrieved.")
     }
     
     // MARK: - Helpers
