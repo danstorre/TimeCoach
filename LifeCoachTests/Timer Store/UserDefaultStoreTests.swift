@@ -9,7 +9,7 @@ class StoreJSONEncoder: NSObject {
     }
 }
 
-class UserDefaultsTimerStore {
+class UserDefaultsTimerStore: LocalTimerStore {
     class UserDefaultsTimerState: NSObject, Decodable, Encodable {
         private let elapsed: Float
         private let starDate: Date
@@ -158,7 +158,7 @@ final class UserDefaultTimerStoreTests: XCTestCase {
     
     // MARK: - Helpers
     @discardableResult
-    private func insert(timer: LocalTimerState, using sut: UserDefaultsTimerStore) -> Error? {
+    private func insert(timer: LocalTimerState, using sut: LocalTimerStore) -> Error? {
         do {
             try sut.insert(state: timer)
             return nil
@@ -167,7 +167,7 @@ final class UserDefaultTimerStoreTests: XCTestCase {
         }
     }
     
-    private func retrieve(from sut: UserDefaultsTimerStore) -> Result<LocalTimerState?, Error> {
+    private func retrieve(from sut: LocalTimerStore) -> Result<LocalTimerState?, Error> {
         do {
             return try .success(sut.retrieve())
         } catch {
@@ -176,7 +176,7 @@ final class UserDefaultTimerStoreTests: XCTestCase {
     }
     
     @discardableResult
-    private func deleteStore(from sut: UserDefaultsTimerStore) -> Error? {
+    private func deleteStore(from sut: LocalTimerStore) -> Error? {
         do {
             try sut.deleteState()
             return nil
@@ -185,7 +185,7 @@ final class UserDefaultTimerStoreTests: XCTestCase {
         }
     }
     
-    private func expect(sut: UserDefaultsTimerStore, toRetrieve expectedState: Result<LocalTimerState?, UserDefaultsTimerStore.Error>,
+    private func expect(sut: LocalTimerStore, toRetrieve expectedState: Result<LocalTimerState?, UserDefaultsTimerStore.Error>,
                         when action: () -> Void, file: StaticString = #filePath, line: UInt = #line) {
         action()
         
@@ -204,7 +204,7 @@ final class UserDefaultTimerStoreTests: XCTestCase {
         }
     }
     
-    private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> UserDefaultsTimerStore {
+    private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> LocalTimerStore {
         let sut = UserDefaultsTimerStore(storeID: testTimerStateStoreID())
         trackForMemoryLeak(instance: sut, file: file, line: line)
         return sut
