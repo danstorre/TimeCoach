@@ -60,6 +60,10 @@ class UserDefaultsTimerStore {
         }
         userDefaults.set(dataToStore, forKey: UserDefaultsTimerStore.DefaultKey)
     }
+    
+    func deleteState() throws {
+        
+    }
 }
 
 final class UserDefaultTimerStoreTests: XCTestCase {
@@ -119,7 +123,24 @@ final class UserDefaultTimerStoreTests: XCTestCase {
         })
     }
     
+    func test_deleteState_onEmptyStoreDeliversNoError() {
+        let sut = makeSUT()
+        
+        let errorResult = deleteStore(from: sut)
+        
+        XCTAssertNil(errorResult, "Expected non-empty cache deletion to succeed")
+    }
+    
     // MARK: - Helpers
+    private func deleteStore(from sut: UserDefaultsTimerStore) -> Error? {
+        do {
+            try sut.deleteState()
+            return nil
+        } catch {
+            return error
+        }
+    }
+    
     private func expect(sutTofailWith expectedError: UserDefaultsTimerStore.Error,
                         when action: () throws -> Void, file: StaticString = #filePath, line: UInt = #line) {
        do {
