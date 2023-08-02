@@ -41,7 +41,7 @@ class UserDefaultsTimerStore: LocalTimerStore {
     }
     
     func retrieve() throws -> LocalTimerState? {
-        guard let dataToStore = UserDefaults(suiteName: storeID)?.data(forKey: UserDefaultsTimerStore.DefaultKey) else {
+        guard let dataToStore = createStore()?.data(forKey: UserDefaultsTimerStore.DefaultKey) else {
             return nil
         }
         
@@ -55,14 +55,18 @@ class UserDefaultsTimerStore: LocalTimerStore {
     func insert(state: LocalTimerState) throws {
         let timerState = UserDefaultsTimerState(local: state)
         guard let dataToStore = try? StoreJSONEncoder().encode(timerState),
-              let userDefaults = UserDefaults(suiteName: storeID) else {
+              let userDefaults = createStore() else {
             throw Error.failInsertionObject(withKey: UserDefaultsTimerStore.DefaultKey)
         }
         userDefaults.set(dataToStore, forKey: UserDefaultsTimerStore.DefaultKey)
     }
     
     func deleteState() throws {
-        UserDefaults(suiteName: storeID)?.removeObject(forKey: UserDefaultsTimerStore.DefaultKey)
+        createStore()?.removeObject(forKey: UserDefaultsTimerStore.DefaultKey)
+    }
+    
+    private func createStore() -> UserDefaults? {
+        UserDefaults(suiteName: storeID)
     }
 }
 
