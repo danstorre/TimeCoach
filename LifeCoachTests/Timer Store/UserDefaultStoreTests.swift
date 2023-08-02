@@ -46,7 +46,7 @@ final class UserDefaultTimerStoreTests: XCTestCase {
         })
     }
     
-    func test_insert_onErrorDeliversError() {
+    func test_insert_onErrorDeliversFailInsertionObjectError() {
         let stub = StoreJSONEncoder.alwaysFailingEncodeStub()
         stub.startIntercepting()
         let sut = makeSUT()
