@@ -127,6 +127,7 @@
 		FBDEE8102A7B134000D1120A /* TimerStoreNotifierTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDEE80F2A7B134000D1120A /* TimerStoreNotifierTests.swift */; };
 		FBDEE8142A7B161100D1120A /* TimerStoreNotifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDEE8132A7B161100D1120A /* TimerStoreNotifier.swift */; };
 		FBDEE8162A7B162200D1120A /* DefaultTimerStoreNotifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDEE8152A7B162200D1120A /* DefaultTimerStoreNotifier.swift */; };
+		FBDEE8182A7B16EE00D1120A /* TimerStoreReceiverTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDEE8172A7B16EE00D1120A /* TimerStoreReceiverTests.swift */; };
 		FBE336A72A3D6CC200735D74 /* FoundationTimerCountdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE336A62A3D6CC200735D74 /* FoundationTimerCountdown.swift */; };
 		FBE593DE2A78269800069F1C /* TimerNoticationReceiverTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE593DD2A78269800069F1C /* TimerNoticationReceiverTests.swift */; };
 		FBE593E02A78294600069F1C /* DefaultTimerNotificationReceiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE593DF2A78294600069F1C /* DefaultTimerNotificationReceiver.swift */; };
@@ -391,6 +392,7 @@
 		FBDEE80F2A7B134000D1120A /* TimerStoreNotifierTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerStoreNotifierTests.swift; sourceTree = "<group>"; };
 		FBDEE8132A7B161100D1120A /* TimerStoreNotifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerStoreNotifier.swift; sourceTree = "<group>"; };
 		FBDEE8152A7B162200D1120A /* DefaultTimerStoreNotifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultTimerStoreNotifier.swift; sourceTree = "<group>"; };
+		FBDEE8172A7B16EE00D1120A /* TimerStoreReceiverTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerStoreReceiverTests.swift; sourceTree = "<group>"; };
 		FBE336A62A3D6CC200735D74 /* FoundationTimerCountdown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoundationTimerCountdown.swift; sourceTree = "<group>"; };
 		FBE593DD2A78269800069F1C /* TimerNoticationReceiverTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerNoticationReceiverTests.swift; sourceTree = "<group>"; };
 		FBE593DF2A78294600069F1C /* DefaultTimerNotificationReceiver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultTimerNotificationReceiver.swift; sourceTree = "<group>"; };
@@ -906,6 +908,7 @@
 			isa = PBXGroup;
 			children = (
 				FBDEE80F2A7B134000D1120A /* TimerStoreNotifierTests.swift */,
+				FBDEE8172A7B16EE00D1120A /* TimerStoreReceiverTests.swift */,
 			);
 			path = "Timer Store Notifications";
 			sourceTree = "<group>";
@@ -1556,6 +1559,7 @@
 				FBD822642A75CABC002702F4 /* TimerNotificationsSchedulerTests.swift in Sources */,
 				FBC9ADAF2919E8B500E0BEFC /* XCTestCase+MemoryLeakTracking.swift in Sources */,
 				FBD8225E2A75B1EE002702F4 /* LocaTimerSpy.swift in Sources */,
+				FBDEE8182A7B16EE00D1120A /* TimerStoreReceiverTests.swift in Sources */,
 				FB960C75293D484000ECBAD5 /* TimerPresentationTests.swift in Sources */,
 				FBBA19592A71EFA700240081 /* TimerSaveTests.swift in Sources */,
 				FBE6465E2A4AA59F005022A2 /* FoundationTimerCountdownTests.swift in Sources */,
