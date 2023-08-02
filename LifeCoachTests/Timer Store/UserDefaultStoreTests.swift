@@ -131,7 +131,25 @@ final class UserDefaultTimerStoreTests: XCTestCase {
         XCTAssertNil(errorResult, "Expected non-empty cache deletion to succeed")
     }
     
+    func test_deleteState_onEmptyStoreDeliversNoSideEffects() {
+        let sut = makeSUT()
+        
+        deleteStore(from: sut)
+        let result = retrieve(from: sut)
+        
+        XCTAssertNil(try result.get(), "Expected deleteState with no side-effects on empty store")
+    }
+    
     // MARK: - Helpers
+    private func retrieve(from sut: UserDefaultsTimerStore) -> Result<LocalTimerState?, Error> {
+        do {
+            return try .success(sut.retrieve())
+        } catch {
+            return .failure(error)
+        }
+    }
+    
+    @discardableResult
     private func deleteStore(from sut: UserDefaultsTimerStore) -> Error? {
         do {
             try sut.deleteState()
