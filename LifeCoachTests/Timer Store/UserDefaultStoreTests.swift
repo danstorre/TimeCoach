@@ -83,11 +83,10 @@ final class UserDefaultTimerStoreTests: XCTestCase {
         expect(sut: sut, toRetrieve: .success(.none), when: {})
     }
     
-    func test_retrieve_onErrorDeliversError() {
-        expect(sutTofailWith: UserDefaultsTimerStore.Error.invalidSavedData(key: UserDefaultsTimerStore.DefaultKey), when: {
+    func test_retrieve_onNonEmptyInvalidDataStoreDeliversError() {
+        expect(sut: makeSUT(), toRetrieve: .failure(UserDefaultsTimerStore.Error.invalidSavedData(key: UserDefaultsTimerStore.DefaultKey)),
+               when: {
             saveInvalidData("invalidData".data(using: .utf8)!)
-            
-            _ = try makeSUT().retrieve()
         })
     }
     
@@ -201,17 +200,20 @@ final class UserDefaultTimerStoreTests: XCTestCase {
         }
     }
     
-    private func expect(sut: UserDefaultsTimerStore, toRetrieve expectedState: Result<LocalTimerState?, Error>,
+    private func expect(sut: UserDefaultsTimerStore, toRetrieve expectedState: Result<LocalTimerState?, UserDefaultsTimerStore.Error>,
                         when action: () -> Void, file: StaticString = #filePath, line: UInt = #line) {
         action()
         
-        let result = Result { try? sut.retrieve() }
+        let result = Result { try sut.retrieve() }
         
         switch (result, expectedState) {
         case (.success(.none), .success(.none)): break
             
         case let (.success(timerState), .success(expectedTimerState)):
             XCTAssertEqual(timerState, expectedTimerState, file: file, line: line)
+            
+        case let (.failure(errorResult), .failure(expectedError)):
+            XCTAssertEqual(errorResult as? UserDefaultsTimerStore.Error, expectedError, file: file, line: line)
         default:
             XCTFail("expected \(String(describing: expectedState)), got \(String(describing: result))", file: file, line: line)
         }
