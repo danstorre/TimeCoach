@@ -62,7 +62,7 @@ class UserDefaultsTimerStore {
     }
     
     func deleteState() throws {
-        
+        UserDefaults(suiteName: storeID)?.removeObject(forKey: UserDefaultsTimerStore.DefaultKey)
     }
 }
 
@@ -141,13 +141,22 @@ final class UserDefaultTimerStoreTests: XCTestCase {
     }
     
     func test_deleteState_onNonEmptyStoreShouldDeliverNoError() {
-        let anyTimerState = makeAnyLocalTimerState()
         let sut = makeSUT()
+        insert(timer: makeAnyLocalTimerState(), using: sut)
         
-        insert(timer: anyTimerState, using: sut)
         let result = deleteStore(from: sut)
         
         XCTAssertNil(result, "Expected no error on deleteState with non-empty store.")
+    }
+    
+    func test_deleteState_onNonEmptyStoreShouldDeliverNoSideEffects() {
+        let sut = makeSUT()
+        insert(timer: makeAnyLocalTimerState(), using: sut)
+        
+        deleteStore(from: sut)
+        let result = retrieve(from: sut)
+        
+        XCTAssertNil(try? result.get(), "Expected empty store after deletion")
     }
     
     // MARK: - Helpers
