@@ -140,7 +140,25 @@ final class UserDefaultTimerStoreTests: XCTestCase {
         XCTAssertNil(try result.get(), "Expected deleteState with no side-effects on empty store")
     }
     
+    func test_deleteState_onNonEmptyStoreShouldDeliverNoError() {
+        let anyTimerState = makeAnyLocalTimerState()
+        let sut = makeSUT()
+        
+        insert(timer: anyTimerState, using: sut)
+        let result = deleteStore(from: sut)
+        
+        XCTAssertNil(result, "Expected no error on deleteState with non-empty store.")
+    }
+    
     // MARK: - Helpers
+    private func insert(timer: LocalTimerState, using sut: UserDefaultsTimerStore) {
+        do {
+            try sut.insert(state: timer)
+        } catch {
+            
+        }
+    }
+    
     private func retrieve(from sut: UserDefaultsTimerStore) -> Result<LocalTimerState?, Error> {
         do {
             return try .success(sut.retrieve())
