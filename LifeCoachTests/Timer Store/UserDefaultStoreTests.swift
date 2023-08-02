@@ -39,8 +39,7 @@ class UserDefaultsTimerStore {
     }
     
     func retrieve() throws -> LocalTimerState? {
-        let userDefaults = UserDefaults(suiteName: storeID)
-        guard let dataToStore = userDefaults?.data(forKey: "any") else {
+        guard let dataToStore = UserDefaults(suiteName: storeID)?.data(forKey: "any") else {
             return nil
         }
         
