@@ -123,6 +123,7 @@
 		FBDBAC4C29762AFE009E440A /* FoundationTimerCountdown+TimerLoad.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDBAC4B29762AFE009E440A /* FoundationTimerCountdown+TimerLoad.swift */; };
 		FBDEE8082A7B0BC200D1120A /* UserDefaultsTimerStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDEE8072A7B0BC200D1120A /* UserDefaultsTimerStore.swift */; };
 		FBDEE80A2A7B0C6400D1120A /* StoreJSONEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDEE8092A7B0C6400D1120A /* StoreJSONEncoder.swift */; };
+		FBDEE80D2A7B0D2F00D1120A /* StoreJSONEncoder+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDEE80C2A7B0D2F00D1120A /* StoreJSONEncoder+Helpers.swift */; };
 		FBE336A72A3D6CC200735D74 /* FoundationTimerCountdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE336A62A3D6CC200735D74 /* FoundationTimerCountdown.swift */; };
 		FBE593DE2A78269800069F1C /* TimerNoticationReceiverTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE593DD2A78269800069F1C /* TimerNoticationReceiverTests.swift */; };
 		FBE593E02A78294600069F1C /* DefaultTimerNotificationReceiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE593DF2A78294600069F1C /* DefaultTimerNotificationReceiver.swift */; };
@@ -383,6 +384,7 @@
 		FBDBAC4B29762AFE009E440A /* FoundationTimerCountdown+TimerLoad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FoundationTimerCountdown+TimerLoad.swift"; sourceTree = "<group>"; };
 		FBDEE8072A7B0BC200D1120A /* UserDefaultsTimerStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsTimerStore.swift; sourceTree = "<group>"; };
 		FBDEE8092A7B0C6400D1120A /* StoreJSONEncoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreJSONEncoder.swift; sourceTree = "<group>"; };
+		FBDEE80C2A7B0D2F00D1120A /* StoreJSONEncoder+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StoreJSONEncoder+Helpers.swift"; sourceTree = "<group>"; };
 		FBE336A62A3D6CC200735D74 /* FoundationTimerCountdown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoundationTimerCountdown.swift; sourceTree = "<group>"; };
 		FBE593DD2A78269800069F1C /* TimerNoticationReceiverTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerNoticationReceiverTests.swift; sourceTree = "<group>"; };
 		FBE593DF2A78294600069F1C /* DefaultTimerNotificationReceiver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultTimerNotificationReceiver.swift; sourceTree = "<group>"; };
@@ -840,6 +842,7 @@
 				FBC9ADAE2919E8B500E0BEFC /* XCTestCase+MemoryLeakTracking.swift */,
 				FBD8225D2A75B1EE002702F4 /* LocaTimerSpy.swift */,
 				FBD8225F2A75B2FE002702F4 /* CommonHelpers.swift */,
+				FBDEE80C2A7B0D2F00D1120A /* StoreJSONEncoder+Helpers.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -1529,6 +1532,7 @@
 				FB960C75293D484000ECBAD5 /* TimerPresentationTests.swift in Sources */,
 				FBBA19592A71EFA700240081 /* TimerSaveTests.swift in Sources */,
 				FBE6465E2A4AA59F005022A2 /* FoundationTimerCountdownTests.swift in Sources */,
+				FBDEE80D2A7B0D2F00D1120A /* StoreJSONEncoder+Helpers.swift in Sources */,
 				FBD8225B2A75A6E3002702F4 /* TimerLoadTests.swift in Sources */,
 				FBD822602A75B2FE002702F4 /* CommonHelpers.swift in Sources */,
 				FB594CA62A4E1E5100C4A32C /* TImerControlsPresentationTests.swift in Sources */,
