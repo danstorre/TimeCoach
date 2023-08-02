@@ -1,6 +1,10 @@
 import XCTest
 
-class TimerStoreNotifier {
+protocol TimerStoreNotifier {
+    func storeSaved()
+}
+
+class DefaultTimerStoreNotifier: TimerStoreNotifier {
     private let completion: () -> Void
     
     init(completion: @escaping () -> Void) {
@@ -15,7 +19,7 @@ class TimerStoreNotifier {
 final class TimerStoreNotifierTests: XCTestCase {
     func test_init_doesNotExecuteCompletion() {
         var completionCallCount = 0
-        let _ = TimerStoreNotifier(completion: { completionCallCount += 1 })
+        let _ = makeSUT(completion: { completionCallCount += 1 })
         
         XCTAssertEqual(completionCallCount, 0, "should not call completion on init")
     }
@@ -31,7 +35,7 @@ final class TimerStoreNotifierTests: XCTestCase {
     
     // MARK: - Helper
     func makeSUT(completion: @escaping () -> Void, file: StaticString = #filePath, line: UInt = #line) -> TimerStoreNotifier {
-        let sut = TimerStoreNotifier(completion: completion)
+        let sut = DefaultTimerStoreNotifier(completion: completion)
         
         trackForMemoryLeak(instance: sut, file: file, line: line)
         
