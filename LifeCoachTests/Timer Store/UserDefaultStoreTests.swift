@@ -80,7 +80,7 @@ final class UserDefaultTimerStoreTests: XCTestCase {
     func test_retrieve_onEmptyStoreDeliversEmpty() {
         let sut = makeSUT()
         
-        expect(sut: sut, toRetrieve: .none, when: {})
+        expect(sut: sut, toRetrieve: .success(.none), when: {})
     }
     
     func test_retrieve_onErrorDeliversError() {
@@ -95,7 +95,7 @@ final class UserDefaultTimerStoreTests: XCTestCase {
         let anyTimerState = makeAnyLocalTimerState(elapsedSeconds: 0)
         let sut = makeSUT()
         
-        expect(sut: sut, toRetrieve: anyTimerState, when: {
+        expect(sut: sut, toRetrieve: .success(anyTimerState), when: {
             try? sut.insert(state: anyTimerState)
         })
     }
@@ -105,22 +105,22 @@ final class UserDefaultTimerStoreTests: XCTestCase {
         let latestTimerState = makeAnyLocalTimerState(elapsedSeconds: 1)
         let sut = makeSUT()
         
-        expect(sut: sut, toRetrieve: latestTimerState, when: {
+        expect(sut: sut, toRetrieve: .success(latestTimerState), when: {
             try? sut.insert(state: firstTimerState)
             try? sut.insert(state: latestTimerState)
         })
     }
     
     func test_insert_onErrorDeliversError() {
-        let anyLocalTimerState = makeAnyLocalTimerState(elapsedSeconds: 0)
+        let stub = StoreJSONEncoder.alwaysFailingEncodeStub()
+        stub.startIntercepting()
         let sut = makeSUT()
         
-        expect(sutTofailWith: UserDefaultsTimerStore.Error.failInsertionObject(withKey: UserDefaultsTimerStore.DefaultKey), when: {
-            let stub = StoreJSONEncoder.alwaysFailingEncodeStub()
-            stub.startIntercepting()
-            
-            try sut.insert(state: anyLocalTimerState)
-        })
+        let insertionError = insert(timer: makeAnyLocalTimerState(), using: sut)
+        
+        XCTAssertEqual(insertionError as? UserDefaultsTimerStore.Error,
+                       UserDefaultsTimerStore.Error.failInsertionObject(withKey: UserDefaultsTimerStore.DefaultKey),
+                       "Expected to fail when inserting state.")
     }
     
     func test_deleteState_onEmptyStoreDeliversNoError() {
@@ -160,11 +160,13 @@ final class UserDefaultTimerStoreTests: XCTestCase {
     }
     
     // MARK: - Helpers
-    private func insert(timer: LocalTimerState, using sut: UserDefaultsTimerStore) {
+    @discardableResult
+    private func insert(timer: LocalTimerState, using sut: UserDefaultsTimerStore) -> Error? {
         do {
             try sut.insert(state: timer)
+            return nil
         } catch {
-            
+            return error
         }
     }
     
@@ -199,15 +201,20 @@ final class UserDefaultTimerStoreTests: XCTestCase {
         }
     }
     
-    private func expect(sut: UserDefaultsTimerStore, toRetrieve expectedState: LocalTimerState?,
+    private func expect(sut: UserDefaultsTimerStore, toRetrieve expectedState: Result<LocalTimerState?, Error>,
                         when action: () -> Void, file: StaticString = #filePath, line: UInt = #line) {
         action()
         
-        let result = try? sut.retrieve()
+        let result = Result { try? sut.retrieve() }
         
-        XCTAssertEqual(result, expectedState,
-                       "expected \(String(describing: expectedState)), got \(String(describing: result))",
-                       file: file, line: line)
+        switch (result, expectedState) {
+        case (.success(.none), .success(.none)): break
+            
+        case let (.success(timerState), .success(expectedTimerState)):
+            XCTAssertEqual(timerState, expectedTimerState, file: file, line: line)
+        default:
+            XCTFail("expected \(String(describing: expectedState)), got \(String(describing: result))", file: file, line: line)
+        }
     }
     
     private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> UserDefaultsTimerStore {
