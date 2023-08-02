@@ -63,8 +63,6 @@ class UserDefaultsTimerStore {
 }
 
 final class UserDefaultTimerStoreTests: XCTestCase {
-    private let testTimerStateStoreID = "testTimerStateStore"
-    
     override func setUp() {
         super.setUp()
         cleanLocalTimerStateStore()
@@ -147,14 +145,14 @@ final class UserDefaultTimerStoreTests: XCTestCase {
     }
     
     private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> UserDefaultsTimerStore {
-        let sut = UserDefaultsTimerStore(storeID: testTimerStateStoreID)
+        let sut = UserDefaultsTimerStore(storeID: testTimerStateStoreID())
         trackForMemoryLeak(instance: sut, file: file, line: line)
         
         return sut
     }
     
     private func cleanLocalTimerStateStore() {
-        cleanUserDefaultSuite(from: testTimerStateStoreID)
+        cleanUserDefaultSuite(from: testTimerStateStoreID())
     }
     
     private func cleanUserDefaultSuite(from id: String) {
@@ -167,8 +165,12 @@ final class UserDefaultTimerStoreTests: XCTestCase {
     }
     
     private func saveInvalidData(_ invalidData: Data) {
-        let userDefaults = UserDefaults(suiteName: testTimerStateStoreID)
+        let userDefaults = UserDefaults(suiteName: testTimerStateStoreID())
         userDefaults?.set(invalidData, forKey: UserDefaultsTimerStore.DefaultKey)
+    }
+    
+    private func testTimerStateStoreID() -> String {
+        "testTimerStateStore"
     }
 }
 
