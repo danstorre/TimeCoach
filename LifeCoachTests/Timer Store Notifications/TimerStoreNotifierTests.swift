@@ -1,20 +1,5 @@
 import XCTest
-
-protocol TimerStoreNotifier {
-    func storeSaved()
-}
-
-class DefaultTimerStoreNotifier: TimerStoreNotifier {
-    private let completion: () -> Void
-    
-    init(completion: @escaping () -> Void) {
-        self.completion = completion
-    }
-    
-    func storeSaved() {
-        completion()
-    }
-}
+import LifeCoach
 
 final class TimerStoreNotifierTests: XCTestCase {
     func test_init_doesNotExecuteCompletion() {
