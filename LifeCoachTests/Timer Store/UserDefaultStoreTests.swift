@@ -76,6 +76,21 @@ final class UserDefaultTimerStoreTests: XCTestCase {
         XCTAssertEqual(result, localState, "latest inserted value should have been retrieved.")
     }
     
+    func test_insert_doneTwiceDeliversLatestInsertedValues() {
+        let localTimerSet = LocalTimerSet(0, startDate: Date(), endDate: Date())
+        let localTimerSetb = LocalTimerSet(1, startDate: Date(), endDate: Date())
+        let localState = LocalTimerState(localTimerSet: localTimerSet)
+        let localStateb = LocalTimerState(localTimerSet: localTimerSetb)
+        let sut = UserDefaultsTimerStore(storeID: testTimerStateStoreID)
+        
+        sut.insert(state: localState)
+        sut.insert(state: localStateb)
+        
+        let result = sut.retrieve()
+        
+        XCTAssertEqual(result, localStateb, "latest inserted value should have been retrieved.")
+    }
+    
     // MARK: - Helpers
     private func cleanLocalTimerStateStore() {
         cleanUserDefaultSuite(from: "testTimerStateStore")
