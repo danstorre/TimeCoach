@@ -44,12 +44,8 @@ class UserDefaultsTimerStore: LocalTimerStore {
         guard let dataFromStore = createStore()?.data(forKey: UserDefaultsTimerStore.DefaultKey) else {
             return nil
         }
-        
-        guard let timerState = try? JSONDecoder().decode(UserDefaultsTimerState.self, from: dataFromStore)
-        else {
-            throw Error.invalidSavedData(key: UserDefaultsTimerStore.DefaultKey)
-        }
-        return timerState.local
+        let localTimerState = try mapData(data: dataFromStore)
+        return localTimerState
     }
     
     func insert(state: LocalTimerState) throws {
@@ -67,6 +63,15 @@ class UserDefaultsTimerStore: LocalTimerStore {
     
     private func createStore() -> UserDefaults? {
         UserDefaults(suiteName: storeID)
+    }
+    
+    private func mapData(data: Data) throws -> LocalTimerState {
+        do {
+            let savedTimerState = try JSONDecoder().decode(UserDefaultsTimerState.self, from: data)
+            return savedTimerState.local
+        } catch {
+            throw Error.invalidSavedData(key: UserDefaultsTimerStore.DefaultKey)
+        }
     }
 }
 
