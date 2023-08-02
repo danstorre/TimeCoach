@@ -155,7 +155,7 @@ final class UserDefaultTimerStoreTests: XCTestCase {
         deleteStore(from: sut)
         let result = retrieve(from: sut)
         
-        XCTAssertNil(try? result.get(), "Expected empty store after deletion")
+        XCTAssertNil(try result.get(), "Expected empty store after deletion")
     }
     
     // MARK: - Helpers
@@ -184,19 +184,6 @@ final class UserDefaultTimerStoreTests: XCTestCase {
             return nil
         } catch {
             return error
-        }
-    }
-    
-    private func expect(sutTofailWith expectedError: UserDefaultsTimerStore.Error,
-                        when action: () throws -> Void, file: StaticString = #filePath, line: UInt = #line) {
-       do {
-            try action()
-            XCTFail("action should have failed with \(expectedError).", file: file, line: line)
-        } catch {
-            XCTAssertEqual(
-                error as? UserDefaultsTimerStore.Error, expectedError,
-                "action should have failed with \(expectedError)", file: file, line: line
-            )
         }
     }
     
