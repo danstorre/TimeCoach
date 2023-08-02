@@ -133,10 +133,9 @@ final class UserDefaultTimerStoreTests: XCTestCase {
     func test_deleteState_onEmptyStoreDeliversNoSideEffects() {
         let sut = makeSUT()
         
-        deleteStore(from: sut)
-        let result = retrieve(from: sut)
-        
-        XCTAssertNil(try result.get(), "Expected deleteState with no side-effects on empty store")
+        expect(sut: sut, toRetrieve: .success(.none), when: {
+            deleteStore(from: sut)
+        })
     }
     
     func test_deleteState_onNonEmptyStoreShouldDeliverNoError() {
@@ -150,12 +149,11 @@ final class UserDefaultTimerStoreTests: XCTestCase {
     
     func test_deleteState_onNonEmptyStoreShouldDeliverNoSideEffects() {
         let sut = makeSUT()
-        insert(timer: makeAnyLocalTimerState(), using: sut)
         
-        deleteStore(from: sut)
-        let result = retrieve(from: sut)
-        
-        XCTAssertNil(try result.get(), "Expected empty store after deletion")
+        expect(sut: sut, toRetrieve: .success(.none), when: {
+            insert(timer: makeAnyLocalTimerState(), using: sut)
+            deleteStore(from: sut)
+        })
     }
     
     // MARK: - Helpers
@@ -209,7 +207,6 @@ final class UserDefaultTimerStoreTests: XCTestCase {
     private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> UserDefaultsTimerStore {
         let sut = UserDefaultsTimerStore(storeID: testTimerStateStoreID())
         trackForMemoryLeak(instance: sut, file: file, line: line)
-        
         return sut
     }
     
