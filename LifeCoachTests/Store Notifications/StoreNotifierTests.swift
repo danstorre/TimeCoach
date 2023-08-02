@@ -1,10 +1,3 @@
-//
-//  StoreNotifierTests.swift
-//  LifeCoachTests
-//
-//  Created by Daniel Torres on 8/2/23.
-//
-
 import XCTest
 
 class StoreNotifier {
@@ -29,10 +22,19 @@ final class StoreNotifierTests: XCTestCase {
     
     func test_storeSaved_executesCompletion() {
         var completionCallCount = 0
-        let sut = StoreNotifier(completion: { completionCallCount += 1 })
+        let sut = makeSUT(completion: { completionCallCount += 1 })
         
         sut.storeSaved()
         
         XCTAssertEqual(completionCallCount, 1, "should call completion once")
+    }
+    
+    // MARK: - Helper
+    func makeSUT(completion: @escaping () -> Void, file: StaticString = #filePath, line: UInt = #line) -> StoreNotifier {
+        let sut = StoreNotifier(completion: completion)
+        
+        trackForMemoryLeak(instance: sut, file: file, line: line)
+        
+        return sut
     }
 }
