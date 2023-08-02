@@ -2,8 +2,15 @@ import Foundation
 import LifeCoach
 import XCTest
 
+class StoreJSONEncoder: NSObject {
+    @objc dynamic
+    func encode(_ data: UserDefaultsTimerStore.UserDefaultsTimerState) throws -> Data {
+        try JSONEncoder().encode(data)
+    }
+}
+
 class UserDefaultsTimerStore {
-    private struct UserDefaultsTimerState: Codable {
+    class UserDefaultsTimerState: NSObject, Decodable, Encodable {
         private let elapsed: Float
         private let starDate: Date
         private let endDate: Date
@@ -22,6 +29,7 @@ class UserDefaultsTimerStore {
     
     enum Error: Swift.Error, Equatable {
         case invalidSavedData(key: String)
+        case invalidInsert(key: String)
     }
     
     private let storeID: String
@@ -43,11 +51,13 @@ class UserDefaultsTimerStore {
         return timerState.local
     }
     
-    func insert(state: LocalTimerState) {
-        let userDefaults = UserDefaults(suiteName: storeID)
+    func insert(state: LocalTimerState) throws {
         let timerState = UserDefaultsTimerState(local: state)
-        let dataToStore = try? JSONEncoder().encode(timerState)
-        userDefaults?.set(dataToStore, forKey: "any")
+        guard let dataToStore = try? StoreJSONEncoder().encode(timerState),
+              let userDefaults = UserDefaults(suiteName: storeID) else {
+            throw Error.invalidInsert(key: "any")
+        }
+        userDefaults.set(dataToStore, forKey: "any")
     }
 }
 
@@ -85,7 +95,7 @@ final class UserDefaultTimerStoreTests: XCTestCase {
         let anyTimerState = makeAnyLocalTimerState(elapsedSeconds: 0)
         let sut = makeSUT()
         
-        sut.insert(state: anyTimerState)
+        try? sut.insert(state: anyTimerState)
         
         let result = try? sut.retrieve()
         
@@ -97,12 +107,32 @@ final class UserDefaultTimerStoreTests: XCTestCase {
         let latestTimerState = makeAnyLocalTimerState(elapsedSeconds: 1)
         let sut = makeSUT()
         
-        sut.insert(state: firstTimerState)
-        sut.insert(state: latestTimerState)
+        try? sut.insert(state: firstTimerState)
+        try? sut.insert(state: latestTimerState)
         
         let result = try? sut.retrieve()
         
         XCTAssertEqual(result, latestTimerState, "latest inserted value should have been retrieved.")
+    }
+    
+    func test_insert_onErrorDeliversError() {
+        let stub = StoreJSONEncoder.alwaysFailingEncodeStub()
+        stub.startIntercepting()
+        
+        let anyLocalTimerState = makeAnyLocalTimerState(elapsedSeconds: 0)
+        let sut = makeSUT()
+        
+        do {
+            try sut.insert(state: anyLocalTimerState)
+            
+            XCTFail("insert should have failed.")
+        } catch {
+            XCTAssertEqual(
+                error as? UserDefaultsTimerStore.Error,
+                UserDefaultsTimerStore.Error.invalidInsert(key: "any"),
+                "insert should have failed."
+            )
+        }
     }
     
     // MARK: - Helpers
@@ -140,5 +170,43 @@ extension UserDefaultsTimerStore.Error: CustomStringConvertible {
         }
         
         return self.localizedDescription
+    }
+}
+
+extension StoreJSONEncoder  {
+    static func alwaysFailingEncodeStub() -> Stub {
+        Stub(
+            #selector(encode),
+            #selector(Stub.encode(_:))
+        )
+    }
+
+    class Stub: NSObject {
+        private let source: Selector
+        private let destination: Selector
+
+        init(_ source: Selector, _ destination: Selector) {
+            self.source = source
+            self.destination = destination
+        }
+        
+        @objc dynamic
+        func encode(_ data: UserDefaultsTimerStore.UserDefaultsTimerState) throws -> Data {
+            throw anyNSError()
+        }
+
+        func startIntercepting() {
+            method_exchangeImplementations(
+                class_getInstanceMethod(StoreJSONEncoder.self, source)!,
+                class_getInstanceMethod(Stub.self, destination)!
+            )
+        }
+
+        deinit {
+            method_exchangeImplementations(
+                class_getInstanceMethod(Stub.self, destination)!,
+                class_getInstanceMethod(StoreJSONEncoder.self, source)!
+            )
+        }
     }
 }
