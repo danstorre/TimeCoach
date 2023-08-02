@@ -2,14 +2,14 @@ import Foundation
 import LifeCoach
 import XCTest
 
-class StoreJSONEncoder: NSObject {
+final class StoreJSONEncoder: NSObject {
     @objc dynamic
     func encode(_ data: UserDefaultsTimerStore.UserDefaultsTimerState) throws -> Data {
         try JSONEncoder().encode(data)
     }
 }
 
-class UserDefaultsTimerStore: LocalTimerStore {
+final class UserDefaultsTimerStore: LocalTimerStore {
     class UserDefaultsTimerState: NSObject, Decodable, Encodable {
         private let elapsed: Float
         private let starDate: Date
