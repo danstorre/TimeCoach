@@ -32,6 +32,8 @@ class UserDefaultsTimerStore {
         case failInsertionObject(withKey: String)
     }
     
+    static let DefaultKey = "UserDefaultsTimerStoreDefaultKey"
+    
     private let storeID: String
     
     init(storeID: String) {
@@ -39,13 +41,13 @@ class UserDefaultsTimerStore {
     }
     
     func retrieve() throws -> LocalTimerState? {
-        guard let dataToStore = UserDefaults(suiteName: storeID)?.data(forKey: "any") else {
+        guard let dataToStore = UserDefaults(suiteName: storeID)?.data(forKey: UserDefaultsTimerStore.DefaultKey) else {
             return nil
         }
         
         guard let timerState = try? JSONDecoder().decode(UserDefaultsTimerState.self, from: dataToStore)
         else {
-            throw Error.invalidSavedData(key: "any")
+            throw Error.invalidSavedData(key: UserDefaultsTimerStore.DefaultKey)
         }
         return timerState.local
     }
@@ -54,9 +56,9 @@ class UserDefaultsTimerStore {
         let timerState = UserDefaultsTimerState(local: state)
         guard let dataToStore = try? StoreJSONEncoder().encode(timerState),
               let userDefaults = UserDefaults(suiteName: storeID) else {
-            throw Error.failInsertionObject(withKey: "any")
+            throw Error.failInsertionObject(withKey: UserDefaultsTimerStore.DefaultKey)
         }
-        userDefaults.set(dataToStore, forKey: "any")
+        userDefaults.set(dataToStore, forKey: UserDefaultsTimerStore.DefaultKey)
     }
 }
 
@@ -80,7 +82,7 @@ final class UserDefaultTimerStoreTests: XCTestCase {
     }
     
     func test_retrieve_onErrorDeliversError() {
-        expect(sutTofailWith: UserDefaultsTimerStore.Error.invalidSavedData(key: "any"), when: {
+        expect(sutTofailWith: UserDefaultsTimerStore.Error.invalidSavedData(key: UserDefaultsTimerStore.DefaultKey), when: {
             saveInvalidData("invalidData".data(using: .utf8)!)
             
             _ = try makeSUT().retrieve()
@@ -111,7 +113,7 @@ final class UserDefaultTimerStoreTests: XCTestCase {
         let anyLocalTimerState = makeAnyLocalTimerState(elapsedSeconds: 0)
         let sut = makeSUT()
         
-        expect(sutTofailWith: UserDefaultsTimerStore.Error.failInsertionObject(withKey: "any"), when: {
+        expect(sutTofailWith: UserDefaultsTimerStore.Error.failInsertionObject(withKey: UserDefaultsTimerStore.DefaultKey), when: {
             let stub = StoreJSONEncoder.alwaysFailingEncodeStub()
             stub.startIntercepting()
             
@@ -166,7 +168,7 @@ final class UserDefaultTimerStoreTests: XCTestCase {
     
     private func saveInvalidData(_ invalidData: Data) {
         let userDefaults = UserDefaults(suiteName: testTimerStateStoreID)
-        userDefaults?.set(invalidData, forKey: "any")
+        userDefaults?.set(invalidData, forKey: UserDefaultsTimerStore.DefaultKey)
     }
 }
 
