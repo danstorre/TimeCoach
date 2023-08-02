@@ -41,11 +41,11 @@ class UserDefaultsTimerStore: LocalTimerStore {
     }
     
     func retrieve() throws -> LocalTimerState? {
-        guard let dataToStore = createStore()?.data(forKey: UserDefaultsTimerStore.DefaultKey) else {
+        guard let dataFromStore = createStore()?.data(forKey: UserDefaultsTimerStore.DefaultKey) else {
             return nil
         }
         
-        guard let timerState = try? JSONDecoder().decode(UserDefaultsTimerState.self, from: dataToStore)
+        guard let timerState = try? JSONDecoder().decode(UserDefaultsTimerState.self, from: dataFromStore)
         else {
             throw Error.invalidSavedData(key: UserDefaultsTimerStore.DefaultKey)
         }
