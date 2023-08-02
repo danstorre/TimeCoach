@@ -58,7 +58,7 @@ final class UserDefaultTimerStoreTests: XCTestCase {
     }
     
     func test_retrieve_onEmptyStoreDeliversEmpty() {
-        let sut = UserDefaultsTimerStore(storeID: testTimerStateStoreID)
+        let sut = makeSUT()
         let result = sut.retrieve()
         
         XCTAssertNil(result, "retrieve should return empty.")
@@ -67,7 +67,7 @@ final class UserDefaultTimerStoreTests: XCTestCase {
     func test_insert_onEmptyStoreDeletesPreviousInsertedLocalTimerState() {
         let firstTimerSet = LocalTimerSet(0, startDate: Date(), endDate: Date())
         let firstTimerState = LocalTimerState(localTimerSet: firstTimerSet)
-        let sut = UserDefaultsTimerStore(storeID: testTimerStateStoreID)
+        let sut = makeSUT()
         
         sut.insert(state: firstTimerState)
         
@@ -81,7 +81,7 @@ final class UserDefaultTimerStoreTests: XCTestCase {
         let firstTimerState = LocalTimerState(localTimerSet: firstTimerSet)
         let latestTimerSet = LocalTimerSet(1, startDate: Date(), endDate: Date())
         let latestTimerState = LocalTimerState(localTimerSet: latestTimerSet)
-        let sut = UserDefaultsTimerStore(storeID: testTimerStateStoreID)
+        let sut = makeSUT()
         
         sut.insert(state: firstTimerState)
         sut.insert(state: latestTimerState)
@@ -92,8 +92,15 @@ final class UserDefaultTimerStoreTests: XCTestCase {
     }
     
     // MARK: - Helpers
+    private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> UserDefaultsTimerStore {
+        let sut = UserDefaultsTimerStore(storeID: testTimerStateStoreID)
+        trackForMemoryLeak(instance: sut, file: file, line: line)
+        
+        return sut
+    }
+    
     private func cleanLocalTimerStateStore() {
-        cleanUserDefaultSuite(from: "testTimerStateStore")
+        cleanUserDefaultSuite(from: testTimerStateStoreID)
     }
     
     private func cleanUserDefaultSuite(from id: String) {
