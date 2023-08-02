@@ -41,26 +41,20 @@ class UserDefaultsTimerStore: LocalTimerStore {
     }
     
     func retrieve() throws -> LocalTimerState? {
-        guard let dataFromStore = createStore()?.data(forKey: UserDefaultsTimerStore.DefaultKey) else {
-            return nil
-        }
-        let localTimerState = try mapData(data: dataFromStore)
-        return localTimerState
+        guard let dataFromStore = createStore()?.data(forKey: UserDefaultsTimerStore.DefaultKey) else { return nil }
+        return try mapData(data: dataFromStore)
     }
     
     func insert(state: LocalTimerState) throws {
         let timerState = UserDefaultsTimerState(local: state)
-        guard let dataToStore = try? StoreJSONEncoder().encode(timerState),
-              let userDefaults = createStore() else {
-            throw Error.failInsertionObject(withKey: UserDefaultsTimerStore.DefaultKey)
-        }
-        userDefaults.set(dataToStore, forKey: UserDefaultsTimerStore.DefaultKey)
+        createStore()?.set(try encode(timerState: timerState), forKey: UserDefaultsTimerStore.DefaultKey)
     }
     
     func deleteState() throws {
         createStore()?.removeObject(forKey: UserDefaultsTimerStore.DefaultKey)
     }
     
+    // MARK: - Helpers
     private func createStore() -> UserDefaults? {
         UserDefaults(suiteName: storeID)
     }
@@ -72,6 +66,11 @@ class UserDefaultsTimerStore: LocalTimerStore {
         } catch {
             throw Error.invalidSavedData(key: UserDefaultsTimerStore.DefaultKey)
         }
+    }
+    
+    private func encode(timerState: UserDefaultsTimerState) throws -> Data {
+        do {  return try StoreJSONEncoder().encode(timerState) }
+        catch { throw Error.failInsertionObject(withKey: UserDefaultsTimerStore.DefaultKey) }
     }
 }
 
