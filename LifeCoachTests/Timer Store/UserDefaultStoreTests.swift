@@ -65,22 +65,19 @@ final class UserDefaultTimerStoreTests: XCTestCase {
     }
     
     func test_insert_onEmptyStoreDeliversInsertedLocalTimerState() {
-        let firstTimerSet = LocalTimerSet(0, startDate: Date(), endDate: Date())
-        let firstTimerState = LocalTimerState(localTimerSet: firstTimerSet)
+        let anyTimerState = makeAnyLocalTimerState(elapsedSeconds: 0)
         let sut = makeSUT()
         
-        sut.insert(state: firstTimerState)
+        sut.insert(state: anyTimerState)
         
         let result = sut.retrieve()
         
-        XCTAssertEqual(result, firstTimerState, "latest inserted value should have been retrieved.")
+        XCTAssertEqual(result, anyTimerState, "latest inserted value should have been retrieved.")
     }
     
     func test_insert_doneTwiceDeliversLatestInsertedValues() {
-        let firstTimerSet = LocalTimerSet(0, startDate: Date(), endDate: Date())
-        let firstTimerState = LocalTimerState(localTimerSet: firstTimerSet)
-        let latestTimerSet = LocalTimerSet(1, startDate: Date(), endDate: Date())
-        let latestTimerState = LocalTimerState(localTimerSet: latestTimerSet)
+        let firstTimerState = makeAnyLocalTimerState(elapsedSeconds: 0)
+        let latestTimerState = makeAnyLocalTimerState(elapsedSeconds: 1)
         let sut = makeSUT()
         
         sut.insert(state: firstTimerState)
@@ -105,5 +102,10 @@ final class UserDefaultTimerStoreTests: XCTestCase {
     
     private func cleanUserDefaultSuite(from id: String) {
         UserDefaults.standard.removePersistentDomain(forName: id)
+    }
+    
+    private func makeAnyLocalTimerState(elapsedSeconds: TimeInterval = 0) -> LocalTimerState {
+        let timerState = LocalTimerSet(elapsedSeconds, startDate: Date(), endDate: Date())
+        return LocalTimerState(localTimerSet: timerState)
     }
 }
