@@ -64,7 +64,7 @@ final class UserDefaultTimerStoreTests: XCTestCase {
         XCTAssertNil(result, "retrieve should return empty.")
     }
     
-    func test_insert_onEmptyStoreDeletesPreviousInsertedLocalTimerState() {
+    func test_insert_onEmptyStoreDeliversInsertedLocalTimerState() {
         let firstTimerSet = LocalTimerSet(0, startDate: Date(), endDate: Date())
         let firstTimerState = LocalTimerState(localTimerSet: firstTimerSet)
         let sut = makeSUT()
