@@ -2,78 +2,6 @@ import Foundation
 import LifeCoach
 import XCTest
 
-final class StoreJSONEncoder: NSObject {
-    @objc dynamic
-    func encode(_ data: UserDefaultsTimerStore.UserDefaultsTimerState) throws -> Data {
-        try JSONEncoder().encode(data)
-    }
-}
-
-final class UserDefaultsTimerStore: LocalTimerStore {
-    class UserDefaultsTimerState: NSObject, Decodable, Encodable {
-        private let elapsed: Float
-        private let starDate: Date
-        private let endDate: Date
-        
-        init(local: LocalTimerState) {
-            self.elapsed = Float(local.localTimerSet.elapsedSeconds)
-            self.endDate = local.localTimerSet.endDate
-            self.starDate = local.localTimerSet.startDate
-        }
-        
-        var local: LocalTimerState {
-            let localTimerSet = LocalTimerSet(TimeInterval(elapsed), startDate: starDate, endDate: endDate)
-            return LocalTimerState(localTimerSet: localTimerSet)
-        }
-    }
-    
-    enum Error: Swift.Error, Equatable {
-        case invalidSavedData(key: String)
-        case failInsertionObject(withKey: String)
-    }
-    
-    static let DefaultKey = "UserDefaultsTimerStoreDefaultKey"
-    
-    private let storeID: String
-    
-    init(storeID: String) {
-        self.storeID = storeID
-    }
-    
-    func retrieve() throws -> LocalTimerState? {
-        guard let dataFromStore = createStore()?.data(forKey: UserDefaultsTimerStore.DefaultKey) else { return nil }
-        return try mapData(data: dataFromStore)
-    }
-    
-    func insert(state: LocalTimerState) throws {
-        let timerState = UserDefaultsTimerState(local: state)
-        createStore()?.set(try encode(timerState: timerState), forKey: UserDefaultsTimerStore.DefaultKey)
-    }
-    
-    func deleteState() throws {
-        createStore()?.removeObject(forKey: UserDefaultsTimerStore.DefaultKey)
-    }
-    
-    // MARK: - Helpers
-    private func createStore() -> UserDefaults? {
-        UserDefaults(suiteName: storeID)
-    }
-    
-    private func mapData(data: Data) throws -> LocalTimerState {
-        do {
-            let savedTimerState = try JSONDecoder().decode(UserDefaultsTimerState.self, from: data)
-            return savedTimerState.local
-        } catch {
-            throw Error.invalidSavedData(key: UserDefaultsTimerStore.DefaultKey)
-        }
-    }
-    
-    private func encode(timerState: UserDefaultsTimerState) throws -> Data {
-        do {  return try StoreJSONEncoder().encode(timerState) }
-        catch { throw Error.failInsertionObject(withKey: UserDefaultsTimerStore.DefaultKey) }
-    }
-}
-
 final class UserDefaultTimerStoreTests: XCTestCase {
     override func setUp() {
         super.setUp()
@@ -243,7 +171,7 @@ final class UserDefaultTimerStoreTests: XCTestCase {
 
 
 extension UserDefaultsTimerStore.Error: CustomStringConvertible {
-    var description: String {
+    public var description: String {
         switch self {
         case .failInsertionObject(withKey: let key):
             return "could not insert timer state with key: \(key)"
