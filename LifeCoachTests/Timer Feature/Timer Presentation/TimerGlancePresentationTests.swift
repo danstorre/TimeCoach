@@ -39,18 +39,14 @@ final class TimerGlancePresentationTests: XCTestCase {
         let pauseState = makeAnyTimerState(state: .pause)
         let sut = makeSUT()
         
-        let result = resultOfStatusCheck(from: sut, withState: pauseState)
-        
-        XCTAssertEqual(result, .showIdle)
+        expect(sut: sut, toSendEvent: .showIdle, on: pauseState)
     }
     
     func test_checkTimerState_onStopTimerStateSendsShowIdle() {
         let stopState = makeAnyTimerState(state: .stop)
         let sut = makeSUT()
         
-        let result = resultOfStatusCheck(from: sut, withState: stopState)
-        
-        XCTAssertEqual(result, .showIdle)
+        expect(sut: sut, toSendEvent: .showIdle, on: stopState)
     }
     
     func test_checkTimerState_onRunningTimerStateSendsShowTimerWithEndDate() {
@@ -59,12 +55,16 @@ final class TimerGlancePresentationTests: XCTestCase {
         let runningState = makeAnyTimerState(seconds: 0, startDate: currentDate, endDate: endDate, state: .running)
         let sut = makeSUT(currentDate: { currentDate })
         
-        let result = resultOfStatusCheck(from: sut, withState: runningState)
-        
-        XCTAssertEqual(result, .showTimerWith(endDate: endDate))
+        expect(sut: sut, toSendEvent: .showTimerWith(endDate: endDate), on: runningState)
     }
     
     // MARK: - Helpers
+    func expect(sut: TimerGlancePresentation, toSendEvent expected: TimerGlancePresentation.TimerStatusEvent, on state: TimerState) {
+        let result = resultOfStatusCheck(from: sut, withState: state)
+        
+        XCTAssertEqual(result, expected)
+    }
+    
     private func makeSUT(currentDate: @escaping () -> Date = Date.init, file: StaticString = #filePath, line: UInt = #line) -> TimerGlancePresentation {
         let sut = TimerGlancePresentation(currentDate: currentDate)
             
