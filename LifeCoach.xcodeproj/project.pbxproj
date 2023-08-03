@@ -828,14 +828,8 @@
 		FBAD475E28FC8BB0003D2F7A /* LifeCoachTests */ = {
 			isa = PBXGroup;
 			children = (
-				FBDEE80E2A7B12FC00D1120A /* Timer Store Notifications */,
-				FBD822622A75CAAC002702F4 /* Timer Notifications */,
 				FBC9ADAD2919E8A700E0BEFC /* Helpers */,
-				FBD8225C2A75A6E8002702F4 /* Timer Store */,
-				FB960C74293D484000ECBAD5 /* TimerPresentationTests.swift */,
-				FBD56F6A2A3CEF33002736AD /* PomodoroUseCaseTests.swift */,
-				FBD56F772A3D184C002736AD /* FoundationTimerCountdownTests.swift */,
-				FB594CA52A4E1E5100C4A32C /* TImerControlsPresentationTests.swift */,
+				FBDEE8212A7B2AA700D1120A /* Timer Feature */,
 			);
 			path = LifeCoachTests;
 			sourceTree = "<group>";
@@ -926,6 +920,44 @@
 				FBDEE81B2A7B176400D1120A /* TimerStoreReceiver.swift */,
 			);
 			path = "Timer Store Notifications";
+			sourceTree = "<group>";
+		};
+		FBDEE8212A7B2AA700D1120A /* Timer Feature */ = {
+			isa = PBXGroup;
+			children = (
+				FBDEE8232A7B2AC800D1120A /* Timer Pomodoro */,
+				FBDEE8222A7B2AB800D1120A /* Timer Presentation */,
+				FBDEE80E2A7B12FC00D1120A /* Timer Store Notifications */,
+				FBD822622A75CAAC002702F4 /* Timer Notifications */,
+				FBD8225C2A75A6E8002702F4 /* Timer Store */,
+			);
+			path = "Timer Feature";
+			sourceTree = "<group>";
+		};
+		FBDEE8222A7B2AB800D1120A /* Timer Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				FB960C74293D484000ECBAD5 /* TimerPresentationTests.swift */,
+				FB594CA52A4E1E5100C4A32C /* TImerControlsPresentationTests.swift */,
+			);
+			path = "Timer Presentation";
+			sourceTree = "<group>";
+		};
+		FBDEE8232A7B2AC800D1120A /* Timer Pomodoro */ = {
+			isa = PBXGroup;
+			children = (
+				FBDEE8242A7B2ADC00D1120A /* Infrastructure */,
+				FBD56F6A2A3CEF33002736AD /* PomodoroUseCaseTests.swift */,
+			);
+			path = "Timer Pomodoro";
+			sourceTree = "<group>";
+		};
+		FBDEE8242A7B2ADC00D1120A /* Infrastructure */ = {
+			isa = PBXGroup;
+			children = (
+				FBD56F772A3D184C002736AD /* FoundationTimerCountdownTests.swift */,
+			);
+			path = Infrastructure;
 			sourceTree = "<group>";
 		};
 		FBE593F32A784D4D00069F1C /* Helpers */ = {
