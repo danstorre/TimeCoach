@@ -2,13 +2,13 @@ import XCTest
 import LifeCoach
 
 class TimerGlancePresentation {
-    enum Event: Equatable {
+    enum TimerStatusEvent: Equatable {
         case showIdle
         case showTimerWith(endDate: Date)
     }
     
     private let currentDate: () -> Date
-    var onShowEvent: ((Event) -> Void)?
+    var onStatusCheck: ((TimerStatusEvent) -> Void)?
     
     init(currentDate: @escaping () -> Date) {
         self.currentDate = currentDate
@@ -17,7 +17,7 @@ class TimerGlancePresentation {
     func check(timerState: TimerState) {
         switch timerState.state {
         case .pause, .stop:
-            onShowEvent?(.showIdle)
+            onStatusCheck?(.showIdle)
         case .running:
             let currenDate = currentDate()
             
@@ -26,7 +26,7 @@ class TimerGlancePresentation {
             let remainingSeconds = timerState.elapsedSeconds.endDate.timeIntervalSinceReferenceDate - startDatePlusElapsedSeconds.timeIntervalSinceReferenceDate
             let endDate = currenDate.adding(seconds: remainingSeconds)
             
-            onShowEvent?(.showTimerWith(endDate: endDate))
+            onStatusCheck?(.showTimerWith(endDate: endDate))
         }
     }
 }
@@ -72,9 +72,9 @@ final class TimerGlancePresentationTests: XCTestCase {
         return sut
     }
     
-    private func resultOfStatusCheck(from sut: TimerGlancePresentation, withState state: TimerState) -> TimerGlancePresentation.Event? {
-        var receivedEvent: TimerGlancePresentation.Event?
-        sut.onShowEvent = { event in
+    private func resultOfStatusCheck(from sut: TimerGlancePresentation, withState state: TimerState) -> TimerGlancePresentation.TimerStatusEvent? {
+        var receivedEvent: TimerGlancePresentation.TimerStatusEvent?
+        sut.onStatusCheck = { event in
             receivedEvent = event
         }
         
