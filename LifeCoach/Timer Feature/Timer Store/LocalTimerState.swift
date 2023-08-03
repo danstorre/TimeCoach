@@ -1,7 +1,7 @@
 import Foundation
 
 public struct LocalTimerState: Equatable {
-    public enum State: String {
+    public enum State {
         case pause
         case running
         case stop

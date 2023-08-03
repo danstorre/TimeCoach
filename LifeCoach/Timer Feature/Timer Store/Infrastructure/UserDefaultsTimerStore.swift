@@ -5,17 +5,17 @@ public final class UserDefaultsTimerStore: LocalTimerStore {
         private let elapsed: Float
         private let starDate: Date
         private let endDate: Date
-        private let state: String
+        private let state: Int
         
         init(local: LocalTimerState) {
             self.elapsed = Float(local.localTimerSet.elapsedSeconds)
             self.endDate = local.localTimerSet.endDate
             self.starDate = local.localTimerSet.startDate
-            self.state = local.state.rawValue
+            self.state = getInt(from: local.state)
         }
         
         var local: LocalTimerState? {
-            guard let state = LocalTimerState.State(rawValue: state) else { return nil}
+            guard let state = getLocalState(from: state) else { return nil}
             let localTimerSet = LocalTimerSet(TimeInterval(elapsed), startDate: starDate, endDate: endDate)
             return LocalTimerState(localTimerSet: localTimerSet, state: state)
         }
@@ -65,5 +65,22 @@ public final class UserDefaultsTimerStore: LocalTimerStore {
     private func encode(timerState: UserDefaultsTimerState) throws -> Data {
         do {  return try StoreJSONEncoder().encode(timerState) }
         catch { throw Error.failInsertionObject(withKey: UserDefaultsTimerStore.DefaultKey) }
+    }
+    
+    private static func getInt(from state: LocalTimerState.State) -> Int {
+        switch state {
+        case .pause: return 0
+        case .running: return 1
+        case .stop: return 2
+        }
+    }
+    
+    private static func getLocalState(from state: Int) -> LocalTimerState.State? {
+        switch state {
+        case 0: return .pause
+        case 1: return .running
+        case 2: return .stop
+        default: return nil
+        }
     }
 }
