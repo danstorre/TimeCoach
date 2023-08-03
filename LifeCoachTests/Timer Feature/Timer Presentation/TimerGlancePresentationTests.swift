@@ -36,7 +36,7 @@ final class TimerGlancePresentationTests: XCTestCase {
         let pauseState = makeAnyTimerState(state: .pause)
         let sut = makeSUT()
         
-        let result = resultOnStatusCheck(from: sut, withState: pauseState)
+        let result = resultOfStatusCheck(from: sut, withState: pauseState)
         
         XCTAssertEqual(result, .showIdle)
     }
@@ -45,7 +45,7 @@ final class TimerGlancePresentationTests: XCTestCase {
         let stopState = makeAnyTimerState(state: .stop)
         let sut = makeSUT()
         
-        let result = resultOnStatusCheck(from: sut, withState: stopState)
+        let result = resultOfStatusCheck(from: sut, withState: stopState)
         
         sut.check(timerState: stopState)
         
@@ -58,7 +58,7 @@ final class TimerGlancePresentationTests: XCTestCase {
         let runningState = makeAnyTimerState(seconds: 0, startDate: currentDate, endDate: endDate, state: .running)
         let sut = makeSUT(currentDate: { currentDate })
         
-        let result = resultOnStatusCheck(from: sut, withState: runningState)
+        let result = resultOfStatusCheck(from: sut, withState: runningState)
         
         XCTAssertEqual(result, .showTimerWith(endDate: endDate))
     }
@@ -72,7 +72,7 @@ final class TimerGlancePresentationTests: XCTestCase {
         return sut
     }
     
-    private func resultOnStatusCheck(from sut: TimerGlancePresentation, withState state: TimerState) -> TimerGlancePresentation.Event? {
+    private func resultOfStatusCheck(from sut: TimerGlancePresentation, withState state: TimerState) -> TimerGlancePresentation.Event? {
         var receivedEvent: TimerGlancePresentation.Event?
         sut.onShowEvent = { event in
             receivedEvent = event
