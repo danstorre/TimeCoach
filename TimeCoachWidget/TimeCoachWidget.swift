@@ -48,13 +48,19 @@ struct SimpleEntry: TimelineEntry {
 
 struct TimeCoachWidgetEntryView : View {
     var entry: Provider.Entry
-
+    
+    let start = Date().addingTimeInterval(-30)
+    let end = Date().addingTimeInterval(90)
+    
     var body: some View {
         Text("open") // Add timer icon here.
             .font(.system(size: 15))
             .foregroundColor(.blue)
             .widgetLabel {
-                ProgressView(entry.timerString, value: entry.value)
+                ProgressView(timerInterval: start...end,
+                             countsDown: true) {
+                    Text("Progress")
+                }
             }
     }
 }
