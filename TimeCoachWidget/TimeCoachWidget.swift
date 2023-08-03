@@ -7,15 +7,15 @@
 
 import WidgetKit
 import SwiftUI
+import LifeCoach
 
 struct Provider: TimelineProvider {
     func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(date: Date())
+        SimpleEntry.createEntry()
     }
 
     func getSnapshot(in context: Context, completion: @escaping (SimpleEntry) -> ()) {
-        let entry = SimpleEntry(date: Date())
-        completion(entry)
+        completion(SimpleEntry.createEntry())
     }
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
@@ -23,11 +23,12 @@ struct Provider: TimelineProvider {
 
         // Generate a timeline consisting of five entries an hour apart, starting from the current date.
         let currentDate = Date()
-        for hourOffset in 0 ..< 5 {
-            let entryDate = Calendar.current.date(byAdding: .hour, value: hourOffset, to: currentDate)!
-            let entry = SimpleEntry(date: entryDate)
-            entries.append(entry)
-        }
+        let viewModel = TimerViewModel(isBreak: false)
+        viewModel.delivered(elapsedTime: TimerSet(0, startDate: currentDate, endDate: currentDate.adding(seconds: 1)))
+        let entry = SimpleEntry(date: currentDate,
+                                value: 0.3,
+                                timerString: viewModel.timerString)
+        entries.append(entry)
 
         let timeline = Timeline(entries: entries, policy: .atEnd)
         completion(timeline)
@@ -35,14 +36,26 @@ struct Provider: TimelineProvider {
 }
 
 struct SimpleEntry: TimelineEntry {
-    let date: Date
+    var date: Date
+    var value: Float
+    
+    let timerString: String
+    
+    static func createEntry(value: Float = 1, timerString: String = "25:00") -> SimpleEntry {
+        SimpleEntry(date: Date(), value: value, timerString: timerString)
+    }
 }
 
 struct TimeCoachWidgetEntryView : View {
     var entry: Provider.Entry
 
     var body: some View {
-        Text(entry.date, style: .time)
+        Text("open") // Add timer icon here.
+            .font(.system(size: 15))
+            .foregroundColor(.blue)
+            .widgetLabel {
+                ProgressView(entry.timerString, value: entry.value)
+            }
     }
 }
 
@@ -64,7 +77,7 @@ struct TimeCoachWidget: Widget {
 
 struct TimeCoachWidget_Previews: PreviewProvider {
     static var previews: some View {
-        TimeCoachWidgetEntryView(entry: SimpleEntry(date: Date()))
+        TimeCoachWidgetEntryView(entry: SimpleEntry.createEntry(value: 0.2, timerString: "01:24"))
             .previewContext(WidgetPreviewContext(family: .accessoryRectangular))
     }
 }
