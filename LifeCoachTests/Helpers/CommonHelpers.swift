@@ -9,8 +9,8 @@ func makeAnyState(seconds: TimeInterval = 1,
                           startDate: Date = Date(),
                           endDate: Date = Date()) -> (model: TimerState, local: LocalTimerState) {
     let elapsedSeconds = makeAnyLocalTimerSet(seconds: seconds, startDate: startDate, endDate: endDate)
-    let model = TimerState(elapsedSeconds: elapsedSeconds.model)
-    let local = LocalTimerState(localTimerSet: elapsedSeconds.local)
+    let model = TimerState(elapsedSeconds: elapsedSeconds.model, state: .pause)
+    let local = LocalTimerState(localTimerSet: elapsedSeconds.local, state: .pause)
     
     return (model, local)
 }

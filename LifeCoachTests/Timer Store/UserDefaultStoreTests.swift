@@ -156,7 +156,7 @@ final class UserDefaultTimerStoreTests: XCTestCase {
     
     private func makeAnyLocalTimerState(elapsedSeconds: TimeInterval = 0) -> LocalTimerState {
         let timerState = LocalTimerSet(elapsedSeconds, startDate: Date(), endDate: Date())
-        return LocalTimerState(localTimerSet: timerState)
+        return LocalTimerState(localTimerSet: timerState, state: .pause)
     }
     
     private func saveInvalidData(_ invalidData: Data) {
