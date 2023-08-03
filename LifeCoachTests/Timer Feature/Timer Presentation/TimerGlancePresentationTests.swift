@@ -16,7 +16,7 @@ class TimerGlancePresentation {
 
 final class TimerGlancePresentationTests: XCTestCase {
     func test_checkTimerState_onPauseTimerStateSendsShowIdle() {
-        let pauseState = makeAnyState(state: .pause).model
+        let pauseState = makeAnyTimerState(state: .pause)
         let sut = TimerGlancePresentation()
         let result = resultOnStatusCheck(from: sut)
         
@@ -26,7 +26,7 @@ final class TimerGlancePresentationTests: XCTestCase {
     }
     
     func test_checkTimerState_onStopTimerStateSendsShowIdle() {
-        let stopState = makeAnyState(state: .stop).model
+        let stopState = makeAnyTimerState(state: .stop)
         let sut = TimerGlancePresentation()
         let result = resultOnStatusCheck(from: sut)
         
