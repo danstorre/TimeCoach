@@ -1,39 +1,6 @@
 import XCTest
 import LifeCoach
 
-class TimerGlancePresentation {
-    enum TimerStatusEvent: Equatable {
-        case showIdle
-        case showTimerWith(endDate: Date)
-    }
-    
-    private let currentDate: () -> Date
-    var onStatusCheck: ((TimerStatusEvent) -> Void)?
-    
-    init(currentDate: @escaping () -> Date) {
-        self.currentDate = currentDate
-    }
-    
-    func check(timerState: TimerState) {
-        switch timerState.state {
-        case .pause, .stop:
-            onStatusCheck?(.showIdle)
-        case .running:
-            let endDate = getCurrenTimersEndDate(from: timerState)
-            onStatusCheck?(.showTimerWith(endDate: endDate))
-        }
-    }
-    
-    private func getCurrenTimersEndDate(from timerState: TimerState) -> Date {
-        let currenDate = currentDate()
-        let elapsedSeconds = timerState.elapsedSeconds.elapsedSeconds
-        let startDatePlusElapsedSeconds: Date = timerState.elapsedSeconds.startDate.adding(seconds: elapsedSeconds)
-        let remainingSeconds = timerState.elapsedSeconds.endDate.timeIntervalSinceReferenceDate - startDatePlusElapsedSeconds.timeIntervalSinceReferenceDate
-        
-        return currenDate.adding(seconds: remainingSeconds)
-    }
-}
-
 final class TimerGlancePresentationTests: XCTestCase {
     func test_checkTimerState_onPauseTimerStateSendsShowIdle() {
         let pauseState = makeAnyTimerState(state: .pause)
