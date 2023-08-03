@@ -16,8 +16,8 @@ func makeAnyState(seconds: TimeInterval = 1,
 }
 
 func makeAnyLocalTimerSet(seconds: TimeInterval = 1,
-                                        startDate: Date = Date(),
-                                        endDate: Date = Date()) -> (model: TimerSet, local: LocalTimerSet) {
+                          startDate: Date = Date(),
+                          endDate: Date = Date()) -> (model: TimerSet, local: LocalTimerSet) {
     let modelElapsedSeconds = TimerSet(seconds, startDate: startDate, endDate: endDate)
     let localTimerSet = LocalTimerSet(seconds, startDate: startDate, endDate: endDate)
     
