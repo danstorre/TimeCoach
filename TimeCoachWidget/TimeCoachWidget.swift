@@ -23,11 +23,7 @@ struct Provider: TimelineProvider {
 
         // Generate a timeline consisting of five entries an hour apart, starting from the current date.
         let currentDate = Date()
-        let viewModel = TimerViewModel(isBreak: false)
-        viewModel.delivered(elapsedTime: TimerSet(0, startDate: currentDate, endDate: currentDate.adding(seconds: 1)))
-        let entry = SimpleEntry(date: currentDate,
-                                value: 0.3,
-                                timerString: viewModel.timerString)
+        let entry = SimpleEntry(date: currentDate.adding(seconds: 5))
         entries.append(entry)
 
         let timeline = Timeline(entries: entries, policy: .never)
@@ -37,12 +33,9 @@ struct Provider: TimelineProvider {
 
 struct SimpleEntry: TimelineEntry {
     var date: Date
-    var value: Float
     
-    let timerString: String
-    
-    static func createEntry(value: Float = 1, timerString: String = "25:00") -> SimpleEntry {
-        SimpleEntry(date: Date(), value: value, timerString: timerString)
+    static func createEntry() -> SimpleEntry {
+        SimpleEntry(date: Date())
     }
 }
 
@@ -53,7 +46,7 @@ struct TimeCoachWidgetEntryView : View {
     let end = Date().addingTimeInterval(90)
     
     var body: some View {
-        Text("open") // Add timer icon here.
+        Text("")
             .font(.system(size: 15))
             .foregroundColor(.blue)
             .widgetLabel {
@@ -83,7 +76,7 @@ struct TimeCoachWidget: Widget {
 
 struct TimeCoachWidget_Previews: PreviewProvider {
     static var previews: some View {
-        TimeCoachWidgetEntryView(entry: SimpleEntry.createEntry(value: 0.2, timerString: "01:24"))
+        TimeCoachWidgetEntryView(entry: SimpleEntry.createEntry())
             .previewContext(WidgetPreviewContext(family: .accessoryRectangular))
     }
 }
