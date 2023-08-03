@@ -59,10 +59,10 @@ final class TimerGlancePresentationTests: XCTestCase {
     }
     
     // MARK: - Helpers
-    func expect(sut: TimerGlancePresentation, toSendEvent expected: TimerGlancePresentation.TimerStatusEvent, on state: TimerState) {
+    func expect(sut: TimerGlancePresentation, toSendEvent expected: TimerGlancePresentation.TimerStatusEvent, on state: TimerState, file: StaticString = #filePath, line: UInt = #line) {
         let result = resultOfStatusCheck(from: sut, withState: state)
         
-        XCTAssertEqual(result, expected)
+        XCTAssertEqual(result, expected, file: file, line: line)
     }
     
     private func makeSUT(currentDate: @escaping () -> Date = Date.init, file: StaticString = #filePath, line: UInt = #line) -> TimerGlancePresentation {
