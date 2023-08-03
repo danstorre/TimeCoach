@@ -50,8 +50,6 @@ final class TimerGlancePresentationTests: XCTestCase {
         
         let result = resultOfStatusCheck(from: sut, withState: stopState)
         
-        sut.check(timerState: stopState)
-        
         XCTAssertEqual(result, .showIdle)
     }
     
