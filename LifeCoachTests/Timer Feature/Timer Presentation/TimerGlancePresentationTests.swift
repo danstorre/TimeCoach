@@ -37,23 +37,23 @@ final class TimerGlancePresentationTests: XCTestCase {
     }
     
     // MARK: - Helpers
-    func expect(sut: TimerGlancePresentation, toSendEvent expected: TimerGlancePresentation.TimerStatusEvent, on state: TimerState, file: StaticString = #filePath, line: UInt = #line) {
+    func expect(sut: TimerGlanceViewModel, toSendEvent expected: TimerGlanceViewModel.TimerStatusEvent, on state: TimerState, file: StaticString = #filePath, line: UInt = #line) {
         let result = resultOfStatusCheck(from: sut, withState: state)
         
         XCTAssertEqual(result, expected, "expected: \(expected), sample: \(state)",
                        file: file, line: line)
     }
     
-    private func makeSUT(currentDate: @escaping () -> Date = Date.init, file: StaticString = #filePath, line: UInt = #line) -> TimerGlancePresentation {
-        let sut = TimerGlancePresentation(currentDate: currentDate)
+    private func makeSUT(currentDate: @escaping () -> Date = Date.init, file: StaticString = #filePath, line: UInt = #line) -> TimerGlanceViewModel {
+        let sut = TimerGlanceViewModel(currentDate: currentDate)
             
         trackForMemoryLeak(instance: sut, file: file, line: line)
         
         return sut
     }
     
-    private func resultOfStatusCheck(from sut: TimerGlancePresentation, withState state: TimerState) -> TimerGlancePresentation.TimerStatusEvent? {
-        var receivedEvent: TimerGlancePresentation.TimerStatusEvent?
+    private func resultOfStatusCheck(from sut: TimerGlanceViewModel, withState state: TimerState) -> TimerGlanceViewModel.TimerStatusEvent? {
+        var receivedEvent: TimerGlanceViewModel.TimerStatusEvent?
         sut.onStatusCheck = { event in
             receivedEvent = event
         }

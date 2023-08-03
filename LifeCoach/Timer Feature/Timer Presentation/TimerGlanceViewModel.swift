@@ -1,6 +1,6 @@
 import Foundation
 
-public class TimerGlancePresentation {
+public class TimerGlanceViewModel {
     public enum TimerStatusEvent: Equatable {
         case showIdle
         case showTimerWith(endDate: Date)
