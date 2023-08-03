@@ -19,15 +19,18 @@ class TimerGlancePresentation {
         case .pause, .stop:
             onStatusCheck?(.showIdle)
         case .running:
-            let currenDate = currentDate()
-            
-            let elapsedSeconds = timerState.elapsedSeconds.elapsedSeconds
-            let startDatePlusElapsedSeconds: Date = timerState.elapsedSeconds.startDate.adding(seconds: elapsedSeconds)
-            let remainingSeconds = timerState.elapsedSeconds.endDate.timeIntervalSinceReferenceDate - startDatePlusElapsedSeconds.timeIntervalSinceReferenceDate
-            let endDate = currenDate.adding(seconds: remainingSeconds)
-            
+            let endDate = getCurrenTimersEndDate(from: timerState)
             onStatusCheck?(.showTimerWith(endDate: endDate))
         }
+    }
+    
+    private func getCurrenTimersEndDate(from timerState: TimerState) -> Date {
+        let currenDate = currentDate()
+        let elapsedSeconds = timerState.elapsedSeconds.elapsedSeconds
+        let startDatePlusElapsedSeconds: Date = timerState.elapsedSeconds.startDate.adding(seconds: elapsedSeconds)
+        let remainingSeconds = timerState.elapsedSeconds.endDate.timeIntervalSinceReferenceDate - startDatePlusElapsedSeconds.timeIntervalSinceReferenceDate
+        
+        return currenDate.adding(seconds: remainingSeconds)
     }
 }
 
