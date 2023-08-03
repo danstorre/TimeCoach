@@ -75,6 +75,7 @@
 		FB594CBE2A4E542200C4A32C /* ToggleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB594CBD2A4E542200C4A32C /* ToggleButton.swift */; };
 		FB594CBF2A4E547F00C4A32C /* ToggleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB594CBD2A4E542200C4A32C /* ToggleButton.swift */; };
 		FB5BF6A52A7BEADA001B81CB /* TimerGlancePresentationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5BF6A42A7BEADA001B81CB /* TimerGlancePresentationTests.swift */; };
+		FB5BF6A72A7BEF9F001B81CB /* StateMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5BF6A62A7BEF9F001B81CB /* StateMapper.swift */; };
 		FB60C6812A5714790048AF8F /* TimerControlsPublishers.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB62AD422A55BD8400B2BBC1 /* TimerControlsPublishers.swift */; };
 		FB62AD432A55BD8400B2BBC1 /* TimerControlsPublishers.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB62AD422A55BD8400B2BBC1 /* TimerControlsPublishers.swift */; };
 		FB73E909293BA2A40087F9EF /* TimeCoachRoot.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB73E908293BA2A40087F9EF /* TimeCoachRoot.swift */; };
@@ -350,6 +351,7 @@
 		FB594CBD2A4E542200C4A32C /* ToggleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleButton.swift; sourceTree = "<group>"; };
 		FB594CC12A4E717000C4A32C /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		FB5BF6A42A7BEADA001B81CB /* TimerGlancePresentationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerGlancePresentationTests.swift; sourceTree = "<group>"; };
+		FB5BF6A62A7BEF9F001B81CB /* StateMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateMapper.swift; sourceTree = "<group>"; };
 		FB62AD422A55BD8400B2BBC1 /* TimerControlsPublishers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerControlsPublishers.swift; sourceTree = "<group>"; };
 		FB73E908293BA2A40087F9EF /* TimeCoachRoot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeCoachRoot.swift; sourceTree = "<group>"; };
 		FB960C71293D462900ECBAD5 /* ToggleStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleStrategy.swift; sourceTree = "<group>"; };
@@ -636,6 +638,7 @@
 				FB5926072A76FA530011D53E /* TimerState.swift */,
 				FB59260A2A76FAAB0011D53E /* LoadTimerState.swift */,
 				FBD822512A73406F002702F4 /* SaveTimerState.swift */,
+				FB5BF6A62A7BEF9F001B81CB /* StateMapper.swift */,
 			);
 			path = "Timer Store";
 			sourceTree = "<group>";
@@ -1567,6 +1570,7 @@
 				FB960C76293D48CB00ECBAD5 /* TimerViewModel.swift in Sources */,
 				FBE593E02A78294600069F1C /* DefaultTimerNotificationReceiver.swift in Sources */,
 				FBD56F722A3D0E20002736AD /* PomodoroTimer.swift in Sources */,
+				FB5BF6A72A7BEF9F001B81CB /* StateMapper.swift in Sources */,
 				FBD56F762A3D0EFA002736AD /* TimerCoutdown.swift in Sources */,
 				FBDBAC4829762AD1009E440A /* TimerLoad.swift in Sources */,
 				FBDEE80A2A7B0C6400D1120A /* StoreJSONEncoder.swift in Sources */,

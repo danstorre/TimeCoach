@@ -6,11 +6,12 @@ func anyNSError() -> NSError {
 }
 
 func makeAnyState(seconds: TimeInterval = 1,
-                          startDate: Date = Date(),
-                          endDate: Date = Date()) -> (model: TimerState, local: LocalTimerState) {
+                  startDate: Date = Date(),
+                  endDate: Date = Date(),
+                  state: TimerState.State = .pause) -> (model: TimerState, local: LocalTimerState) {
     let elapsedSeconds = makeAnyLocalTimerSet(seconds: seconds, startDate: startDate, endDate: endDate)
-    let model = TimerState(elapsedSeconds: elapsedSeconds.model, state: .pause)
-    let local = LocalTimerState(localTimerSet: elapsedSeconds.local, state: .pause)
+    let model = TimerState(elapsedSeconds: elapsedSeconds.model, state: state)
+    let local = LocalTimerState(localTimerSet: elapsedSeconds.local, state: StateMapper.state(from: state))
     
     return (model, local)
 }
