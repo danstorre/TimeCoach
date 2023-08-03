@@ -25,6 +25,16 @@ final class TimerGlancePresentationTests: XCTestCase {
         XCTAssertEqual(result, .showIdle)
     }
     
+    func test_checkTimerState_onStopTimerStateSendsShowIdle() {
+        let stopState = TimerState(elapsedSeconds: makeAnyLocalTimerSet().model, state: .stop)
+        let sut = TimerGlancePresentation()
+        var result = resultOnStatusCheck(from: sut)
+        
+        sut.check(timerState: stopState)
+        
+        XCTAssertEqual(result, .showIdle)
+    }
+    
     // MARK: - Helpers
     private func resultOnStatusCheck(from: TimerGlancePresentation) -> TimerGlancePresentation.Event{
         .showIdle
