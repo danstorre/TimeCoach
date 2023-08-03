@@ -51,18 +51,30 @@ final class TimerGlancePresentationTests: XCTestCase {
     
     func test_checkTimerState_onRunningTimerStateSendsShowTimerWithEndDate() {
         let currentDate = Date()
-        let endDate = currentDate.adding(seconds: 1)
-        let runningState = makeAnyTimerState(seconds: 0, startDate: currentDate, endDate: endDate, state: .running)
-        let sut = makeSUT(currentDate: { currentDate })
+        let samples = [
+            makeAnyTimerState(seconds: 0, startDate: currentDate, endDate: currentDate.adding(seconds: 1), state: .running),
+            makeAnyTimerState(seconds: 1, startDate: currentDate, endDate: currentDate.adding(seconds: 1), state: .running),
+            makeAnyTimerState(seconds: 0, startDate: currentDate.adding(seconds: -1), endDate: currentDate, state: .running),
+            makeAnyTimerState(seconds: 1, startDate: currentDate.adding(seconds: -1), endDate: currentDate, state: .running),
+            makeAnyTimerState(seconds: 0, startDate: currentDate.adding(seconds: -1), endDate: currentDate.adding(seconds: 1), state: .running),
+            makeAnyTimerState(seconds: 1, startDate: currentDate.adding(seconds: -1), endDate: currentDate.adding(seconds: 1), state: .running),
+            makeAnyTimerState(seconds: 2, startDate: currentDate.adding(seconds: -1), endDate: currentDate.adding(seconds: 1), state: .running),
+        ]
         
-        expect(sut: sut, toSendEvent: .showTimerWith(endDate: endDate), on: runningState)
+        samples.forEach { sample in
+            let sut = makeSUT(currentDate: { currentDate })
+            
+            let endDate = getCurrenTimersEndDate(from: sample, and: currentDate)
+            expect(sut: sut, toSendEvent: .showTimerWith(endDate: endDate), on: sample)
+        }
     }
     
     // MARK: - Helpers
     func expect(sut: TimerGlancePresentation, toSendEvent expected: TimerGlancePresentation.TimerStatusEvent, on state: TimerState, file: StaticString = #filePath, line: UInt = #line) {
         let result = resultOfStatusCheck(from: sut, withState: state)
         
-        XCTAssertEqual(result, expected, file: file, line: line)
+        XCTAssertEqual(result, expected, "expected: \(expected), sample: \(state)",
+                       file: file, line: line)
     }
     
     private func makeSUT(currentDate: @escaping () -> Date = Date.init, file: StaticString = #filePath, line: UInt = #line) -> TimerGlancePresentation {
@@ -82,5 +94,13 @@ final class TimerGlancePresentationTests: XCTestCase {
         sut.check(timerState: state)
         
         return receivedEvent
+    }
+    
+    private func getCurrenTimersEndDate(from timerState: TimerState, and currentDate: Date) -> Date {
+        let elapsedSeconds = timerState.elapsedSeconds.elapsedSeconds
+        let startDatePlusElapsedSeconds: Date = timerState.elapsedSeconds.startDate.adding(seconds: elapsedSeconds)
+        let remainingSeconds = timerState.elapsedSeconds.endDate.timeIntervalSinceReferenceDate - startDatePlusElapsedSeconds.timeIntervalSinceReferenceDate
+        
+        return currentDate.adding(seconds: remainingSeconds)
     }
 }
