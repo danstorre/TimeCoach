@@ -6,7 +6,7 @@ public struct LocalTimerState: Equatable {
         case running
         case stop
     }
-    public let localTimerSet: LocalTimerSet
+    let localTimerSet: LocalTimerSet
     let state: State
     
     public init(localTimerSet: LocalTimerSet, state: LocalTimerState.State) {
