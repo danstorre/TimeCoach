@@ -17,7 +17,7 @@ class TimerGlancePresentation {
 final class TimerGlancePresentationTests: XCTestCase {
     func test_checkTimerState_onPauseTimerStateSendsShowIdle() {
         let pauseState = makeAnyTimerState(state: .pause)
-        let sut = TimerGlancePresentation()
+        let sut = makeSUT()
         let result = resultOnStatusCheck(from: sut)
         
         sut.check(timerState: pauseState)
@@ -27,7 +27,7 @@ final class TimerGlancePresentationTests: XCTestCase {
     
     func test_checkTimerState_onStopTimerStateSendsShowIdle() {
         let stopState = makeAnyTimerState(state: .stop)
-        let sut = TimerGlancePresentation()
+        let sut = makeSUT()
         let result = resultOnStatusCheck(from: sut)
         
         sut.check(timerState: stopState)
@@ -36,7 +36,15 @@ final class TimerGlancePresentationTests: XCTestCase {
     }
     
     // MARK: - Helpers
-    private func resultOnStatusCheck(from: TimerGlancePresentation) -> TimerGlancePresentation.Event{
+    private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> TimerGlancePresentation {
+        let sut = TimerGlancePresentation()
+            
+        trackForMemoryLeak(instance: sut, file: file, line: line)
+        
+        return sut
+    }
+    
+    private func resultOnStatusCheck(from: TimerGlancePresentation) -> TimerGlancePresentation.Event {
         .showIdle
     }
 }
