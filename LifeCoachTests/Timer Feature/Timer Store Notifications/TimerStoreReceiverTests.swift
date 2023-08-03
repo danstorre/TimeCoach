@@ -20,7 +20,7 @@ final class TimerStoreReceiverTests: XCTestCase {
     
     // MARK: - Helpers
     private func makeSUT(completion: @escaping () -> Void) -> TimerStoreReceiver {
-        let sut = TimerStoreReceiverNotification(completion: completion)
+        let sut = DefaultTimerStoreReceiver(completion: completion)
         
         trackForMemoryLeak(instance: sut)
         

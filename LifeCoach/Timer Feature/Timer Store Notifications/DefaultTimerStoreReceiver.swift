@@ -1,6 +1,6 @@
 import Foundation
 
-public class TimerStoreReceiverNotification: TimerStoreReceiver {
+public class DefaultTimerStoreReceiver: TimerStoreReceiver {
     private let completion: () -> Void
     
     public init(completion: @escaping () -> Void) {
