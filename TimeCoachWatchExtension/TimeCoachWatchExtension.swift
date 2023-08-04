@@ -94,7 +94,7 @@ struct TimeCoachWidget: Widget {
         .configurationDisplayName("TimeCoach Widget")
         .description("Add this widget to display the current timer")
 #if os(watchOS)
-        .supportedFamilies([.accessoryCorner])
+        .supportedFamilies([.accessoryCorner, .accessoryCircular])
 #endif
     }
 }
