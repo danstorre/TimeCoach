@@ -39,9 +39,33 @@ struct SimpleEntry: TimelineEntry {
     }
 }
 
-struct TimeCoachWidgetEntryView : View {
+struct TimeCoachWidgetEntryView: View {
+    @Environment(\.widgetFamily) var family
+    
     var entry: Provider.Entry
     
+    let start = Date()
+    let end = Date().addingTimeInterval(40)
+    
+    var body: some View {
+        switch family {
+        case .accessoryCircular:
+            CircularTimerWidget()
+        case .accessoryCorner:
+            CornerTimerWidget()
+        default:
+            CircularTimerWidget()
+        }
+    }
+}
+
+struct CircularTimerWidget: View {
+    var body: some View {
+        Text("")
+    }
+}
+
+struct CornerTimerWidget: View {
     let start = Date()
     let end = Date().addingTimeInterval(40)
     
