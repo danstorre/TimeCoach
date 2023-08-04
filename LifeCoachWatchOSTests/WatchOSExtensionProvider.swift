@@ -76,7 +76,7 @@ final class WatchOSExtensionProvider: XCTestCase {
         
         let timeLine = sut.getTimeLineResult()
         
-        XCTAssertEqual(timeLine?.entries, [SimpleEntry(date: currentDate, endDate: endDate)])
+        assertCorrectTimeLine(with: SimpleEntry(date: currentDate, endDate: endDate, isIdle: false), from: timeLine)
     }
     
     func test_getTimeLine_onLoadTimerStatePauseDeliversCorrectIsIdleTimeLineEntry() {
@@ -88,7 +88,13 @@ final class WatchOSExtensionProvider: XCTestCase {
         
         let timeLine = sut.getTimeLineResult()
         
-        XCTAssertEqual(timeLine?.entries, [SimpleEntry(date: currentDate, endDate: .none, isIdle: true)])
+        assertCorrectTimeLine(with: SimpleEntry(date: currentDate, endDate: .none, isIdle: true), from: timeLine)
+    }
+    
+    // MARK: - Helpers
+    private func assertCorrectTimeLine(with simpleEntry: SimpleEntry, from timeLine: Timeline<SimpleEntry>?, file: StaticString = #filePath, line: UInt = #line) {
+        XCTAssertEqual(timeLine?.entries, [simpleEntry], file: file, line: line)
+        XCTAssertEqual(timeLine?.policy, .never, file: file, line: line)
     }
 }
 
