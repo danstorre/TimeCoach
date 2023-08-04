@@ -78,16 +78,23 @@ final class WatchOSExtensionProvider: XCTestCase {
         assertCorrectTimeLine(with: runningTimeLineEntry, from: timeLineResult)
     }
     
-    func test_getTimeLine_onLoadTimerStatePauseDeliversCorrectIsIdleTimeLineEntry() {
+    func test_getTimeLine_onLoadIdleTimerStateDeliversCorrectIsIdleTimeLineEntry() {
         let currentDate = Date()
         let (sut, spy) = makeSUT(currentDate: { currentDate })
+        
         let pauseState = makeAnyTimerState(startDate: currentDate, state: .pause)
-        let idleTimelineEntry = SimpleEntry(date: currentDate, endDate: .none, isIdle: true)
-        spy.loadsSuccess(with: pauseState)
+        let stopState = makeAnyTimerState(startDate: currentDate, state: .stop)
         
-        let timeLineResult = sut.getTimeLineResult()
+        let samples = [pauseState, stopState]
         
-        assertCorrectTimeLine(with: idleTimelineEntry, from: timeLineResult)
+        samples.forEach { sample in
+            let idleTimelineEntry = SimpleEntry(date: currentDate, endDate: .none, isIdle: true)
+            spy.loadsSuccess(with: sample)
+            
+            let timeLineResult = sut.getTimeLineResult()
+            
+            assertCorrectTimeLine(with: idleTimelineEntry, from: timeLineResult)
+        }
     }
     
     // MARK: - Helpers
