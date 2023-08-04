@@ -5,6 +5,7 @@ import LifeCoach
 class WatchOSProvider {
     private let stateLoader: LoadTimerState
     private let currentDate: () -> Date
+    
     init(stateLoader: LoadTimerState, currentDate: @escaping () -> Date = Date.init) {
         self.stateLoader = stateLoader
         self.currentDate = currentDate
@@ -52,20 +53,6 @@ class WatchOSProvider {
         viewModel.check(timerState: state)
         
         return receivedEvent
-    }
-}
-
-class Spy: LoadTimerState {
-    private(set) var loadStateCallCount = 0
-    
-    private var timerStateResult: LifeCoach.TimerState? = nil
-    func load() throws -> LifeCoach.TimerState? {
-        loadStateCallCount += 1
-        return timerStateResult
-    }
-    
-    func loadsSuccess(with state: LifeCoach.TimerState) {
-        timerStateResult = state
     }
 }
 
@@ -124,6 +111,20 @@ final class WatchOSExtensionProvider: XCTestCase {
     private func assertCorrectTimeLine(with simpleEntry: TimerEntry, from timeLine: Timeline<TimerEntry>?, file: StaticString = #filePath, line: UInt = #line) {
         XCTAssertEqual(timeLine?.entries, [simpleEntry], file: file, line: line)
         XCTAssertEqual(timeLine?.policy, .never, file: file, line: line)
+    }
+    
+    private class Spy: LoadTimerState {
+        private(set) var loadStateCallCount = 0
+        
+        private var timerStateResult: LifeCoach.TimerState? = nil
+        func load() throws -> LifeCoach.TimerState? {
+            loadStateCallCount += 1
+            return timerStateResult
+        }
+        
+        func loadsSuccess(with state: LifeCoach.TimerState) {
+            timerStateResult = state
+        }
     }
 }
 
