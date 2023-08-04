@@ -46,11 +46,16 @@ struct TimeCoachWidgetEntryView : View {
     let end = Date().addingTimeInterval(40)
     
     var body: some View {
-        Text("")
-            .widgetLabel(label: {
-                ProgressView(timerInterval: start...end,
-                             countsDown: true)
-            })
+        VStack {
+            Image("widgetIcon")
+                .foregroundColor(.blue)
+            Text("")
+                .widgetLabel(label: {
+                    ProgressView(timerInterval: start...end,
+                                 countsDown: true)
+                    .tint(.blue)
+                })
+        }
     }
 }
 
