@@ -60,8 +60,14 @@ struct TimeCoachWidgetEntryView: View {
 }
 
 struct CircularTimerWidget: View {
+    let start = Date()
+    let end = Date().addingTimeInterval(40)
+    
     var body: some View {
-        Text("")
+        ProgressView(timerInterval: start...end,
+                     countsDown: true)
+        .progressViewStyle(.circular)
+        .tint(.blue)
     }
 }
 
