@@ -30,6 +30,15 @@ class WatchOSProvider {
             let timeline = Timeline(entries: entries, policy: .never)
             completion(timeline)
         }
+        
+        if case .showIdle = receivedEvent {
+            var entries: [SimpleEntry] = []
+
+            entries.append(SimpleEntry(date: currentDate(), endDate: .none, isIdle: true))
+
+            let timeline = Timeline(entries: entries, policy: .never)
+            completion(timeline)
+        }
     }
 }
 
@@ -69,17 +78,30 @@ final class WatchOSExtensionProvider: XCTestCase {
         
         XCTAssertEqual(timeLine?.entries, [SimpleEntry(date: currentDate, endDate: endDate)])
     }
+    
+    func test_getTimeLine_onLoadTimerStatePauseDeliversCorrectIsIdleTimeLineEntry() {
+        let spy = Spy()
+        let currentDate = Date()
+        let sut = WatchOSProvider(stateLoader: spy, currentDate: { currentDate })
+        let pauseState = makeAnyTimerState(startDate: currentDate, state: .pause)
+        spy.loadsSuccess(with: pauseState)
+        
+        let timeLine = sut.getTimeLineResult()
+        
+        XCTAssertEqual(timeLine?.entries, [SimpleEntry(date: currentDate, endDate: .none, isIdle: true)])
+    }
 }
 
 extension SimpleEntry: CustomStringConvertible {
     var description: String {
-        "startDate: \(date), endDate: \(endDate)"
+        "startDate: \(date), endDate: \(String(describing: endDate))"
     }
 }
 
 struct SimpleEntry: TimelineEntry, Equatable {
     var date: Date
-    var endDate: Date
+    var endDate: Date?
+    var isIdle: Bool = false
 }
 
 extension WatchOSProvider {
