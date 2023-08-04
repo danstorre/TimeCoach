@@ -47,7 +47,7 @@
 		FB509E062A7C936A00AA9333 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB2A10E82A6B1854004A1784 /* SwiftUI.framework */; };
 		FB509E092A7C936B00AA9333 /* TimeCoachWatchExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB509E082A7C936B00AA9333 /* TimeCoachWatchExtension.swift */; };
 		FB509E0B2A7C936B00AA9333 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FB509E0A2A7C936B00AA9333 /* Assets.xcassets */; };
-		FB509E0F2A7C936B00AA9333 /* TimeCoachWatchExtensionExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = FB509E042A7C936A00AA9333 /* TimeCoachWatchExtensionExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		FB509E0F2A7C936B00AA9333 /* TimeCoachWatchExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = FB509E042A7C936A00AA9333 /* TimeCoachWatchExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		FB5398962A45DA7C000B9CFD /* RealityKitContent in Frameworks */ = {isa = PBXBuildFile; productRef = FB5398952A45DA7C000B9CFD /* RealityKitContent */; };
 		FB5398982A45DA7C000B9CFD /* TimeCoachVisionApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5398972A45DA7C000B9CFD /* TimeCoachVisionApp.swift */; };
 		FB53989A2A45DA7C000B9CFD /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5398992A45DA7C000B9CFD /* ContentView.swift */; };
@@ -280,7 +280,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				FB509E0F2A7C936B00AA9333 /* TimeCoachWatchExtensionExtension.appex in Embed Foundation Extensions */,
+				FB509E0F2A7C936B00AA9333 /* TimeCoachWatchExtension.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -336,7 +336,7 @@
 		FB4B89612A3BBB6D0088DB5B /* TimerStateSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerStateSpy.swift; sourceTree = "<group>"; };
 		FB4B89682A3BBC700088DB5B /* TimeCoach_Watch_AppApp+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimeCoach_Watch_AppApp+Helpers.swift"; sourceTree = "<group>"; };
 		FB4B896A2A3BBCFD0088DB5B /* TimerView+ViewInspectorHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimerView+ViewInspectorHelpers.swift"; sourceTree = "<group>"; };
-		FB509E042A7C936A00AA9333 /* TimeCoachWatchExtensionExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TimeCoachWatchExtensionExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		FB509E042A7C936A00AA9333 /* TimeCoachWatchExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TimeCoachWatchExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB509E082A7C936B00AA9333 /* TimeCoachWatchExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeCoachWatchExtension.swift; sourceTree = "<group>"; };
 		FB509E0A2A7C936B00AA9333 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FB509E0C2A7C936B00AA9333 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -831,7 +831,7 @@
 				FB5398E32A4617EF000B9CFD /* TimeCoachVisionOS.framework */,
 				FB1535572A4A66E000E4B0B0 /* LifeCoachWatchOSUIPreview.app */,
 				FB15355C2A4A66E000E4B0B0 /* LifeCoachWatchOSUIPreview Watch App.app */,
-				FB509E042A7C936A00AA9333 /* TimeCoachWatchExtensionExtension.appex */,
+				FB509E042A7C936A00AA9333 /* TimeCoachWatchExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1169,9 +1169,9 @@
 			productReference = FB15355C2A4A66E000E4B0B0 /* LifeCoachWatchOSUIPreview Watch App.app */;
 			productType = "com.apple.product-type.application";
 		};
-		FB509E032A7C936A00AA9333 /* TimeCoachWatchExtensionExtension */ = {
+		FB509E032A7C936A00AA9333 /* TimeCoachWatchExtension */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = FB509E132A7C936C00AA9333 /* Build configuration list for PBXNativeTarget "TimeCoachWatchExtensionExtension" */;
+			buildConfigurationList = FB509E132A7C936C00AA9333 /* Build configuration list for PBXNativeTarget "TimeCoachWatchExtension" */;
 			buildPhases = (
 				FB509E002A7C936A00AA9333 /* Sources */,
 				FB509E012A7C936A00AA9333 /* Frameworks */,
@@ -1181,9 +1181,9 @@
 			);
 			dependencies = (
 			);
-			name = TimeCoachWatchExtensionExtension;
+			name = TimeCoachWatchExtension;
 			productName = TimeCoachWatchExtensionExtension;
-			productReference = FB509E042A7C936A00AA9333 /* TimeCoachWatchExtensionExtension.appex */;
+			productReference = FB509E042A7C936A00AA9333 /* TimeCoachWatchExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
 		FB5398902A45DA7C000B9CFD /* TimeCoachVision */ = {
@@ -1397,7 +1397,7 @@
 				FBE9A9852939527E00D8BF29 /* TimeCoach Watch AppTests */,
 				FB5398902A45DA7C000B9CFD /* TimeCoachVision */,
 				FB5398E22A4617EF000B9CFD /* TimeCoachVisionOS */,
-				FB509E032A7C936A00AA9333 /* TimeCoachWatchExtensionExtension */,
+				FB509E032A7C936A00AA9333 /* TimeCoachWatchExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -1703,7 +1703,7 @@
 		};
 		FB509E0E2A7C936B00AA9333 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = FB509E032A7C936A00AA9333 /* TimeCoachWatchExtensionExtension */;
+			target = FB509E032A7C936A00AA9333 /* TimeCoachWatchExtension */;
 			targetProxy = FB509E0D2A7C936B00AA9333 /* PBXContainerItemProxy */;
 		};
 		FB5398F52A4617F0000B9CFD /* PBXTargetDependency */ = {
@@ -2583,7 +2583,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		FB509E132A7C936C00AA9333 /* Build configuration list for PBXNativeTarget "TimeCoachWatchExtensionExtension" */ = {
+		FB509E132A7C936C00AA9333 /* Build configuration list for PBXNativeTarget "TimeCoachWatchExtension" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				FB509E112A7C936C00AA9333 /* Debug */,
