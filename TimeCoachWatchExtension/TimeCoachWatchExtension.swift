@@ -43,17 +43,14 @@ struct TimeCoachWidgetEntryView : View {
     var entry: Provider.Entry
     
     let start = Date()
+    let end = Date().addingTimeInterval(40)
     
     var body: some View {
         Text("")
-            .font(.system(size: 15))
-            .foregroundColor(.blue)
-            .widgetLabel {
-                ProgressView(timerInterval: start...start.adding(seconds:45),
-                             countsDown: true) {
-                    Text(start.adding(seconds: 45), style: .relative)
-                }
-            }
+            .widgetLabel(label: {
+                ProgressView(timerInterval: start...end,
+                             countsDown: true)
+            })
     }
 }
 
