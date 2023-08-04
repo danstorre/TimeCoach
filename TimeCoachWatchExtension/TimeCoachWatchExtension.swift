@@ -8,34 +8,30 @@
 import WidgetKit
 import SwiftUI
 import LifeCoach
+import LifeCoachWatchOS
 
 struct Provider: TimelineProvider {
-    func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry.createEntry()
+    private let provider: WatchOSProviderProtocol
+    
+    init(provider: WatchOSProviderProtocol) {
+        self.provider = provider
+    }
+    func placeholder(in context: Context) -> TimerEntry {
+        TimerEntry.createEntry()
     }
 
-    func getSnapshot(in context: Context, completion: @escaping (SimpleEntry) -> ()) {
-        completion(SimpleEntry.createEntry())
+    func getSnapshot(in context: Context, completion: @escaping (TimerEntry) -> ()) {
+        completion(TimerEntry.createEntry())
     }
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
-        var entries: [SimpleEntry] = []
-
-        // Generate a timeline consisting of five entries an hour apart, starting from the current date.
-        let currentDate = Date()
-        let entry = SimpleEntry(date: currentDate.adding(seconds: 5))
-        entries.append(entry)
-
-        let timeline = Timeline(entries: entries, policy: .never)
-        completion(timeline)
+        provider.getTimeline(completion: completion)
     }
 }
 
-struct SimpleEntry: TimelineEntry {
-    var date: Date
-    
-    static func createEntry() -> SimpleEntry {
-        SimpleEntry(date: Date())
+extension TimerEntry {
+    static func createEntry() -> TimerEntry {
+        TimerEntry(date: .init(), isIdle: false)
     }
 }
 
@@ -109,9 +105,19 @@ struct CornerTimerWidget: View {
 @main
 struct TimeCoachWidget: Widget {
     let kind: String = "TimeCoachWidget"
+    
+    private static let provider = Provider.init(
+        provider: WatchOSProvider(
+            stateLoader: LocalTimer(
+                store: UserDefaultsTimerStore(
+                    storeID: "any"
+                )
+            )
+        )
+    )
 
     var body: some WidgetConfiguration {
-        StaticConfiguration(kind: kind, provider: Provider()) { entry in
+        StaticConfiguration(kind: kind, provider: Self.provider) { entry in
             TimeCoachWidgetEntryView(entry: entry)
         }
         .configurationDisplayName("TimeCoach Widget")
@@ -124,7 +130,7 @@ struct TimeCoachWidget: Widget {
 
 struct TimeCoachWidget_Previews: PreviewProvider {
     static var previews: some View {
-        TimeCoachWidgetEntryView(entry: SimpleEntry.createEntry())
+        TimeCoachWidgetEntryView(entry: TimerEntry.createEntry())
             .previewContext(WidgetPreviewContext(family: .accessoryRectangular))
     }
 }
