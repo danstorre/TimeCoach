@@ -319,9 +319,6 @@
 		FB1535612A4A66E000E4B0B0 /* LifeCoachWatchOSUIPreviewApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LifeCoachWatchOSUIPreviewApp.swift; sourceTree = "<group>"; };
 		FB2A10E62A6B1854004A1784 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		FB2A10E82A6B1854004A1784 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
-		FB2A10EB2A6B1854004A1784 /* TimeCoachWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeCoachWidget.swift; sourceTree = "<group>"; };
-		FB2A10ED2A6B1855004A1784 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		FB2A10EF2A6B1855004A1784 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FB40D18A2A79CDA5008D3A36 /* UserDefaultStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultStoreTests.swift; sourceTree = "<group>"; };
 		FB4AA1322936EB9A0076FED9 /* TimerUIIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerUIIntegrationTests.swift; sourceTree = "<group>"; };
 		FB4AA1372936F1730076FED9 /* TimerText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerText.swift; sourceTree = "<group>"; };
@@ -571,16 +568,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		FB2A10EA2A6B1854004A1784 /* TimeCoachWidget */ = {
-			isa = PBXGroup;
-			children = (
-				FB2A10EB2A6B1854004A1784 /* TimeCoachWidget.swift */,
-				FB2A10ED2A6B1855004A1784 /* Assets.xcassets */,
-				FB2A10EF2A6B1855004A1784 /* Info.plist */,
-			);
-			path = TimeCoachWidget;
-			sourceTree = "<group>";
-		};
 		FB4AA13E29379D9F0076FED9 /* Timer Feature */ = {
 			isa = PBXGroup;
 			children = (
@@ -824,7 +811,6 @@
 				FBE9A9892939527F00D8BF29 /* TimeCoach Watch AppTests */,
 				FB5398922A45DA7C000B9CFD /* TimeCoachVision */,
 				FB5398E42A4617EF000B9CFD /* TimeCoachVisionOS */,
-				FB2A10EA2A6B1854004A1784 /* TimeCoachWidget */,
 				FB509E072A7C936B00AA9333 /* TimeCoachWatchExtension */,
 				FBAD475128FC8BB0003D2F7A /* Products */,
 				FB5398932A45DA7C000B9CFD /* Packages */,
