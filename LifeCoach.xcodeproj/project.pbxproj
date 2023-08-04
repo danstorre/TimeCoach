@@ -400,6 +400,7 @@
 		FBAD475028FC8BB0003D2F7A /* LifeCoach.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LifeCoach.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FBAD475428FC8BB0003D2F7A /* LifeCoach.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = LifeCoach.docc; sourceTree = "<group>"; };
 		FBAD475A28FC8BB0003D2F7A /* LifeCoachTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LifeCoachTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		FBB0C7C42A7DBD7C005412CF /* TimeCoachWatchExtensionDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TimeCoachWatchExtensionDebug.entitlements; sourceTree = "<group>"; };
 		FBB3D8812A770EBC00A8BBAD /* UserNotificationsScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNotificationsScheduler.swift; sourceTree = "<group>"; };
 		FBB3D8832A770F1F00A8BBAD /* NotificationScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationScheduler.swift; sourceTree = "<group>"; };
 		FBBA19582A71EFA700240081 /* TimerSaveTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerSaveTests.swift; sourceTree = "<group>"; };
@@ -464,6 +465,7 @@
 		FBED1E4C293EDB3F0061CAAF /* TimerTextTimeLine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerTextTimeLine.swift; sourceTree = "<group>"; };
 		FBED1E51293EE13F0061CAAF /* TimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerView.swift; sourceTree = "<group>"; };
 		FBED1E53293F7E980061CAAF /* UserNotificationDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNotificationDelegate.swift; sourceTree = "<group>"; };
+		FBF0209E2A7DBBFE005074CD /* TimeCoach Watch AppDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "TimeCoach Watch AppDebug.entitlements"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -693,6 +695,7 @@
 		FB509E072A7C936B00AA9333 /* TimeCoachWatchExtension */ = {
 			isa = PBXGroup;
 			children = (
+				FBB0C7C42A7DBD7C005412CF /* TimeCoachWatchExtensionDebug.entitlements */,
 				FB509E082A7C936B00AA9333 /* TimeCoachWatchExtension.swift */,
 				FB509E0A2A7C936B00AA9333 /* Assets.xcassets */,
 				FB509E0C2A7C936B00AA9333 /* Info.plist */,
@@ -1078,6 +1081,7 @@
 		FBE9A9782939527C00D8BF29 /* TimeCoach Watch App */ = {
 			isa = PBXGroup;
 			children = (
+				FBF0209E2A7DBBFE005074CD /* TimeCoach Watch AppDebug.entitlements */,
 				FBB3D8802A770EB200A8BBAD /* Notifications */,
 				FB4AA14129379DC20076FED9 /* Timer Composition */,
 				FB960C7E293D530900ECBAD5 /* Previews */,
@@ -2022,6 +2026,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = TimeCoachWatchExtension/TimeCoachWatchExtensionDebug.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
@@ -2041,7 +2046,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.danstorre.timeCoach.watchkitapp.widget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=watchos*]" = "timeCoach-widget-development";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=watchos*]" = "TimeCoach-widget-development";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -2584,6 +2589,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "TimeCoach Watch App/TimeCoach Watch AppDebug.entitlements";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
