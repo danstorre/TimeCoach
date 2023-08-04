@@ -1,21 +1,21 @@
 //
-//  TimeCoachWatchExtension.swift
-//  TimeCoachWatchExtension
+//  TimeCoachWidget.swift
+//  TimeCoachWidget
 //
-//  Created by Daniel Torres on 8/3/23.
+//  Created by Daniel Torres on 7/21/23.
 //
 
 import WidgetKit
 import SwiftUI
+import LifeCoach
 
 struct Provider: TimelineProvider {
     func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(date: Date())
+        SimpleEntry.createEntry()
     }
 
     func getSnapshot(in context: Context, completion: @escaping (SimpleEntry) -> ()) {
-        let entry = SimpleEntry(date: Date())
-        completion(entry)
+        completion(SimpleEntry.createEntry())
     }
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
@@ -23,45 +23,59 @@ struct Provider: TimelineProvider {
 
         // Generate a timeline consisting of five entries an hour apart, starting from the current date.
         let currentDate = Date()
-        for hourOffset in 0 ..< 5 {
-            let entryDate = Calendar.current.date(byAdding: .hour, value: hourOffset, to: currentDate)!
-            let entry = SimpleEntry(date: entryDate)
-            entries.append(entry)
-        }
+        let entry = SimpleEntry(date: currentDate.adding(seconds: 5))
+        entries.append(entry)
 
-        let timeline = Timeline(entries: entries, policy: .atEnd)
+        let timeline = Timeline(entries: entries, policy: .never)
         completion(timeline)
     }
 }
 
 struct SimpleEntry: TimelineEntry {
-    let date: Date
+    var date: Date
+    
+    static func createEntry() -> SimpleEntry {
+        SimpleEntry(date: Date())
+    }
 }
 
-struct TimeCoachWatchExtensionEntryView : View {
+struct TimeCoachWidgetEntryView : View {
     var entry: Provider.Entry
-
+    
+    let start = Date()
+    
     var body: some View {
-        Text(entry.date, style: .time)
+        Text("")
+            .font(.system(size: 15))
+            .foregroundColor(.blue)
+            .widgetLabel {
+                ProgressView(timerInterval: start...start.adding(seconds:45),
+                             countsDown: true) {
+                    Text(start.adding(seconds: 45), style: .relative)
+                }
+            }
     }
 }
 
 @main
-struct TimeCoachWatchExtension: Widget {
-    let kind: String = "TimeCoachWatchExtension"
+struct TimeCoachWidget: Widget {
+    let kind: String = "TimeCoachWidget"
 
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: Provider()) { entry in
-            TimeCoachWatchExtensionEntryView(entry: entry)
+            TimeCoachWidgetEntryView(entry: entry)
         }
-        .configurationDisplayName("My Widget")
-        .description("This is an example widget.")
+        .configurationDisplayName("TimeCoach Widget")
+        .description("Add this widget to display the current timer")
+#if os(watchOS)
+        .supportedFamilies([.accessoryCorner])
+#endif
     }
 }
 
-struct TimeCoachWatchExtension_Previews: PreviewProvider {
+struct TimeCoachWidget_Previews: PreviewProvider {
     static var previews: some View {
-        TimeCoachWatchExtensionEntryView(entry: SimpleEntry(date: Date()))
+        TimeCoachWidgetEntryView(entry: SimpleEntry.createEntry())
             .previewContext(WidgetPreviewContext(family: .accessoryRectangular))
     }
 }
