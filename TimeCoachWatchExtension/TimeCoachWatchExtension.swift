@@ -53,6 +53,8 @@ struct TimeCoachWidgetEntryView: View {
             CircularTimerWidget()
         case .accessoryCorner:
             CornerTimerWidget()
+        case .accessoryInline:
+            InlineTimerWidget()
         default:
             CircularTimerWidget()
         }
@@ -68,6 +70,15 @@ struct CircularTimerWidget: View {
                      countsDown: true)
         .progressViewStyle(.circular)
         .tint(.blue)
+    }
+}
+
+struct InlineTimerWidget: View {
+    let start = Date()
+    let end = Date().addingTimeInterval(40)
+    
+    var body: some View {
+        Text("Timer will end in about ") + Text(end, style: .relative)
     }
 }
 
@@ -100,7 +111,7 @@ struct TimeCoachWidget: Widget {
         .configurationDisplayName("TimeCoach Widget")
         .description("Add this widget to display the current timer")
 #if os(watchOS)
-        .supportedFamilies([.accessoryCorner, .accessoryCircular])
+        .supportedFamilies([.accessoryCorner, .accessoryCircular, .accessoryInline])
 #endif
     }
 }
