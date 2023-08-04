@@ -45,7 +45,7 @@ final class WatchOSExtensionProvider: XCTestCase {
     }
     
     // MARK: - Helpers
-    private func makeSUT(currentDate: @escaping () -> Date, file: StaticString = #filePath, line: UInt = #line) -> (sut: WatchOSProvider, spy: Spy) {
+    private func makeSUT(currentDate: @escaping () -> Date, file: StaticString = #filePath, line: UInt = #line) -> (sut: WatchOSProviderProtocol, spy: Spy) {
         let spy = Spy()
         let sut = WatchOSProvider(stateLoader: spy, currentDate: currentDate)
         
@@ -81,7 +81,7 @@ extension TimerEntry: CustomStringConvertible {
     }
 }
 
-private extension WatchOSProvider {
+private extension WatchOSProviderProtocol {
     func getTimeLineResult() -> Timeline<TimerEntry>? {
         var receivedEntry: Timeline<TimerEntry>?
         getTimeline() { entry in

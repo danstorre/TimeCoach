@@ -2,7 +2,11 @@ import Foundation
 import WidgetKit
 import LifeCoach
 
-public class WatchOSProvider {
+public protocol WatchOSProviderProtocol {
+    func getTimeline(completion: @escaping (Timeline<TimerEntry>) -> ())
+}
+
+public class WatchOSProvider: WatchOSProviderProtocol {
     private let stateLoader: LoadTimerState
     private let currentDate: () -> Date
     
