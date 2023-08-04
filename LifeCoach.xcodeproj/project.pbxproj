@@ -92,6 +92,7 @@
 		FBA223E52A7DAEE5003FF5A8 /* XCTestCase+MemoryLeakTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC9ADAE2919E8B500E0BEFC /* XCTestCase+MemoryLeakTracking.swift */; };
 		FBA223E82A7DB2D1003FF5A8 /* WatchOSProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA223E72A7DB2D1003FF5A8 /* WatchOSProvider.swift */; };
 		FBA223EA2A7DB365003FF5A8 /* TimerEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA223E92A7DB365003FF5A8 /* TimerEntry.swift */; };
+		FBA223ED2A7DB3AF003FF5A8 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA223EC2A7DB3AF003FF5A8 /* Helpers.swift */; };
 		FBA8DD7D2A4F10D9009E48D5 /* TimerCoutdownToTimerStateAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA8DD7C2A4F10D9009E48D5 /* TimerCoutdownToTimerStateAdapter.swift */; };
 		FBA8DD832A4F120E009E48D5 /* TimerStateAdapter+Publishers.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA8DD822A4F120E009E48D5 /* TimerStateAdapter+Publishers.swift */; };
 		FBA8DD852A4F13F0009E48D5 /* LocalElapsedSecondsSets+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA8DD842A4F13F0009E48D5 /* LocalElapsedSecondsSets+Extension.swift */; };
@@ -389,6 +390,7 @@
 		FB960C7F293D532E00ECBAD5 /* PreviewTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewTimer.swift; sourceTree = "<group>"; };
 		FBA223E72A7DB2D1003FF5A8 /* WatchOSProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchOSProvider.swift; sourceTree = "<group>"; };
 		FBA223E92A7DB365003FF5A8 /* TimerEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerEntry.swift; sourceTree = "<group>"; };
+		FBA223EC2A7DB3AF003FF5A8 /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		FBA8DD7C2A4F10D9009E48D5 /* TimerCoutdownToTimerStateAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerCoutdownToTimerStateAdapter.swift; sourceTree = "<group>"; };
 		FBA8DD802A4F11B0009E48D5 /* ColorSwiftUI+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ColorSwiftUI+Extension.swift"; sourceTree = "<group>"; };
 		FBA8DD822A4F120E009E48D5 /* TimerStateAdapter+Publishers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimerStateAdapter+Publishers.swift"; sourceTree = "<group>"; };
@@ -775,6 +777,7 @@
 		FB566A112A7D935000506CBA /* LifeCoachWatchOSTests */ = {
 			isa = PBXGroup;
 			children = (
+				FBA223EB2A7DB391003FF5A8 /* Helpers */,
 				FB566A122A7D935000506CBA /* WatchOSExtensionProvider.swift */,
 			);
 			path = LifeCoachWatchOSTests;
@@ -841,6 +844,14 @@
 				FBA223E92A7DB365003FF5A8 /* TimerEntry.swift */,
 			);
 			path = "WatchOS Extension";
+			sourceTree = "<group>";
+		};
+		FBA223EB2A7DB391003FF5A8 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				FBA223EC2A7DB3AF003FF5A8 /* Helpers.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 		FBAD474628FC8BB0003D2F7A = {
@@ -1656,6 +1667,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FB566A132A7D935000506CBA /* WatchOSExtensionProvider.swift in Sources */,
+				FBA223ED2A7DB3AF003FF5A8 /* Helpers.swift in Sources */,
 				FBA223E52A7DAEE5003FF5A8 /* XCTestCase+MemoryLeakTracking.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
