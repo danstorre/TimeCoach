@@ -10,7 +10,7 @@ class WatchOSProvider {
         self.currentDate = currentDate
     }
     
-    func getTimeline(completion: @escaping (Timeline<SimpleEntry>) -> ()) {
+    func getTimeline(completion: @escaping (Timeline<TimerEntry>) -> ()) {
         guard let state = try? stateLoader.load() else {
             return
         }
@@ -26,18 +26,18 @@ class WatchOSProvider {
     }
     
     // MARK: - Helpers
-    private func idleTimeLine() -> Timeline<SimpleEntry> {
-        var entries: [SimpleEntry] = []
+    private func idleTimeLine() -> Timeline<TimerEntry> {
+        var entries: [TimerEntry] = []
 
-        entries.append(SimpleEntry(date: currentDate(), endDate: .none, isIdle: true))
+        entries.append(TimerEntry(date: currentDate(), endDate: .none, isIdle: true))
 
         return Timeline(entries: entries, policy: .never)
     }
     
-    private func runningTimeLine(with endDate: Date) -> Timeline<SimpleEntry> {
-        var entries: [SimpleEntry] = []
+    private func runningTimeLine(with endDate: Date) -> Timeline<TimerEntry> {
+        var entries: [TimerEntry] = []
 
-        entries.append(SimpleEntry(date: currentDate(), endDate: endDate))
+        entries.append(TimerEntry(date: currentDate(), endDate: endDate))
 
         return Timeline(entries: entries, policy: .never)
     }
@@ -83,7 +83,7 @@ final class WatchOSExtensionProvider: XCTestCase {
         let endDate = currentDate.adding(seconds: 1)
         let (sut, spy) = makeSUT(currentDate: { currentDate })
         let runningState = makeAnyTimerState(seconds: 0, startDate: currentDate, endDate: endDate, state: .running)
-        let runningTimeLineEntry = SimpleEntry(date: currentDate, endDate: endDate, isIdle: false)
+        let runningTimeLineEntry = TimerEntry(date: currentDate, endDate: endDate, isIdle: false)
         spy.loadsSuccess(with: runningState)
         
         let timeLineResult = sut.getTimeLineResult()
@@ -101,7 +101,7 @@ final class WatchOSExtensionProvider: XCTestCase {
         let samples = [pauseState, stopState]
         
         samples.forEach { sample in
-            let idleTimelineEntry = SimpleEntry(date: currentDate, endDate: .none, isIdle: true)
+            let idleTimelineEntry = TimerEntry(date: currentDate, endDate: .none, isIdle: true)
             spy.loadsSuccess(with: sample)
             
             let timeLineResult = sut.getTimeLineResult()
@@ -121,27 +121,27 @@ final class WatchOSExtensionProvider: XCTestCase {
         return (sut, spy)
     }
     
-    private func assertCorrectTimeLine(with simpleEntry: SimpleEntry, from timeLine: Timeline<SimpleEntry>?, file: StaticString = #filePath, line: UInt = #line) {
+    private func assertCorrectTimeLine(with simpleEntry: TimerEntry, from timeLine: Timeline<TimerEntry>?, file: StaticString = #filePath, line: UInt = #line) {
         XCTAssertEqual(timeLine?.entries, [simpleEntry], file: file, line: line)
         XCTAssertEqual(timeLine?.policy, .never, file: file, line: line)
     }
 }
 
-extension SimpleEntry: CustomStringConvertible {
+extension TimerEntry: CustomStringConvertible {
     var description: String {
         "startDate: \(date), endDate: \(String(describing: endDate))"
     }
 }
 
-struct SimpleEntry: TimelineEntry, Equatable {
+struct TimerEntry: TimelineEntry, Equatable {
     var date: Date
     var endDate: Date?
     var isIdle: Bool = false
 }
 
 extension WatchOSProvider {
-    func getTimeLineResult() -> Timeline<SimpleEntry>? {
-        var receivedEntry: Timeline<SimpleEntry>?
+    func getTimeLineResult() -> Timeline<TimerEntry>? {
+        var receivedEntry: Timeline<TimerEntry>?
         getTimeline() { entry in
             receivedEntry = entry
         }
