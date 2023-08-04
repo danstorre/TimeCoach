@@ -88,15 +88,6 @@ struct CircularTimerWidget: View {
     }
 }
 
-struct InlineTimerWidget: View {
-    let start = Date()
-    let end = Date().addingTimeInterval(40)
-    
-    var body: some View {
-        Text("Timer will end in about ") + Text(end, style: .relative)
-    }
-}
-
 struct CornerTimerWidget: View {
     let start = Date()
     let end = Date().addingTimeInterval(40)
