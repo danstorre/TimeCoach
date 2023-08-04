@@ -1,7 +1,7 @@
 import XCTest
 import WidgetKit
 import LifeCoach
-import LifeCoachWatchOS
+import LifeCoachExtensions
 
 final class WatchOSExtensionProvider: XCTestCase {
     func test_getTimeline_messagesLoadState() {
