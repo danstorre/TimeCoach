@@ -6,6 +6,7 @@ import LifeCoachWatchOS
 import LifeCoach
 import Combine
 import UserNotifications
+import LifeCoachExtensions
 
 @main
 struct TimeCoach_Watch_AppApp: App {

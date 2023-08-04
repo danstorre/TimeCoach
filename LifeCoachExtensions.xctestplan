@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "1C447333-0656-4AA0-8ACB-CC17B6DA4BE0",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:LifeCoach.xcodeproj",
+        "identifier" : "FB097C552A7DC55900BED235",
+        "name" : "LifeCoachExtensionsTests"
+      }
+    }
+  ],
+  "version" : 1
+}
