@@ -17,12 +17,7 @@ class WatchOSProvider {
         let showEvent = getEvent(from: state, andCurrentDate: currentDate)
         
         if case let .showTimerWith(endDate: endDate) = showEvent {
-            var entries: [SimpleEntry] = []
-
-            entries.append(SimpleEntry(date: currentDate(), endDate: endDate))
-
-            let timeline = Timeline(entries: entries, policy: .never)
-            completion(timeline)
+            completion(runningTimeLine(with: endDate))
         }
         
         if case .showIdle = showEvent {
@@ -33,6 +28,15 @@ class WatchOSProvider {
             let timeline = Timeline(entries: entries, policy: .never)
             completion(timeline)
         }
+    }
+    
+    // MARK: - Helpers
+    private func runningTimeLine(with endDate: Date) -> Timeline<SimpleEntry> {
+        var entries: [SimpleEntry] = []
+
+        entries.append(SimpleEntry(date: currentDate(), endDate: endDate))
+
+        return Timeline(entries: entries, policy: .never)
     }
     
     private func getEvent(from state: TimerState, andCurrentDate: @escaping () -> Date) -> TimerGlanceViewModel.TimerStatusEvent? {
