@@ -90,6 +90,8 @@
 		FB960C78293D48D800ECBAD5 /* Date+Formatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4AA1562937C3970076FED9 /* Date+Formatters.swift */; };
 		FBA1CE202A4CF8E7008F030B /* LifeCoach.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBAD475028FC8BB0003D2F7A /* LifeCoach.framework */; };
 		FBA223E52A7DAEE5003FF5A8 /* XCTestCase+MemoryLeakTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC9ADAE2919E8B500E0BEFC /* XCTestCase+MemoryLeakTracking.swift */; };
+		FBA223E82A7DB2D1003FF5A8 /* WatchOSProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA223E72A7DB2D1003FF5A8 /* WatchOSProvider.swift */; };
+		FBA223EA2A7DB365003FF5A8 /* TimerEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA223E92A7DB365003FF5A8 /* TimerEntry.swift */; };
 		FBA8DD7D2A4F10D9009E48D5 /* TimerCoutdownToTimerStateAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA8DD7C2A4F10D9009E48D5 /* TimerCoutdownToTimerStateAdapter.swift */; };
 		FBA8DD832A4F120E009E48D5 /* TimerStateAdapter+Publishers.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA8DD822A4F120E009E48D5 /* TimerStateAdapter+Publishers.swift */; };
 		FBA8DD852A4F13F0009E48D5 /* LocalElapsedSecondsSets+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA8DD842A4F13F0009E48D5 /* LocalElapsedSecondsSets+Extension.swift */; };
@@ -385,6 +387,8 @@
 		FB960C71293D462900ECBAD5 /* ToggleStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleStrategy.swift; sourceTree = "<group>"; };
 		FB960C74293D484000ECBAD5 /* TimerPresentationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerPresentationTests.swift; sourceTree = "<group>"; };
 		FB960C7F293D532E00ECBAD5 /* PreviewTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewTimer.swift; sourceTree = "<group>"; };
+		FBA223E72A7DB2D1003FF5A8 /* WatchOSProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchOSProvider.swift; sourceTree = "<group>"; };
+		FBA223E92A7DB365003FF5A8 /* TimerEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerEntry.swift; sourceTree = "<group>"; };
 		FBA8DD7C2A4F10D9009E48D5 /* TimerCoutdownToTimerStateAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerCoutdownToTimerStateAdapter.swift; sourceTree = "<group>"; };
 		FBA8DD802A4F11B0009E48D5 /* ColorSwiftUI+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ColorSwiftUI+Extension.swift"; sourceTree = "<group>"; };
 		FBA8DD822A4F120E009E48D5 /* TimerStateAdapter+Publishers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimerStateAdapter+Publishers.swift"; sourceTree = "<group>"; };
@@ -573,6 +577,7 @@
 		FB06B52E292BF71C00AE6079 /* LifeCoachWatchOS */ = {
 			isa = PBXGroup;
 			children = (
+				FBA223E62A7DB2B8003FF5A8 /* WatchOS Extension */,
 				FB4AA13E29379D9F0076FED9 /* Timer Feature */,
 				FB0238DC2A574233002F55D5 /* Resources */,
 			);
@@ -827,6 +832,15 @@
 				FB960C7F293D532E00ECBAD5 /* PreviewTimer.swift */,
 			);
 			path = Previews;
+			sourceTree = "<group>";
+		};
+		FBA223E62A7DB2B8003FF5A8 /* WatchOS Extension */ = {
+			isa = PBXGroup;
+			children = (
+				FBA223E72A7DB2D1003FF5A8 /* WatchOSProvider.swift */,
+				FBA223E92A7DB365003FF5A8 /* TimerEntry.swift */,
+			);
+			path = "WatchOS Extension";
 			sourceTree = "<group>";
 		};
 		FBAD474628FC8BB0003D2F7A = {
@@ -1563,11 +1577,13 @@
 				FB0238C72A572F24002F55D5 /* TimerView.swift in Sources */,
 				FB0238C92A572F46002F55D5 /* Colors.swift in Sources */,
 				FB0238CB2A572FEF002F55D5 /* ColorSwiftUI+Extension.swift in Sources */,
+				FBA223E82A7DB2D1003FF5A8 /* WatchOSProvider.swift in Sources */,
 				FB4AA1382936F1730076FED9 /* TimerText.swift in Sources */,
 				FB594CBE2A4E542200C4A32C /* ToggleButton.swift in Sources */,
 				FBED1E4D293EDB3F0061CAAF /* TimerTextTimeLine.swift in Sources */,
 				FBE9A9DC2939654400D8BF29 /* TimerLabelStyle.swift in Sources */,
 				FBED1E4B293EDAD10061CAAF /* TimerControls.swift in Sources */,
+				FBA223EA2A7DB365003FF5A8 /* TimerEntry.swift in Sources */,
 				FB0238C82A572F38002F55D5 /* PreviewProvider+FactoryMethods.swift in Sources */,
 				FB0238DF2A574301002F55D5 /* TimerStyle.swift in Sources */,
 			);
