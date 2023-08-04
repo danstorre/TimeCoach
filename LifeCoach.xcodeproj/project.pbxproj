@@ -93,6 +93,7 @@
 		FBA223E82A7DB2D1003FF5A8 /* WatchOSProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA223E72A7DB2D1003FF5A8 /* WatchOSProvider.swift */; };
 		FBA223EA2A7DB365003FF5A8 /* TimerEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA223E92A7DB365003FF5A8 /* TimerEntry.swift */; };
 		FBA223ED2A7DB3AF003FF5A8 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA223EC2A7DB3AF003FF5A8 /* Helpers.swift */; };
+		FBA223EF2A7DB5EC003FF5A8 /* WatchOSProviderProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA223EE2A7DB5EC003FF5A8 /* WatchOSProviderProtocol.swift */; };
 		FBA8DD7D2A4F10D9009E48D5 /* TimerCoutdownToTimerStateAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA8DD7C2A4F10D9009E48D5 /* TimerCoutdownToTimerStateAdapter.swift */; };
 		FBA8DD832A4F120E009E48D5 /* TimerStateAdapter+Publishers.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA8DD822A4F120E009E48D5 /* TimerStateAdapter+Publishers.swift */; };
 		FBA8DD852A4F13F0009E48D5 /* LocalElapsedSecondsSets+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA8DD842A4F13F0009E48D5 /* LocalElapsedSecondsSets+Extension.swift */; };
@@ -391,6 +392,7 @@
 		FBA223E72A7DB2D1003FF5A8 /* WatchOSProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchOSProvider.swift; sourceTree = "<group>"; };
 		FBA223E92A7DB365003FF5A8 /* TimerEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerEntry.swift; sourceTree = "<group>"; };
 		FBA223EC2A7DB3AF003FF5A8 /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
+		FBA223EE2A7DB5EC003FF5A8 /* WatchOSProviderProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchOSProviderProtocol.swift; sourceTree = "<group>"; };
 		FBA8DD7C2A4F10D9009E48D5 /* TimerCoutdownToTimerStateAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerCoutdownToTimerStateAdapter.swift; sourceTree = "<group>"; };
 		FBA8DD802A4F11B0009E48D5 /* ColorSwiftUI+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ColorSwiftUI+Extension.swift"; sourceTree = "<group>"; };
 		FBA8DD822A4F120E009E48D5 /* TimerStateAdapter+Publishers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimerStateAdapter+Publishers.swift"; sourceTree = "<group>"; };
@@ -842,6 +844,7 @@
 			children = (
 				FBA223E72A7DB2D1003FF5A8 /* WatchOSProvider.swift */,
 				FBA223E92A7DB365003FF5A8 /* TimerEntry.swift */,
+				FBA223EE2A7DB5EC003FF5A8 /* WatchOSProviderProtocol.swift */,
 			);
 			path = "WatchOS Extension";
 			sourceTree = "<group>";
@@ -1588,6 +1591,7 @@
 				FB0238C72A572F24002F55D5 /* TimerView.swift in Sources */,
 				FB0238C92A572F46002F55D5 /* Colors.swift in Sources */,
 				FB0238CB2A572FEF002F55D5 /* ColorSwiftUI+Extension.swift in Sources */,
+				FBA223EF2A7DB5EC003FF5A8 /* WatchOSProviderProtocol.swift in Sources */,
 				FBA223E82A7DB2D1003FF5A8 /* WatchOSProvider.swift in Sources */,
 				FB4AA1382936F1730076FED9 /* TimerText.swift in Sources */,
 				FB594CBE2A4E542200C4A32C /* ToggleButton.swift in Sources */,
