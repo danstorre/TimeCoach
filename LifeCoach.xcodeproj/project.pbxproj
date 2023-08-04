@@ -34,11 +34,6 @@
 		FB1535902A4A674A00E4B0B0 /* TimerLabelStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE9A9DB2939654400D8BF29 /* TimerLabelStyle.swift */; };
 		FB1535912A4A677F00E4B0B0 /* LifeCoach.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBAD475028FC8BB0003D2F7A /* LifeCoach.framework */; };
 		FB1535922A4A677F00E4B0B0 /* LifeCoach.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FBAD475028FC8BB0003D2F7A /* LifeCoach.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		FB2A10E72A6B1854004A1784 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB2A10E62A6B1854004A1784 /* WidgetKit.framework */; };
-		FB2A10E92A6B1854004A1784 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB2A10E82A6B1854004A1784 /* SwiftUI.framework */; };
-		FB2A10EC2A6B1854004A1784 /* TimeCoachWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2A10EB2A6B1854004A1784 /* TimeCoachWidget.swift */; };
-		FB2A10EE2A6B1855004A1784 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FB2A10ED2A6B1855004A1784 /* Assets.xcassets */; };
-		FB2A10F22A6B1855004A1784 /* TimeCoachWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = FB2A10E52A6B1854004A1784 /* TimeCoachWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		FB40D18B2A79CDA5008D3A36 /* UserDefaultStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB40D18A2A79CDA5008D3A36 /* UserDefaultStoreTests.swift */; };
 		FB4AA1382936F1730076FED9 /* TimerText.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4AA1372936F1730076FED9 /* TimerText.swift */; };
 		FB4AA1542937C0F30076FED9 /* ExtensionHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4AA1532937C0F30076FED9 /* ExtensionHelpers.swift */; };
@@ -182,13 +177,6 @@
 			remoteGlobalIDString = FBAD474F28FC8BB0003D2F7A;
 			remoteInfo = LifeCoach;
 		};
-		FB2A10F02A6B1855004A1784 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = FBAD474728FC8BB0003D2F7A /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = FB2A10E42A6B1854004A1784;
-			remoteInfo = TimeCoachWidgetExtension;
-		};
 		FB5398F42A4617F0000B9CFD /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = FBAD474728FC8BB0003D2F7A /* Project object */;
@@ -204,6 +192,20 @@
 			remoteInfo = LifeCoach;
 		};
 		FBAD475C28FC8BB0003D2F7A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FBAD474728FC8BB0003D2F7A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FBAD474F28FC8BB0003D2F7A;
+			remoteInfo = LifeCoach;
+		};
+		FBC0AF032A7C8B9C0034C593 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FBAD474728FC8BB0003D2F7A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FB06B52C292BF71C00AE6079;
+			remoteInfo = LifeCoachWatchOS;
+		};
+		FBC0AF052A7C8BA30034C593 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = FBAD474728FC8BB0003D2F7A /* Project object */;
 			proxyType = 1;
@@ -260,17 +262,6 @@
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		FB2A10F62A6B1855004A1784 /* Embed Foundation Extensions */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 13;
-			files = (
-				FB2A10F22A6B1855004A1784 /* TimeCoachWidgetExtension.appex in Embed Foundation Extensions */,
-			);
-			name = "Embed Foundation Extensions";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		FB5398F82A4617F0000B9CFD /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -303,7 +294,6 @@
 		FB1535572A4A66E000E4B0B0 /* LifeCoachWatchOSUIPreview.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LifeCoachWatchOSUIPreview.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB15355C2A4A66E000E4B0B0 /* LifeCoachWatchOSUIPreview Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "LifeCoachWatchOSUIPreview Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB1535612A4A66E000E4B0B0 /* LifeCoachWatchOSUIPreviewApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LifeCoachWatchOSUIPreviewApp.swift; sourceTree = "<group>"; };
-		FB2A10E52A6B1854004A1784 /* TimeCoachWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TimeCoachWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB2A10E62A6B1854004A1784 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		FB2A10E82A6B1854004A1784 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		FB2A10EB2A6B1854004A1784 /* TimeCoachWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeCoachWidget.swift; sourceTree = "<group>"; };
@@ -446,15 +436,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				FB1535912A4A677F00E4B0B0 /* LifeCoach.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		FB2A10E22A6B1854004A1784 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				FB2A10E92A6B1854004A1784 /* SwiftUI.framework in Frameworks */,
-				FB2A10E72A6B1854004A1784 /* WidgetKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -817,7 +798,6 @@
 				FB5398E32A4617EF000B9CFD /* TimeCoachVisionOS.framework */,
 				FB1535572A4A66E000E4B0B0 /* LifeCoachWatchOSUIPreview.app */,
 				FB15355C2A4A66E000E4B0B0 /* LifeCoachWatchOSUIPreview Watch App.app */,
-				FB2A10E52A6B1854004A1784 /* TimeCoachWidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1112,6 +1092,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				FBC0AF062A7C8BA30034C593 /* PBXTargetDependency */,
 			);
 			name = LifeCoachWatchOS;
 			productName = LifeCoachWatchOS;
@@ -1153,23 +1134,6 @@
 			productName = "LifeCoachWatchOSUIPreview Watch App";
 			productReference = FB15355C2A4A66E000E4B0B0 /* LifeCoachWatchOSUIPreview Watch App.app */;
 			productType = "com.apple.product-type.application";
-		};
-		FB2A10E42A6B1854004A1784 /* TimeCoachWidgetExtension */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = FB2A10F32A6B1855004A1784 /* Build configuration list for PBXNativeTarget "TimeCoachWidgetExtension" */;
-			buildPhases = (
-				FB2A10E12A6B1854004A1784 /* Sources */,
-				FB2A10E22A6B1854004A1784 /* Frameworks */,
-				FB2A10E32A6B1854004A1784 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = TimeCoachWidgetExtension;
-			productName = TimeCoachWidgetExtension;
-			productReference = FB2A10E52A6B1854004A1784 /* TimeCoachWidgetExtension.appex */;
-			productType = "com.apple.product-type.app-extension";
 		};
 		FB5398902A45DA7C000B9CFD /* TimeCoachVision */ = {
 			isa = PBXNativeTarget;
@@ -1273,12 +1237,11 @@
 				FBE9A9712939527C00D8BF29 /* Frameworks */,
 				FBE9A9722939527C00D8BF29 /* Resources */,
 				FB0238FF2A57529D002F55D5 /* Embed Frameworks */,
-				FB2A10F62A6B1855004A1784 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				FB2A10F12A6B1855004A1784 /* PBXTargetDependency */,
+				FBC0AF042A7C8B9C0034C593 /* PBXTargetDependency */,
 			);
 			name = "TimeCoach Watch App";
 			productName = "TimeCoach Watch App";
@@ -1323,9 +1286,6 @@
 						CreatedOnToolsVersion = 14.3;
 					};
 					FB15355B2A4A66E000E4B0B0 = {
-						CreatedOnToolsVersion = 14.3;
-					};
-					FB2A10E42A6B1854004A1784 = {
 						CreatedOnToolsVersion = 14.3;
 					};
 					FB5398902A45DA7C000B9CFD = {
@@ -1381,7 +1341,6 @@
 				FBE9A9852939527E00D8BF29 /* TimeCoach Watch AppTests */,
 				FB5398902A45DA7C000B9CFD /* TimeCoachVision */,
 				FB5398E22A4617EF000B9CFD /* TimeCoachVisionOS */,
-				FB2A10E42A6B1854004A1784 /* TimeCoachWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -1407,14 +1366,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				FB0238D52A573A67002F55D5 /* Media.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		FB2A10E32A6B1854004A1784 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				FB2A10EE2A6B1855004A1784 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1514,14 +1465,6 @@
 				FB15358D2A4A671300E4B0B0 /* TimerControls.swift in Sources */,
 				FB1535902A4A674A00E4B0B0 /* TimerLabelStyle.swift in Sources */,
 				FB15358E2A4A673100E4B0B0 /* TimerTextTimeLine.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		FB2A10E12A6B1854004A1784 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				FB2A10EC2A6B1854004A1784 /* TimeCoachWidget.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1685,11 +1628,6 @@
 			target = FBAD474F28FC8BB0003D2F7A /* LifeCoach */;
 			targetProxy = FB1535932A4A677F00E4B0B0 /* PBXContainerItemProxy */;
 		};
-		FB2A10F12A6B1855004A1784 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = FB2A10E42A6B1854004A1784 /* TimeCoachWidgetExtension */;
-			targetProxy = FB2A10F02A6B1855004A1784 /* PBXContainerItemProxy */;
-		};
 		FB5398F52A4617F0000B9CFD /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = FB5398E22A4617EF000B9CFD /* TimeCoachVisionOS */;
@@ -1704,6 +1642,16 @@
 			isa = PBXTargetDependency;
 			target = FBAD474F28FC8BB0003D2F7A /* LifeCoach */;
 			targetProxy = FBAD475C28FC8BB0003D2F7A /* PBXContainerItemProxy */;
+		};
+		FBC0AF042A7C8B9C0034C593 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FB06B52C292BF71C00AE6079 /* LifeCoachWatchOS */;
+			targetProxy = FBC0AF032A7C8B9C0034C593 /* PBXContainerItemProxy */;
+		};
+		FBC0AF062A7C8BA30034C593 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FBAD474F28FC8BB0003D2F7A /* LifeCoach */;
+			targetProxy = FBC0AF052A7C8BA30034C593 /* PBXContainerItemProxy */;
 		};
 		FBE9A9772939527C00D8BF29 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1883,68 +1831,6 @@
 				SDKROOT = iphoneos;
 				SWIFT_VERSION = 5.0;
 				VALIDATE_PRODUCT = YES;
-			};
-			name = Release;
-		};
-		FB2A10F42A6B1855004A1784 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = TimeCoachWidget/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = TimeCoachWidget;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@executable_path/../../Frameworks",
-					"@executable_path/../../../../Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.danstorre.timeCoach.TimeCoachWidget;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = watchos;
-				SKIP_INSTALL = YES;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 9.0;
-			};
-			name = Debug;
-		};
-		FB2A10F52A6B1855004A1784 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
-				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = TimeCoachWidget/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = TimeCoachWidget;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@executable_path/../../Frameworks",
-					"@executable_path/../../../../Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.danstorre.timeCoach.TimeCoachWidget;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				SDKROOT = watchos;
-				SKIP_INSTALL = YES;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 4;
-				VALIDATE_PRODUCT = YES;
-				WATCHOS_DEPLOYMENT_TARGET = 9.0;
 			};
 			name = Release;
 		};
@@ -2254,6 +2140,8 @@
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_INSTALL_OBJC_HEADER = NO;
+				SWIFT_PRECOMPILE_BRIDGING_HEADER = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "4,7";
 				WATCHOS_DEPLOYMENT_TARGET = 9.0;
@@ -2297,6 +2185,8 @@
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_INSTALL_OBJC_HEADER = NO;
+				SWIFT_PRECOMPILE_BRIDGING_HEADER = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "4,7";
 				WATCHOS_DEPLOYMENT_TARGET = 9.0;
@@ -2373,7 +2263,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.danstorre.timeCoach;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = TimeCoachDevelopment;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "timeCoach-iphone-development";
 				SDKROOT = iphoneos;
 				SWIFT_VERSION = 5.0;
 			};
@@ -2423,10 +2313,10 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.1;
-				PRODUCT_BUNDLE_IDENTIFIER = com.danstorre.timeCoach;
+				PRODUCT_BUNDLE_IDENTIFIER = com.danstorre.timeCoach.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=watchos*]" = TimeCoachDevelopment;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=watchos*]" = "timeCoach-watchos-development";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -2546,15 +2436,6 @@
 			buildConfigurations = (
 				FB1535852A4A66E100E4B0B0 /* Debug */,
 				FB1535862A4A66E100E4B0B0 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		FB2A10F32A6B1855004A1784 /* Build configuration list for PBXNativeTarget "TimeCoachWidgetExtension" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				FB2A10F42A6B1855004A1784 /* Debug */,
-				FB2A10F52A6B1855004A1784 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
