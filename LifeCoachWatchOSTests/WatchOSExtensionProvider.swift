@@ -58,8 +58,7 @@ class Spy: LoadTimerState {
 
 final class WatchOSExtensionProvider: XCTestCase {
     func test_getTimeline_messagesLoadState() {
-        let spy = Spy()
-        let sut = WatchOSProvider(stateLoader: spy)
+        let (sut, spy) = makeSUT(currentDate: { Date() })
         
         sut.getTimeline() { _ in }
         
@@ -67,10 +66,9 @@ final class WatchOSExtensionProvider: XCTestCase {
     }
     
     func test_getTimeLine_onLoadTimerStateRunningDeliversCorrectTimeLineEntry() {
-        let spy = Spy()
         let currentDate = Date()
         let endDate = currentDate.adding(seconds: 1)
-        let sut = WatchOSProvider(stateLoader: spy, currentDate: { currentDate })
+        let (sut, spy) = makeSUT(currentDate: { currentDate })
         let runningState = makeAnyTimerState(seconds: 0, startDate: currentDate, endDate: endDate, state: .running)
         spy.loadsSuccess(with: runningState)
         
@@ -80,18 +78,28 @@ final class WatchOSExtensionProvider: XCTestCase {
     }
     
     func test_getTimeLine_onLoadTimerStatePauseDeliversCorrectIsIdleTimeLineEntry() {
-        let spy = Spy()
         let currentDate = Date()
-        let sut = WatchOSProvider(stateLoader: spy, currentDate: { currentDate })
+        let (sut, spy) = makeSUT(currentDate: { currentDate })
         let pauseState = makeAnyTimerState(startDate: currentDate, state: .pause)
         spy.loadsSuccess(with: pauseState)
+        let idleTimelineEntry = SimpleEntry(date: currentDate, endDate: .none, isIdle: true)
         
         let timeLine = sut.getTimeLineResult()
         
-        assertCorrectTimeLine(with: SimpleEntry(date: currentDate, endDate: .none, isIdle: true), from: timeLine)
+        assertCorrectTimeLine(with: idleTimelineEntry, from: timeLine)
     }
     
     // MARK: - Helpers
+    private func makeSUT(currentDate: @escaping () -> Date, file: StaticString = #filePath, line: UInt = #line) -> (sut: WatchOSProvider, spy: Spy) {
+        let spy = Spy()
+        let sut = WatchOSProvider(stateLoader: spy, currentDate: currentDate)
+        
+        trackForMemoryLeak(instance: sut, file: file, line: line)
+        trackForMemoryLeak(instance: spy, file: file, line: line)
+        
+        return (sut, spy)
+    }
+    
     private func assertCorrectTimeLine(with simpleEntry: SimpleEntry, from timeLine: Timeline<SimpleEntry>?, file: StaticString = #filePath, line: UInt = #line) {
         XCTAssertEqual(timeLine?.entries, [simpleEntry], file: file, line: line)
         XCTAssertEqual(timeLine?.policy, .never, file: file, line: line)
