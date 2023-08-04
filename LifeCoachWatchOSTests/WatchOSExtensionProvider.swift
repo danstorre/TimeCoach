@@ -21,16 +21,19 @@ class WatchOSProvider {
         }
         
         if case .showIdle = showEvent {
-            var entries: [SimpleEntry] = []
-
-            entries.append(SimpleEntry(date: currentDate(), endDate: .none, isIdle: true))
-
-            let timeline = Timeline(entries: entries, policy: .never)
-            completion(timeline)
+            completion(idleTimeLine())
         }
     }
     
     // MARK: - Helpers
+    private func idleTimeLine() -> Timeline<SimpleEntry> {
+        var entries: [SimpleEntry] = []
+
+        entries.append(SimpleEntry(date: currentDate(), endDate: .none, isIdle: true))
+
+        return Timeline(entries: entries, policy: .never)
+    }
+    
     private func runningTimeLine(with endDate: Date) -> Timeline<SimpleEntry> {
         var entries: [SimpleEntry] = []
 
