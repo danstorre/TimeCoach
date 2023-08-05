@@ -8,7 +8,7 @@
 import WidgetKit
 import SwiftUI
 import LifeCoach
-import LifeCoachWatchOS
+import LifeCoachExtensions
 
 struct Provider: TimelineProvider {
     private let provider: WatchOSProviderProtocol
