@@ -31,7 +31,7 @@ struct Provider: TimelineProvider {
 
 extension TimerEntry {
     static func createEntry() -> TimerEntry {
-        TimerEntry(date: .init(), isIdle: false)
+        TimerEntry(date: .init(), isIdle: true)
     }
 }
 
@@ -40,53 +40,59 @@ struct TimeCoachWidgetEntryView: View {
     
     var entry: Provider.Entry
     
-    let start = Date()
-    let end = Date().addingTimeInterval(40)
-    
     var body: some View {
         switch family {
         case .accessoryCircular:
-            CircularTimerWidget()
+            CircularTimerWidget(entry: entry)
         case .accessoryCorner:
-            CornerTimerWidget()
+            CornerTimerWidget(entry: entry)
         case .accessoryRectangular:
-            RectangularTimerWidget()
+            RectangularTimerWidget(entry: entry)
         default:
-            CircularTimerWidget()
+            CircularTimerWidget(entry: entry)
         }
     }
 }
 
 struct RectangularTimerWidget: View {
-    let start = Date()
-    let end = Date().addingTimeInterval(40)
+    let entry: TimerEntry
     
     var body: some View {
         VStack {
-            Text("Pomodoro will end in:")
-                .foregroundColor(.blue)
-            ProgressView(timerInterval: start...end,
-                         countsDown: true)
-            .tint(.blue)
+            if let endDate = entry.endDate {
+                Text("Pomodoro will end in:")
+                    .foregroundColor(.blue)
+                ProgressView(timerInterval: entry.date...endDate,
+                             countsDown: true)
+                .tint(.blue)
+            } else {
+                Image("widgetIcon")
+                    .foregroundColor(.blue)
+                Text("Tap to begin.")
+            }
         }
     }
 }
 
 struct CircularTimerWidget: View {
-    let start = Date()
-    let end = Date().addingTimeInterval(40)
+    let entry: TimerEntry
     
     var body: some View {
-        ProgressView(timerInterval: start...end,
-                     countsDown: true)
-        .progressViewStyle(.circular)
-        .tint(.blue)
+        if let endDate = entry.endDate {
+            ProgressView(timerInterval: entry.date...endDate,
+                         countsDown: true)
+            .progressViewStyle(.circular)
+            .tint(.blue)
+        } else {
+            ProgressView("", value: 1, total: 1)
+                .progressViewStyle(.circular)
+                .tint(.blue)
+        }
     }
 }
 
 struct CornerTimerWidget: View {
-    let start = Date()
-    let end = Date().addingTimeInterval(40)
+    let entry: TimerEntry
     
     var body: some View {
         VStack {
@@ -94,9 +100,14 @@ struct CornerTimerWidget: View {
                 .foregroundColor(.blue)
             Text("")
                 .widgetLabel(label: {
-                    ProgressView(timerInterval: start...end,
-                                 countsDown: true)
-                    .tint(.blue)
+                    if let endDate = entry.endDate {
+                        ProgressView(timerInterval: entry.date...endDate,
+                                     countsDown: true)
+                            .tint(.blue)
+                    } else {
+                        ProgressView("", value: 1, total: 1)
+                            .tint(.blue)
+                    }
                 })
         }
     }
