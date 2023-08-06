@@ -8,7 +8,6 @@ public enum TimerCoutdownState {
 
 public protocol TimerCoutdown {
     
-    var currentSet: LocalTimerSet { get }
     var currentSetElapsedTime: TimeInterval { get }
     var state: TimerCoutdownState { get }
     

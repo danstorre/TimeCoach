@@ -7,7 +7,7 @@ public final class FoundationTimerCountdown: TimerCoutdown {
     public private(set) var state: TimerCoutdownState = .stop
     private var setA: LocalTimerSet
     private var setB: LocalTimerSet
-    public var currentSet: LocalTimerSet
+    var currentSet: LocalTimerSet
     var elapsedTimeInterval: TimeInterval = 0
     private let incrementing: Double
     var timerDelivery: StartCoundownCompletion?
@@ -35,7 +35,6 @@ public final class FoundationTimerCountdown: TimerCoutdown {
     }
     
     public func stopCountdown() {
-        currentSet = LocalTimerSet(0, startDate: currentSet.startDate, endDate: currentSet.endDate)
         timerDelivery?(.success(currentSet))
         invalidatesTimer()
         state = .stop
@@ -63,13 +62,13 @@ public final class FoundationTimerCountdown: TimerCoutdown {
         guard hasNotHitThreshold() else {
             invalidatesTimer()
             state = .stop
-            currentSet = LocalTimerSet(elapsedTimeInterval, startDate: currentSet.startDate, endDate: currentSet.endDate)
-            timerDelivery?(.success(currentSet))
+            let elapsed = currentSet.adding(elapsedTimeInterval)
+            timerDelivery?(.success(elapsed))
             return
         }
         
-        currentSet = LocalTimerSet(elapsedTimeInterval, startDate: currentSet.startDate, endDate: currentSet.endDate)
-        timerDelivery?(.success(currentSet))
+        let elapsed = currentSet.adding(elapsedTimeInterval)
+        timerDelivery?(.success(elapsed))
     }
     
     private func hasNotHitThreshold() -> Bool {
@@ -80,7 +79,6 @@ public final class FoundationTimerCountdown: TimerCoutdown {
     private func executeNextSet() {
         invalidatesTimer()
         elapsedTimeInterval = 0
-        currentSet = LocalTimerSet(elapsedTimeInterval, startDate: currentSet.startDate, endDate: currentSet.endDate)
         state = .stop
         setA = currentSet
         currentSet = setB
