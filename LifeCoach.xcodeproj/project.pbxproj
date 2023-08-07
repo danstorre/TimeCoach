@@ -22,8 +22,6 @@
 		FB0238DF2A574301002F55D5 /* TimerStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD1279C2A5703730081C69C /* TimerStyle.swift */; };
 		FB0238E02A574309002F55D5 /* TimerStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD1279C2A5703730081C69C /* TimerStyle.swift */; };
 		FB0238E22A57442E002F55D5 /* PreviewTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB960C7F293D532E00ECBAD5 /* PreviewTimer.swift */; };
-		FB0238FD2A57529D002F55D5 /* LifeCoachWatchOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB06B52D292BF71C00AE6079 /* LifeCoachWatchOS.framework */; };
-		FB0238FE2A57529D002F55D5 /* LifeCoachWatchOS.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FB06B52D292BF71C00AE6079 /* LifeCoachWatchOS.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FB0239092A57548B002F55D5 /* DIGITALDREAMFAT.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FB0239072A57548B002F55D5 /* DIGITALDREAMFAT.ttf */; };
 		FB02390A2A57548B002F55D5 /* pizzadude.dk License.txt in Resources */ = {isa = PBXBuildFile; fileRef = FB0239082A57548B002F55D5 /* pizzadude.dk License.txt */; };
 		FB097C572A7DC55900BED235 /* LifeCoachExtensions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB097C4F2A7DC55900BED235 /* LifeCoachExtensions.framework */; };
@@ -178,6 +176,7 @@
 		FBEC46212A8067EB00CAB18F /* CircularTimerWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBEC46202A8067EB00CAB18F /* CircularTimerWidget.swift */; };
 		FBEC46232A8067FD00CAB18F /* CornerTimerWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBEC46222A8067FD00CAB18F /* CornerTimerWidget.swift */; };
 		FBEC46262A80684800CAB18F /* TimerEntry+Factory.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBEC46252A80684800CAB18F /* TimerEntry+Factory.swift */; };
+		FBEC46272A806B9700CAB18F /* LifeCoachWatchOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB06B52D292BF71C00AE6079 /* LifeCoachWatchOS.framework */; };
 		FBED1E4B293EDAD10061CAAF /* TimerControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBED1E4A293EDAD10061CAAF /* TimerControls.swift */; };
 		FBED1E4D293EDB3F0061CAAF /* TimerTextTimeLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBED1E4C293EDB3F0061CAAF /* TimerTextTimeLine.swift */; };
 		FBED1E54293F7E980061CAAF /* UserNotificationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBED1E53293F7E980061CAAF /* UserNotificationDelegate.swift */; };
@@ -278,17 +277,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		FB0238FF2A57529D002F55D5 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				FB0238FE2A57529D002F55D5 /* LifeCoachWatchOS.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		FB1535832A4A66E100E4B0B0 /* Embed Watch Content */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -579,7 +567,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FB0238FD2A57529D002F55D5 /* LifeCoachWatchOS.framework in Frameworks */,
+				FBEC46272A806B9700CAB18F /* LifeCoachWatchOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1469,7 +1457,6 @@
 				FBE9A9702939527C00D8BF29 /* Sources */,
 				FBE9A9712939527C00D8BF29 /* Frameworks */,
 				FBE9A9722939527C00D8BF29 /* Resources */,
-				FB0238FF2A57529D002F55D5 /* Embed Frameworks */,
 				FB509E102A7C936C00AA9333 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
