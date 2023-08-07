@@ -115,6 +115,9 @@
 		FBBF06262A4F41D60020695A /* TimeCoach-VisionOS-App-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FBBF06252A4F41D60020695A /* TimeCoach-VisionOS-App-Info.plist */; };
 		FBC612F3293AC2ED008D9EF8 /* TimerCountDownSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC612F2293AC2ED008D9EF8 /* TimerCountDownSpy.swift */; };
 		FBC9ADAF2919E8B500E0BEFC /* XCTestCase+MemoryLeakTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC9ADAE2919E8B500E0BEFC /* XCTestCase+MemoryLeakTracking.swift */; };
+		FBC9CC002A806E4A001B5975 /* TimerStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC9CBFF2A806E4A001B5975 /* TimerStyle.swift */; };
+		FBC9CC032A806E84001B5975 /* CustomFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC9CC022A806E84001B5975 /* CustomFont.swift */; };
+		FBC9CC0F2A806FD0001B5975 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FBC9CC0E2A806FD0001B5975 /* Media.xcassets */; };
 		FBD56F652A3BD489002736AD /* LocalTimerSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD56F642A3BD489002736AD /* LocalTimerSet.swift */; };
 		FBD56F672A3CE66F002736AD /* LocalElapsedSeconds+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD56F662A3CE66F002736AD /* LocalElapsedSeconds+Extensions.swift */; };
 		FBD56F6B2A3CEF33002736AD /* PomodoroUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD56F6A2A3CEF33002736AD /* PomodoroUseCaseTests.swift */; };
@@ -423,6 +426,9 @@
 		FBBF06252A4F41D60020695A /* TimeCoach-VisionOS-App-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "TimeCoach-VisionOS-App-Info.plist"; sourceTree = SOURCE_ROOT; };
 		FBC612F2293AC2ED008D9EF8 /* TimerCountDownSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerCountDownSpy.swift; sourceTree = "<group>"; };
 		FBC9ADAE2919E8B500E0BEFC /* XCTestCase+MemoryLeakTracking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+MemoryLeakTracking.swift"; sourceTree = "<group>"; };
+		FBC9CBFF2A806E4A001B5975 /* TimerStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerStyle.swift; sourceTree = "<group>"; };
+		FBC9CC022A806E84001B5975 /* CustomFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomFont.swift; sourceTree = "<group>"; };
+		FBC9CC0E2A806FD0001B5975 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		FBD1279C2A5703730081C69C /* TimerStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerStyle.swift; sourceTree = "<group>"; };
 		FBD56F642A3BD489002736AD /* LocalTimerSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalTimerSet.swift; sourceTree = "<group>"; };
 		FBD56F662A3CE66F002736AD /* LocalElapsedSeconds+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LocalElapsedSeconds+Extensions.swift"; sourceTree = "<group>"; };
@@ -754,7 +760,6 @@
 			isa = PBXGroup;
 			children = (
 				FB5399192A461C39000B9CFD /* Timer Composition */,
-				FB53992F2A46208E000B9CFD /* Previews */,
 				FB53989D2A45DA7D000B9CFD /* Preview Content */,
 				FB5399112A461BA7000B9CFD /* Resources */,
 				FBBF06252A4F41D60020695A /* TimeCoach-VisionOS-App-Info.plist */,
@@ -783,10 +788,12 @@
 		FB5398E42A4617EF000B9CFD /* TimeCoachVisionOS */ = {
 			isa = PBXGroup;
 			children = (
+				FBC9CC012A806E6B001B5975 /* Resources */,
 				FB5399022A46197E000B9CFD /* TimerText.swift */,
 				FB5399092A4619FD000B9CFD /* TimerLabelStyle.swift */,
 				FB53990B2A461A76000B9CFD /* TimerControls.swift */,
 				FBBF06222A4F2DA20020695A /* ToggleButton.swift */,
+				FBC9CBFF2A806E4A001B5975 /* TimerStyle.swift */,
 			);
 			path = TimeCoachVisionOS;
 			sourceTree = "<group>";
@@ -817,13 +824,6 @@
 				FBBF06202A4F2CC30020695A /* TimerView.swift */,
 			);
 			path = "Timer Composition";
-			sourceTree = "<group>";
-		};
-		FB53992F2A46208E000B9CFD /* Previews */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Previews;
 			sourceTree = "<group>";
 		};
 		FB5925FD2A76F8880011D53E /* Timer Notifications */ = {
@@ -976,6 +976,15 @@
 				FBDEE80C2A7B0D2F00D1120A /* StoreJSONEncoder+Helpers.swift */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		FBC9CC012A806E6B001B5975 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				FBC9CC022A806E84001B5975 /* CustomFont.swift */,
+				FBC9CC0E2A806FD0001B5975 /* Media.xcassets */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		FBD56F6C2A3CEF50002736AD /* Helpers */ = {
@@ -1642,6 +1651,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FBC9CC0F2A806FD0001B5975 /* Media.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1786,8 +1796,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FBC9CC002A806E4A001B5975 /* TimerStyle.swift in Sources */,
 				FB53990A2A4619FD000B9CFD /* TimerLabelStyle.swift in Sources */,
 				FB5399032A46197E000B9CFD /* TimerText.swift in Sources */,
+				FBC9CC032A806E84001B5975 /* CustomFont.swift in Sources */,
 				FB53990C2A461A76000B9CFD /* TimerControls.swift in Sources */,
 				FBBF06232A4F2DA20020695A /* ToggleButton.swift in Sources */,
 			);
