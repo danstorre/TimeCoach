@@ -7,15 +7,15 @@ final class StateTimerAcceptanceTests: XCTestCase {
     
     func test_onLaunch_onToggleUserInteractionShouldStartNotificationAndSaveStateProcess() {
         let (sut, spy) = makeSUT()
-        let localTimerSet = createAnyTimerSet(startingFrom: .init())
-        let expectedTimerState = LocalTimerState(localTimerSet: localTimerSet, state: .running)
-        spy.deliversSetOnStart(localTimerSet)
+        let anySet = createAnyTimerSet(startingFrom: .init())
+        let expected = createAnyTimerState(using: anySet, on: .running)
+        spy.deliversSetOnToggle(anySet)
         
         sut.simulateToggleTimerUserInteraction()
         
         XCTAssertEqual(spy.receivedMessages, [
             .startTimer,
-            .saveStateTimer(value: expectedTimerState),
+            .saveStateTimer(value: expected),
             .scheduleTimerNotification
         ])
     }
@@ -26,6 +26,10 @@ final class StateTimerAcceptanceTests: XCTestCase {
         let sut = TimeCoach_Watch_AppApp(pomodoroTimer: spy, timerState: spy, stateTimerStore: spy, scheduler: spy)
         
         return (sut, spy)
+    }
+    
+    private func createAnyTimerState(using anySet: LocalTimerSet, on state: LocalTimerState.State) -> LocalTimerState {
+        LocalTimerState(localTimerSet: anySet, state: state)
     }
     
     private func createAnyTimerSet(startingFrom startDate: Date = Date()) -> LocalTimerSet {
@@ -78,7 +82,7 @@ final class StateTimerAcceptanceTests: XCTestCase {
         
         func skipCountdown(completion: @escaping SkipCountdownCompletion) {}
         
-        func deliversSetOnStart(_ set: LocalTimerSet) {
+        func deliversSetOnToggle(_ set: LocalTimerSet) {
             setOnStart = .success(set)
         }
         
