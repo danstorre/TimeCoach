@@ -167,17 +167,6 @@ final class StateTimerAcceptanceTests: XCTestCase {
     }
 }
 
-extension LocalTimerState.State: CustomStringConvertible {
-    public var description: String {
-        switch self {
-        case .pause: return "pause"
-        case .stop: return "stop"
-        case .running: return "running"
-        }
-    }
-}
-
-
 private extension TimeCoach_Watch_AppApp {
     func simulateToggleTimerUserInteraction() {
         timerView.simulateToggleTimerUserInteraction()
