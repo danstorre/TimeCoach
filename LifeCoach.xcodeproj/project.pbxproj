@@ -713,7 +713,7 @@
 			children = (
 				FBDEE8122A7B15FE00D1120A /* Timer Store Notifications */,
 				FB5925FD2A76F8880011D53E /* Timer Notifications */,
-				FB4B895B2A3B96760088DB5B /* Timer Store */,
+				FB4B895B2A3B96760088DB5B /* Timer State Store */,
 				FBE9A9A92939538200D8BF29 /* Timer Presentation */,
 				FBD56F702A3D0E0E002736AD /* Timer Pomodoro */,
 				FB4AA1632937CD000076FED9 /* TimerSet.swift */,
@@ -732,7 +732,7 @@
 			path = Infrastructure;
 			sourceTree = "<group>";
 		};
-		FB4B895B2A3B96760088DB5B /* Timer Store */ = {
+		FB4B895B2A3B96760088DB5B /* Timer State Store */ = {
 			isa = PBXGroup;
 			children = (
 				FBDEE8062A7B0BB500D1120A /* Infrastructure */,
@@ -746,7 +746,7 @@
 				FBD822512A73406F002702F4 /* SaveTimerState.swift */,
 				FB5BF6A62A7BEF9F001B81CB /* StateMapper.swift */,
 			);
-			path = "Timer Store";
+			path = "Timer State Store";
 			sourceTree = "<group>";
 		};
 		FB4B89602A3BBB5F0088DB5B /* Helpers */ = {
