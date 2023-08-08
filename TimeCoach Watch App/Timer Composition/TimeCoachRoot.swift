@@ -178,15 +178,6 @@ extension Publisher where Output == (TimerSet, TimerState.State) {
 }
 
 extension Publisher where Output == Void {
-    func saveTimerState(saver timerStateSaver: SaveTimerState, with timerState: (timerSet: TimerSet, state: TimerState.State)) -> AnyPublisher<Void, Failure> {
-        self.handleEvents(receiveSubscription: { _ in
-            try? timerStateSaver.save(state: TimerState(elapsedSeconds: timerState.timerSet, state: timerState.state))
-        })
-        .eraseToAnyPublisher()
-    }
-}
-
-extension Publisher where Output == Void {
     func unregisterTimerNotifications(_ completion: @escaping () -> Void) -> AnyPublisher<Void, Failure> {
         self.handleEvents(receiveOutput: { _ in
             completion()
