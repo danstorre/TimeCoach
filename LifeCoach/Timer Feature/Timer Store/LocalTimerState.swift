@@ -7,7 +7,7 @@ public struct LocalTimerState: Equatable {
         case stop
     }
     public let localTimerSet: LocalTimerSet
-    let state: State
+    public let state: State
     
     public init(localTimerSet: LocalTimerSet, state: LocalTimerState.State) {
         self.localTimerSet = localTimerSet

@@ -22,7 +22,8 @@ final class SaveTimerAcceptanceTests: XCTestCase {
         let spyTimeState = TimerStateSpy()
         
         let sut = TimeCoach_Watch_AppApp(pomodoroTimer: spy,
-                                         timerState: spyTimeState)
+                                         timerState: spyTimeState,
+                                         stateTimerStore: DummyLocalTimerStore())
         
         trackForMemoryLeak(instance: spy)
         

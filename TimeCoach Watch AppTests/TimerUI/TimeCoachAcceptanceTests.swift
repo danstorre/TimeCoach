@@ -113,7 +113,9 @@ final class TimeCoachAcceptanceTests: XCTestCase {
             breakStub: breakResponse)
         let spyTimerState = TimerStateSpy()
         
-        let sut = TimeCoach_Watch_AppApp(pomodoroTimer: spy, timerState: spyTimerState).timerView
+        let sut = TimeCoach_Watch_AppApp(pomodoroTimer: spy,
+                                         timerState: spyTimerState,
+                                         stateTimerStore: DummyLocalTimerStore()).timerView
         
         trackForMemoryLeak(instance: spy, file: file, line: line)
         trackForMemoryLeak(instance: spyTimerState, file: file, line: line)
