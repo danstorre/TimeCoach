@@ -94,13 +94,13 @@ class TimeCoachRoot {
         let localTimer = localTimer
         let scheduler = timerNotificationScheduler
         let timerSavedNofitier = timerSavedNofitier
-        return regularTimerPlayPublisher()
+        return playPublisher()
             .save(timerStateSaver: localTimer)
             .schedule(timerNotificationScheduler: scheduler)
             .notifySavedTimer(timerSavedNofitier: timerSavedNofitier)
     }
     
-    private func regularTimerPlayPublisher() -> RegularTimer.ElapsedSecondsPublisher {
+    private func playPublisher() -> RegularTimer.ElapsedSecondsPublisher {
         regularTimer!.playPublisher(currentSubject: currentSubject)()
     }
 }
