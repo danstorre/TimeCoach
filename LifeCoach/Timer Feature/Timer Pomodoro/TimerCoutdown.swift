@@ -10,6 +10,7 @@ public protocol TimerCoutdown {
     
     var currentSetElapsedTime: TimeInterval { get }
     var state: TimerCoutdownState { get }
+    var currentTimerSet: LocalTimerSet { get }
     
     typealias Result = Swift.Result<LocalTimerSet, Error>
     typealias StartCoundownCompletion = (Result) -> Void

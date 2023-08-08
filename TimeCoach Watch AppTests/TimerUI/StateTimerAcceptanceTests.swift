@@ -50,6 +50,8 @@ final class StateTimerAcceptanceTests: XCTestCase {
     }
     
     private class Spy: TimerCoutdown, TimerStore, LocalTimerStore, Scheduler {
+        var currentTimerSet: LifeCoach.LocalTimerSet { .pomodoroSet(date: Date()) }
+        
         enum AnyMessage: Equatable, CustomStringConvertible {
             case startTimer
             case saveStateTimer(value: LifeCoach.LocalTimerState)

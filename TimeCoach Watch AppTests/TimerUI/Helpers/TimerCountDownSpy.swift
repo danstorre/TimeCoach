@@ -14,6 +14,7 @@ func breakResponse(_ seconds: TimeInterval) -> TimerSet {
 }
 
 class TimerCountdownSpy: TimerCoutdown {
+    var currentTimerSet: LifeCoach.LocalTimerSet { .init(0, startDate: Date(), endDate: Date())}
     var currentSetElapsedTime: TimeInterval { 0 }
     
     private(set) var receivedStartCountdownCompletions = [StartCoundownCompletion]()

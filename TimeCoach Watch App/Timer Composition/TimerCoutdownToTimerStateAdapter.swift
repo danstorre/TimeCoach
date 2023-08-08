@@ -3,6 +3,8 @@ import LifeCoach
 import Combine
 
 class TimerCoutdownToTimerStateAdapter: TimerCoutdown {
+    var currentTimerSet: LifeCoach.LocalTimerSet = .pomodoroSet(date: Date())
+    
     var isPlaying: Bool {
         switch timer.state {
         case .running: return true

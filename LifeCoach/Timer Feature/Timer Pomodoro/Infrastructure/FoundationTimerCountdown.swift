@@ -15,6 +15,10 @@ public final class FoundationTimerCountdown: TimerCoutdown {
     var currentTimer: Timer?
     var timeAtSave: CFTimeInterval? = nil
     
+    public var currentTimerSet: LocalTimerSet {
+        currentSet
+    }
+    
     public var currentSetElapsedTime: TimeInterval {
         elapsedTimeInterval
     }

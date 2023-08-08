@@ -175,6 +175,7 @@ final class PomodoroUseCaseTests: XCTestCase {
     }
     
     private class TimerSpy: TimerCoutdown {
+        var currentTimerSet: LifeCoach.LocalTimerSet { .init(0, startDate: Date(), endDate: Date())}
         var currentSetElapsedTime: TimeInterval { 0 }
         var state: LifeCoach.TimerCoutdownState { .pause }
         
