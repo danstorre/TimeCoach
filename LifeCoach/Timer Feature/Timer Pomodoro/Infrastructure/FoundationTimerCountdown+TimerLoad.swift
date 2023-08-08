@@ -4,11 +4,11 @@ extension FoundationTimerCountdown: TimerLoad {
     public func loadTime() {
         guard let timeAtSave = timeAtSave else { return }
         let elapsed = CFAbsoluteTimeGetCurrent() - timeAtSave
-        elapsedTimeInterval += elapsed.rounded()
-        let startDate = currentSet.startDate
-        let finishDate = currentSet.endDate
+        
+        currentSet = .init(currentSet.elapsedSeconds + elapsed.rounded(), startDate: currentSet.startDate, endDate: currentSet.endDate)
+        
         timerDelivery?(
-            .success(LocalTimerSet(elapsedTimeInterval, startDate: startDate, endDate: finishDate))
+            .success(currentSet)
         )
         startCountdown(completion: timerDelivery ?? { _ in })
         self.timeAtSave = nil
