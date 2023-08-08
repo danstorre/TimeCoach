@@ -42,20 +42,6 @@ class TimeCoachRoot {
         self.notifySavedTimer = infrastructure.notifySavedTimer
     }
     
-    convenience init(
-        timerCoutdown: TimerCoutdown,
-        timerState: TimerSave & TimerLoad,
-        stateTimerStore: LocalTimerStore,
-        scheduler: LifeCoach.Scheduler
-    ) {
-        self.init()
-        self.timerSave = timerState
-        self.timerLoad = timerState
-        self.timerCoutdown = timerCoutdown
-        self.stateTimerStore = stateTimerStore
-        self.scheduler = scheduler
-    }
-    
     func createTimer(withTimeLine: Bool = true) -> TimerView {
         let date = Date()
         let timerCountdown = createTimerCountDown(from: date)
