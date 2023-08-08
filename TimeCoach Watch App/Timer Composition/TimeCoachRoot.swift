@@ -54,12 +54,12 @@ class TimeCoachRoot {
     
     func createTimer(withTimeLine: Bool = true) -> TimerView {
         let date = currenDate()
-        let timerCountdown = createTimerCountDown(from: date)
+        timerCoutdown = createTimerCountDown(from: date)
         currentSubject = Self.createFirstValuePublisher(from: date)
-        let timerPlayerAdapterState = TimerCoutdownToTimerStateAdapter(timer: timerCountdown, currentDate: currenDate)
+        let timerPlayerAdapterState = TimerCoutdownToTimerStateAdapter(timer: timerCoutdown!, currentDate: currenDate)
         regularTimer = Self.createPomodorTimer(with: timerPlayerAdapterState, and: currentSubject)
         
-        if let timerCountdown = timerCountdown as? FoundationTimerCountdown {
+        if let timerCountdown = timerCoutdown as? FoundationTimerCountdown {
             self.timerSave = timerCountdown
             self.timerLoad = timerCountdown
         }
