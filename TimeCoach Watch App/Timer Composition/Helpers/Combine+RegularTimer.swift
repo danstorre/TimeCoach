@@ -9,17 +9,15 @@ extension RegularTimer {
     func stopPublisher() -> VoidPublisher {
         return Deferred {
             self.stop()
-            return PassthroughSubject<Void, Error>()
+            return CurrentValueSubject<Void, Error>.init(())
         }.eraseToAnyPublisher()
     }
     
-    func pausePublisher() -> () -> VoidPublisher {
-        {
-            Deferred {
-                pause()
-                return PassthroughSubject<Void, Error>()
-            }.eraseToAnyPublisher()
-        }
+    func pausePublisher() -> VoidPublisher {
+        return Deferred {
+            pause()
+            return CurrentValueSubject<Void, Error>.init(())
+        }.eraseToAnyPublisher()
     }
     
     func skipPublisher(currentSubject: CurrentValuePublisher) -> () -> ElapsedSecondsPublisher {

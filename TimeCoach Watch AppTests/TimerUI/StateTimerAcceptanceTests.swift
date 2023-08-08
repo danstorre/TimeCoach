@@ -39,6 +39,25 @@ final class StateTimerAcceptanceTests: XCTestCase {
         ])
     }
     
+    func test_onLaunch_onPauseUserInteractionShouldExecutePauseProcess() {
+        let currentDate = Date()
+        let (sut, spy) = makeSUT(currentDate: { currentDate })
+        let anySet = createAnyTimerSet(startingFrom: currentDate, endDate: currentDate.adding(seconds: .pomodoroInSeconds))
+        let expected = createAnyTimerState(using: anySet, on: .pause)
+        spy.deliversSetOnToggle(anySet)
+        sut.timerView.simulateToggleTimerUserInteraction()
+        spy.resetMessages()
+        
+        sut.timerView.simulateToggleTimerUserInteraction()
+        
+        XCTAssertEqual(spy.receivedMessages, [
+            .pauseTimer,
+            .saveStateTimer(value: expected),
+            .unregisterTimerNotification,
+            .notifySavedTimer
+        ])
+    }
+    
     // MARK: - Helpers
     private func makeSUT(currentDate: @escaping () -> Date = Date.init) -> (sut: TimeCoach_Watch_AppApp, spy: Spy) {
         let spy = Spy(currenDate: currentDate())
@@ -80,6 +99,7 @@ final class StateTimerAcceptanceTests: XCTestCase {
         enum AnyMessage: Equatable, CustomStringConvertible {
             case startTimer
             case stopTimer
+            case pauseTimer
             case saveStateTimer(value: LifeCoach.LocalTimerState)
             case scheduleTimerNotification
             case unregisterTimerNotification
@@ -102,6 +122,8 @@ final class StateTimerAcceptanceTests: XCTestCase {
                     return "stopTimer"
                 case .unregisterTimerNotification:
                     return "unregisterTimerNotification"
+                case .pauseTimer:
+                    return "pauseTimer"
                 }
             }
         }
@@ -114,18 +136,27 @@ final class StateTimerAcceptanceTests: XCTestCase {
         
         private var setOnStart: Result<LocalTimerSet, Error>?
         
+        func resetMessages() {
+            receivedMessages = []
+        }
+        
         // MARK: - Timer
         func startCountdown(completion: @escaping StartCoundownCompletion) {
+            state = .running
             receivedMessages.append(.startTimer)
             guard let setOnStart = setOnStart else { return }
             completion(setOnStart)
         }
         
         func stopCountdown() {
+            state = .stop
             receivedMessages.append(.stopTimer)
         }
         
-        func pauseCountdown() {}
+        func pauseCountdown() {
+            state = .pause
+            receivedMessages.append(.pauseTimer)
+        }
         
         func skipCountdown(completion: @escaping SkipCountdownCompletion) {}
         

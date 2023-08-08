@@ -67,7 +67,7 @@ class TimeCoachRoot {
         let timerControlPublishers = TimerControlsPublishers(playPublisher: handlePlay,
                                                              skipPublisher: regularTimer!.skipPublisher(currentSubject: currentSubject),
                                                              stopPublisher: handleStop,
-                                                             pausePublisher: regularTimer!.pausePublisher(),
+                                                             pausePublisher: handlePause,
                                                              isPlaying: timerPlayerAdapterState.isPlayingPublisherProvider())
         
         return TimerViewComposer.createTimer(
@@ -98,12 +98,31 @@ class TimeCoachRoot {
     
     private func handleStop() -> RegularTimer.VoidPublisher {
         let localTimer = localTimer
-        let currentSet = timerCoutdown?.currentTimerSet ?? LocalTimerSet.pomodoroSet(date: currenDate())
+        let timerCoutdown = timerCoutdown
         let timerSavedNofitier = timerSavedNofitier
+        
         return stopPublisher()
-            .saveTimerState(saver: localTimer, with: currentSet.toElapseSeconds)
+            .map({ _ in (timerSet: timerCoutdown!.currentTimerSet.toElapseSeconds, state: timerCoutdown!.state.toModel) })
+            .saveTimerState(saver: localTimer)
+            .flatMap({ _ in Just(()) })
             .unregisterTimerNotifications(unregisterNotifications)
             .notifySavedTimer(notifier: timerSavedNofitier)
+            .eraseToAnyPublisher()
+
+    }
+    
+    private func handlePause() -> RegularTimer.VoidPublisher {
+        let localTimer = localTimer
+        let timerCoutdown = timerCoutdown
+        let timerSavedNofitier = timerSavedNofitier
+        
+        return pausePublisher()
+            .map({ _ in (timerSet: timerCoutdown!.currentTimerSet.toElapseSeconds, state: timerCoutdown!.state.toModel) })
+            .saveTimerState(saver: localTimer)
+            .flatMap({ _ in Just(()) })
+            .unregisterTimerNotifications(unregisterNotifications)
+            .notifySavedTimer(notifier: timerSavedNofitier)
+            .eraseToAnyPublisher()
     }
     
     private func stopPublisher() -> RegularTimer.VoidPublisher {
@@ -112,6 +131,10 @@ class TimeCoachRoot {
     
     private func playPublisher() -> RegularTimer.ElapsedSecondsPublisher {
         regularTimer!.playPublisher(currentSubject: currentSubject)()
+    }
+    
+    private func pausePublisher() -> RegularTimer.VoidPublisher {
+        regularTimer!.pausePublisher()
     }
 }
 
@@ -125,10 +148,19 @@ extension Publisher where Output == TimerSet {
     }
 }
 
+extension Publisher where Output == (TimerSet, TimerState.State) {
+    func saveTimerState(saver timerStateSaver: SaveTimerState) -> AnyPublisher<(TimerSet, TimerState.State), Failure> {
+        self.handleEvents(receiveOutput: { timerState in
+            try? timerStateSaver.save(state: TimerState(elapsedSeconds: timerState.0, state: timerState.1))
+        })
+        .eraseToAnyPublisher()
+    }
+}
+
 extension Publisher where Output == Void {
-    func saveTimerState(saver timerStateSaver: SaveTimerState, with timerSet: TimerSet) -> AnyPublisher<Void, Failure> {
+    func saveTimerState(saver timerStateSaver: SaveTimerState, with timerState: (timerSet: TimerSet, state: TimerState.State)) -> AnyPublisher<Void, Failure> {
         self.handleEvents(receiveSubscription: { _ in
-            try? timerStateSaver.save(state: TimerState(elapsedSeconds: timerSet, state: .stop))
+            try? timerStateSaver.save(state: TimerState(elapsedSeconds: timerState.timerSet, state: timerState.state))
         })
         .eraseToAnyPublisher()
     }
@@ -136,7 +168,7 @@ extension Publisher where Output == Void {
 
 extension Publisher where Output == Void {
     func unregisterTimerNotifications(_ completion: @escaping () -> Void) -> AnyPublisher<Void, Failure> {
-        self.handleEvents(receiveSubscription: { _ in
+        self.handleEvents(receiveOutput: { _ in
             completion()
         })
         .eraseToAnyPublisher()
@@ -145,7 +177,7 @@ extension Publisher where Output == Void {
 
 extension Publisher where Output == Void {
     func notifySavedTimer(notifier timerSavedNofitier: TimerStoreNotifier) -> AnyPublisher<Void, Failure> {
-        self.handleEvents(receiveSubscription: { _ in
+        self.handleEvents(receiveOutput: { _ in
             timerSavedNofitier.storeSaved()
         })
         .eraseToAnyPublisher()
@@ -171,3 +203,14 @@ extension Publisher where Output == TimerSet {
 }
 
 extension UNUserNotificationCenter: NotificationScheduler {}
+
+
+extension TimerCoutdownState {
+    var toModel: TimerState.State {
+        switch self {
+        case .pause: return .pause
+        case .running: return .running
+        case .stop: return .stop
+        }
+    }
+}
