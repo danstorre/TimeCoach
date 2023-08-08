@@ -51,20 +51,19 @@ final class FoundationTimerCountdownTests: XCTestCase {
         let startSet = createTimerSet(0, startDate: fixedDate, endDate: fixedDate.adding(seconds: 0.002))
         let sut = makeSUT(startingSet: startSet, nextSet: createAnyTimerSet())
 
-        expect(sut: sut,
-               toDeliver: [startSet.adding(0.001), startSet.adding(0.002)])
+        expect(sut: sut, toDeliver: [startSet.adding(0.001), startSet.adding(0.002)])
     }
     
     func test_start_afterFinishTheFirstSetTimerDoesNotChangeState() {
         let fixedDate = Date()
         let startSet = createTimerSet(0, startDate: fixedDate, endDate: fixedDate.adding(seconds: 0.001))
         let sut = makeSUT(startingSet: startSet, nextSet: createAnyTimerSet())
-        expect(sut: sut,
-               toDeliver: [startSet.adding(0.001)])
+        let finishedStartSet = startSet.adding(0.001)
         
-        sut.startCountdown(completion: { _ in })
+        expect(sut: sut, toDeliver: [finishedStartSet])
+        sut.commitFinishedTimer()
         
-        XCTAssertEqual(sut.state, .stop)
+        assertTimerSet(finishedStartSet, state: .stop, from: sut)
     }
     
     func test_startTwice_doesNotChangeStateOfRunning() {
@@ -302,5 +301,11 @@ final class FoundationTimerCountdownTests: XCTestCase {
 extension LocalTimerSet: CustomStringConvertible {
     public var description: String {
         "elapsed seconds: \(elapsedSeconds), startDate: \(startDate), endDate: \(endDate)"
+    }
+}
+
+extension TimerCoutdown {
+    func commitFinishedTimer() {
+        startCountdown(completion: { _ in })
     }
 }
