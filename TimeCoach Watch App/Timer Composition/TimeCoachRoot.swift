@@ -137,8 +137,7 @@ class TimeCoachRoot {
             .flatsToVoid()
             .unregisterTimerNotifications(unregisterNotifications)
             .notifySavedTimer(notifier: timerSavedNofitier)
-            .flatMap { currentSubject }
-            .eraseToAnyPublisher()
+            .flatsToElapsedSecondsPublisher(currentSubject)
     }
     
     private func stopPublisher() -> RegularTimer.VoidPublisher {
@@ -197,6 +196,15 @@ extension Publisher where Output == Void {
     func notifySavedTimer(notifier timerSavedNofitier: TimerStoreNotifier) -> AnyPublisher<Void, Failure> {
         self.handleEvents(receiveOutput: { _ in
             timerSavedNofitier.storeSaved()
+        })
+        .eraseToAnyPublisher()
+    }
+}
+
+extension Publisher where Output == Void {
+    func flatsToElapsedSecondsPublisher(_ currentSetPublisher: CurrentValueSubject<TimerSet, Error>) -> AnyPublisher<TimerSet, Failure> {
+        self.flatMap({ _ in
+            Just(currentSetPublisher.value)
         })
         .eraseToAnyPublisher()
     }
