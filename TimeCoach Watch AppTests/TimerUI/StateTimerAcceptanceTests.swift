@@ -21,15 +21,35 @@ final class StateTimerAcceptanceTests: XCTestCase {
         ])
     }
     
+    func test_onLaunch_onStopUserInteractionShouldExecuteStopProcess() {
+        let currentDate = Date()
+        let (sut, spy) = makeSUT(currentDate: { currentDate })
+        let expected = createAnyTimerState(
+            using: createAnyTimerSet(startingFrom: currentDate, endDate: currentDate.adding(seconds: .pomodoroInSeconds)),
+            on: .stop
+        )
+        
+        sut.timerView.simulateStopTimerUserInteraction()
+        
+        XCTAssertEqual(spy.receivedMessages, [
+            .stopTimer,
+            .saveStateTimer(value: expected),
+            .unregisterTimerNotification,
+            .notifySavedTimer
+        ])
+    }
+    
     // MARK: - Helpers
-    private func makeSUT() -> (sut: TimeCoach_Watch_AppApp, spy: Spy) {
-        let spy = Spy()
+    private func makeSUT(currentDate: @escaping () -> Date = Date.init) -> (sut: TimeCoach_Watch_AppApp, spy: Spy) {
+        let spy = Spy(currenDate: currentDate())
         let infra = Infrastructure(
             timerCoutdown: spy,
             timerState: spy,
             stateTimerStore: spy,
             scheduler: spy,
-            notifySavedTimer: spy.notifySavedTimer
+            notifySavedTimer: spy.notifySavedTimer,
+            currentDate: currentDate,
+            unregisterTimerNotification: spy.unregisterTimerNotification
         )
         
         let sut = TimeCoach_Watch_AppApp(infrastructure: infra)
@@ -41,8 +61,8 @@ final class StateTimerAcceptanceTests: XCTestCase {
         LocalTimerState(localTimerSet: anySet, state: state)
     }
     
-    private func createAnyTimerSet(startingFrom startDate: Date = Date()) -> LocalTimerSet {
-        createTimerSet(0, startDate: startDate, endDate: startDate.adding(seconds: 1))
+    private func createAnyTimerSet(startingFrom startDate: Date = Date(), endDate: Date? = nil) -> LocalTimerSet {
+        createTimerSet(0, startDate: startDate, endDate: endDate ?? startDate.adding(seconds: 1))
     }
     
     private func createTimerSet(_ elapsedSeconds: TimeInterval, startDate: Date, endDate: Date) -> LocalTimerSet {
@@ -50,12 +70,19 @@ final class StateTimerAcceptanceTests: XCTestCase {
     }
     
     private class Spy: TimerCoutdown, TimerStore, LocalTimerStore, Scheduler {
-        var currentTimerSet: LifeCoach.LocalTimerSet { .pomodoroSet(date: Date()) }
+        private let currenDate: Date
+        
+        init(currenDate: Date) {
+            self.currenDate = currenDate
+        }
+        var currentTimerSet: LifeCoach.LocalTimerSet { .pomodoroSet(date: currenDate) }
         
         enum AnyMessage: Equatable, CustomStringConvertible {
             case startTimer
+            case stopTimer
             case saveStateTimer(value: LifeCoach.LocalTimerState)
             case scheduleTimerNotification
+            case unregisterTimerNotification
             case notifySavedTimer
             
             var description: String {
@@ -71,6 +98,10 @@ final class StateTimerAcceptanceTests: XCTestCase {
                     return "scheduleTimerNotification"
                 case .notifySavedTimer:
                     return "notifySavedTimer"
+                case .stopTimer:
+                    return "stopTimer"
+                case .unregisterTimerNotification:
+                    return "unregisterTimerNotification"
                 }
             }
         }
@@ -90,7 +121,9 @@ final class StateTimerAcceptanceTests: XCTestCase {
             completion(setOnStart)
         }
         
-        func stopCountdown() {}
+        func stopCountdown() {
+            receivedMessages.append(.stopTimer)
+        }
         
         func pauseCountdown() {}
         
@@ -121,6 +154,10 @@ final class StateTimerAcceptanceTests: XCTestCase {
         // MARK: - Scheduler
         func setSchedule(at scheduledDate: Date) throws {
             receivedMessages.append(.scheduleTimerNotification)
+        }
+        
+        func unregisterTimerNotification() {
+            receivedMessages.append(.unregisterTimerNotification)
         }
         
         // MARK: - Notify Saved Timer

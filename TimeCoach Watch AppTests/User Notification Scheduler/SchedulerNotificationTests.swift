@@ -134,12 +134,6 @@ final class SchedulerNotificationTests: XCTestCase {
     }
 }
 
-extension Date {
-    func adding(seconds: TimeInterval) -> Date {
-        self + seconds
-    }
-}
-
 extension UNTimeIntervalNotificationTrigger {
     open override var description: String {
         return "timeInterval \(timeInterval)"

@@ -87,8 +87,8 @@ final class TimerUIIntegrationTests: XCTestCase {
         let timerControlPublishers = TimerControlsPublishers(
             playPublisher: { timeLoader.play() },
             skipPublisher: { timeLoader.skip() },
-            stopPublisher: timeLoader.stop(),
-            pausePublisher: timeLoader.pause(),
+            stopPublisher: { timeLoader.stop() },
+            pausePublisher: { timeLoader.pause() },
             isPlaying: timeLoader.isPlayingPusblisher.eraseToAnyPublisher()
         )
         

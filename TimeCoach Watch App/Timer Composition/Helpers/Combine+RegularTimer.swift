@@ -13,11 +13,13 @@ extension RegularTimer {
         }.eraseToAnyPublisher()
     }
     
-    func pausePublisher() -> VoidPublisher {
-        return Deferred {
-            self.pause()
-            return PassthroughSubject<Void, Error>()
-        }.eraseToAnyPublisher()
+    func pausePublisher() -> () -> VoidPublisher {
+        {
+            Deferred {
+                pause()
+                return PassthroughSubject<Void, Error>()
+            }.eraseToAnyPublisher()
+        }
     }
     
     func skipPublisher(currentSubject: CurrentValuePublisher) -> () -> ElapsedSecondsPublisher {
