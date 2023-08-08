@@ -108,8 +108,6 @@ class TimeCoachRoot {
             .flatsToVoid()
             .unregisterTimerNotifications(unregisterNotifications)
             .notifySavedTimer(notifier: timerSavedNofitier)
-            .eraseToAnyPublisher()
-
     }
     
     private func handlePause() -> RegularTimer.VoidPublisher {
@@ -124,7 +122,6 @@ class TimeCoachRoot {
             .flatsToVoid()
             .unregisterTimerNotifications(unregisterNotifications)
             .notifySavedTimer(notifier: timerSavedNofitier)
-            .eraseToAnyPublisher()
     }
     
     private func handleSkip() -> RegularTimer.ElapsedSecondsPublisher {
