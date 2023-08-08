@@ -7,7 +7,7 @@ final class StateTimerAcceptanceTests: XCTestCase {
     
     func test_onLaunch_onToggleUserInteractionShouldStartNotificationAndSaveStateProcess() {
         let (sut, spy) = makeSUT()
-        let localTimerSet = LocalTimerSet.pomodoroSet(date: .init())
+        let localTimerSet = createAnyTimerSet(startingFrom: .init())
         let expectedTimerState = LocalTimerState(localTimerSet: localTimerSet, state: .running)
         spy.deliversSetOnStart(localTimerSet)
         
@@ -26,6 +26,14 @@ final class StateTimerAcceptanceTests: XCTestCase {
         let sut = TimeCoach_Watch_AppApp(pomodoroTimer: spy, timerState: spy, stateTimerStore: spy, scheduler: spy)
         
         return (sut, spy)
+    }
+    
+    private func createAnyTimerSet(startingFrom startDate: Date = Date()) -> LocalTimerSet {
+        createTimerSet(0, startDate: startDate, endDate: startDate.adding(seconds: 1))
+    }
+    
+    private func createTimerSet(_ elapsedSeconds: TimeInterval, startDate: Date, endDate: Date) -> LocalTimerSet {
+        LocalTimerSet(elapsedSeconds, startDate: startDate, endDate: endDate)
     }
     
     private class Spy: TimerCoutdown, TimerStore, LocalTimerStore, Scheduler {
