@@ -8,6 +8,27 @@ import Combine
 import UserNotifications
 import LifeCoachExtensions
 
+public struct Infrastructure {
+    let timerCoutdown: TimerCoutdown
+    let timerState: TimerSave & TimerLoad
+    let stateTimerStore: LocalTimerStore
+    let scheduler: LifeCoach.Scheduler
+    let notifySavedTimer: (() -> Void)?
+    
+    init(timerCoutdown: TimerCoutdown,
+         timerState: TimerSave & TimerLoad,
+         stateTimerStore: LocalTimerStore,
+         scheduler: LifeCoach.Scheduler,
+         notifySavedTimer: (() -> Void)? = nil
+    ) {
+        self.timerCoutdown = timerCoutdown
+        self.timerState = timerState
+        self.stateTimerStore = stateTimerStore
+        self.scheduler = scheduler
+        self.notifySavedTimer = notifySavedTimer
+    }
+}
+
 @main
 struct TimeCoach_Watch_AppApp: App {
     @Environment(\.scenePhase) private var scenePhase
@@ -18,6 +39,11 @@ struct TimeCoach_Watch_AppApp: App {
         let root = TimeCoachRoot()
         self.root = root
         self.timerView = root.createTimer()
+    }
+    
+    init(infrastructure: Infrastructure) {
+        self.root = TimeCoachRoot(infrastructure: infrastructure)
+        self.timerView = root.createTimer(withTimeLine: false)
     }
 
     init(

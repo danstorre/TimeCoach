@@ -23,7 +23,15 @@ final class StateTimerAcceptanceTests: XCTestCase {
     // MARK: - Helpers
     private func makeSUT() -> (sut: TimeCoach_Watch_AppApp, spy: Spy) {
         let spy = Spy()
-        let sut = TimeCoach_Watch_AppApp(pomodoroTimer: spy, timerState: spy, stateTimerStore: spy, scheduler: spy)
+        let infra = Infrastructure(
+            timerCoutdown: spy,
+            timerState: spy,
+            stateTimerStore: spy,
+            scheduler: spy,
+            notifySavedTimer: spy.notifySavedTimer
+        )
+        
+        let sut = TimeCoach_Watch_AppApp(infrastructure: infra)
         
         return (sut, spy)
     }
@@ -107,6 +115,11 @@ final class StateTimerAcceptanceTests: XCTestCase {
         // MARK: - Scheduler
         func setSchedule(at scheduledDate: Date) throws {
             receivedMessages.append(.scheduleTimerNotification)
+        }
+        
+        // MARK: - Notify Saved Timer
+        func notifySavedTimer() {
+            
         }
     }
 }

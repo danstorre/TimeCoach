@@ -28,6 +28,15 @@ class TimeCoachRoot {
         UNUserNotificationCenter.current().delegate = notificationDelegate
     }
     
+    convenience init(infrastructure: Infrastructure) {
+        self.init()
+        self.timerSave = infrastructure.timerState
+        self.timerLoad = infrastructure.timerState
+        self.timerCoutdown = infrastructure.timerCoutdown
+        self.stateTimerStore = infrastructure.stateTimerStore
+        self.scheduler = infrastructure.scheduler
+    }
+    
     convenience init(
         timerCoutdown: TimerCoutdown,
         timerState: TimerSave & TimerLoad,
