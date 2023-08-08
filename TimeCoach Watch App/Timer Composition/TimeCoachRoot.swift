@@ -27,7 +27,8 @@ class TimeCoachRoot {
     private lazy var unregisterNotifications: (() -> Void) = Self.unregisterNotificationsFromUNUserNotificationCenter
     
     static func unregisterNotificationsFromUNUserNotificationCenter() {
-        
+        UNUserNotificationCenter.current().removeAllDeliveredNotifications()
+        UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
     }
     
     // Timer Saved Notifications
