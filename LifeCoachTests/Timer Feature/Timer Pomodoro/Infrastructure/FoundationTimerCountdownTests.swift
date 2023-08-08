@@ -145,7 +145,7 @@ final class FoundationTimerCountdownTests: XCTestCase {
         XCTAssertEqual(receivedElapsedSeconds, [])
     }
     
-    func test_skip_onPauseState_doesNotChangesStopStateResetsTimerAndDeliversNextTimerSet() {
+    func test_skip_onPauseState_deliversNextTimerSet() {
         let fixedDate = Date()
         let startingSet = createAnyTimerSet()
         let nextSet = createTimerSet(0, startDate: fixedDate, endDate: fixedDate.adding(seconds: 0.002))
@@ -153,9 +153,18 @@ final class FoundationTimerCountdownTests: XCTestCase {
         
         let receivedElapsedSeconds = receivedElapsedSecondsOnSkip(from: sut)
         
-        XCTAssertEqual(sut.state, .stop)
         XCTAssertEqual(receivedElapsedSeconds, [nextSet])
-        XCTAssertEqual(sut.currentSetElapsedTime, 0)
+    }
+    
+    func test_skip_onPauseState_doesNotChangesStopStateResetsTimer() {
+        let fixedDate = Date()
+        let startingSet = createAnyTimerSet()
+        let nextSet = createTimerSet(0, startDate: fixedDate, endDate: fixedDate.adding(seconds: 0.002))
+        let sut = makeSUT(startingSet: startingSet, nextSet: nextSet)
+        
+        sut.skipCountdown { _ in }
+        
+        assertTimerSet(nextSet, state: .stop, from: sut)
     }
     
     func test_skip_onRunningState_changesStateToStopResetsTimerAndSendsNextTimerSet() {
