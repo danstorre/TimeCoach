@@ -103,7 +103,7 @@ class TimeCoachRoot {
         let unregisterNotifications = unregisterNotifications
         
         return stopPublisher()
-            .map({ _ in (timerSet: timerCoutdown!.currentTimerSet.toElapseSeconds, state: timerCoutdown!.state.toModel) })
+            .mapsTimerSetAndState(timerCoutdown: timerCoutdown!)
             .saveTimerState(saver: localTimer)
             .flatsToVoid()
             .unregisterTimerNotifications(unregisterNotifications)
@@ -117,7 +117,7 @@ class TimeCoachRoot {
         let unregisterNotifications = unregisterNotifications
         
         return pausePublisher()
-            .map({ _ in (timerSet: timerCoutdown!.currentTimerSet.toElapseSeconds, state: timerCoutdown!.state.toModel) })
+            .mapsTimerSetAndState(timerCoutdown: timerCoutdown!)
             .saveTimerState(saver: localTimer)
             .flatsToVoid()
             .unregisterTimerNotifications(unregisterNotifications)
@@ -132,7 +132,7 @@ class TimeCoachRoot {
         let unregisterNotifications = unregisterNotifications
         
         return skipPublisher()
-            .map({ _ in (timerSet: timerCoutdown!.currentTimerSet.toElapseSeconds, state: timerCoutdown!.state.toModel) })
+            .mapsTimerSetAndState(timerCoutdown: timerCoutdown!)
             .saveTimerState(saver: localTimer)
             .flatsToVoid()
             .unregisterTimerNotifications(unregisterNotifications)
@@ -164,6 +164,20 @@ extension Publisher where Output == TimerSet {
             try? timerStateSaver.save(state: TimerState(elapsedSeconds: timerSet, state: .running))
         })
         .eraseToAnyPublisher()
+    }
+}
+
+extension Publisher where Output == TimerSet {
+    func mapsTimerSetAndState(timerCoutdown: TimerCoutdown) -> AnyPublisher<(TimerSet, TimerState.State), Failure> {
+        self.map({ _ in (timerSet: timerCoutdown.currentTimerSet.toElapseSeconds, state: timerCoutdown.state.toModel) })
+            .eraseToAnyPublisher()
+    }
+}
+
+extension Publisher where Output == Void {
+    func mapsTimerSetAndState(timerCoutdown: TimerCoutdown) -> AnyPublisher<(TimerSet, TimerState.State), Failure> {
+        self.map({ _ in (timerSet: timerCoutdown.currentTimerSet.toElapseSeconds, state: timerCoutdown.state.toModel) })
+            .eraseToAnyPublisher()
     }
 }
 
