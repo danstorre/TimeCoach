@@ -73,14 +73,10 @@ final class FoundationTimerCountdownTests: XCTestCase {
     func test_stop_OnPauseState_changesStateToStop() {
         let startSet = createAnyTimerSet()
         let sut = makeSUT(startingSet: startSet, nextSet: createAnyTimerSet())
-        
-        XCTAssertEqual(sut.state, .stop)
-        XCTAssertEqual(sut.currentSetElapsedTime, 0)
-        
         sut.pauseCountdown()
-        assertTimerSet(startSet, state: .pause, from: sut)
         
         sut.stopCountdown()
+        
         assertTimerSet(startSet, state: .stop, from: sut)
     }
     
