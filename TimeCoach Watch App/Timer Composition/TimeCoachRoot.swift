@@ -105,7 +105,7 @@ class TimeCoachRoot {
         return stopPublisher()
             .map({ _ in (timerSet: timerCoutdown!.currentTimerSet.toElapseSeconds, state: timerCoutdown!.state.toModel) })
             .saveTimerState(saver: localTimer)
-            .flatMap({ _ in Just(()) })
+            .flatsToVoid()
             .unregisterTimerNotifications(unregisterNotifications)
             .notifySavedTimer(notifier: timerSavedNofitier)
             .eraseToAnyPublisher()
@@ -121,7 +121,7 @@ class TimeCoachRoot {
         return pausePublisher()
             .map({ _ in (timerSet: timerCoutdown!.currentTimerSet.toElapseSeconds, state: timerCoutdown!.state.toModel) })
             .saveTimerState(saver: localTimer)
-            .flatMap({ _ in Just(()) })
+            .flatsToVoid()
             .unregisterTimerNotifications(unregisterNotifications)
             .notifySavedTimer(notifier: timerSavedNofitier)
             .eraseToAnyPublisher()
@@ -137,7 +137,7 @@ class TimeCoachRoot {
         return skipPublisher()
             .map({ _ in (timerSet: timerCoutdown!.currentTimerSet.toElapseSeconds, state: timerCoutdown!.state.toModel) })
             .saveTimerState(saver: localTimer)
-            .flatMap({ _ in Just(()) })
+            .flatsToVoid()
             .unregisterTimerNotifications(unregisterNotifications)
             .notifySavedTimer(notifier: timerSavedNofitier)
             .flatMap { currentSubject }
@@ -186,6 +186,13 @@ extension Publisher where Output == Void {
             completion()
         })
         .eraseToAnyPublisher()
+    }
+}
+
+extension Publisher where Output == (TimerSet, TimerState.State) {
+    func flatsToVoid() -> AnyPublisher<Void, Failure> {
+        self.flatMap({ _ in Just(()) })
+            .eraseToAnyPublisher()
     }
 }
 
