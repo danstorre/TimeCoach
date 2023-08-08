@@ -65,7 +65,7 @@ class TimeCoachRoot {
         }
         
         let timerControlPublishers = TimerControlsPublishers(playPublisher: handlePlay,
-                                                             skipPublisher: regularTimer!.skipPublisher(currentSubject: currentSubject),
+                                                             skipPublisher: handleSkip,
                                                              stopPublisher: handleStop,
                                                              pausePublisher: handlePause,
                                                              isPlaying: timerPlayerAdapterState.isPlayingPublisherProvider())
@@ -125,6 +125,22 @@ class TimeCoachRoot {
             .eraseToAnyPublisher()
     }
     
+    private func handleSkip() -> RegularTimer.ElapsedSecondsPublisher {
+        let localTimer = localTimer
+        let timerCoutdown = timerCoutdown
+        let currentSubject = currentSubject
+        let timerSavedNofitier = timerSavedNofitier
+        
+        return skipPublisher()
+            .map({ _ in (timerSet: timerCoutdown!.currentTimerSet.toElapseSeconds, state: timerCoutdown!.state.toModel) })
+            .saveTimerState(saver: localTimer)
+            .flatMap({ _ in Just(()) })
+            .unregisterTimerNotifications(unregisterNotifications)
+            .notifySavedTimer(notifier: timerSavedNofitier)
+            .flatMap { currentSubject }
+            .eraseToAnyPublisher()
+    }
+    
     private func stopPublisher() -> RegularTimer.VoidPublisher {
         regularTimer!.stopPublisher()
     }
@@ -135,6 +151,10 @@ class TimeCoachRoot {
     
     private func pausePublisher() -> RegularTimer.VoidPublisher {
         regularTimer!.pausePublisher()
+    }
+    
+    private func skipPublisher() -> RegularTimer.ElapsedSecondsPublisher {
+        regularTimer!.skipPublisher(currentSubject: currentSubject)()
     }
 }
 

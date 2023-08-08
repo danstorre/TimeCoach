@@ -58,6 +58,23 @@ final class StateTimerAcceptanceTests: XCTestCase {
         ])
     }
     
+    func test_onLaunch_onSkipUserInteractionShouldExecuteSkipProcess() {
+        let currentDate = Date()
+        let (sut, spy) = makeSUT(currentDate: { currentDate })
+        let anySet = createAnyTimerSet(startingFrom: currentDate, endDate: currentDate.adding(seconds: .pomodoroInSeconds))
+        let expected = createAnyTimerState(using: anySet, on: .stop)
+        spy.deliversSetOnSkip(anySet)
+        
+        sut.timerView.simulateSkipTimerUserInteraction()
+        
+        XCTAssertEqual(spy.receivedMessages, [
+            .skipTimer,
+            .saveStateTimer(value: expected),
+            .unregisterTimerNotification,
+            .notifySavedTimer
+        ])
+    }
+    
     // MARK: - Helpers
     private func makeSUT(currentDate: @escaping () -> Date = Date.init) -> (sut: TimeCoach_Watch_AppApp, spy: Spy) {
         let spy = Spy(currenDate: currentDate())
@@ -100,6 +117,7 @@ final class StateTimerAcceptanceTests: XCTestCase {
             case startTimer
             case stopTimer
             case pauseTimer
+            case skipTimer
             case saveStateTimer(value: LifeCoach.LocalTimerState)
             case scheduleTimerNotification
             case unregisterTimerNotification
@@ -124,6 +142,8 @@ final class StateTimerAcceptanceTests: XCTestCase {
                     return "unregisterTimerNotification"
                 case .pauseTimer:
                     return "pauseTimer"
+                case .skipTimer:
+                    return "skipTimer"
                 }
             }
         }
@@ -135,6 +155,7 @@ final class StateTimerAcceptanceTests: XCTestCase {
         private(set) var receivedMessages = [AnyMessage]()
         
         private var setOnStart: Result<LocalTimerSet, Error>?
+        private var setOnSkip: Result<LocalTimerSet, Error>?
         
         func resetMessages() {
             receivedMessages = []
@@ -158,10 +179,19 @@ final class StateTimerAcceptanceTests: XCTestCase {
             receivedMessages.append(.pauseTimer)
         }
         
-        func skipCountdown(completion: @escaping SkipCountdownCompletion) {}
+        func skipCountdown(completion: @escaping SkipCountdownCompletion) {
+            state = .stop
+            receivedMessages.append(.skipTimer)
+            guard let setOnSkip = setOnSkip else { return }
+            completion(setOnSkip)
+        }
         
         func deliversSetOnToggle(_ set: LocalTimerSet) {
             setOnStart = .success(set)
+        }
+        
+        func deliversSetOnSkip(_ set: LocalTimerSet) {
+            setOnSkip = .success(set)
         }
         
         // MARK: - Timer Store
