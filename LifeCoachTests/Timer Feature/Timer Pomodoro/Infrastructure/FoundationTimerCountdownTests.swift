@@ -10,7 +10,7 @@ final class FoundationTimerCountdownTests: XCTestCase {
         assertTimerSet(startSet, state: .stop, from: sut)
     }
     
-    func test_start_afterOneMilliSecondElapsedFromTheStartingSetChangesStateToRunning() {
+    func test_start_afterOneMilliSecondElapsedFromTheStartingSetsCorrectCurrentTimerState() {
         let startSet = createAnyTimerSet()
         let sut = makeSUT(startingSet: startSet, nextSet: createAnyTimerSet())
         let expectation = expectation(description: "wait for start countdown to deliver time.")
@@ -22,6 +22,21 @@ final class FoundationTimerCountdownTests: XCTestCase {
         invalidatesTimer(on: sut)
         
         assertTimerSet(startSet.adding(0.001), state: .running, from: sut)
+    }
+    
+    func test_start_afterTwoMilliSecondsElapsedFromTheStartingSetsCorrectCurrentTimerState() {
+        let startSet = createAnyTimerSet()
+        let sut = makeSUT(startingSet: startSet, nextSet: createAnyTimerSet())
+        let expectation = expectation(description: "wait for start countdown to deliver time.")
+        expectation.expectedFulfillmentCount = 2
+        
+        sut.startCountdown(completion: { _ in
+            expectation.fulfill()
+        })
+        wait(for: [expectation], timeout: 0.1)
+        invalidatesTimer(on: sut)
+        
+        assertTimerSet(startSet.adding(0.002), state: .running, from: sut)
     }
     
     func test_start_deliversOneMilliSecondElapsedFromTheStartingSetAndChangesStateToRunning() {
