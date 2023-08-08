@@ -100,6 +100,7 @@ class TimeCoachRoot {
         let localTimer = localTimer
         let timerCoutdown = timerCoutdown
         let timerSavedNofitier = timerSavedNofitier
+        let unregisterNotifications = unregisterNotifications
         
         return stopPublisher()
             .map({ _ in (timerSet: timerCoutdown!.currentTimerSet.toElapseSeconds, state: timerCoutdown!.state.toModel) })
@@ -115,6 +116,7 @@ class TimeCoachRoot {
         let localTimer = localTimer
         let timerCoutdown = timerCoutdown
         let timerSavedNofitier = timerSavedNofitier
+        let unregisterNotifications = unregisterNotifications
         
         return pausePublisher()
             .map({ _ in (timerSet: timerCoutdown!.currentTimerSet.toElapseSeconds, state: timerCoutdown!.state.toModel) })
@@ -130,6 +132,7 @@ class TimeCoachRoot {
         let timerCoutdown = timerCoutdown
         let currentSubject = currentSubject
         let timerSavedNofitier = timerSavedNofitier
+        let unregisterNotifications = unregisterNotifications
         
         return skipPublisher()
             .map({ _ in (timerSet: timerCoutdown!.currentTimerSet.toElapseSeconds, state: timerCoutdown!.state.toModel) })
