@@ -46,22 +46,6 @@ struct TimeCoach_Watch_AppApp: App {
         self.timerView = root.createTimer(withTimeLine: false)
     }
 
-    init(
-        pomodoroTimer: TimerCoutdown,
-        timerState: TimerSave & TimerLoad,
-        stateTimerStore: LocalTimerStore,
-        scheduler: LifeCoach.Scheduler
-    ) {
-        let root = TimeCoachRoot(
-            timerCoutdown: pomodoroTimer,
-            timerState: timerState,
-            stateTimerStore: stateTimerStore,
-            scheduler: scheduler
-        )
-        self.root = root
-        self.timerView = root.createTimer(withTimeLine: false)
-    }
-    
     var body: some Scene {
         WindowGroup {
             timerView
