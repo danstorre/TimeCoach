@@ -20,11 +20,18 @@ struct TimeCoach_Watch_AppApp: App {
         self.timerView = root.createTimer()
     }
 
-    init(pomodoroTimer: TimerCoutdown, timerState: TimerSave & TimerLoad,
-         stateTimerStore: LocalTimerStore) {
-        let root = TimeCoachRoot(timerCoutdown: pomodoroTimer,
-                                 timerState: timerState,
-                                 stateTimerStore: stateTimerStore)
+    init(
+        pomodoroTimer: TimerCoutdown,
+        timerState: TimerSave & TimerLoad,
+        stateTimerStore: LocalTimerStore,
+        scheduler: LifeCoach.Scheduler
+    ) {
+        let root = TimeCoachRoot(
+            timerCoutdown: pomodoroTimer,
+            timerState: timerState,
+            stateTimerStore: stateTimerStore,
+            scheduler: scheduler
+        )
         self.root = root
         self.timerView = root.createTimer(withTimeLine: false)
     }

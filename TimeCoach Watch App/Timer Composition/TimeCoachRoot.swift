@@ -19,6 +19,10 @@ class TimeCoachRoot {
     private lazy var stateTimerStore: LocalTimerStore = UserDefaultsTimerStore(storeID: "any")
     private lazy var localTimer: LocalTimer = LocalTimer(store: stateTimerStore)
     
+    // Timer Notification Scheduler
+    private lazy var scheduler: LifeCoach.Scheduler = UserNotificationsScheduler(with: UNUserNotificationCenter.current())
+    private lazy var timerNotificationScheduler = DefaultTimerNotificationScheduler(scheduler: scheduler)
+    
     init() {
         self.notificationDelegate = UserNotificationDelegate()
         UNUserNotificationCenter.current().delegate = notificationDelegate
@@ -27,13 +31,15 @@ class TimeCoachRoot {
     convenience init(
         timerCoutdown: TimerCoutdown,
         timerState: TimerSave & TimerLoad,
-        stateTimerStore: LocalTimerStore
+        stateTimerStore: LocalTimerStore,
+        scheduler: LifeCoach.Scheduler
     ) {
         self.init()
         self.timerSave = timerState
         self.timerLoad = timerState
         self.timerCoutdown = timerCoutdown
         self.stateTimerStore = stateTimerStore
+        self.scheduler = scheduler
     }
     
     func createTimer(withTimeLine: Bool = true) -> TimerView {
@@ -72,8 +78,10 @@ class TimeCoachRoot {
     
     private func handlePlay() -> RegularTimer.ElapsedSecondsPublisher {
         let localTimer = localTimer
+        let scheduler = timerNotificationScheduler
         return regularTimerPlayPublisher()
             .save(timerStateSaver: localTimer)
+            .schedule(timerNotificationScheduler: scheduler)
     }
     
     private func regularTimerPlayPublisher() -> RegularTimer.ElapsedSecondsPublisher {
@@ -90,3 +98,14 @@ extension Publisher where Output == TimerSet {
         .eraseToAnyPublisher()
     }
 }
+
+extension Publisher where Output == TimerSet {
+    func schedule(timerNotificationScheduler: TimerNotificationScheduler) -> AnyPublisher<TimerSet, Failure> {
+        handleEvents(receiveOutput: { timerSet in
+            try? timerNotificationScheduler.scheduleNotification(from: timerSet)
+        })
+        .eraseToAnyPublisher()
+    }
+}
+
+extension UNUserNotificationCenter: NotificationScheduler {}

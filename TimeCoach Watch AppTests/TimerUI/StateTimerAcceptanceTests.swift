@@ -5,9 +5,9 @@ import LifeCoach
 final class StateTimerAcceptanceTests: XCTestCase {
     typealias TimerStore = TimerLoad & TimerSave
     
-    func test_onLaunch_onToggleUserInteractionShouldSendMessageToTimerStateStore() {
+    func test_onLaunch_onToggleUserInteractionShouldStartNotificationAndSaveStateProcess() {
         let spy = Spy()
-        let sut = TimeCoach_Watch_AppApp(pomodoroTimer: spy, timerState: spy, stateTimerStore: spy).timerView
+        let sut = TimeCoach_Watch_AppApp(pomodoroTimer: spy, timerState: spy, stateTimerStore: spy, scheduler: spy).timerView
         let localTimerSet = LocalTimerSet.pomodoroSet(date: .init())
         let expectedTimerState = LocalTimerState(localTimerSet: localTimerSet, state: .running)
         spy.deliversSetOnStart(localTimerSet)
@@ -16,14 +16,17 @@ final class StateTimerAcceptanceTests: XCTestCase {
         
         XCTAssertEqual(spy.receivedMessages, [
             .startTimer,
-            .saveStateTimer(value: expectedTimerState)
+            .saveStateTimer(value: expectedTimerState),
+            .scheduleTimerNotification
         ])
     }
     
-    private class Spy: TimerCoutdown, TimerStore, LocalTimerStore {
+    // MARK: - Helpers
+    private class Spy: TimerCoutdown, TimerStore, LocalTimerStore, Scheduler {
         enum AnyMessage: Equatable, CustomStringConvertible {
             case startTimer
             case saveStateTimer(value: LifeCoach.LocalTimerState)
+            case scheduleTimerNotification
             
             var description: String {
                 switch self {
@@ -34,6 +37,8 @@ final class StateTimerAcceptanceTests: XCTestCase {
                 saveStateTimer: seconds: \(localTimerState.localTimerSet.elapsedSeconds), state: \(localTimerState.state)
                 startDate: \(localTimerState.localTimerSet.startDate), endDate: \(localTimerState.localTimerSet.endDate)
                 """
+                case .scheduleTimerNotification:
+                    return "scheduleTimerNotification"
                 }
             }
         }
@@ -79,6 +84,11 @@ final class StateTimerAcceptanceTests: XCTestCase {
         
         func insert(state: LifeCoach.LocalTimerState) throws {
             receivedMessages.append(.saveStateTimer(value: state))
+        }
+        
+        // MARK: - Scheduler
+        func setSchedule(at scheduledDate: Date) throws {
+            receivedMessages.append(.scheduleTimerNotification)
         }
     }
 }

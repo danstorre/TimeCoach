@@ -106,8 +106,8 @@ final class SchedulerNotificationTests: XCTestCase {
             removeAllPendingNotificationRequestsCallCount += 1
         }
         
-        func add(_ notification: UNNotificationRequest) {
-            receivedNotifications.append(notification)
+        func add(_ request: UNNotificationRequest, withCompletionHandler completionHandler: ((Error?) -> Void)?) {
+            receivedNotifications.append(request)
         }
         
         func assertCorrectTrigger(from sample: TimeInterval, file: StaticString = #filePath, line: UInt = #line) {

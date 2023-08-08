@@ -15,3 +15,4 @@ struct DummyLocalTimerStore: LocalTimerStore {
     
     func insert(state: LifeCoach.LocalTimerState) throws {}
 }
+

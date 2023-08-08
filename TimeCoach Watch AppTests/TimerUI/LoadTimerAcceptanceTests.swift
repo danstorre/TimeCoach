@@ -21,11 +21,10 @@ final class LoadTimerAcceptanceTests: XCTestCase {
             breakStub: breakResponse)
         let spyTimeState = TimerStateSpy()
         
-        let dummyLocalTimerStore = DummyLocalTimerStore()
-        
         let sut = TimeCoach_Watch_AppApp(pomodoroTimer: spy,
                                          timerState: spyTimeState,
-                                         stateTimerStore: dummyLocalTimerStore)
+                                         stateTimerStore: DummyLocalTimerStore(),
+                                         scheduler: DummyScheduler())
         
         trackForMemoryLeak(instance: spy)
         

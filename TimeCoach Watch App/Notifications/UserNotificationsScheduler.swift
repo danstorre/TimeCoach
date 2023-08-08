@@ -31,6 +31,6 @@ public class UserNotificationsScheduler: Scheduler {
         
         let notification = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
         
-        notificationCenter.add(notification)
+        notificationCenter.add(notification, withCompletionHandler: {_ in })
     }
 }
