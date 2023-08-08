@@ -16,7 +16,8 @@ final class StateTimerAcceptanceTests: XCTestCase {
         XCTAssertEqual(spy.receivedMessages, [
             .startTimer,
             .saveStateTimer(value: expected),
-            .scheduleTimerNotification
+            .scheduleTimerNotification,
+            .notifySavedTimer
         ])
     }
     
@@ -53,6 +54,7 @@ final class StateTimerAcceptanceTests: XCTestCase {
             case startTimer
             case saveStateTimer(value: LifeCoach.LocalTimerState)
             case scheduleTimerNotification
+            case notifySavedTimer
             
             var description: String {
                 switch self {
@@ -65,6 +67,8 @@ final class StateTimerAcceptanceTests: XCTestCase {
                 """
                 case .scheduleTimerNotification:
                     return "scheduleTimerNotification"
+                case .notifySavedTimer:
+                    return "notifySavedTimer"
                 }
             }
         }
@@ -119,7 +123,7 @@ final class StateTimerAcceptanceTests: XCTestCase {
         
         // MARK: - Notify Saved Timer
         func notifySavedTimer() {
-            
+            receivedMessages.append(.notifySavedTimer)
         }
     }
 }

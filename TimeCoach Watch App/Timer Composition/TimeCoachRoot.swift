@@ -23,6 +23,10 @@ class TimeCoachRoot {
     private lazy var scheduler: LifeCoach.Scheduler = UserNotificationsScheduler(with: UNUserNotificationCenter.current())
     private lazy var timerNotificationScheduler = DefaultTimerNotificationScheduler(scheduler: scheduler)
     
+    // Timer Saved Notifications
+    private var notifySavedTimer: (() -> Void)?
+    private lazy var timerSavedNofitier: LifeCoach.TimerStoreNotifier = DefaultTimerStoreNotifier(completion: notifySavedTimer ?? {})
+    
     init() {
         self.notificationDelegate = UserNotificationDelegate()
         UNUserNotificationCenter.current().delegate = notificationDelegate
@@ -35,6 +39,7 @@ class TimeCoachRoot {
         self.timerCoutdown = infrastructure.timerCoutdown
         self.stateTimerStore = infrastructure.stateTimerStore
         self.scheduler = infrastructure.scheduler
+        self.notifySavedTimer = infrastructure.notifySavedTimer
     }
     
     convenience init(
@@ -88,9 +93,11 @@ class TimeCoachRoot {
     private func handlePlay() -> RegularTimer.ElapsedSecondsPublisher {
         let localTimer = localTimer
         let scheduler = timerNotificationScheduler
+        let timerSavedNofitier = timerSavedNofitier
         return regularTimerPlayPublisher()
             .save(timerStateSaver: localTimer)
             .schedule(timerNotificationScheduler: scheduler)
+            .notifySavedTimer(timerSavedNofitier: timerSavedNofitier)
     }
     
     private func regularTimerPlayPublisher() -> RegularTimer.ElapsedSecondsPublisher {
@@ -112,6 +119,15 @@ extension Publisher where Output == TimerSet {
     func schedule(timerNotificationScheduler: TimerNotificationScheduler) -> AnyPublisher<TimerSet, Failure> {
         handleEvents(receiveOutput: { timerSet in
             try? timerNotificationScheduler.scheduleNotification(from: timerSet)
+        })
+        .eraseToAnyPublisher()
+    }
+}
+
+extension Publisher where Output == TimerSet {
+    func notifySavedTimer(timerSavedNofitier: TimerStoreNotifier) -> AnyPublisher<TimerSet, Failure> {
+        handleEvents(receiveOutput: { timerSet in
+            timerSavedNofitier.storeSaved()
         })
         .eraseToAnyPublisher()
     }
