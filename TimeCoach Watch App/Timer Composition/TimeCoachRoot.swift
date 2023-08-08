@@ -92,12 +92,12 @@ class TimeCoachRoot {
     
     private func handlePlay() -> RegularTimer.ElapsedSecondsPublisher {
         let localTimer = localTimer
-        let scheduler = timerNotificationScheduler
+        let timerNotificationScheduler = timerNotificationScheduler
         let timerSavedNofitier = timerSavedNofitier
         return playPublisher()
-            .save(timerStateSaver: localTimer)
-            .schedule(timerNotificationScheduler: scheduler)
-            .notifySavedTimer(timerSavedNofitier: timerSavedNofitier)
+            .saveTimerState(saver: localTimer)
+            .scheduleTimerNotfication(scheduler: timerNotificationScheduler)
+            .notifySavedTimer(notifier: timerSavedNofitier)
     }
     
     private func playPublisher() -> RegularTimer.ElapsedSecondsPublisher {
@@ -107,7 +107,7 @@ class TimeCoachRoot {
 
 
 extension Publisher where Output == TimerSet {
-    func save(timerStateSaver: SaveTimerState) -> AnyPublisher<TimerSet, Failure> {
+    func saveTimerState(saver timerStateSaver: SaveTimerState) -> AnyPublisher<TimerSet, Failure> {
         self.handleEvents(receiveOutput: { timerSet in
             try? timerStateSaver.save(state: TimerState(elapsedSeconds: timerSet, state: .running))
         })
@@ -116,16 +116,16 @@ extension Publisher where Output == TimerSet {
 }
 
 extension Publisher where Output == TimerSet {
-    func schedule(timerNotificationScheduler: TimerNotificationScheduler) -> AnyPublisher<TimerSet, Failure> {
+    func scheduleTimerNotfication(scheduler: TimerNotificationScheduler) -> AnyPublisher<TimerSet, Failure> {
         handleEvents(receiveOutput: { timerSet in
-            try? timerNotificationScheduler.scheduleNotification(from: timerSet)
+            try? scheduler.scheduleNotification(from: timerSet)
         })
         .eraseToAnyPublisher()
     }
 }
 
 extension Publisher where Output == TimerSet {
-    func notifySavedTimer(timerSavedNofitier: TimerStoreNotifier) -> AnyPublisher<TimerSet, Failure> {
+    func notifySavedTimer(notifier timerSavedNofitier: TimerStoreNotifier) -> AnyPublisher<TimerSet, Failure> {
         handleEvents(receiveOutput: { timerSet in
             timerSavedNofitier.storeSaved()
         })
