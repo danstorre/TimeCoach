@@ -4,9 +4,10 @@ import XCTest
 final class FoundationTimerCountdownTests: XCTestCase {
     
     func test_init_stateIsStop() {
-        let sut = makeSUT(startingSet: createAnyTimerSet(), nextSet: createAnyTimerSet())
-        XCTAssertEqual(sut.state, .stop)
-        XCTAssertEqual(sut.currentSetElapsedTime, 0)
+        let startSet = createAnyTimerSet()
+        let sut = makeSUT(startingSet: startSet, nextSet: createAnyTimerSet())
+    
+        assertTimerSet(startSet, state: .stop, from: sut)
     }
     
     func test_start_deliversOneMilliSecondElapsedFromTheStartingSetAndChangesStateToRunning() {
@@ -283,6 +284,6 @@ final class FoundationTimerCountdownTests: XCTestCase {
 
 extension LocalTimerSet: CustomStringConvertible {
     public var description: String {
-        "elapsed seconds: \(elapsedSeconds)"
+        "elapsed seconds: \(elapsedSeconds), startDate: \(startDate), endDate: \(endDate)"
     }
 }
