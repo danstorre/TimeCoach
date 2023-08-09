@@ -1,16 +1,6 @@
 import XCTest
 import LifeCoach
-
-enum TimerNotificationReceiverFactory {
-    static func timerNotificationReceiver(timerStateSaver: SaveTimerState,
-                                          timerStoreNotifier: TimerStoreNotifier,
-                                          getTimerState: @escaping () -> TimerState) -> TimerNotificationReceiver {
-        return DefaultTimerNotificationReceiver(completion: {
-            try? timerStateSaver.save(state: getTimerState())
-            timerStoreNotifier.storeSaved()
-        })
-    }
-}
+import TimeCoach_Watch_App
 
 final class ReceiverNotificationProcessTests: XCTestCase {
     func test_receiveNotificationExecutesReceiverNotificationProcess() {

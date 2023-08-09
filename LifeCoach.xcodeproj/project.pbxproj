@@ -29,6 +29,7 @@
 		FB05D9B62A83191300EA0AE8 /* UNUserNotificationCenter+NotificationScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB05D9B52A83191300EA0AE8 /* UNUserNotificationCenter+NotificationScheduler.swift */; };
 		FB05D9B82A83198F00EA0AE8 /* Publishres+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB05D9B72A83198E00EA0AE8 /* Publishres+Helpers.swift */; };
 		FB05D9BC2A83DB2600EA0AE8 /* ReceiverNotificationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB05D9BB2A83DB2600EA0AE8 /* ReceiverNotificationTests.swift */; };
+		FB05D9C02A83E1C200EA0AE8 /* TimerNotificationReceiverFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB05D9BF2A83E1C200EA0AE8 /* TimerNotificationReceiverFactory.swift */; };
 		FB097C572A7DC55900BED235 /* LifeCoachExtensions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB097C4F2A7DC55900BED235 /* LifeCoachExtensions.framework */; };
 		FB097C5D2A7DC55900BED235 /* LifeCoachExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = FB097C512A7DC55900BED235 /* LifeCoachExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FB097C652A7DC70C00BED235 /* WatchOSExtensionProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB566A122A7D935000506CBA /* WatchOSExtensionProvider.swift */; };
@@ -363,6 +364,7 @@
 		FB05D9B52A83191300EA0AE8 /* UNUserNotificationCenter+NotificationScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UNUserNotificationCenter+NotificationScheduler.swift"; sourceTree = "<group>"; };
 		FB05D9B72A83198E00EA0AE8 /* Publishres+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Publishres+Helpers.swift"; sourceTree = "<group>"; };
 		FB05D9BB2A83DB2600EA0AE8 /* ReceiverNotificationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiverNotificationTests.swift; sourceTree = "<group>"; };
+		FB05D9BF2A83E1C200EA0AE8 /* TimerNotificationReceiverFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerNotificationReceiverFactory.swift; sourceTree = "<group>"; };
 		FB06B52D292BF71C00AE6079 /* LifeCoachWatchOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LifeCoachWatchOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB097C4F2A7DC55900BED235 /* LifeCoachExtensions.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LifeCoachExtensions.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB097C512A7DC55900BED235 /* LifeCoachExtensions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LifeCoachExtensions.h; sourceTree = "<group>"; };
@@ -641,6 +643,14 @@
 			path = Fonts;
 			sourceTree = "<group>";
 		};
+		FB05D9BE2A83E1B600EA0AE8 /* Notifications Processes */ = {
+			isa = PBXGroup;
+			children = (
+				FB05D9BF2A83E1C200EA0AE8 /* TimerNotificationReceiverFactory.swift */,
+			);
+			path = "Notifications Processes";
+			sourceTree = "<group>";
+		};
 		FB06B52E292BF71C00AE6079 /* LifeCoachWatchOS */ = {
 			isa = PBXGroup;
 			children = (
@@ -689,6 +699,7 @@
 		FB4AA14129379DC20076FED9 /* Timer Composition */ = {
 			isa = PBXGroup;
 			children = (
+				FB05D9BE2A83E1B600EA0AE8 /* Notifications Processes */,
 				FBE6465B2A4AA2D2005022A2 /* Helpers */,
 				FB73E908293BA2A40087F9EF /* TimeCoachRoot.swift */,
 				FB4AA14229379DC90076FED9 /* TimerViewComposer.swift */,
@@ -1922,6 +1933,7 @@
 				FBA8DD7D2A4F10D9009E48D5 /* TimerCoutdownToTimerStateAdapter.swift in Sources */,
 				FB960C72293D462900ECBAD5 /* ToggleStrategy.swift in Sources */,
 				FBE9A97A2939527C00D8BF29 /* TimeCoachApp.swift in Sources */,
+				FB05D9C02A83E1C200EA0AE8 /* TimerNotificationReceiverFactory.swift in Sources */,
 				FBB3D8842A770F1F00A8BBAD /* NotificationScheduler.swift in Sources */,
 				FBE6465D2A4AA2DE005022A2 /* Combine+RegularTimer.swift in Sources */,
 				FBE646582A4A9F77005022A2 /* TimerAdapter.swift in Sources */,
