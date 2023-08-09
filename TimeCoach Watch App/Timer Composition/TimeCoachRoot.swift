@@ -4,6 +4,7 @@ import LifeCoach
 import LifeCoachWatchOS
 import Combine
 import UserNotifications
+import WidgetKit
 
 class TimeCoachRoot {
     private var timerSave: TimerSave?
@@ -38,7 +39,9 @@ class TimeCoachRoot {
     
     // Timer Saved Notifications
     private var notifySavedTimer: (() -> Void)?
-    private lazy var timerSavedNofitier: LifeCoach.TimerStoreNotifier = DefaultTimerStoreNotifier(completion: notifySavedTimer ?? {})
+    private lazy var timerSavedNofitier: LifeCoach.TimerStoreNotifier = DefaultTimerStoreNotifier(
+        completion: notifySavedTimer ?? { WidgetCenter.shared.reloadAllTimelines() }
+    )
     
     init() {
         UNUserNotificationCenter.current().delegate = UNUserNotificationdelegate()
