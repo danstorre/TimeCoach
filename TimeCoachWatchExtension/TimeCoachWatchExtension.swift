@@ -18,7 +18,7 @@ struct TimeCoachWidget: Widget {
         provider: WatchOSProvider(
             stateLoader: LocalTimer(
                 store: UserDefaultsTimerStore(
-                    storeID: "any"
+                    storeID: "group.timeCoach.timerState"
                 )
             )
         )
