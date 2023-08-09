@@ -85,7 +85,7 @@ class TimeCoachRoot {
             .notificationReceiverProcessWith(timerStateSaver: localTimer,
                                        timerStoreNotifier: timerSavedNofitier,
                                        getTimerState: { [weak self] in
-                self?.getTimerState() ?? TimerState(timerSet: .init(0, startDate: Date(), endDate: Date()), state: .stop)
+                self?.getTimerState()
             })
         let notificationReceiverSoundAlert = DefaultTimerNotificationReceiver {
             WKInterfaceDevice.current().play(.notification)
