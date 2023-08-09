@@ -5,7 +5,6 @@ import LifeCoach
 public class WatchOSProvider: WatchOSProviderProtocol {
     private let stateLoader: LoadTimerState
     private let currentDate: () -> Date
-    private var latestTimerState: TimerState?
     
     public init(stateLoader: LoadTimerState, currentDate: @escaping () -> Date = Date.init) {
         self.stateLoader = stateLoader
@@ -13,18 +12,10 @@ public class WatchOSProvider: WatchOSProviderProtocol {
     }
     
     public func getTimeline(completion: @escaping (Timeline<TimerEntry>) -> ()) {
-        guard let loadedTimerState = try? stateLoader.load() else {
+        guard let state = try? stateLoader.load() else {
             return
         }
-        
-        if let latestTimerState = latestTimerState,
-           latestTimerState.state == loadedTimerState.state {
-            return
-        }
-        
-        latestTimerState = loadedTimerState
-        
-        let showEvent = getEvent(from: loadedTimerState, andCurrentDate: currentDate)
+        let showEvent = getEvent(from: state, andCurrentDate: currentDate)
         
         if case let .showTimerWith(endDate: endDate) = showEvent {
             completion(runningTimeLine(with: endDate))
