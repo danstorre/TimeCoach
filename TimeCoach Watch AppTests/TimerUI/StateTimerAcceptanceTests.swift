@@ -7,9 +7,22 @@ final class StateTimerAcceptanceTests: XCTestCase {
     
     func test_onLaunch_onToggleUserInteractionShouldStartNotificationAndSaveStateProcess() {
         let (sut, spy) = makeSUT()
-        let anySet = createAnyTimerSet(startingFrom: .init())
-        let expected = createAnyTimerState(using: anySet, on: .running)
-        spy.deliversSetOnToggle(anySet)
+        let expected = createAnyTimerState(using: spy.currentTimerSet, on: .running)
+        
+        sut.simulateToggleTimerUserInteraction()
+        
+        XCTAssertEqual(spy.receivedMessages, [
+            .startTimer,
+            .saveStateTimer(value: expected),
+            .scheduleTimerNotification,
+            .notifySavedTimer
+        ])
+    }
+    
+    func test_onLaunch_afterTimerDeliversShouldNotStartNotificationAndSaveStateProcess() {
+        let (sut, spy) = makeSUT()
+        let expected = createAnyTimerState(using: spy.currentTimerSet, on: .running)
+        spy.deliversSetOnToggle(expected.localTimerSet.adding(1))
         
         sut.simulateToggleTimerUserInteraction()
         

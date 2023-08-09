@@ -11,8 +11,8 @@ public class DefaultTimerNotificationScheduler: TimerNotificationScheduler {
     
     public func scheduleNotification(from set: TimerSet) throws {
         let currentDate = currentDate()
-        let scheduleTime = set.endDate + set.startDate.distance(to: currentDate)
+        let scheduleTime = set.endDate.adding(seconds: set.startDate.distance(to: currentDate))
         
-        try scheduler.setSchedule(at: scheduleTime - set.elapsedSeconds)
+        try scheduler.setSchedule(at: scheduleTime.adding(seconds: -set.elapsedSeconds)) 
     }
 }

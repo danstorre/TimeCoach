@@ -112,14 +112,22 @@ class TimeCoachRoot {
         timerLoad?.loadTime()
     }
     
+    private struct UnexpectedError: Error {}
+    
     private func handlePlay() -> RegularTimer.TimerSetPublisher {
+        let getTimerState = self.getTimerState
         let localTimer = localTimer
         let timerNotificationScheduler = timerNotificationScheduler
         let timerSavedNofitier = timerSavedNofitier
         return playPublisher()
-            .saveTimerState(saver: localTimer)
-            .scheduleTimerNotfication(scheduler: timerNotificationScheduler)
-            .notifySavedTimer(notifier: timerSavedNofitier)
+            .merge(with: Just(getTimerState()!.timerSet)
+                .mapError{ _ in UnexpectedError()}
+                .eraseToAnyPublisher()
+                .saveTimerState(saver: localTimer)
+                .scheduleTimerNotfication(scheduler: timerNotificationScheduler)
+                .notifySavedTimer(notifier: timerSavedNofitier)
+            )
+            .eraseToAnyPublisher()
     }
     
     private func handleStop() -> RegularTimer.VoidPublisher {
