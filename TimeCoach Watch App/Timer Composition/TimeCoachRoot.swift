@@ -83,8 +83,8 @@ class TimeCoachRoot {
         let timerSavedNofitier = self.timerSavedNofitier
         let notificationReceiverProcess = TimerNotificationReceiverFactory
             .notificationReceiverProcessWith(timerStateSaver: localTimer,
-                                       timerStoreNotifier: timerSavedNofitier,
-                                       getTimerState: { [weak self] in
+                                             timerStoreNotifier: timerSavedNofitier,
+                                             getTimerState: { [weak self] in
                 self?.getTimerState()
             })
         let notificationReceiverSoundAlert = DefaultTimerNotificationReceiver {
