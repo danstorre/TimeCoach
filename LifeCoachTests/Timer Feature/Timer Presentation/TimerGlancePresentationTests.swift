@@ -16,7 +16,7 @@ final class TimerGlancePresentationTests: XCTestCase {
         expect(sut: sut, toSendEvent: .showIdle, on: stopState)
     }
     
-    func test_checkTimerState_onRunningTimerStateSendsShowTimerWithEndDate() {
+    func test_checkTimerState_onRunningTimerStateSendsShowTimerValues() {
         let currentDate = Date()
         let samples = [
             makeAnyTimerState(seconds: 0, startDate: currentDate, endDate: currentDate.adding(seconds: 1), state: .running),
@@ -31,8 +31,8 @@ final class TimerGlancePresentationTests: XCTestCase {
         samples.forEach { sample in
             let sut = makeSUT(currentDate: { currentDate })
             
-            let endDate = getCurrenTimersEndDate(from: sample, and: currentDate)
-            expect(sut: sut, toSendEvent: .showTimerWith(endDate: endDate), on: sample)
+            let values = getCurrentTimersValues(from: sample, and: currentDate)
+            expect(sut: sut, toSendEvent: .showTimerWith(values: values), on: sample)
         }
     }
     
@@ -63,11 +63,14 @@ final class TimerGlancePresentationTests: XCTestCase {
         return receivedEvent
     }
     
-    private func getCurrenTimersEndDate(from timerState: TimerState, and currentDate: Date) -> Date {
+    private func getCurrentTimersValues(from timerState: TimerState, and currentDate: Date) -> TimerPresentationValues {
         let elapsedSeconds = timerState.timerSet.elapsedSeconds
         let startDatePlusElapsedSeconds: Date = timerState.timerSet.startDate.adding(seconds: elapsedSeconds)
         let remainingSeconds = timerState.timerSet.endDate.timeIntervalSinceReferenceDate - startDatePlusElapsedSeconds.timeIntervalSinceReferenceDate
         
-        return currentDate.adding(seconds: remainingSeconds)
+        let totalTime = timerState.timerSet.endDate.timeIntervalSinceReferenceDate - timerState.timerSet.startDate.timeIntervalSinceReferenceDate
+        
+        return TimerPresentationValues(endDate: currentDate.adding(seconds: remainingSeconds),
+                                       progress: Float(remainingSeconds/totalTime))
     }
 }

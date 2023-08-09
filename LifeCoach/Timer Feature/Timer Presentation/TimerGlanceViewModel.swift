@@ -1,9 +1,19 @@
 import Foundation
 
+public struct TimerPresentationValues: Equatable {
+    let endDate: Date
+    let progress: Float
+    
+    public init(endDate: Date, progress: Float) {
+        self.endDate = endDate
+        self.progress = progress
+    }
+}
+
 public class TimerGlanceViewModel {
     public enum TimerStatusEvent: Equatable {
         case showIdle
-        case showTimerWith(endDate: Date)
+        case showTimerWith(values: TimerPresentationValues)
     }
     
     private let currentDate: () -> Date
@@ -18,17 +28,21 @@ public class TimerGlanceViewModel {
         case .pause, .stop:
             onStatusCheck?(.showIdle)
         case .running:
-            let endDate = getCurrenTimersEndDate(from: timerState)
-            onStatusCheck?(.showTimerWith(endDate: endDate))
+            let values = getCurrentTimersEndDate(from: timerState)
+            
+            onStatusCheck?(.showTimerWith(values: values))
         }
     }
     
-    private func getCurrenTimersEndDate(from timerState: TimerState) -> Date {
-        let currenDate = currentDate()
+    private func getCurrentTimersEndDate(from timerState: TimerState) -> TimerPresentationValues {
+        let currentDate = currentDate()
         let elapsedSeconds = timerState.timerSet.elapsedSeconds
         let startDatePlusElapsedSeconds: Date = timerState.timerSet.startDate.adding(seconds: elapsedSeconds)
         let remainingSeconds = timerState.timerSet.endDate.timeIntervalSinceReferenceDate - startDatePlusElapsedSeconds.timeIntervalSinceReferenceDate
         
-        return currenDate.adding(seconds: remainingSeconds)
+        let totalTime = timerState.timerSet.endDate.timeIntervalSinceReferenceDate - timerState.timerSet.startDate.timeIntervalSinceReferenceDate
+        
+        return TimerPresentationValues(endDate: currentDate.adding(seconds: remainingSeconds),
+                                       progress: Float(remainingSeconds/totalTime))
     }
 }
