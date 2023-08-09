@@ -17,8 +17,8 @@ public class WatchOSProvider: WatchOSProviderProtocol {
         }
         let showEvent = getEvent(from: state, andCurrentDate: currentDate)
         
-        if case let .showTimerWith(endDate: endDate) = showEvent {
-            completion(runningTimeLine(with: endDate))
+        if case let .showTimerWith(values: values) = showEvent {
+            completion(runningTimeLine(with: values))
         }
         
         if case .showIdle = showEvent {
@@ -35,10 +35,10 @@ public class WatchOSProvider: WatchOSProviderProtocol {
         return Timeline(entries: entries, policy: .never)
     }
     
-    private func runningTimeLine(with endDate: Date) -> Timeline<TimerEntry> {
+    private func runningTimeLine(with values: TimerPresentationValues) -> Timeline<TimerEntry> {
         var entries: [TimerEntry] = []
 
-        entries.append(TimerEntry(date: currentDate(), endDate: endDate, isIdle: false))
+        entries.append(TimerEntry(date: currentDate(), endDate: values.endDate, isIdle: false))
 
         return Timeline(entries: entries, policy: .never)
     }

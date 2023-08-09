@@ -1,15 +1,5 @@
 import Foundation
 
-public struct TimerPresentationValues: Equatable {
-    let endDate: Date
-    let progress: Float
-    
-    public init(endDate: Date, progress: Float) {
-        self.endDate = endDate
-        self.progress = progress
-    }
-}
-
 public class TimerGlanceViewModel {
     public enum TimerStatusEvent: Equatable {
         case showIdle
