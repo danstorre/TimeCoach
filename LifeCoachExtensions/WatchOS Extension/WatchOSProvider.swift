@@ -30,7 +30,7 @@ public class WatchOSProvider: WatchOSProviderProtocol {
     private func idleTimeLine() -> Timeline<TimerEntry> {
         var entries: [TimerEntry] = []
 
-        entries.append(TimerEntry(date: currentDate(), endDate: .none, isIdle: true))
+        entries.append(TimerEntry(date: currentDate(), timerPresentationValues: .none, isIdle: true))
 
         return Timeline(entries: entries, policy: .never)
     }
@@ -38,7 +38,7 @@ public class WatchOSProvider: WatchOSProviderProtocol {
     private func runningTimeLine(with values: TimerPresentationValues) -> Timeline<TimerEntry> {
         var entries: [TimerEntry] = []
 
-        entries.append(TimerEntry(date: currentDate(), endDate: values.endDate, isIdle: false))
+        entries.append(TimerEntry(date: currentDate(), timerPresentationValues: values, isIdle: false))
 
         return Timeline(entries: entries, policy: .never)
     }

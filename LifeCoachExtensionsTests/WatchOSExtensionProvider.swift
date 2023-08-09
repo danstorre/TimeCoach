@@ -15,9 +15,11 @@ final class WatchOSExtensionProvider: XCTestCase {
     func test_getTimeLine_onLoadTimerStateRunningDeliversCorrectTimeLineEntry() {
         let currentDate = Date()
         let endDate = currentDate.adding(seconds: 1)
+        let timerPresentationValues = TimerPresentationValues(endDate: endDate, progress: 1)
         let (sut, spy) = makeSUT(currentDate: { currentDate })
         let runningState = makeAnyTimerState(seconds: 0, startDate: currentDate, endDate: endDate, state: .running)
-        let runningTimeLineEntry = TimerEntry(date: currentDate, endDate: endDate, isIdle: false)
+        
+        let runningTimeLineEntry = TimerEntry(date: currentDate, timerPresentationValues: timerPresentationValues, isIdle: false)
         spy.loadsSuccess(with: runningState)
         
         let timeLineResult = sut.getTimeLineResult()
@@ -35,7 +37,7 @@ final class WatchOSExtensionProvider: XCTestCase {
         let samples = [pauseState, stopState]
         
         samples.forEach { sample in
-            let idleTimelineEntry = TimerEntry(date: currentDate, endDate: .none, isIdle: true)
+            let idleTimelineEntry = TimerEntry(date: currentDate, timerPresentationValues: .none, isIdle: true)
             spy.loadsSuccess(with: sample)
             
             let timeLineResult = sut.getTimeLineResult()
@@ -77,7 +79,7 @@ final class WatchOSExtensionProvider: XCTestCase {
 
 extension TimerEntry: CustomStringConvertible {
     public var description: String {
-        "startDate: \(date), endDate: \(String(describing: endDate))"
+        "startDate: \(date), endDate: \(String(describing: timerPresentationValues?.endDate)), and progress: \(String(describing: timerPresentationValues?.progress))"
     }
 }
 

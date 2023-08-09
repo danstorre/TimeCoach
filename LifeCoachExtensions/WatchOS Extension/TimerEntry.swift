@@ -1,14 +1,15 @@
 import Foundation
+import LifeCoach
 import WidgetKit
 
 public struct TimerEntry: TimelineEntry, Equatable {
     public var date: Date
-    public var endDate: Date?
+    public var timerPresentationValues: TimerPresentationValues?
     public var isIdle: Bool = false
     
-    public init(date: Date, endDate: Date? = nil, isIdle: Bool) {
+    public init(date: Date, timerPresentationValues: TimerPresentationValues? = nil, isIdle: Bool) {
         self.date = date
-        self.endDate = endDate
+        self.timerPresentationValues = timerPresentationValues
         self.isIdle = isIdle
     }
 }

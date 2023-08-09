@@ -4,7 +4,7 @@ struct CircularTimerWidget: View {
     let entry: TimerEntry
     
     var body: some View {
-        if let endDate = entry.endDate {
+        if let endDate = entry.timerPresentationValues?.endDate {
             ProgressView(timerInterval: entry.date...endDate,
                          countsDown: true)
             .progressViewStyle(.circular)

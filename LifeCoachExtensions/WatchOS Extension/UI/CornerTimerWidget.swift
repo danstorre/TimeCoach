@@ -9,7 +9,7 @@ struct CornerTimerWidget: View {
                 .foregroundColor(.blue)
             Text("")
                 .widgetLabel(label: {
-                    if let endDate = entry.endDate {
+                    if let endDate = entry.timerPresentationValues?.endDate {
                         ProgressView(timerInterval: entry.date...endDate,
                                      countsDown: true)
                             .tint(.blue)

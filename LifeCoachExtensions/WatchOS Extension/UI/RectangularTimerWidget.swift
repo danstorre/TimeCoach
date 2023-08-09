@@ -5,7 +5,7 @@ struct RectangularTimerWidget: View {
     
     var body: some View {
         VStack {
-            if let endDate = entry.endDate {
+            if let endDate = entry.timerPresentationValues?.endDate {
                 Text("Pomodoro will end in:")
                     .foregroundColor(.blue)
                 ProgressView(timerInterval: entry.date...endDate,
