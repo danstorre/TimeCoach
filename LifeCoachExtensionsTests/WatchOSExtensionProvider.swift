@@ -22,7 +22,7 @@ final class WatchOSExtensionProvider: XCTestCase {
         
         let timeLineResult = sut.getTimeLineResult()
         
-        assertCorrectTimeLine(with: runningTimeLineEntry, from: timeLineResult)
+        assertCorrectTimeLine(with: [runningTimeLineEntry], from: timeLineResult)
     }
     
     func test_getTimeLine_onLoadIdleTimerStateDeliversCorrectIsIdleTimeLineEntry() {
@@ -40,8 +40,27 @@ final class WatchOSExtensionProvider: XCTestCase {
             
             let timeLineResult = sut.getTimeLineResult()
             
-            assertCorrectTimeLine(with: idleTimelineEntry, from: timeLineResult)
+            assertCorrectTimeLine(with: [idleTimelineEntry], from: timeLineResult)
         }
+    }
+    
+    func test_getTimeLineTwice_onLoadWithSameState_deliverAnyTimeLineEntryOnce() {
+        let currentDate = Date()
+        let (sut, spy) = makeSUT(currentDate: { currentDate })
+        let pauseState = makeAnyTimerState(startDate: currentDate, state: .pause)
+        spy.loadsSuccess(with: pauseState)
+        
+        var receivedEntries: [Timeline<TimerEntry>] = []
+        sut.getTimeline() { entry in
+            receivedEntries.append(entry)
+        }
+        
+        sut.getTimeline() { entry in
+            receivedEntries.append(entry)
+        }
+        
+        let expectedCount = 1
+        XCTAssertEqual(receivedEntries.count, 1, "receivedEntries \(receivedEntries.count), expected \(expectedCount)")
     }
     
     // MARK: - Helpers
@@ -55,8 +74,8 @@ final class WatchOSExtensionProvider: XCTestCase {
         return (sut, spy)
     }
     
-    private func assertCorrectTimeLine(with simpleEntry: TimerEntry, from timeLine: Timeline<TimerEntry>?, file: StaticString = #filePath, line: UInt = #line) {
-        XCTAssertEqual(timeLine?.entries, [simpleEntry], file: file, line: line)
+    private func assertCorrectTimeLine(with entries: [TimerEntry], from timeLine: Timeline<TimerEntry>?, file: StaticString = #filePath, line: UInt = #line) {
+        XCTAssertEqual(timeLine?.entries, entries, file: file, line: line)
         XCTAssertEqual(timeLine?.policy, .never, file: file, line: line)
     }
     
