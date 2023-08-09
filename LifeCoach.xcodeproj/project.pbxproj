@@ -188,7 +188,6 @@
 		FBEC46262A80684800CAB18F /* TimerEntry+Factory.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBEC46252A80684800CAB18F /* TimerEntry+Factory.swift */; };
 		FBED1E4B293EDAD10061CAAF /* TimerControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBED1E4A293EDAD10061CAAF /* TimerControls.swift */; };
 		FBED1E4D293EDB3F0061CAAF /* TimerTextTimeLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBED1E4C293EDB3F0061CAAF /* TimerTextTimeLine.swift */; };
-		FBED1E54293F7E980061CAAF /* UserNotificationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBED1E53293F7E980061CAAF /* UserNotificationDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -512,7 +511,6 @@
 		FBED1E4A293EDAD10061CAAF /* TimerControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerControls.swift; sourceTree = "<group>"; };
 		FBED1E4C293EDB3F0061CAAF /* TimerTextTimeLine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerTextTimeLine.swift; sourceTree = "<group>"; };
 		FBED1E51293EE13F0061CAAF /* TimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerView.swift; sourceTree = "<group>"; };
-		FBED1E53293F7E980061CAAF /* UserNotificationDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNotificationDelegate.swift; sourceTree = "<group>"; };
 		FBF0209E2A7DBBFE005074CD /* TimeCoach Watch AppDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "TimeCoach Watch AppDebug.entitlements"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -690,7 +688,6 @@
 				FB4AA14229379DC90076FED9 /* TimerViewComposer.swift */,
 				FB4AA13929378A460076FED9 /* TimerPresentationAdapter.swift */,
 				FB960C71293D462900ECBAD5 /* ToggleStrategy.swift */,
-				FBED1E53293F7E980061CAAF /* UserNotificationDelegate.swift */,
 				FBE646552A4A9F3F005022A2 /* TimerVoidAdapter.swift */,
 				FBE646572A4A9F77005022A2 /* TimerAdapter.swift */,
 				FBA8DD7C2A4F10D9009E48D5 /* TimerCoutdownToTimerStateAdapter.swift */,
@@ -1905,7 +1902,6 @@
 			files = (
 				FBE9A9A72939534000D8BF29 /* TimerPresentationAdapter.swift in Sources */,
 				FBE646672A4AA924005022A2 /* TimeCoachRoot+Extension.swift in Sources */,
-				FBED1E54293F7E980061CAAF /* UserNotificationDelegate.swift in Sources */,
 				FBE646562A4A9F3F005022A2 /* TimerVoidAdapter.swift in Sources */,
 				FBE593E62A78498000069F1C /* UserNotificationsReceiver.swift in Sources */,
 				FB0238E22A57442E002F55D5 /* PreviewTimer.swift in Sources */,

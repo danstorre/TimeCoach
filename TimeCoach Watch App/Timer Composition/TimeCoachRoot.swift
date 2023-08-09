@@ -8,7 +8,6 @@ import UserNotifications
 class TimeCoachRoot {
     private var timerSave: TimerSave?
     private var timerLoad: TimerLoad?
-    private var notificationDelegate: UNUserNotificationCenterDelegate
     
     // Timer
     private var currenDate: () -> Date = Date.init
@@ -24,6 +23,12 @@ class TimeCoachRoot {
     private lazy var scheduler: LifeCoach.Scheduler = UserNotificationsScheduler(with: UNUserNotificationCenter.current())
     private lazy var timerNotificationScheduler = DefaultTimerNotificationScheduler(scheduler: scheduler)
     
+    private lazy var UNUserNotificationdelegate = {
+        let defaultNotificationReceiver = DefaultTimerNotificationReceiver {
+            WKInterfaceDevice.current().play(.notification)
+        }
+        return UserNotificationsReceiver(receiver: defaultNotificationReceiver)
+    }
     private lazy var unregisterNotifications: (() -> Void) = Self.unregisterNotificationsFromUNUserNotificationCenter
     
     static func unregisterNotificationsFromUNUserNotificationCenter() {
@@ -36,8 +41,7 @@ class TimeCoachRoot {
     private lazy var timerSavedNofitier: LifeCoach.TimerStoreNotifier = DefaultTimerStoreNotifier(completion: notifySavedTimer ?? {})
     
     init() {
-        self.notificationDelegate = UserNotificationDelegate()
-        UNUserNotificationCenter.current().delegate = notificationDelegate
+        UNUserNotificationCenter.current().delegate = UNUserNotificationdelegate()
     }
     
     convenience init(infrastructure: Infrastructure) {
@@ -77,9 +81,7 @@ class TimeCoachRoot {
     }
     
     func goToBackground() {
-        timerSave?.saveTime(completion: { time in
-            UserNotificationDelegate.registerNotificationOn(remainingTime: time)
-        })
+        timerSave?.saveTime(completion: { time in })
     }
     
     func goToForeground() {
