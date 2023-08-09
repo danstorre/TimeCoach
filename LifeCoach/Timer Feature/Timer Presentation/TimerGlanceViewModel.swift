@@ -25,9 +25,9 @@ public class TimerGlanceViewModel {
     
     private func getCurrenTimersEndDate(from timerState: TimerState) -> Date {
         let currenDate = currentDate()
-        let elapsedSeconds = timerState.elapsedSeconds.elapsedSeconds
-        let startDatePlusElapsedSeconds: Date = timerState.elapsedSeconds.startDate.adding(seconds: elapsedSeconds)
-        let remainingSeconds = timerState.elapsedSeconds.endDate.timeIntervalSinceReferenceDate - startDatePlusElapsedSeconds.timeIntervalSinceReferenceDate
+        let elapsedSeconds = timerState.timerSet.elapsedSeconds
+        let startDatePlusElapsedSeconds: Date = timerState.timerSet.startDate.adding(seconds: elapsedSeconds)
+        let remainingSeconds = timerState.timerSet.endDate.timeIntervalSinceReferenceDate - startDatePlusElapsedSeconds.timeIntervalSinceReferenceDate
         
         return currenDate.adding(seconds: remainingSeconds)
     }

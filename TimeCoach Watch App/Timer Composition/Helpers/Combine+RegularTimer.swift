@@ -3,7 +3,7 @@ import Combine
 
 extension RegularTimer {
     typealias VoidPublisher = AnyPublisher<Void, Error>
-    typealias ElapsedSecondsPublisher = AnyPublisher<TimerSet, Error>
+    typealias TimerSetPublisher = AnyPublisher<TimerSet, Error>
     typealias CurrentValuePublisher = CurrentValueSubject<TimerSet, Error>
     
     func stopPublisher() -> VoidPublisher {
@@ -20,7 +20,7 @@ extension RegularTimer {
         }.eraseToAnyPublisher()
     }
     
-    func skipPublisher(currentSubject: CurrentValuePublisher) -> () -> ElapsedSecondsPublisher {
+    func skipPublisher(currentSubject: CurrentValuePublisher) -> () -> TimerSetPublisher {
         {
             Deferred {
                 skip()
@@ -29,7 +29,7 @@ extension RegularTimer {
         }
     }
     
-    func playPublisher(currentSubject: CurrentValuePublisher) -> () -> ElapsedSecondsPublisher {
+    func playPublisher(currentSubject: CurrentValuePublisher) -> () -> TimerSetPublisher {
         {
             Deferred {
                 start()

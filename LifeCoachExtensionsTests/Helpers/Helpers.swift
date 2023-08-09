@@ -22,7 +22,7 @@ func makeAnyTimerState(seconds: TimeInterval = 1,
                        endDate: Date = Date(),
                        state helperState: TimerStateHelper = .pause) -> TimerState {
     let elapsedSeconds = makeAnyLocalTimerSet(seconds: seconds, startDate: startDate, endDate: endDate)
-    return TimerState(elapsedSeconds: elapsedSeconds.model, state: helperState.timerState)
+    return TimerState(timerSet: elapsedSeconds.model, state: helperState.timerState)
 }
 
 func makeAnyLocalTimerSet(seconds: TimeInterval = 1,

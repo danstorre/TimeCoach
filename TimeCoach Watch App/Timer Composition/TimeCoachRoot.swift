@@ -91,7 +91,7 @@ class TimeCoachRoot {
         timerLoad?.loadTime()
     }
     
-    private func handlePlay() -> RegularTimer.ElapsedSecondsPublisher {
+    private func handlePlay() -> RegularTimer.TimerSetPublisher {
         let localTimer = localTimer
         let timerNotificationScheduler = timerNotificationScheduler
         let timerSavedNofitier = timerSavedNofitier
@@ -129,7 +129,7 @@ class TimeCoachRoot {
             .notifySavedTimer(notifier: timerSavedNofitier)
     }
     
-    private func handleSkip() -> RegularTimer.ElapsedSecondsPublisher {
+    private func handleSkip() -> RegularTimer.TimerSetPublisher {
         let localTimer = localTimer
         let timerCountdown = timerCountdown
         let currentSubject = currentSubject
@@ -142,14 +142,14 @@ class TimeCoachRoot {
             .flatsToVoid()
             .unregisterTimerNotifications(unregisterNotifications)
             .notifySavedTimer(notifier: timerSavedNofitier)
-            .flatsToElapsedSecondsPublisher(currentSubject)
+            .flatsToTimerSetPublisher(currentSubject)
     }
     
     private func stopPublisher() -> RegularTimer.VoidPublisher {
         regularTimer!.stopPublisher()
     }
     
-    private func playPublisher() -> RegularTimer.ElapsedSecondsPublisher {
+    private func playPublisher() -> RegularTimer.TimerSetPublisher {
         regularTimer!.playPublisher(currentSubject: currentSubject)()
     }
     
@@ -157,7 +157,7 @@ class TimeCoachRoot {
         regularTimer!.pausePublisher()
     }
     
-    private func skipPublisher() -> RegularTimer.ElapsedSecondsPublisher {
+    private func skipPublisher() -> RegularTimer.TimerSetPublisher {
         regularTimer!.skipPublisher(currentSubject: currentSubject)()
     }
 }

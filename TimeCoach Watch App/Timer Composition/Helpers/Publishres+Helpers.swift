@@ -5,7 +5,7 @@ import LifeCoach
 extension Publisher where Output == TimerSet {
     func saveTimerState(saver timerStateSaver: SaveTimerState) -> AnyPublisher<TimerSet, Failure> {
         self.handleEvents(receiveOutput: { timerSet in
-            try? timerStateSaver.save(state: TimerState(elapsedSeconds: timerSet, state: .running))
+            try? timerStateSaver.save(state: TimerState(timerSet: timerSet, state: .running))
         })
         .eraseToAnyPublisher()
     }
@@ -28,7 +28,7 @@ extension Publisher where Output == Void {
 extension Publisher where Output == (TimerSet, TimerState.State) {
     func saveTimerState(saver timerStateSaver: SaveTimerState) -> AnyPublisher<(TimerSet, TimerState.State), Failure> {
         self.handleEvents(receiveOutput: { timerState in
-            try? timerStateSaver.save(state: TimerState(elapsedSeconds: timerState.0, state: timerState.1))
+            try? timerStateSaver.save(state: TimerState(timerSet: timerState.0, state: timerState.1))
         })
         .eraseToAnyPublisher()
     }
@@ -60,7 +60,7 @@ extension Publisher where Output == Void {
 }
 
 extension Publisher where Output == Void {
-    func flatsToElapsedSecondsPublisher(_ currentSetPublisher: CurrentValueSubject<TimerSet, Error>) -> AnyPublisher<TimerSet, Failure> {
+    func flatsToTimerSetPublisher(_ currentSetPublisher: CurrentValueSubject<TimerSet, Error>) -> AnyPublisher<TimerSet, Failure> {
         self.flatMap({ _ in
             Just(currentSetPublisher.value)
         })

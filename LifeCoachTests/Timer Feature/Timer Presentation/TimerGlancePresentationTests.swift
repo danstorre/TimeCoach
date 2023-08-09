@@ -64,9 +64,9 @@ final class TimerGlancePresentationTests: XCTestCase {
     }
     
     private func getCurrenTimersEndDate(from timerState: TimerState, and currentDate: Date) -> Date {
-        let elapsedSeconds = timerState.elapsedSeconds.elapsedSeconds
-        let startDatePlusElapsedSeconds: Date = timerState.elapsedSeconds.startDate.adding(seconds: elapsedSeconds)
-        let remainingSeconds = timerState.elapsedSeconds.endDate.timeIntervalSinceReferenceDate - startDatePlusElapsedSeconds.timeIntervalSinceReferenceDate
+        let elapsedSeconds = timerState.timerSet.elapsedSeconds
+        let startDatePlusElapsedSeconds: Date = timerState.timerSet.startDate.adding(seconds: elapsedSeconds)
+        let remainingSeconds = timerState.timerSet.endDate.timeIntervalSinceReferenceDate - startDatePlusElapsedSeconds.timeIntervalSinceReferenceDate
         
         return currentDate.adding(seconds: remainingSeconds)
     }

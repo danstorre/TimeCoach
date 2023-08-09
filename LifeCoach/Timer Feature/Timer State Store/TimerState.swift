@@ -6,11 +6,11 @@ public struct TimerState: Equatable {
         case running
         case stop
     }
-    public let elapsedSeconds: TimerSet
+    public let timerSet: TimerSet
     public let state: State
     
-    public init(elapsedSeconds: TimerSet, state: TimerState.State) {
-        self.elapsedSeconds = elapsedSeconds
+    public init(timerSet: TimerSet, state: TimerState.State) {
+        self.timerSet = timerSet
         self.state = state
     }
 }
