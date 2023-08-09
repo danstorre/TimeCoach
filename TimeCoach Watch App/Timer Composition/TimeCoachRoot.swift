@@ -24,9 +24,9 @@ class TimeCoachRoot {
     private lazy var scheduler: LifeCoach.Scheduler = UserNotificationsScheduler(with: UNUserNotificationCenter.current())
     private lazy var timerNotificationScheduler = DefaultTimerNotificationScheduler(scheduler: scheduler)
     
-    private lazy var UNUserNotificationdelegate: () -> UNUserNotificationCenterDelegate? = { [weak self] in
+    private lazy var UNUserNotificationdelegate: UNUserNotificationCenterDelegate? = { [weak self] in
         return self?.createUNUserNotificationdelegate()
-    }
+    }()
     private lazy var unregisterNotifications: (() -> Void) = Self.unregisterNotificationsFromUNUserNotificationCenter
     
     static func unregisterNotificationsFromUNUserNotificationCenter() {
@@ -70,7 +70,7 @@ class TimeCoachRoot {
                                                              pausePublisher: handlePause,
                                                              isPlaying: timerPlayerAdapterState.isPlayingPublisherProvider())
         
-        UNUserNotificationCenter.current().delegate = UNUserNotificationdelegate()
+        UNUserNotificationCenter.current().delegate = UNUserNotificationdelegate
         
         return TimerViewComposer.createTimer(
             timerControlPublishers: timerControlPublishers,
