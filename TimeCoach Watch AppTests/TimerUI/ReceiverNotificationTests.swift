@@ -15,6 +15,18 @@ final class ReceiverNotificationProcessTests: XCTestCase {
         XCTAssertEqual(spy.messagesReceived, [.saveTimerState, .notifySavedTimer])
     }
     
+    func test_receiveNotificationDoesNotSendAnyMessagesOnNonTimerState() {
+        let spy = TimerStateSpy()
+        let timerState = createAnyTimerState()
+        let getTimerState: () -> TimerState? = { .none }
+        let sut: TimerNotificationReceiver = TimerNotificationReceiverFactory
+            .notificationReceiverProcessWith(timerStateSaver: spy, timerStoreNotifier: spy, getTimerState: getTimerState)
+        
+        sut.receiveNotification()
+        
+        XCTAssertEqual(spy.messagesReceived, [])
+    }
+    
     private class TimerStateSpy: SaveTimerState, TimerStoreNotifier {
         private(set) var messagesReceived = [AnyMessage]()
         

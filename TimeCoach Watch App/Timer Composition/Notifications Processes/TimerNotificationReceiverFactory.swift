@@ -4,10 +4,11 @@ public enum TimerNotificationReceiverFactory {
     public static func notificationReceiverProcessWith(
         timerStateSaver: SaveTimerState,
         timerStoreNotifier: TimerStoreNotifier,
-        getTimerState: @escaping () -> TimerState
+        getTimerState: @escaping () -> TimerState?
     ) -> TimerNotificationReceiver {
         return DefaultTimerNotificationReceiver(completion: {
-            try? timerStateSaver.save(state: getTimerState())
+            guard let timerState = getTimerState() else { return }
+            try? timerStateSaver.save(state: timerState)
             timerStoreNotifier.storeSaved()
         })
     }
