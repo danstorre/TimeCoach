@@ -16,7 +16,7 @@ class TimeCoachRoot {
     private lazy var currentSubject: RegularTimer.CurrentValuePublisher = .init(TimerSet.init(0, startDate: .init(), endDate: .init()))
     
     // Local Timer
-    private lazy var stateTimerStore: LocalTimerStore = UserDefaultsTimerStore(storeID: "any")
+    private lazy var stateTimerStore: LocalTimerStore = UserDefaultsTimerStore(storeID: "group.timeCoach.timerState")
     private lazy var localTimer: LocalTimer = LocalTimer(store: stateTimerStore)
     
     // Timer Notification Scheduler
