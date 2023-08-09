@@ -70,7 +70,9 @@ final class TimerGlancePresentationTests: XCTestCase {
         
         let totalTime = timerState.timerSet.endDate.timeIntervalSinceReferenceDate - timerState.timerSet.startDate.timeIntervalSinceReferenceDate
         
-        return TimerPresentationValues(endDate: currentDate.adding(seconds: remainingSeconds),
-                                       progress: Float(remainingSeconds/totalTime))
+        return TimerPresentationValues(
+            starDate: currentDate.adding(seconds: -remainingSeconds),
+            endDate: currentDate.adding(seconds: remainingSeconds),
+            progress: Float(remainingSeconds/totalTime))
     }
 }
