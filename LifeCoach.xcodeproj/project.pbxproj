@@ -926,6 +926,7 @@
 			isa = PBXGroup;
 			children = (
 				FBEC46192A80669E00CAB18F /* UI */,
+				FBEC461C2A80675E00CAB18F /* Provider.swift */,
 				FBA223E72A7DB2D1003FF5A8 /* WatchOSProvider.swift */,
 				FBA223E92A7DB365003FF5A8 /* TimerEntry.swift */,
 				FBA223EE2A7DB5EC003FF5A8 /* WatchOSProviderProtocol.swift */,
@@ -1251,7 +1252,6 @@
 			children = (
 				FBEC46242A80684100CAB18F /* Helpers */,
 				FBEC461A2A8066BC00CAB18F /* TimeCoachWidgetEntryView.swift */,
-				FBEC461C2A80675E00CAB18F /* Provider.swift */,
 				FBEC461E2A8067D600CAB18F /* RectangularTimerWidget.swift */,
 				FBEC46202A8067EB00CAB18F /* CircularTimerWidget.swift */,
 				FBEC46222A8067FD00CAB18F /* CornerTimerWidget.swift */,
