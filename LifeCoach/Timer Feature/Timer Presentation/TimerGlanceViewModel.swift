@@ -33,7 +33,7 @@ public class TimerGlanceViewModel {
         let totalTime = timerState.timerSet.endDate.timeIntervalSinceReferenceDate - timerState.timerSet.startDate.timeIntervalSinceReferenceDate
         
         return TimerPresentationValues(
-            starDate: currentDate - remainingSeconds,
+            starDate: currentDate - elapsedSeconds,
             endDate: currentDate.adding(seconds: remainingSeconds),
             progress: Float(remainingSeconds/totalTime))
     }

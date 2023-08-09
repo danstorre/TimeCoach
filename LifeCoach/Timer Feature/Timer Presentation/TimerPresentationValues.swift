@@ -1,7 +1,7 @@
 import Foundation
 
 public struct TimerPresentationValues: Equatable {
-    private let starDate: Date
+    public let starDate: Date
     public let endDate: Date
     public let progress: Float
     
