@@ -244,9 +244,6 @@ extension Publisher where Output == TimerSet {
     }
 }
 
-extension UNUserNotificationCenter: NotificationScheduler {}
-
-
 extension TimerCoutdownState {
     var toModel: TimerState.State {
         switch self {
