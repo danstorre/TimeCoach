@@ -88,6 +88,25 @@ final class StateTimerAcceptanceTests: XCTestCase {
         ])
     }
     
+    func test_onLaunch_onSkipUserInteractionShouldStartNotificationAndSaveStateProcessOnce() {
+        let currentDate = Date()
+        let (sut, spy) = makeSUT(currentDate: { currentDate })
+        let anySet = createAnyTimerSet(startingFrom: currentDate, endDate: currentDate.adding(seconds: .pomodoroInSeconds))
+        let expected = createAnyTimerState(using: anySet, on: .stop)
+        spy.deliversSetOnSkip(anySet)
+        
+        sut.timerView.simulateSkipTimerUserInteraction()
+        
+        spy.deliversSet(anySet)
+        
+        XCTAssertEqual(spy.receivedMessages, [
+            .skipTimer,
+            .saveStateTimer(value: expected),
+            .unregisterTimerNotification,
+            .notifySavedTimer
+        ])
+    }
+    
     // MARK: - Helpers
     private func makeSUT(currentDate: @escaping () -> Date = Date.init) -> (sut: TimeCoach_Watch_AppApp, spy: Spy) {
         let spy = Spy(currenDate: currentDate())
@@ -166,6 +185,7 @@ final class StateTimerAcceptanceTests: XCTestCase {
         
         private(set) var receivedCompletions = [StartCoundownCompletion]()
         private(set) var receivedMessages = [AnyMessage]()
+        private(set) var receivedSkipCompletions = [SkipCountdownCompletion]()
         
         private var setOnStart: Result<LocalTimerSet, Error>?
         private var setOnSkip: Result<LocalTimerSet, Error>?
@@ -197,6 +217,7 @@ final class StateTimerAcceptanceTests: XCTestCase {
             receivedMessages.append(.skipTimer)
             guard let setOnSkip = setOnSkip else { return }
             completion(setOnSkip)
+            receivedSkipCompletions.append(completion)
         }
         
         func deliversSetOnToggle(_ set: LocalTimerSet) {
@@ -205,6 +226,10 @@ final class StateTimerAcceptanceTests: XCTestCase {
         
         func deliversSetOnSkip(_ set: LocalTimerSet) {
             setOnSkip = .success(set)
+        }
+        
+        func deliversSet(_ set: LocalTimerSet, index: Int = 0) {
+            receivedSkipCompletions[index](.success(set))
         }
         
         // MARK: - Timer Store

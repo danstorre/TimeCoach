@@ -166,12 +166,17 @@ class TimeCoachRoot {
         let unregisterNotifications = unregisterNotifications
         
         return skipPublisher()
-            .mapsTimerSetAndState(timerCountdown: timerCountdown!)
-            .saveTimerState(saver: localTimer)
-            .flatsToVoid()
-            .unregisterTimerNotifications(unregisterNotifications)
-            .notifySavedTimer(notifier: timerSavedNofitier)
-            .flatsToTimerSetPublisher(currentSubject)
+            .merge(with: Just(getTimerState()!.timerSet)
+                .mapError{ _ in UnexpectedError()}
+                .eraseToAnyPublisher()
+                .mapsTimerSetAndState(timerCountdown: timerCountdown!)
+                .saveTimerState(saver: localTimer)
+                .flatsToVoid()
+                .unregisterTimerNotifications(unregisterNotifications)
+                .notifySavedTimer(notifier: timerSavedNofitier)
+                .flatsToTimerSetPublisher(currentSubject)
+            )
+            .eraseToAnyPublisher()
     }
     
     private func stopPublisher() -> RegularTimer.VoidPublisher {
