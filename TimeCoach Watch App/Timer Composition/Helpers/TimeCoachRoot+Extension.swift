@@ -13,7 +13,7 @@ extension TimeCoachRoot {
     // MARK: Factory methods
     func createTimerCountDown(from date: Date) -> TimerCoutdown {
         #if os(watchOS)
-        timerCoutdown ?? FoundationTimerCountdown(startingSet: .pomodoroSet(date: date),
+        timerCountdown ?? FoundationTimerCountdown(startingSet: .pomodoroSet(date: date),
                                                   nextSet: .breakSet(date: date))
         #elseif os(xrOS)
         FoundationTimerCountdown(startingSet: .pomodoroSet(date: date),

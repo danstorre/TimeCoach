@@ -2,7 +2,7 @@ import Foundation
 import LifeCoach
 
 public struct Infrastructure {
-    let timerCoutdown: TimerCoutdown
+    let timerCountdown: TimerCoutdown
     let timerState: TimerSave & TimerLoad
     let stateTimerStore: LocalTimerStore
     let scheduler: LifeCoach.Scheduler
@@ -10,7 +10,7 @@ public struct Infrastructure {
     let unregisterTimerNotification: (() -> Void)?
     let currentDate: () -> Date
     
-    init(timerCoutdown: TimerCoutdown,
+    init(timerCountdown: TimerCoutdown,
          timerState: TimerSave & TimerLoad,
          stateTimerStore: LocalTimerStore,
          scheduler: LifeCoach.Scheduler,
@@ -18,7 +18,7 @@ public struct Infrastructure {
          currentDate: @escaping () -> Date = Date.init,
          unregisterTimerNotification: (() -> Void)? = nil
     ) {
-        self.timerCoutdown = timerCoutdown
+        self.timerCountdown = timerCountdown
         self.timerState = timerState
         self.stateTimerStore = stateTimerStore
         self.scheduler = scheduler

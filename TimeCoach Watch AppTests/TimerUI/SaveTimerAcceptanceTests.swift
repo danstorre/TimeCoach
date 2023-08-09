@@ -22,7 +22,7 @@ final class SaveTimerAcceptanceTests: XCTestCase {
         let spyTimeState = TimerStateSpy()
         
         let infra = Infrastructure(
-            timerCoutdown: spy,
+            timerCountdown: spy,
             timerState: spyTimeState,
             stateTimerStore: DummyLocalTimerStore(),
             scheduler: DummyScheduler()

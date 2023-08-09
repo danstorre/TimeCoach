@@ -12,7 +12,7 @@ class TimeCoachRoot {
     
     // Timer
     private var currenDate: () -> Date = Date.init
-    var timerCoutdown: TimerCoutdown?
+    var timerCountdown: TimerCoutdown?
     private var regularTimer: RegularTimer?
     private lazy var currentSubject: RegularTimer.CurrentValuePublisher = .init(TimerSet.init(0, startDate: .init(), endDate: .init()))
     
@@ -44,7 +44,7 @@ class TimeCoachRoot {
         self.init()
         self.timerSave = infrastructure.timerState
         self.timerLoad = infrastructure.timerState
-        self.timerCoutdown = infrastructure.timerCoutdown
+        self.timerCountdown = infrastructure.timerCountdown
         self.stateTimerStore = infrastructure.stateTimerStore
         self.scheduler = infrastructure.scheduler
         self.notifySavedTimer = infrastructure.notifySavedTimer
@@ -54,12 +54,12 @@ class TimeCoachRoot {
     
     func createTimer(withTimeLine: Bool = true) -> TimerView {
         let date = currenDate()
-        timerCoutdown = createTimerCountDown(from: date)
+        timerCountdown = createTimerCountDown(from: date)
         currentSubject = Self.createFirstValuePublisher(from: date)
-        let timerPlayerAdapterState = TimerCoutdownToTimerStateAdapter(timer: timerCoutdown!, currentDate: currenDate)
+        let timerPlayerAdapterState = TimerCoutdownToTimerStateAdapter(timer: timerCountdown!, currentDate: currenDate)
         regularTimer = Self.createPomodorTimer(with: timerPlayerAdapterState, and: currentSubject)
         
-        if let timerCountdown = timerCoutdown as? FoundationTimerCountdown {
+        if let timerCountdown = timerCountdown as? FoundationTimerCountdown {
             self.timerSave = timerCountdown
             self.timerLoad = timerCountdown
         }
@@ -98,12 +98,12 @@ class TimeCoachRoot {
     
     private func handleStop() -> RegularTimer.VoidPublisher {
         let localTimer = localTimer
-        let timerCoutdown = timerCoutdown
+        let timerCountdown = timerCountdown
         let timerSavedNofitier = timerSavedNofitier
         let unregisterNotifications = unregisterNotifications
         
         return stopPublisher()
-            .mapsTimerSetAndState(timerCoutdown: timerCoutdown!)
+            .mapsTimerSetAndState(timerCountdown: timerCountdown!)
             .saveTimerState(saver: localTimer)
             .flatsToVoid()
             .unregisterTimerNotifications(unregisterNotifications)
@@ -112,12 +112,12 @@ class TimeCoachRoot {
     
     private func handlePause() -> RegularTimer.VoidPublisher {
         let localTimer = localTimer
-        let timerCoutdown = timerCoutdown
+        let timerCountdown = timerCountdown
         let timerSavedNofitier = timerSavedNofitier
         let unregisterNotifications = unregisterNotifications
         
         return pausePublisher()
-            .mapsTimerSetAndState(timerCoutdown: timerCoutdown!)
+            .mapsTimerSetAndState(timerCountdown: timerCountdown!)
             .saveTimerState(saver: localTimer)
             .flatsToVoid()
             .unregisterTimerNotifications(unregisterNotifications)
@@ -126,13 +126,13 @@ class TimeCoachRoot {
     
     private func handleSkip() -> RegularTimer.ElapsedSecondsPublisher {
         let localTimer = localTimer
-        let timerCoutdown = timerCoutdown
+        let timerCountdown = timerCountdown
         let currentSubject = currentSubject
         let timerSavedNofitier = timerSavedNofitier
         let unregisterNotifications = unregisterNotifications
         
         return skipPublisher()
-            .mapsTimerSetAndState(timerCoutdown: timerCoutdown!)
+            .mapsTimerSetAndState(timerCountdown: timerCountdown!)
             .saveTimerState(saver: localTimer)
             .flatsToVoid()
             .unregisterTimerNotifications(unregisterNotifications)
@@ -168,15 +168,15 @@ extension Publisher where Output == TimerSet {
 }
 
 extension Publisher where Output == TimerSet {
-    func mapsTimerSetAndState(timerCoutdown: TimerCoutdown) -> AnyPublisher<(TimerSet, TimerState.State), Failure> {
-        self.map({ _ in (timerSet: timerCoutdown.currentTimerSet.toElapseSeconds, state: timerCoutdown.state.toModel) })
+    func mapsTimerSetAndState(timerCountdown: TimerCoutdown) -> AnyPublisher<(TimerSet, TimerState.State), Failure> {
+        self.map({ _ in (timerSet: timerCountdown.currentTimerSet.toElapseSeconds, state: timerCountdown.state.toModel) })
             .eraseToAnyPublisher()
     }
 }
 
 extension Publisher where Output == Void {
-    func mapsTimerSetAndState(timerCoutdown: TimerCoutdown) -> AnyPublisher<(TimerSet, TimerState.State), Failure> {
-        self.map({ _ in (timerSet: timerCoutdown.currentTimerSet.toElapseSeconds, state: timerCoutdown.state.toModel) })
+    func mapsTimerSetAndState(timerCountdown: TimerCoutdown) -> AnyPublisher<(TimerSet, TimerState.State), Failure> {
+        self.map({ _ in (timerSet: timerCountdown.currentTimerSet.toElapseSeconds, state: timerCountdown.state.toModel) })
             .eraseToAnyPublisher()
     }
 }

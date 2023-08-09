@@ -79,7 +79,7 @@ final class StateTimerAcceptanceTests: XCTestCase {
     private func makeSUT(currentDate: @escaping () -> Date = Date.init) -> (sut: TimeCoach_Watch_AppApp, spy: Spy) {
         let spy = Spy(currenDate: currentDate())
         let infra = Infrastructure(
-            timerCoutdown: spy,
+            timerCountdown: spy,
             timerState: spy,
             stateTimerStore: spy,
             scheduler: spy,

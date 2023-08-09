@@ -114,7 +114,7 @@ final class TimeCoachAcceptanceTests: XCTestCase {
         let spyTimerState = TimerStateSpy()
         
         let infra = Infrastructure(
-            timerCoutdown: spy,
+            timerCountdown: spy,
             timerState: spyTimerState,
             stateTimerStore: DummyLocalTimerStore(),
             scheduler: DummyScheduler()
