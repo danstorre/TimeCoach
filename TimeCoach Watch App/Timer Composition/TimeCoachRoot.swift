@@ -6,6 +6,20 @@ import Combine
 import UserNotifications
 import WidgetKit
 
+class UNUserNotificationCenterDelegateComposite: NSObject, UNUserNotificationCenterDelegate {
+    private let delegates: [UNUserNotificationCenterDelegate]
+
+    init(delegates: [UNUserNotificationCenterDelegate]) {
+        self.delegates = delegates
+    }
+    
+    public func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        delegates.forEach { delegate in
+            delegate.userNotificationCenter?(center, willPresent: notification, withCompletionHandler: completionHandler)
+        }
+    }
+}
+
 class TimeCoachRoot {
     private var timerSave: TimerSave?
     private var timerLoad: TimerLoad?
@@ -24,11 +38,8 @@ class TimeCoachRoot {
     private lazy var scheduler: LifeCoach.Scheduler = UserNotificationsScheduler(with: UNUserNotificationCenter.current())
     private lazy var timerNotificationScheduler = DefaultTimerNotificationScheduler(scheduler: scheduler)
     
-    private lazy var UNUserNotificationdelegate = {
-        let defaultNotificationReceiver = DefaultTimerNotificationReceiver {
-            WKInterfaceDevice.current().play(.notification)
-        }
-        return UserNotificationsReceiver(receiver: defaultNotificationReceiver)
+    private lazy var UNUserNotificationdelegate: () -> UNUserNotificationCenterDelegate? = { [weak self] in
+        return self?.createUNUserNotificationdelegate()
     }
     private lazy var unregisterNotifications: (() -> Void) = Self.unregisterNotificationsFromUNUserNotificationCenter
     
@@ -42,10 +53,6 @@ class TimeCoachRoot {
     private lazy var timerSavedNofitier: LifeCoach.TimerStoreNotifier = DefaultTimerStoreNotifier(
         completion: notifySavedTimer ?? { WidgetCenter.shared.reloadAllTimelines() }
     )
-    
-    init() {
-        UNUserNotificationCenter.current().delegate = UNUserNotificationdelegate()
-    }
     
     convenience init(infrastructure: Infrastructure) {
         self.init()
@@ -77,10 +84,38 @@ class TimeCoachRoot {
                                                              pausePublisher: handlePause,
                                                              isPlaying: timerPlayerAdapterState.isPlayingPublisherProvider())
         
+        UNUserNotificationCenter.current().delegate = UNUserNotificationdelegate()
+        
         return TimerViewComposer.createTimer(
             timerControlPublishers: timerControlPublishers,
             withTimeLine: withTimeLine
         )
+    }
+    
+    private func createUNUserNotificationdelegate() -> UNUserNotificationCenterDelegate? {
+        let localTimer = self.localTimer
+        let timerSavedNofitier = self.timerSavedNofitier
+        let onNotificationReceiverStartProcess = TimerNotificationReceiverFactory
+            .timerNotificationReceiver(timerStateSaver: localTimer,
+                                       timerStoreNotifier: timerSavedNofitier,
+                                       getTimerState: { [weak self] in
+                self?.getTimerState() ?? TimerState(timerSet: .init(0, startDate: Date(), endDate: Date()), state: .stop)
+            })
+        let onNotificationReceiverPlaySound = DefaultTimerNotificationReceiver {
+            WKInterfaceDevice.current().play(.notification)
+        }
+        return UNUserNotificationCenterDelegateComposite(delegates: [
+            UserNotificationsReceiver(receiver: onNotificationReceiverPlaySound),
+            UserNotificationsReceiver(receiver: onNotificationReceiverStartProcess)
+        ])
+    }
+    
+    private func getTimerState() -> TimerState? {
+        guard let timerSet = timerCountdown?.currentTimerSet.toElapseSeconds,
+                let state = timerCountdown?.state.toModel else {
+            return nil
+        }
+        return TimerState(timerSet: timerSet, state: state)
     }
     
     func goToBackground() {
