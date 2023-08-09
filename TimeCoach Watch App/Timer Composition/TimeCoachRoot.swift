@@ -82,7 +82,7 @@ class TimeCoachRoot {
         let localTimer = self.localTimer
         let timerSavedNofitier = self.timerSavedNofitier
         let onNotificationReceiverStartProcess = TimerNotificationReceiverFactory
-            .timerNotificationReceiver(timerStateSaver: localTimer,
+            .notificationReceiverProcessWith(timerStateSaver: localTimer,
                                        timerStoreNotifier: timerSavedNofitier,
                                        getTimerState: { [weak self] in
                 self?.getTimerState() ?? TimerState(timerSet: .init(0, startDate: Date(), endDate: Date()), state: .stop)

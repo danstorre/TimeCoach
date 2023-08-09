@@ -8,7 +8,7 @@ final class ReceiverNotificationProcessTests: XCTestCase {
         let timerState = createAnyTimerState()
         let getTimerState: () -> TimerState = { timerState }
         let sut: TimerNotificationReceiver = TimerNotificationReceiverFactory
-            .timerNotificationReceiver(timerStateSaver: spy, timerStoreNotifier: spy, getTimerState: getTimerState)
+            .notificationReceiverProcessWith(timerStateSaver: spy, timerStoreNotifier: spy, getTimerState: getTimerState)
         
         sut.receiveNotification()
         
