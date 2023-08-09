@@ -81,18 +81,18 @@ class TimeCoachRoot {
     private func createUNUserNotificationdelegate() -> UNUserNotificationCenterDelegate? {
         let localTimer = self.localTimer
         let timerSavedNofitier = self.timerSavedNofitier
-        let onNotificationReceiverStartProcess = TimerNotificationReceiverFactory
+        let notificationReceiverProcess = TimerNotificationReceiverFactory
             .notificationReceiverProcessWith(timerStateSaver: localTimer,
                                        timerStoreNotifier: timerSavedNofitier,
                                        getTimerState: { [weak self] in
                 self?.getTimerState() ?? TimerState(timerSet: .init(0, startDate: Date(), endDate: Date()), state: .stop)
             })
-        let onNotificationReceiverPlaySound = DefaultTimerNotificationReceiver {
+        let notificationReceiverSoundAlert = DefaultTimerNotificationReceiver {
             WKInterfaceDevice.current().play(.notification)
         }
         return UNUserNotificationCenterDelegateComposite(delegates: [
-            UserNotificationsReceiver(receiver: onNotificationReceiverPlaySound),
-            UserNotificationsReceiver(receiver: onNotificationReceiverStartProcess)
+            UserNotificationsReceiver(receiver: notificationReceiverSoundAlert),
+            UserNotificationsReceiver(receiver: notificationReceiverProcess)
         ])
     }
     
