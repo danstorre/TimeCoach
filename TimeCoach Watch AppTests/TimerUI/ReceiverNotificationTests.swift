@@ -17,7 +17,6 @@ final class ReceiverNotificationProcessTests: XCTestCase {
     
     func test_receiveNotificationDoesNotSendAnyMessagesOnNonTimerState() {
         let spy = TimerStateSpy()
-        let timerState = createAnyTimerState()
         let getTimerState: () -> TimerState? = { .none }
         let sut: TimerNotificationReceiver = TimerNotificationReceiverFactory
             .notificationReceiverProcessWith(timerStateSaver: spy, timerStoreNotifier: spy, getTimerState: getTimerState)
