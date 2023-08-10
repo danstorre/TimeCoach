@@ -11,9 +11,14 @@ struct CircularTimerWidget: View {
             .progressViewStyle(.circular)
             .tint(.blue)
         } else {
-            ProgressView("", value: 1, total: 1)
-                .progressViewStyle(.circular)
-                .tint(.blue)
+            ProgressView(value: 1, label: {
+                Image("widgetIcon-centered")
+                    .resizable()
+                    .frame(width: 32.0, height: 32.0)
+                    .tint(.blue)
+            })
+            .progressViewStyle(.circular)
+            .tint(.blue)
         }
     }
 }
