@@ -107,6 +107,19 @@ final class StateTimerAcceptanceTests: XCTestCase {
         ])
     }
     
+    func test_onBackgroundEvent_shouldSendMessageToStartNotificationAndSaveStateProcess() {
+        let currentDate = Date()
+        let (sut, spy) = makeSUT(currentDate: { currentDate })
+        let expected = createAnyTimerState(using: .pomodoroSet(date: currentDate), on: .stop)
+        
+        sut.goToBackground()
+        
+        XCTAssertEqual(spy.receivedMessages, [
+            .saveStateTimer(value: expected),
+            .notifySavedTimer
+        ])
+    }
+    
     // MARK: - Helpers
     private func makeSUT(currentDate: @escaping () -> Date = Date.init) -> (sut: TimeCoach_Watch_AppApp, spy: Spy) {
         let spy = Spy(currenDate: currentDate())
@@ -181,7 +194,7 @@ final class StateTimerAcceptanceTests: XCTestCase {
         }
         
         var currentSetElapsedTime: TimeInterval = 0.0
-        var state: LifeCoach.TimerCoutdownState = .pause
+        var state: LifeCoach.TimerCoutdownState = .stop
         
         private(set) var receivedCompletions = [StartCoundownCompletion]()
         private(set) var receivedMessages = [AnyMessage]()
