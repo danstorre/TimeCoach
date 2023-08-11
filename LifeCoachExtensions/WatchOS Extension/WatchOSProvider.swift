@@ -25,34 +25,27 @@ public class WatchOSProvider: WatchOSProviderProtocol {
     }
     
     public func getSnapshot(completion: @escaping (Timeline<TimerEntry>) -> ()) {
-        guard let state = try? stateLoader.load() else {
-            completion(idleTimeLine())
-            return
-        }
-        
-        switch getEvent(from: state, andCurrentDate: currentDate) {
-        case let .showTimerWith(values: values):
-            completion(runningTimeLine(with: values))
-        case .showIdle:
-            completion(idleTimeLine())
-        }
+        completion(getTimeLine())
     }
     
     public func getTimeline(completion: @escaping (Timeline<TimerEntry>) -> ()) {
+        completion(getTimeLine())
+    }
+    
+    // MARK: - Helpers
+    private func getTimeLine() -> Timeline<TimerEntry> {
         guard let state = try? stateLoader.load() else {
-            completion(idleTimeLine())
-            return
+            return idleTimeLine()
         }
         
         switch getEvent(from: state, andCurrentDate: currentDate) {
         case let .showTimerWith(values: values):
-            completion(runningTimeLine(with: values))
+            return runningTimeLine(with: values)
         case .showIdle:
-            completion(idleTimeLine())
+            return idleTimeLine()
         }
     }
     
-    // MARK: - Helpers
     private func idleTimeLine() -> Timeline<TimerEntry> {
         var entries: [TimerEntry] = []
 
