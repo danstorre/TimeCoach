@@ -38,7 +38,7 @@ struct TimeCoachWidget: Widget {
 
 struct TimeCoachWidget_Previews: PreviewProvider {
     static var previews: some View {
-        TimeCoachWidgetEntryView(entry: TimerEntry.createEntry())
+        TimeCoachWidgetEntryView(entry: TimerEntry.createEntry(from: .init()))
             .previewContext(WidgetPreviewContext(family: .accessoryRectangular))
     }
 }
