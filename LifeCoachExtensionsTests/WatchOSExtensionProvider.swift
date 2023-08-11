@@ -107,6 +107,16 @@ final class WatchOSExtensionProvider: XCTestCase {
         }
     }
     
+    func test_getSnapshot_onLoaderErrorDeliversEmptyTimerEntry() {
+        let currentDate = Date()
+        let (sut, _) = makeSUT(currentDate: { currentDate })
+        let idleTimelineEntry = TimerEntry(date: currentDate, timerPresentationValues: .none, isIdle: true)
+        
+        let timeLineResult = sut.getSnapshotResult()
+        
+        assertCorrectTimeLine(with: idleTimelineEntry, from: timeLineResult)
+    }
+    
     // MARK: - Helpers
     private func makeSUT(currentDate: @escaping () -> Date, file: StaticString = #filePath, line: UInt = #line) -> (sut: WatchOSProviderProtocol, spy: Spy) {
         let spy = Spy()
@@ -154,6 +164,14 @@ private extension WatchOSProviderProtocol {
     func getTimeLineResult() -> Timeline<TimerEntry>? {
         var receivedEntry: Timeline<TimerEntry>?
         getTimeline() { entry in
+            receivedEntry = entry
+        }
+        return receivedEntry
+    }
+    
+    func getSnapshotResult() -> Timeline<TimerEntry>? {
+        var receivedEntry: Timeline<TimerEntry>?
+        getSnapshot() { entry in
             receivedEntry = entry
         }
         return receivedEntry
