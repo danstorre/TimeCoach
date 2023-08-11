@@ -29,8 +29,12 @@ public class WatchOSProvider: WatchOSProviderProtocol {
             completion(idleTimeLine())
             return
         }
-        if case let .showTimerWith(values: values) = getEvent(from: state, andCurrentDate: currentDate) {
+        
+        switch getEvent(from: state, andCurrentDate: currentDate) {
+        case let .showTimerWith(values: values):
             completion(runningTimeLine(with: values))
+        case .showIdle:
+            completion(idleTimeLine())
         }
     }
     

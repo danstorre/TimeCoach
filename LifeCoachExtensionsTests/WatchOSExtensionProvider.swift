@@ -140,6 +140,25 @@ final class WatchOSExtensionProvider: XCTestCase {
         assertCorrectTimeLine(with: runningTimeLineEntry, from: timeLineResult)
     }
     
+    func test_getSnapshot_onLoadIdleTimerStateDeliversCorrectIsIdleTimeLineEntry() {
+        let currentDate = Date()
+        let (sut, spy) = makeSUT(currentDate: { currentDate })
+        
+        let pauseState = makeAnyTimerState(startDate: currentDate, state: .pause)
+        let stopState = makeAnyTimerState(startDate: currentDate, state: .stop)
+        
+        let samples = [pauseState, stopState]
+        
+        samples.forEach { sample in
+            let idleTimelineEntry = TimerEntry(date: currentDate, timerPresentationValues: .none, isIdle: true)
+            spy.loadsSuccess(with: sample)
+            
+            let timeLineResult = sut.getSnapshotResult()
+            
+            assertCorrectTimeLine(with: idleTimelineEntry, from: timeLineResult)
+        }
+    }
+    
     // MARK: - Helpers
     private func makeSUT(currentDate: @escaping () -> Date, file: StaticString = #filePath, line: UInt = #line) -> (sut: WatchOSProviderProtocol, spy: Spy) {
         let spy = Spy()
