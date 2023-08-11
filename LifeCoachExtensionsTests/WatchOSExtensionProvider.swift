@@ -77,6 +77,25 @@ final class WatchOSExtensionProvider: XCTestCase {
         XCTAssertEqual(timerEntryResult, expected)
     }
     
+    func test_placeholder_onLoadIdleTimerStateDeliversCorrectIsIdleTimerEntry() {
+        let currentDate = Date()
+        let (sut, spy) = makeSUT(currentDate: { currentDate })
+        
+        let pauseState = makeAnyTimerState(startDate: currentDate, state: .pause)
+        let stopState = makeAnyTimerState(startDate: currentDate, state: .stop)
+        
+        let samples = [pauseState, stopState]
+        
+        samples.forEach { sample in
+            let expected = TimerEntry(date: currentDate, timerPresentationValues: .none, isIdle: true)
+            spy.loadsSuccess(with: sample)
+            
+            let timerEntryResult = sut.placeholder()
+            
+            XCTAssertEqual(timerEntryResult, expected)
+        }
+    }
+    
     // MARK: - Helpers
     private func makeSUT(currentDate: @escaping () -> Date, file: StaticString = #filePath, line: UInt = #line) -> (sut: WatchOSProviderProtocol, spy: Spy) {
         let spy = Spy()

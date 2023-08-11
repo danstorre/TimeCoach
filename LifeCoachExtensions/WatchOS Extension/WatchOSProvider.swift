@@ -15,13 +15,17 @@ public class WatchOSProvider: WatchOSProviderProtocol {
         guard let state = try? stateLoader.load() else {
             return TimerEntry.createEntry(from: currentDate())
         }
+        
         let showEvent = getEvent(from: state, andCurrentDate: currentDate)
         
-        if case let .showTimerWith(values: values) = showEvent {
+        switch showEvent {
+        case let .showTimerWith(values: values):
             return TimerEntry(date: currentDate(), timerPresentationValues: values, isIdle: false)
+        case .showIdle:
+            return TimerEntry(date: currentDate(), timerPresentationValues: .none, isIdle: true)
+        case .none:
+            fatalError("missing .none showEvent assertion")
         }
-        
-        fatalError("missing assertion on idle state")
     }
     
     public func getTimeline(completion: @escaping (Timeline<TimerEntry>) -> ()) {
