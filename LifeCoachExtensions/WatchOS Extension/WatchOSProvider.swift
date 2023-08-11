@@ -30,13 +30,11 @@ public class WatchOSProvider: WatchOSProviderProtocol {
         guard let state = try? stateLoader.load() else {
             return
         }
-        let showEvent = getEvent(from: state, andCurrentDate: currentDate)
         
-        if case let .showTimerWith(values: values) = showEvent {
+        switch getEvent(from: state, andCurrentDate: currentDate) {
+        case let .showTimerWith(values: values):
             completion(runningTimeLine(with: values))
-        }
-        
-        if case .showIdle = showEvent {
+        case .showIdle:
             completion(idleTimeLine())
         }
     }
