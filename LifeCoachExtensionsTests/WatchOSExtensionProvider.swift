@@ -54,6 +54,15 @@ final class WatchOSExtensionProvider: XCTestCase {
         XCTAssertEqual(spy.loadStateCallCount, 1, "should have called load state")
     }
     
+    func test_placeholder_onLoaderErrorDeliversEmptyTimerEntry() {
+        let currentDate = Date()
+        let (sut, _) = makeSUT(currentDate: { currentDate })
+        
+        let result = sut.placeholder()
+        
+        XCTAssertEqual(result, TimerEntry.createEntry(from: currentDate), "should have called load state")
+    }
+    
     func test_placeholder_onLoadTimerStateRunningDeliversCorrectTimerEntry() {
         let currentDate = Date()
         let endDate = currentDate.adding(seconds: 1)
@@ -102,10 +111,11 @@ final class WatchOSExtensionProvider: XCTestCase {
 extension TimerEntry: CustomStringConvertible {
     public var description: String {
         """
-values related to currenrDate:
+values related to currentDate:
 startDate: \(String(describing: timerPresentationValues?.starDate)),
 endDate: \(String(describing: timerPresentationValues?.endDate)),
-and progress: \(String(describing: timerPresentationValues?.progress))
+and progress: \(String(describing: timerPresentationValues?.progress)),
+idle: \(isIdle)
 """
     }
 }

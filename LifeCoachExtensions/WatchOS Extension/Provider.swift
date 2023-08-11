@@ -9,11 +9,11 @@ public struct Provider: TimelineProvider {
     }
     
     public func placeholder(in context: Context) -> TimerEntry {
-        TimerEntry.createEntry()
+        TimerEntry.createEntry(from: Date())
     }
 
     public func getSnapshot(in context: Context, completion: @escaping (TimerEntry) -> ()) {
-        completion(TimerEntry.createEntry())
+        completion(TimerEntry.createEntry(from: Date()))
     }
 
     public func getTimeline(in context: Context, completion: @escaping (Timeline<TimerEntry>) -> ()) {

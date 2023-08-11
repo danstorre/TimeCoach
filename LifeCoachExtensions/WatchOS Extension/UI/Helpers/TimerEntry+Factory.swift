@@ -1,7 +1,7 @@
 import Foundation
 
 extension TimerEntry {
-    public static func createEntry() -> TimerEntry {
-        TimerEntry(date: .init(), isIdle: true)
+    public static func createEntry(from date: Date) -> TimerEntry {
+        TimerEntry(date: date, isIdle: true)
     }
 }

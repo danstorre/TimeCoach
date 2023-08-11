@@ -13,7 +13,7 @@ public class WatchOSProvider: WatchOSProviderProtocol {
     
     public func placeholder() -> TimerEntry {
         guard let state = try? stateLoader.load() else {
-            fatalError("missing assertion on state load none result")
+            return TimerEntry.createEntry(from: currentDate())
         }
         let showEvent = getEvent(from: state, andCurrentDate: currentDate)
         
