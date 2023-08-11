@@ -693,6 +693,21 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		FB118E692A86D40900474AC1 /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "New Group";
+			sourceTree = "<group>";
+		};
+		FB118E6A2A86D42500474AC1 /* Infrastructure Process */ = {
+			isa = PBXGroup;
+			children = (
+				FB05D9BB2A83DB2600EA0AE8 /* ReceiverNotificationTests.swift */,
+			);
+			path = "Infrastructure Process";
+			sourceTree = "<group>";
+		};
 		FB4AA13E29379D9F0076FED9 /* Timer Feature */ = {
 			isa = PBXGroup;
 			children = (
@@ -1166,13 +1181,13 @@
 		FBE9A92E2939247A00D8BF29 /* TimerUI */ = {
 			isa = PBXGroup;
 			children = (
+				FB118E692A86D40900474AC1 /* New Group */,
 				FB4B89602A3BBB5F0088DB5B /* Helpers */,
 				FB4AA1322936EB9A0076FED9 /* TimerUIIntegrationTests.swift */,
 				FBE9A9DD29396EA100D8BF29 /* TimeCoachAcceptanceTests.swift */,
 				FB4B895C2A3BB9D90088DB5B /* SaveTimerAcceptanceTests.swift */,
 				FB4B895E2A3BBB090088DB5B /* LoadTimerAcceptanceTests.swift */,
 				FBCD0A8A2A8188B000086476 /* StateTimerAcceptanceTests.swift */,
-				FB05D9BB2A83DB2600EA0AE8 /* ReceiverNotificationTests.swift */,
 			);
 			path = TimerUI;
 			sourceTree = "<group>";
@@ -1196,6 +1211,7 @@
 			isa = PBXGroup;
 			children = (
 				FBE593F32A784D4D00069F1C /* Helpers */,
+				FB118E6A2A86D42500474AC1 /* Infrastructure Process */,
 				FB59260E2A76FECC0011D53E /* User Notification Scheduler */,
 				FBE9A92E2939247A00D8BF29 /* TimerUI */,
 			);
