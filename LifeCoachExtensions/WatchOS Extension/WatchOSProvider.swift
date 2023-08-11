@@ -16,9 +16,7 @@ public class WatchOSProvider: WatchOSProviderProtocol {
             return TimerEntry.createEntry(from: currentDate())
         }
         
-        let showEvent = getEvent(from: state, andCurrentDate: currentDate)
-        
-        switch showEvent {
+        switch getEvent(from: state, andCurrentDate: currentDate) {
         case let .showTimerWith(values: values):
             return TimerEntry(date: currentDate(), timerPresentationValues: values, isIdle: false)
         case .showIdle:
