@@ -28,6 +28,7 @@ public class WatchOSProvider: WatchOSProviderProtocol {
     
     public func getTimeline(completion: @escaping (Timeline<TimerEntry>) -> ()) {
         guard let state = try? stateLoader.load() else {
+            completion(idleTimeLine())
             return
         }
         

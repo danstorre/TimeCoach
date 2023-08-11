@@ -12,6 +12,17 @@ final class WatchOSExtensionProvider: XCTestCase {
         XCTAssertEqual(spy.loadStateCallCount, 1, "should have called load state")
     }
     
+    func test_getTimeline_onLoaderErrorDeliversIsIdleTimeLineEntry() {
+        let currentDate = Date()
+        let (sut, _) = makeSUT(currentDate: { currentDate })
+        let idleTimelineEntry = TimerEntry(date: currentDate, timerPresentationValues: .none, isIdle: true)
+        
+        sut.getTimeline() { _ in }
+        
+        let timeLineResult = sut.getTimeLineResult()
+        assertCorrectTimeLine(with: idleTimelineEntry, from: timeLineResult)
+    }
+    
     func test_getTimeLine_onLoadTimerStateRunningDeliversCorrectTimeLineEntry() {
         let currentDate = Date()
         let endDate = currentDate.adding(seconds: 1)
