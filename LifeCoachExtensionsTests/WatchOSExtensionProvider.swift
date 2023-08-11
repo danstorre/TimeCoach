@@ -26,12 +26,9 @@ final class WatchOSExtensionProvider: XCTestCase {
     func test_getTimeLine_onLoadTimerStateRunningDeliversCorrectTimeLineEntry() {
         let currentDate = Date()
         let endDate = currentDate.adding(seconds: 1)
-        let timerPresentationValues = TimerPresentationValues(starDate: currentDate, endDate: endDate, progress: 1)
+        let runningTimeLineEntry = createTimerEntry(currentDate: currentDate, endDate: endDate, isIdle: false)
         let (sut, spy) = makeSUT(currentDate: { currentDate })
-        let runningState = makeAnyTimerState(seconds: 0, startDate: currentDate, endDate: endDate, state: .running)
-        
-        let runningTimeLineEntry = TimerEntry(date: currentDate, timerPresentationValues: timerPresentationValues, isIdle: false)
-        spy.loadsSuccess(with: runningState)
+        spy.loadsSuccess(with: makeAnyTimerState(seconds: 0, startDate: currentDate, endDate: endDate, state: .running))
         
         let timeLineResult = sut.getTimeLineResult()
         
@@ -77,15 +74,13 @@ final class WatchOSExtensionProvider: XCTestCase {
     func test_placeholder_onLoadTimerStateRunningDeliversCorrectTimerEntry() {
         let currentDate = Date()
         let endDate = currentDate.adding(seconds: 1)
-        let timerPresentationValues = TimerPresentationValues(starDate: currentDate, endDate: endDate, progress: 1)
+        let runningTimeLineEntry = createTimerEntry(currentDate: currentDate, endDate: endDate, isIdle: false)
         let (sut, spy) = makeSUT(currentDate: { currentDate })
-        let runningState = makeAnyTimerState(seconds: 0, startDate: currentDate, endDate: endDate, state: .running)
-        let expected = TimerEntry(date: currentDate, timerPresentationValues: timerPresentationValues, isIdle: false)
-        spy.loadsSuccess(with: runningState)
+        spy.loadsSuccess(with: makeAnyTimerState(seconds: 0, startDate: currentDate, endDate: endDate, state: .running))
         
         let timerEntryResult = sut.placeholder()
         
-        XCTAssertEqual(timerEntryResult, expected)
+        XCTAssertEqual(timerEntryResult, runningTimeLineEntry)
     }
     
     func test_placeholder_onLoadIdleTimerStateDeliversCorrectIsIdleTimerEntry() {
@@ -128,11 +123,9 @@ final class WatchOSExtensionProvider: XCTestCase {
     func test_getSnapshot_onLoadTimerStateRunningDeliversCorrectTimerEntry() {
         let currentDate = Date()
         let endDate = currentDate.adding(seconds: 1)
-        let timerPresentationValues = TimerPresentationValues(starDate: currentDate, endDate: endDate, progress: 1)
+        let runningTimeLineEntry = createTimerEntry(currentDate: currentDate, endDate: endDate, isIdle: false)
         let (sut, spy) = makeSUT(currentDate: { currentDate })
-        let runningState = makeAnyTimerState(seconds: 0, startDate: currentDate, endDate: endDate, state: .running)
-        let runningTimeLineEntry = TimerEntry(date: currentDate, timerPresentationValues: timerPresentationValues, isIdle: false)
-        spy.loadsSuccess(with: runningState)
+        spy.loadsSuccess(with: makeAnyTimerState(seconds: 0, startDate: currentDate, endDate: endDate, state: .running))
         
         let timeLineResult = sut.getSnapshotResult()
         
@@ -159,6 +152,11 @@ final class WatchOSExtensionProvider: XCTestCase {
     }
     
     // MARK: - Helpers
+    private func createTimerEntry(currentDate: Date, endDate: Date, isIdle: Bool) -> TimerEntry {
+        let timerPresentationValues = TimerPresentationValues(starDate: currentDate, endDate: endDate, progress: 1)
+        return TimerEntry(date: currentDate, timerPresentationValues: timerPresentationValues, isIdle: isIdle)
+    }
+    
     private func makeSUT(currentDate: @escaping () -> Date, file: StaticString = #filePath, line: UInt = #line) -> (sut: WatchOSProviderProtocol, spy: Spy) {
         let spy = Spy()
         let sut = WatchOSProvider(stateLoader: spy, currentDate: currentDate)
