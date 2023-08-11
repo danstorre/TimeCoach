@@ -49,9 +49,23 @@ final class WatchOSExtensionProvider: XCTestCase {
     func test_placeholder_messagesLoadState() {
         let (sut, spy) = makeSUT(currentDate: { Date() })
         
-        sut.placeholder()
+        _ = sut.placeholder()
         
         XCTAssertEqual(spy.loadStateCallCount, 1, "should have called load state")
+    }
+    
+    func test_placeholder_onLoadTimerStateRunningDeliversCorrectTimerEntry() {
+        let currentDate = Date()
+        let endDate = currentDate.adding(seconds: 1)
+        let timerPresentationValues = TimerPresentationValues(starDate: currentDate, endDate: endDate, progress: 1)
+        let (sut, spy) = makeSUT(currentDate: { currentDate })
+        let runningState = makeAnyTimerState(seconds: 0, startDate: currentDate, endDate: endDate, state: .running)
+        let runningTimeLineEntry = TimerEntry(date: currentDate, timerPresentationValues: timerPresentationValues, isIdle: false)
+        spy.loadsSuccess(with: runningState)
+        
+        let timerEntryResult = sut.placeholder()
+        
+        XCTAssertEqual(timerEntryResult, runningTimeLineEntry)
     }
     
     // MARK: - Helpers

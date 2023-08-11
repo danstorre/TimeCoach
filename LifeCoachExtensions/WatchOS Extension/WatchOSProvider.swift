@@ -11,8 +11,17 @@ public class WatchOSProvider: WatchOSProviderProtocol {
         self.currentDate = currentDate
     }
     
-    public func placeholder() {
-        _ = try? stateLoader.load()
+    public func placeholder() -> TimerEntry {
+        guard let state = try? stateLoader.load() else {
+            fatalError("missing assertion on state load none result")
+        }
+        let showEvent = getEvent(from: state, andCurrentDate: currentDate)
+        
+        if case let .showTimerWith(values: values) = showEvent {
+            return TimerEntry(date: currentDate(), timerPresentationValues: values, isIdle: false)
+        }
+        
+        fatalError("missing assertion on idle state")
     }
     
     public func getTimeline(completion: @escaping (Timeline<TimerEntry>) -> ()) {
