@@ -113,7 +113,6 @@ final class WatchOSExtensionProvider: XCTestCase {
     func test_getSnapshot_onLoaderErrorDeliversEmptyTimerEntry() {
         let currentDate = Date()
         let (sut, _) = makeSUT(currentDate: { currentDate })
-        let idleTimelineEntry = TimerEntry(date: currentDate, timerPresentationValues: .none, isIdle: true)
         
         let timerEntryResult = sut.getSnapshotResult()
         
