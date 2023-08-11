@@ -46,6 +46,14 @@ final class WatchOSExtensionProvider: XCTestCase {
         }
     }
     
+    func test_placeholder_messagesLoadState() {
+        let (sut, spy) = makeSUT(currentDate: { Date() })
+        
+        sut.placeholder()
+        
+        XCTAssertEqual(spy.loadStateCallCount, 1, "should have called load state")
+    }
+    
     // MARK: - Helpers
     private func makeSUT(currentDate: @escaping () -> Date, file: StaticString = #filePath, line: UInt = #line) -> (sut: WatchOSProviderProtocol, spy: Spy) {
         let spy = Spy()

@@ -11,6 +11,10 @@ public class WatchOSProvider: WatchOSProviderProtocol {
         self.currentDate = currentDate
     }
     
+    public func placeholder() {
+        _ = try? stateLoader.load()
+    }
+    
     public func getTimeline(completion: @escaping (Timeline<TimerEntry>) -> ()) {
         guard let state = try? stateLoader.load() else {
             return
