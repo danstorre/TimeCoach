@@ -23,8 +23,6 @@ public class WatchOSProvider: WatchOSProviderProtocol {
             return TimerEntry(date: currentDate(), timerPresentationValues: values, isIdle: false)
         case .showIdle:
             return TimerEntry(date: currentDate(), timerPresentationValues: .none, isIdle: true)
-        case .none:
-            fatalError("missing .none showEvent assertion")
         }
     }
     
@@ -60,10 +58,10 @@ public class WatchOSProvider: WatchOSProviderProtocol {
         return Timeline(entries: entries, policy: .never)
     }
     
-    private func getEvent(from state: TimerState, andCurrentDate: @escaping () -> Date) -> TimerGlanceViewModel.TimerStatusEvent? {
+    private func getEvent(from state: TimerState, andCurrentDate: @escaping () -> Date) -> TimerGlanceViewModel.TimerStatusEvent {
         let viewModel = TimerGlanceViewModel(currentDate: currentDate)
         
-        var receivedEvent: TimerGlanceViewModel.TimerStatusEvent?
+        var receivedEvent: TimerGlanceViewModel.TimerStatusEvent = .showIdle
         viewModel.onStatusCheck = { event in
             receivedEvent = event
         }
