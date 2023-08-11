@@ -8,7 +8,7 @@ extension FoundationTimerCountdown: TimerLoad {
         currentSet = .init(currentSet.elapsedSeconds + elapsed.rounded(), startDate: currentSet.startDate, endDate: currentSet.endDate)
         
         timerDelivery?(
-            .success(currentSet)
+            .success((currentTimerSet, state))
         )
         startCountdown(completion: timerDelivery ?? { _ in })
         self.timeAtSave = nil

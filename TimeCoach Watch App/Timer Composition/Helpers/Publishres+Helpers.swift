@@ -2,10 +2,10 @@ import Foundation
 import Combine
 import LifeCoach
 
-extension Publisher where Output == TimerSet {
-    func saveTimerState(saver timerStateSaver: SaveTimerState) -> AnyPublisher<TimerSet, Failure> {
-        self.handleEvents(receiveOutput: { timerSet in
-            try? timerStateSaver.save(state: TimerState(timerSet: timerSet, state: .running))
+extension Publisher where Output == TimerState {
+    func saveTimerState(saver timerStateSaver: SaveTimerState) -> AnyPublisher<TimerState, Failure> {
+        self.handleEvents(receiveOutput: { timerState in
+            try? timerStateSaver.save(state: timerState)
         })
         .eraseToAnyPublisher()
     }
@@ -60,7 +60,7 @@ extension Publisher where Output == Void {
 }
 
 extension Publisher where Output == Void {
-    func flatsToTimerSetPublisher(_ currentSetPublisher: CurrentValueSubject<TimerSet, Error>) -> AnyPublisher<TimerSet, Failure> {
+    func flatsToTimerSetPublisher(_ currentSetPublisher: CurrentValueSubject<TimerState, Error>) -> AnyPublisher<TimerState, Failure> {
         self.flatMap({ _ in
             Just(currentSetPublisher.value)
         })
@@ -68,18 +68,18 @@ extension Publisher where Output == Void {
     }
 }
 
-extension Publisher where Output == TimerSet {
-    func scheduleTimerNotfication(scheduler: TimerNotificationScheduler) -> AnyPublisher<TimerSet, Failure> {
-        handleEvents(receiveOutput: { timerSet in
-            try? scheduler.scheduleNotification(from: timerSet)
+extension Publisher where Output == TimerState {
+    func scheduleTimerNotfication(scheduler: TimerNotificationScheduler) -> AnyPublisher<TimerState, Failure> {
+        handleEvents(receiveOutput: { timerState in
+            try? scheduler.scheduleNotification(from: timerState.timerSet)
         })
         .eraseToAnyPublisher()
     }
 }
 
-extension Publisher where Output == TimerSet {
-    func notifySavedTimer(notifier timerSavedNofitier: TimerStoreNotifier) -> AnyPublisher<TimerSet, Failure> {
-        handleEvents(receiveOutput: { timerSet in
+extension Publisher where Output == TimerState {
+    func notifySavedTimer(notifier timerSavedNofitier: TimerStoreNotifier) -> AnyPublisher<TimerState, Failure> {
+        handleEvents(receiveOutput: { _ in
             timerSavedNofitier.storeSaved()
         })
         .eraseToAnyPublisher()

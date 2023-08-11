@@ -59,22 +59,22 @@ class TimerCountdownSpy: TimerCoutdown {
     
     func flushPomodoroTimes(at index: Int) {
         pomodoroStubs.forEach { stub in
-            receivedStartCountdownCompletions[index](.success(stub().toLocal()))
+            receivedStartCountdownCompletions[index](.success((stub().toLocal(), .running)))
         }
     }
     
     func flushBreakTimes(at index: Int) {
         breakStubs.forEach { stub in
-            receivedStartCountdownCompletions[index](.success(stub().toLocal()))
+            receivedStartCountdownCompletions[index](.success((stub().toLocal(), .running)))
         }
     }
     
     func completeSuccessfullyOnSkip(at index: Int = 0) {
-        receivedSkipCountdownCompletions[index](.success(breakResponse(0).toLocal()))
+        receivedSkipCountdownCompletions[index](.success((breakResponse(0).toLocal(), .stop)))
     }
     
     func completeSuccessfullyOnPomodoroStop(at index: Int = 0) {
-        receivedStartCountdownCompletions[index](.success(pomodoroResponse(0).toLocal()))
+        receivedStartCountdownCompletions[index](.success((pomodoroResponse(0).toLocal(), .stop)))
     }
     
     static func delivers(after seconds: ClosedRange<TimeInterval>,

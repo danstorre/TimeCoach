@@ -3,11 +3,11 @@ import LifeCoach
 import Combine
 
 final class TimerAdapter {
-    private let loader: () -> AnyPublisher<TimerSet, Error>
+    private let loader: () -> AnyPublisher<TimerState, Error>
     private var cancellable: Cancellable?
     private let deliveredElapsedTime: (TimerSet) -> Void
     
-    init(loader: @escaping () -> AnyPublisher<TimerSet, Error>,
+    init(loader: @escaping () -> AnyPublisher<TimerState, Error>,
          deliveredElapsedTime: @escaping (TimerSet) -> Void) {
         self.loader = loader
         self.deliveredElapsedTime = deliveredElapsedTime
@@ -15,6 +15,7 @@ final class TimerAdapter {
     
     private func subscribe() {
         cancellable = loader()
+            .map({ $0.timerSet })
             .sink(
                 receiveCompletion: { _ in },
                 receiveValue: { [weak self] elapsed in

@@ -8,7 +8,7 @@ public class PomodoroTimer: RegularTimer {
         case timerError
     }
     
-    public typealias Result = Swift.Result<TimerSet, Error>
+    public typealias Result = Swift.Result<TimerState, Error>
     
     public init(timer: TimerCoutdown, timeReceiver: @escaping (Result) -> Void) {
         self.timer = timer
@@ -47,10 +47,21 @@ public class PomodoroTimer: RegularTimer {
     
     private static func resolveResult(result: TimerCoutdown.Result) -> Result {
         switch result {
-        case let .success(localTimerSet):
-            return .success(localTimerSet.toElapseSeconds)
+        case let .success((localTimerSet, localState)):
+            return .success(TimerState(timerSet: localTimerSet.toElapseSeconds, state: localState.model))
         case .failure:
             return .failure(.timerError)
+        }
+    }
+}
+
+
+private extension TimerCoutdownState {
+    var model: TimerState.State {
+        switch self {
+        case .pause: return .pause
+        case .stop: return .stop
+        case .running: return .running
         }
     }
 }

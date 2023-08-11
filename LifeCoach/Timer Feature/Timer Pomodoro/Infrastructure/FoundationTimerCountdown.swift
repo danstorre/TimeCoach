@@ -1,9 +1,6 @@
 import Foundation
 
 public final class FoundationTimerCountdown: TimerCoutdown {
-    public typealias StartCoundownCompletion = (Result<LocalTimerSet, Error>) -> Void
-    public typealias SkipCoundownCompletion = (Result<LocalTimerSet, Error>) -> Void
-    
     public private(set) var state: TimerCoutdownState = .stop
     private var setA: LocalTimerSet
     private var setB: LocalTimerSet
@@ -39,9 +36,9 @@ public final class FoundationTimerCountdown: TimerCoutdown {
     
     public func stopCountdown() {
         currentSet = LocalTimerSet(0, startDate: currentSet.startDate, endDate: currentSet.endDate)
-        timerDelivery?(.success(currentSet))
-        invalidatesTimer()
         state = .stop
+        timerDelivery?(.success((currentTimerSet, state)))
+        invalidatesTimer()
     }
     
     public func pauseCountdown() {
@@ -49,7 +46,7 @@ public final class FoundationTimerCountdown: TimerCoutdown {
         state = .pause
     }
     
-    public func skipCountdown(completion: @escaping SkipCoundownCompletion) {
+    public func skipCountdown(completion: @escaping SkipCountdownCompletion) {
         timerDelivery = completion
         executeNextSet()
     }
@@ -65,11 +62,11 @@ public final class FoundationTimerCountdown: TimerCoutdown {
         guard hasNotHitThreshold() else {
             invalidatesTimer()
             state = .stop
-            timerDelivery?(.success(currentSet))
+            timerDelivery?(.success((currentTimerSet, state)))
             return
         }
         
-        timerDelivery?(.success(currentSet))
+        timerDelivery?(.success((currentTimerSet, state)))
     }
     
     private func hasNotHitThreshold() -> Bool {
@@ -83,7 +80,7 @@ public final class FoundationTimerCountdown: TimerCoutdown {
         state = .stop
         setA = currentSet
         currentSet = setB
-        timerDelivery?(.success(setB))
+        timerDelivery?(.success((setB, state)))
         setB = setA
     }
     

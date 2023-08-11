@@ -122,8 +122,8 @@ final class FoundationTimerCountdownTests: XCTestCase {
         var receivedElapsedSeconds = [LocalTimerSet]()
         
         sut.startCountdown() { result in
-            if case let .success(elapsedSeconds) = result {
-                receivedElapsedSeconds.append(elapsedSeconds)
+            if case let .success((timerSet, _)) = result {
+                receivedElapsedSeconds.append(timerSet)
             }
         }
         XCTAssertEqual(receivedElapsedSeconds, [])
@@ -220,8 +220,8 @@ final class FoundationTimerCountdownTests: XCTestCase {
         var receivedElapsedSeconds = [LocalTimerSet]()
         let expectation = expectation(description: "wait for skip countdown to deliver time.")
         sut.skipCountdown() { result in
-            if case let .success(deliveredElapsedSeconds) = result {
-                receivedElapsedSeconds.append(deliveredElapsedSeconds)
+            if case let .success((timerSet, _)) = result {
+                receivedElapsedSeconds.append(timerSet)
             }
             expectation.fulfill()
         }
@@ -232,8 +232,8 @@ final class FoundationTimerCountdownTests: XCTestCase {
     private func receivedElapsedSecondsOnRunningState(from sut: TimerCoutdown, when action: () -> Void) -> [LocalTimerSet] {
         var receivedElapsedSeconds = [LocalTimerSet]()
         sut.startCountdown() { result in
-            if case let .success(deliveredElapsedSeconds) = result {
-                receivedElapsedSeconds.append(deliveredElapsedSeconds)
+            if case let .success((timerSet, _)) = result {
+                receivedElapsedSeconds.append(timerSet)
             }
         }
 
@@ -273,8 +273,8 @@ final class FoundationTimerCountdownTests: XCTestCase {
         expectation.expectedFulfillmentCount = deliverExpectation.count
         
         sut.startCountdown() { result in
-            if case let .success(deliveredElapsedSeconds) = result {
-                receivedElapsedSeconds.append(deliveredElapsedSeconds)
+            if case let .success((timerSet, _)) = result {
+                receivedElapsedSeconds.append(timerSet)
             }
             expectation.fulfill()
         }

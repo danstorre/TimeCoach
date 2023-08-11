@@ -14,7 +14,9 @@ class TimeCoachRoot {
     private var currenDate: () -> Date = Date.init
     var timerCountdown: TimerCoutdown?
     private var regularTimer: RegularTimer?
-    private lazy var currentSubject: RegularTimer.CurrentValuePublisher = .init(TimerSet.init(0, startDate: .init(), endDate: .init()))
+    private lazy var currentSubject: RegularTimer.CurrentValuePublisher = .init(
+        TimerState(timerSet: TimerSet.init(0, startDate: .init(), endDate: .init()),
+                   state: .stop))
     
     // Local Timer
     private lazy var stateTimerStore: LocalTimerStore = UserDefaultsTimerStore(storeID: "group.timeCoach.timerState")
@@ -126,18 +128,19 @@ class TimeCoachRoot {
     private struct UnexpectedError: Error {}
     
     private func handlePlay() -> RegularTimer.TimerSetPublisher {
-        let getTimerState = self.getTimerState
         let localTimer = localTimer
         let timerNotificationScheduler = timerNotificationScheduler
         let timerSavedNofitier = timerSavedNofitier
+        
         return playPublisher()
-            .merge(with: Just(getTimerState()!.timerSet)
-                .mapError{ _ in UnexpectedError()}
-                .eraseToAnyPublisher()
-                .saveTimerState(saver: localTimer)
-                .scheduleTimerNotfication(scheduler: timerNotificationScheduler)
-                .notifySavedTimer(notifier: timerSavedNofitier)
-            )
+            .processFirstValue { value in
+                Just(value)
+                    .saveTimerState(saver: localTimer)
+                    .scheduleTimerNotfication(scheduler: timerNotificationScheduler)
+                    .notifySavedTimer(notifier: timerSavedNofitier)
+                    .subscribe(Subscribers.Sink(receiveCompletion: { _ in
+                    }, receiveValue: { _ in }))
+            }
             .eraseToAnyPublisher()
     }
     
@@ -171,22 +174,21 @@ class TimeCoachRoot {
     
     private func handleSkip() -> RegularTimer.TimerSetPublisher {
         let localTimer = localTimer
-        let timerCountdown = timerCountdown
         let currentSubject = currentSubject
         let timerSavedNofitier = timerSavedNofitier
         let unregisterNotifications = unregisterNotifications
         
         return skipPublisher()
-            .merge(with: Just(getTimerState()!.timerSet)
-                .mapError{ _ in UnexpectedError()}
-                .eraseToAnyPublisher()
-                .mapsTimerSetAndState(timerCountdown: timerCountdown!)
-                .saveTimerState(saver: localTimer)
-                .flatsToVoid()
-                .unregisterTimerNotifications(unregisterNotifications)
-                .notifySavedTimer(notifier: timerSavedNofitier)
-                .flatsToTimerSetPublisher(currentSubject)
-            )
+            .processFirstValue { value in
+                Just((value.timerSet, value.state))
+                    .saveTimerState(saver: localTimer)
+                    .flatsToVoid()
+                    .unregisterTimerNotifications(unregisterNotifications)
+                    .notifySavedTimer(notifier: timerSavedNofitier)
+                    .flatsToTimerSetPublisher(currentSubject)
+                    .subscribe(Subscribers.Sink(receiveCompletion: { _ in
+                    }, receiveValue: { _ in }))
+            }
             .eraseToAnyPublisher()
     }
     
@@ -207,3 +209,19 @@ class TimeCoachRoot {
     }
 }
 
+
+extension Publisher {
+    func processFirstValue(_ process: @escaping (Output) -> Void) -> AnyPublisher<Output, Failure> {
+        var isFirstValue = true
+        
+        return self
+            .map { value in
+                if isFirstValue {
+                    process(value)
+                    isFirstValue = false
+                }
+                return value
+            }
+            .eraseToAnyPublisher()
+    }
+}

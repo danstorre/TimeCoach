@@ -3,8 +3,8 @@ import Combine
 
 extension RegularTimer {
     typealias VoidPublisher = AnyPublisher<Void, Error>
-    typealias TimerSetPublisher = AnyPublisher<TimerSet, Error>
-    typealias CurrentValuePublisher = CurrentValueSubject<TimerSet, Error>
+    typealias TimerSetPublisher = AnyPublisher<TimerState, Error>
+    typealias CurrentValuePublisher = CurrentValueSubject<TimerState, Error>
     
     func stopPublisher() -> VoidPublisher {
         return Deferred {

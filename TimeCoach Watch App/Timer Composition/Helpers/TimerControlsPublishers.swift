@@ -2,15 +2,15 @@ import LifeCoach
 import Combine
 
 public struct TimerControlsPublishers {
-    let playPublisher: () -> AnyPublisher<TimerSet, Error>
-    let skipPublisher: () -> AnyPublisher<TimerSet, Error>
+    let playPublisher: () -> AnyPublisher<TimerState, Error>
+    let skipPublisher: () -> AnyPublisher<TimerState, Error>
     let stopPublisher: () -> AnyPublisher<Void, Error>
     let pausePublisher: () -> AnyPublisher<Void, Error>
     
     let isPlaying: AnyPublisher<Bool, Never>
     
-    public init(playPublisher: @escaping () -> AnyPublisher<TimerSet, Error>,
-                skipPublisher: @escaping () -> AnyPublisher<TimerSet, Error>,
+    public init(playPublisher: @escaping () -> AnyPublisher<TimerState, Error>,
+                skipPublisher: @escaping () -> AnyPublisher<TimerState, Error>,
                 stopPublisher: @escaping () -> AnyPublisher<Void, Error>,
                 pausePublisher: @escaping () -> AnyPublisher<Void, Error>,
                 isPlaying: AnyPublisher<Bool, Never>) {

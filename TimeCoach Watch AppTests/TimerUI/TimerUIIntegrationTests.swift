@@ -124,24 +124,26 @@ final class TimerUIIntegrationTests: XCTestCase {
             }
         }
         
-        typealias PlayPublisher = CurrentValueSubject<TimerSet, Error>
-        typealias SkipPublisher = CurrentValueSubject<TimerSet, Error>
+        typealias PlayPublisher = CurrentValueSubject<TimerState, Error>
+        typealias SkipPublisher = CurrentValueSubject<TimerState, Error>
         typealias StopPublisher = CurrentValueSubject<Void, Error>
         typealias PausePublisher = CurrentValueSubject<Void, Error>
         typealias IsPlayingPublisher = CurrentValueSubject<Bool, Never>
         
-        func play() -> AnyPublisher<TimerSet, Error> {
-            let elapsed = makeElapsedSeconds(0, startDate: Date(), endDate: Date())
-            return PlayPublisher(elapsed).map { elapsed in
+        func play() -> AnyPublisher<TimerState, Error> {
+            let elapsedTimerState = TimerState(timerSet: makeElapsedSeconds(0, startDate: Date(), endDate: Date()),
+                                               state: .running)
+            return PlayPublisher(elapsedTimerState).map { elapsed in
                 self.isPlaying = true
                 self.commandsReceived.append(.play)
                 return elapsed
             }.eraseToAnyPublisher()
         }
         
-        func skip() -> AnyPublisher<TimerSet, Error> {
-            let elapsedTime = makeElapsedSeconds(0, startDate: Date(), endDate: Date())
-            return SkipPublisher(elapsedTime).map { elapsed in
+        func skip() -> AnyPublisher<TimerState, Error> {
+            let elapsedTimerState = TimerState(timerSet: makeElapsedSeconds(0, startDate: Date(), endDate: Date()),
+                                               state: .running)
+            return SkipPublisher(elapsedTimerState).map { elapsed in
                 self.isPlaying = false
                 self.commandsReceived.append(.skip)
                 return elapsed

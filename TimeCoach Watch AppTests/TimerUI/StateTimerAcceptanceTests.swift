@@ -8,6 +8,7 @@ final class StateTimerAcceptanceTests: XCTestCase {
     func test_onLaunch_onToggleUserInteractionShouldStartNotificationAndSaveStateProcess() {
         let (sut, spy) = makeSUT()
         let expected = createAnyTimerState(using: spy.currentTimerSet, on: .running)
+        spy.deliversTimerStateOnToggle((timerSet: expected.localTimerSet, state: expected.state.toInfra))
         
         sut.simulateToggleTimerUserInteraction()
         
@@ -22,9 +23,11 @@ final class StateTimerAcceptanceTests: XCTestCase {
     func test_onLaunch_afterTimerDeliversShouldNotStartNotificationAndSaveStateProcess() {
         let (sut, spy) = makeSUT()
         let expected = createAnyTimerState(using: spy.currentTimerSet, on: .running)
-        spy.deliversSetOnToggle(expected.localTimerSet.adding(1))
+        spy.deliversTimerStateOnToggle((timerSet: expected.localTimerSet, state: expected.state.toInfra))
         
         sut.simulateToggleTimerUserInteraction()
+        
+        spy.deliversSetAfterStart((timerSet: expected.localTimerSet.adding(1), state: expected.state.toInfra))
         
         XCTAssertEqual(spy.receivedMessages, [
             .startTimer,
@@ -57,7 +60,7 @@ final class StateTimerAcceptanceTests: XCTestCase {
         let (sut, spy) = makeSUT(currentDate: { currentDate })
         let anySet = createAnyTimerSet(startingFrom: currentDate, endDate: currentDate.adding(seconds: .pomodoroInSeconds))
         let expected = createAnyTimerState(using: anySet, on: .pause)
-        spy.deliversSetOnToggle(anySet)
+        spy.deliversTimerStateOnToggle((timerSet: expected.localTimerSet, state: expected.state.toInfra))
         sut.timerView.simulateToggleTimerUserInteraction()
         spy.resetMessages()
         
@@ -76,7 +79,7 @@ final class StateTimerAcceptanceTests: XCTestCase {
         let (sut, spy) = makeSUT(currentDate: { currentDate })
         let anySet = createAnyTimerSet(startingFrom: currentDate, endDate: currentDate.adding(seconds: .pomodoroInSeconds))
         let expected = createAnyTimerState(using: anySet, on: .stop)
-        spy.deliversSetOnSkip(anySet)
+        spy.deliversTimerStateOnSkip((timerSet: anySet, state: expected.state.toInfra))
         
         sut.timerView.simulateSkipTimerUserInteraction()
         
@@ -93,11 +96,11 @@ final class StateTimerAcceptanceTests: XCTestCase {
         let (sut, spy) = makeSUT(currentDate: { currentDate })
         let anySet = createAnyTimerSet(startingFrom: currentDate, endDate: currentDate.adding(seconds: .pomodoroInSeconds))
         let expected = createAnyTimerState(using: anySet, on: .stop)
-        spy.deliversSetOnSkip(anySet)
+        spy.deliversTimerStateOnSkip((timerSet: anySet, state: expected.state.toInfra))
         
         sut.timerView.simulateSkipTimerUserInteraction()
         
-        spy.deliversSet(anySet)
+        spy.deliversSetAfterSkip((timerSet: anySet, state: .stop))
         
         XCTAssertEqual(spy.receivedMessages, [
             .skipTimer,
@@ -196,12 +199,12 @@ final class StateTimerAcceptanceTests: XCTestCase {
         var currentSetElapsedTime: TimeInterval = 0.0
         var state: LifeCoach.TimerCoutdownState = .stop
         
-        private(set) var receivedCompletions = [StartCoundownCompletion]()
         private(set) var receivedMessages = [AnyMessage]()
-        private(set) var receivedSkipCompletions = [SkipCountdownCompletion]()
+        private var receivedStartCompletions = [StartCoundownCompletion]()
+        private var receivedSkipCompletions = [SkipCountdownCompletion]()
         
-        private var setOnStart: Result<LocalTimerSet, Error>?
-        private var setOnSkip: Result<LocalTimerSet, Error>?
+        private var timerStateOnStart: TimerCoutdown.Result?
+        private var timerStateOnSkip: TimerCoutdown.Result?
         
         func resetMessages() {
             receivedMessages = []
@@ -211,8 +214,9 @@ final class StateTimerAcceptanceTests: XCTestCase {
         func startCountdown(completion: @escaping StartCoundownCompletion) {
             state = .running
             receivedMessages.append(.startTimer)
-            guard let setOnStart = setOnStart else { return }
-            completion(setOnStart)
+            guard let timerStateOnStart = timerStateOnStart else { return }
+            completion(timerStateOnStart)
+            receivedStartCompletions.append(completion)
         }
         
         func stopCountdown() {
@@ -228,21 +232,25 @@ final class StateTimerAcceptanceTests: XCTestCase {
         func skipCountdown(completion: @escaping SkipCountdownCompletion) {
             state = .stop
             receivedMessages.append(.skipTimer)
-            guard let setOnSkip = setOnSkip else { return }
-            completion(setOnSkip)
+            guard let timerStateOnSkip = timerStateOnSkip else { return }
+            completion(timerStateOnSkip)
             receivedSkipCompletions.append(completion)
         }
         
-        func deliversSetOnToggle(_ set: LocalTimerSet) {
-            setOnStart = .success(set)
+        func deliversTimerStateOnToggle(_ timerState: (timerSet: LocalTimerSet, state: TimerCoutdownState)) {
+            timerStateOnStart = .success((timerState.timerSet, timerState.state))
         }
         
-        func deliversSetOnSkip(_ set: LocalTimerSet) {
-            setOnSkip = .success(set)
+        func deliversTimerStateOnSkip(_ timerState: (timerSet: LocalTimerSet, state: TimerCoutdownState)) {
+            timerStateOnSkip = .success((timerState.timerSet, timerState.state))
         }
         
-        func deliversSet(_ set: LocalTimerSet, index: Int = 0) {
-            receivedSkipCompletions[index](.success(set))
+        func deliversSetAfterSkip(_ timerState: (timerSet: LocalTimerSet, state: TimerCoutdownState), index: Int = 0) {
+            receivedSkipCompletions[index](.success((timerState.timerSet, timerState.state)))
+        }
+        
+        func deliversSetAfterStart(_ timerState: (timerSet: LocalTimerSet, state: TimerCoutdownState), index: Int = 0) {
+            receivedStartCompletions[index](.success((timerState.timerSet, timerState.state)))
         }
         
         // MARK: - Timer Store
@@ -282,5 +290,15 @@ final class StateTimerAcceptanceTests: XCTestCase {
 private extension TimeCoach_Watch_AppApp {
     func simulateToggleTimerUserInteraction() {
         timerView.simulateToggleTimerUserInteraction()
+    }
+}
+
+fileprivate extension LocalTimerState.State {
+    var toInfra: TimerCoutdownState {
+        switch self {
+        case .pause: return .pause
+        case .running: return .running
+        case .stop: return .stop
+        }
     }
 }

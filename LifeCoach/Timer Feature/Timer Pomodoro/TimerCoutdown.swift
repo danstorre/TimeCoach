@@ -12,7 +12,7 @@ public protocol TimerCoutdown {
     var state: TimerCoutdownState { get }
     var currentTimerSet: LocalTimerSet { get }
     
-    typealias Result = Swift.Result<LocalTimerSet, Error>
+    typealias Result = Swift.Result<(LocalTimerSet, TimerCoutdownState), Error>
     typealias StartCoundownCompletion = (Result) -> Void
     typealias SkipCountdownCompletion = (Result) -> Void
     func startCountdown(completion: @escaping StartCoundownCompletion)
