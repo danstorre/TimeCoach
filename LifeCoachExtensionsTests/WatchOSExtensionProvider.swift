@@ -107,6 +107,14 @@ final class WatchOSExtensionProvider: XCTestCase {
         }
     }
     
+    func test_getSnapshot_messagesLoadState() {
+        let (sut, spy) = makeSUT(currentDate: { Date() })
+        
+        _ = sut.getSnapshotResult()
+        
+        XCTAssertEqual(spy.loadStateCallCount, 1, "should have called load state")
+    }
+    
     func test_getSnapshot_onLoaderErrorDeliversEmptyTimerEntry() {
         let currentDate = Date()
         let (sut, _) = makeSUT(currentDate: { currentDate })
