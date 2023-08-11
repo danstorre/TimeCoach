@@ -4,11 +4,7 @@ import TimeCoach_Watch_App
 
 final class ReceiverNotificationProcessTests: XCTestCase {
     func test_receiveNotificationExecutesReceiverNotificationProcess() {
-        let spy = TimerStateSpy()
-        let timerState = createAnyTimerState()
-        let getTimerState: () -> TimerState = { timerState }
-        let sut: TimerNotificationReceiver = TimerNotificationReceiverFactory
-            .notificationReceiverProcessWith(timerStateSaver: spy, timerStoreNotifier: spy, getTimerState: getTimerState)
+        let (sut, spy) = makeSUT(getTimerState: { Self.createAnyTimerState() })
         
         sut.receiveNotification()
         
@@ -16,14 +12,22 @@ final class ReceiverNotificationProcessTests: XCTestCase {
     }
     
     func test_receiveNotificationDoesNotSendAnyMessagesOnNonTimerState() {
-        let spy = TimerStateSpy()
-        let getTimerState: () -> TimerState? = { .none }
-        let sut: TimerNotificationReceiver = TimerNotificationReceiverFactory
-            .notificationReceiverProcessWith(timerStateSaver: spy, timerStoreNotifier: spy, getTimerState: getTimerState)
+        let (sut, spy) = makeSUT(getTimerState: { .none })
         
         sut.receiveNotification()
         
         XCTAssertEqual(spy.messagesReceived, [])
+    }
+    
+    // MARK: - helpers
+    private func makeSUT(getTimerState: @escaping () -> TimerState?, file: StaticString = #filePath, line: UInt = #line) -> (sut: TimerNotificationReceiver, spy: TimerStateSpy){
+        let spy = TimerStateSpy()
+        let sut = TimerNotificationReceiverFactory
+            .notificationReceiverProcessWith(timerStateSaver: spy, timerStoreNotifier: spy, getTimerState: getTimerState)
+        
+        trackForMemoryLeak(instance: spy, file: file, line: line)
+        
+        return (sut, spy)
     }
     
     private class TimerStateSpy: SaveTimerState, TimerStoreNotifier {
@@ -52,15 +56,15 @@ final class ReceiverNotificationProcessTests: XCTestCase {
         }
     }
     
-    private func createAnyTimerState() -> TimerState {
-        TimerState(timerSet: createAnyTimerSet(), state: .stop)
+    private static func createAnyTimerState() -> TimerState {
+        TimerState(timerSet: Self.createAnyTimerSet(), state: .stop)
     }
     
-    private func createAnyTimerSet(startingFrom startDate: Date = Date(), endDate: Date? = nil) -> TimerSet {
-        createTimerSet(0, startDate: startDate, endDate: endDate ?? startDate.adding(seconds: 1))
+    private static func createAnyTimerSet(startingFrom startDate: Date = Date(), endDate: Date? = nil) -> TimerSet {
+        Self.createTimerSet(0, startDate: startDate, endDate: endDate ?? startDate.adding(seconds: 1))
     }
     
-    private func createTimerSet(_ elapsedSeconds: TimeInterval, startDate: Date, endDate: Date) -> TimerSet {
+    private static func createTimerSet(_ elapsedSeconds: TimeInterval, startDate: Date, endDate: Date) -> TimerSet {
         TimerSet(elapsedSeconds, startDate: startDate, endDate: endDate)
     }
 }
