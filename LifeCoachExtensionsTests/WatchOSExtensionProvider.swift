@@ -60,12 +60,12 @@ final class WatchOSExtensionProvider: XCTestCase {
         let timerPresentationValues = TimerPresentationValues(starDate: currentDate, endDate: endDate, progress: 1)
         let (sut, spy) = makeSUT(currentDate: { currentDate })
         let runningState = makeAnyTimerState(seconds: 0, startDate: currentDate, endDate: endDate, state: .running)
-        let runningTimeLineEntry = TimerEntry(date: currentDate, timerPresentationValues: timerPresentationValues, isIdle: false)
+        let expected = TimerEntry(date: currentDate, timerPresentationValues: timerPresentationValues, isIdle: false)
         spy.loadsSuccess(with: runningState)
         
         let timerEntryResult = sut.placeholder()
         
-        XCTAssertEqual(timerEntryResult, runningTimeLineEntry)
+        XCTAssertEqual(timerEntryResult, expected)
     }
     
     // MARK: - Helpers
