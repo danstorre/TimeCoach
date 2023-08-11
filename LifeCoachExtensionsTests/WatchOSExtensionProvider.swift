@@ -115,9 +115,9 @@ final class WatchOSExtensionProvider: XCTestCase {
         let (sut, _) = makeSUT(currentDate: { currentDate })
         let idleTimelineEntry = TimerEntry(date: currentDate, timerPresentationValues: .none, isIdle: true)
         
-        let timeLineResult = sut.getSnapshotResult()
+        let timerEntryResult = sut.getSnapshotResult()
         
-        assertCorrectTimeLine(with: idleTimelineEntry, from: timeLineResult)
+        XCTAssertEqual(timerEntryResult, TimerEntry.createEntry(from: currentDate), "should deliver empty timer entry")
     }
     
     func test_getSnapshot_onLoadTimerStateRunningDeliversCorrectTimerEntry() {
@@ -127,9 +127,9 @@ final class WatchOSExtensionProvider: XCTestCase {
         let (sut, spy) = makeSUT(currentDate: { currentDate })
         spy.loadsSuccess(with: makeAnyTimerState(seconds: 0, startDate: currentDate, endDate: endDate, state: .running))
         
-        let timeLineResult = sut.getSnapshotResult()
+        let timerEntryResult = sut.getSnapshotResult()
         
-        assertCorrectTimeLine(with: runningTimeLineEntry, from: timeLineResult)
+        XCTAssertEqual(timerEntryResult, runningTimeLineEntry)
     }
     
     func test_getSnapshot_onLoadIdleTimerStateDeliversCorrectIsIdleTimeLineEntry() {
@@ -145,9 +145,9 @@ final class WatchOSExtensionProvider: XCTestCase {
             let idleTimelineEntry = TimerEntry(date: currentDate, timerPresentationValues: .none, isIdle: true)
             spy.loadsSuccess(with: sample)
             
-            let timeLineResult = sut.getSnapshotResult()
+            let timerEntryResult = sut.getSnapshotResult()
             
-            assertCorrectTimeLine(with: idleTimelineEntry, from: timeLineResult)
+            XCTAssertEqual(timerEntryResult, idleTimelineEntry)
         }
     }
     
@@ -208,8 +208,8 @@ private extension WatchOSProviderProtocol {
         return receivedEntry
     }
     
-    func getSnapshotResult() -> Timeline<TimerEntry>? {
-        var receivedEntry: Timeline<TimerEntry>?
+    func getSnapshotResult() -> TimerEntry? {
+        var receivedEntry: TimerEntry?
         getSnapshot() { entry in
             receivedEntry = entry
         }

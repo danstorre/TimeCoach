@@ -13,7 +13,7 @@ public struct Provider: TimelineProvider {
     }
 
     public func getSnapshot(in context: Context, completion: @escaping (TimerEntry) -> ()) {
-        completion(TimerEntry.createEntry(from: Date()))
+        provider.getSnapshot(completion: completion)
     }
 
     public func getTimeline(in context: Context, completion: @escaping (Timeline<TimerEntry>) -> ()) {

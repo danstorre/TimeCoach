@@ -4,6 +4,6 @@ import LifeCoach
 
 public protocol WatchOSProviderProtocol {
     func placeholder() -> TimerEntry
-    func getSnapshot(completion: @escaping (Timeline<TimerEntry>) -> ())
+    func getSnapshot(completion: @escaping (TimerEntry) -> ())
     func getTimeline(completion: @escaping (Timeline<TimerEntry>) -> ())
 }

@@ -12,6 +12,19 @@ public class WatchOSProvider: WatchOSProviderProtocol {
     }
     
     public func placeholder() -> TimerEntry {
+        getTimerEntry()
+    }
+    
+    public func getSnapshot(completion: @escaping (TimerEntry) -> ()) {
+        completion(getTimerEntry())
+    }
+    
+    public func getTimeline(completion: @escaping (Timeline<TimerEntry>) -> ()) {
+        completion(getTimeLine())
+    }
+    
+    // MARK: - Helpers
+    private func getTimerEntry() -> TimerEntry {
         guard let state = try? stateLoader.load() else {
             return TimerEntry.createEntry(from: currentDate())
         }
@@ -24,15 +37,6 @@ public class WatchOSProvider: WatchOSProviderProtocol {
         }
     }
     
-    public func getSnapshot(completion: @escaping (Timeline<TimerEntry>) -> ()) {
-        completion(getTimeLine())
-    }
-    
-    public func getTimeline(completion: @escaping (Timeline<TimerEntry>) -> ()) {
-        completion(getTimeLine())
-    }
-    
-    // MARK: - Helpers
     private func getTimeLine() -> Timeline<TimerEntry> {
         guard let state = try? stateLoader.load() else {
             return idleTimeLine()
