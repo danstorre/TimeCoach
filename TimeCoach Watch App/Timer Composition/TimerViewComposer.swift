@@ -31,8 +31,7 @@ public final class TimerViewComposer {
     
     public static func createTimer(
         timerStyle: TimerStyle = .init(),
-        timerControlPublishers: TimerControlsPublishers,
-        withTimeLine: Bool
+        timerControlPublishers: TimerControlsPublishers
     ) -> TimerView {
         let timerViewModel = TimerViewModel(isBreak: false)
         let controlsViewModel = Self.subscribeChangesFrom(isPlayingPublisher: timerControlPublishers.isPlaying,
@@ -49,7 +48,7 @@ public final class TimerViewComposer {
                                           timerControlPublishers: timerControlPublishers,
                                           skipHandler: skipHandler)
         
-        return timerView(withTimeLine, timerViewModel, timerStyle, controls)
+        return timerView(timerViewModel, timerStyle, controls)
     }
     
     private static func timerControls(controlsViewModel: ControlsViewModel = ControlsViewModel(),
@@ -75,22 +74,14 @@ public final class TimerViewComposer {
                              stopHandler: toggleStrategy.stopHandler)
     }
     
-    private static func timerView(_ withTimeLine: Bool, _ timerViewModel: TimerViewModel, _ timerStyle: TimerStyle, _ controls: TimerControls) -> TimerView {
+    private static func timerView(_ timerViewModel: TimerViewModel, _ timerStyle: TimerStyle, _ controls: TimerControls) -> TimerView {
         
 #if os(watchOS)
-        if withTimeLine {
-            let timerWithTimeLine = TimerTextTimeLineWithLuminance(timerViewModel: timerViewModel,
-                                                                   breakColor: timerStyle.breakColor,
-                                                                   customFont: timerStyle.customFont)
-            
-            return TimerView(timerWithTimeLine: timerWithTimeLine, controls: controls)
-        } else {
-            let timerWithoutTimeLine = TimerText(timerViewModel: timerViewModel,
-                                                 mode: .full,
-                                                 breakColor: timerStyle.breakColor,
-                                                 customFont: timerStyle.customFont)
-            return TimerView(timerWithoutTimeLine: timerWithoutTimeLine, controls: controls)
-        }
+        let timerWithTimeLine = TimerTextTimeLineWithLuminance(timerViewModel: timerViewModel,
+                                                               breakColor: timerStyle.breakColor,
+                                                               customFont: timerStyle.customFont)
+        
+        return TimerView(timerWithTimeLine: timerWithTimeLine, controls: controls)
 #elseif os(xrOS)
         let timerWithoutTimeLine = TimerText(timerViewModel: timerViewModel,
                                              mode: .full,

@@ -54,7 +54,7 @@ class TimeCoachRoot {
         self.unregisterNotifications = infrastructure.unregisterTimerNotification ?? {}
     }
     
-    func createTimer(withTimeLine: Bool = true) -> TimerView {
+    func createTimer() -> TimerView {
         let date = currenDate()
         timerCountdown = createTimerCountDown(from: date)
         currentSubject = Self.createFirstValuePublisher(from: date)
@@ -74,10 +74,7 @@ class TimeCoachRoot {
         
         UNUserNotificationCenter.current().delegate = UNUserNotificationdelegate
         
-        return TimerViewComposer.createTimer(
-            timerControlPublishers: timerControlPublishers,
-            withTimeLine: withTimeLine
-        )
+        return TimerViewComposer.createTimer(timerControlPublishers: timerControlPublishers)
     }
     
     private func createUNUserNotificationdelegate() -> UNUserNotificationCenterDelegate? {

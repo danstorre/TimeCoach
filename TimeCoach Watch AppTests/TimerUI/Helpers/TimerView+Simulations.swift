@@ -4,8 +4,8 @@ import TimeCoach_Watch_App
 
 extension TimerText: Inspectable {}
 extension TimerControls: Inspectable {}
-extension TimerTextTimeLine: Inspectable {}
 extension ToggleButton: Inspectable {}
+extension TimerTextTimeLineWithLuminance: Inspectable {}
 
 extension TimerView {
     func timerLabelString() -> String {

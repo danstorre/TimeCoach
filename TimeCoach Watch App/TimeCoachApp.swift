@@ -22,7 +22,7 @@ struct TimeCoach_Watch_AppApp: App {
     
     init(infrastructure: Infrastructure) {
         self.root = TimeCoachRoot(infrastructure: infrastructure)
-        self.timerView = root.createTimer(withTimeLine: false)
+        self.timerView = root.createTimer()
     }
 
     var body: some Scene {

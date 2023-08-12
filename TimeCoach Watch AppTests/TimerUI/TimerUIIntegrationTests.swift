@@ -93,10 +93,7 @@ final class TimerUIIntegrationTests: XCTestCase {
         )
         
         let timerView = TimerViewComposer
-            .createTimer(
-                timerControlPublishers: timerControlPublishers,
-                withTimeLine: false // the integration tests do not contemplate the time line since this an watchOS specific trait.
-            )
+            .createTimer(timerControlPublishers: timerControlPublishers)
     
         trackForMemoryLeak(instance: timeLoader, file: file, line: line)
         
@@ -174,7 +171,7 @@ final class TimerUIIntegrationTests: XCTestCase {
 
 private extension TimerView {
     var customFont: String? {
-        timerWithoutTimeLine?.customFont
+        timerWithTimeLine?.customFont
     }
 }
 
