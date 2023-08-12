@@ -42,10 +42,10 @@
 		FB097C6A2A7DC78B00BED235 /* WatchOSProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA223E72A7DB2D1003FF5A8 /* WatchOSProvider.swift */; };
 		FB097C702A7DC9AA00BED235 /* LifeCoachExtensions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB097C4F2A7DC55900BED235 /* LifeCoachExtensions.framework */; };
 		FB097C752A7DC9B100BED235 /* LifeCoach.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBAD475028FC8BB0003D2F7A /* LifeCoach.framework */; };
+		FB118E6E2A87BB0500474AC1 /* TimerTextTimeLineWithLuminance.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB118E6D2A87BB0500474AC1 /* TimerTextTimeLineWithLuminance.swift */; };
 		FB15355D2A4A66E000E4B0B0 /* LifeCoachWatchOSUIPreview Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = FB15355C2A4A66E000E4B0B0 /* LifeCoachWatchOSUIPreview Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		FB1535622A4A66E000E4B0B0 /* LifeCoachWatchOSUIPreviewApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1535612A4A66E000E4B0B0 /* LifeCoachWatchOSUIPreviewApp.swift */; };
 		FB15358D2A4A671300E4B0B0 /* TimerControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBED1E4A293EDAD10061CAAF /* TimerControls.swift */; };
-		FB15358E2A4A673100E4B0B0 /* TimerTextTimeLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBED1E4C293EDB3F0061CAAF /* TimerTextTimeLine.swift */; };
 		FB15358F2A4A673C00E4B0B0 /* TimerText.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4AA1372936F1730076FED9 /* TimerText.swift */; };
 		FB1535902A4A674A00E4B0B0 /* TimerLabelStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE9A9DB2939654400D8BF29 /* TimerLabelStyle.swift */; };
 		FB1535912A4A677F00E4B0B0 /* LifeCoach.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBAD475028FC8BB0003D2F7A /* LifeCoach.framework */; };
@@ -193,7 +193,6 @@
 		FBEC46232A8067FD00CAB18F /* CornerTimerWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBEC46222A8067FD00CAB18F /* CornerTimerWidget.swift */; };
 		FBEC46262A80684800CAB18F /* TimerEntry+Factory.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBEC46252A80684800CAB18F /* TimerEntry+Factory.swift */; };
 		FBED1E4B293EDAD10061CAAF /* TimerControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBED1E4A293EDAD10061CAAF /* TimerControls.swift */; };
-		FBED1E4D293EDB3F0061CAAF /* TimerTextTimeLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBED1E4C293EDB3F0061CAAF /* TimerTextTimeLine.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -376,6 +375,7 @@
 		FB097C642A7DC5C100BED235 /* LifeCoachExtensions.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = LifeCoachExtensions.xctestplan; sourceTree = SOURCE_ROOT; };
 		FB118E6B2A872D3500474AC1 /* TimeCoach Watch AppRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "TimeCoach Watch AppRelease.entitlements"; sourceTree = "<group>"; };
 		FB118E6C2A872E0800474AC1 /* TimeCoachWatchExtensionRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TimeCoachWatchExtensionRelease.entitlements; sourceTree = "<group>"; };
+		FB118E6D2A87BB0500474AC1 /* TimerTextTimeLineWithLuminance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerTextTimeLineWithLuminance.swift; sourceTree = "<group>"; };
 		FB1535572A4A66E000E4B0B0 /* LifeCoachWatchOSUIPreview.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LifeCoachWatchOSUIPreview.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB15355C2A4A66E000E4B0B0 /* LifeCoachWatchOSUIPreview Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "LifeCoachWatchOSUIPreview Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB1535612A4A66E000E4B0B0 /* LifeCoachWatchOSUIPreviewApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LifeCoachWatchOSUIPreviewApp.swift; sourceTree = "<group>"; };
@@ -523,7 +523,6 @@
 		FBEC46222A8067FD00CAB18F /* CornerTimerWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CornerTimerWidget.swift; sourceTree = "<group>"; };
 		FBEC46252A80684800CAB18F /* TimerEntry+Factory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimerEntry+Factory.swift"; sourceTree = "<group>"; };
 		FBED1E4A293EDAD10061CAAF /* TimerControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerControls.swift; sourceTree = "<group>"; };
-		FBED1E4C293EDB3F0061CAAF /* TimerTextTimeLine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerTextTimeLine.swift; sourceTree = "<group>"; };
 		FBED1E51293EE13F0061CAAF /* TimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerView.swift; sourceTree = "<group>"; };
 		FBF0209E2A7DBBFE005074CD /* TimeCoach Watch AppDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "TimeCoach Watch AppDebug.entitlements"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -742,7 +741,7 @@
 				FBED1E51293EE13F0061CAAF /* TimerView.swift */,
 				FB4AA1372936F1730076FED9 /* TimerText.swift */,
 				FBED1E4A293EDAD10061CAAF /* TimerControls.swift */,
-				FBED1E4C293EDB3F0061CAAF /* TimerTextTimeLine.swift */,
+				FB118E6D2A87BB0500474AC1 /* TimerTextTimeLineWithLuminance.swift */,
 				FB1535612A4A66E000E4B0B0 /* LifeCoachWatchOSUIPreviewApp.swift */,
 				FB594CBD2A4E542200C4A32C /* ToggleButton.swift */,
 				FB0238CD2A573275002F55D5 /* Media.xcassets */,
@@ -1778,8 +1777,8 @@
 				FB0238CB2A572FEF002F55D5 /* ColorSwiftUI+Extension.swift in Sources */,
 				FB4AA1382936F1730076FED9 /* TimerText.swift in Sources */,
 				FB594CBE2A4E542200C4A32C /* ToggleButton.swift in Sources */,
-				FBED1E4D293EDB3F0061CAAF /* TimerTextTimeLine.swift in Sources */,
 				FBE9A9DC2939654400D8BF29 /* TimerLabelStyle.swift in Sources */,
+				FB118E6E2A87BB0500474AC1 /* TimerTextTimeLineWithLuminance.swift in Sources */,
 				FBED1E4B293EDAD10061CAAF /* TimerControls.swift in Sources */,
 				FB0238C82A572F38002F55D5 /* PreviewProvider+FactoryMethods.swift in Sources */,
 				FB0238DF2A574301002F55D5 /* TimerStyle.swift in Sources */,
@@ -1827,7 +1826,6 @@
 				FB1535622A4A66E000E4B0B0 /* LifeCoachWatchOSUIPreviewApp.swift in Sources */,
 				FB15358D2A4A671300E4B0B0 /* TimerControls.swift in Sources */,
 				FB1535902A4A674A00E4B0B0 /* TimerLabelStyle.swift in Sources */,
-				FB15358E2A4A673100E4B0B0 /* TimerTextTimeLine.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

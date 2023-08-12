@@ -79,9 +79,9 @@ public final class TimerViewComposer {
         
 #if os(watchOS)
         if withTimeLine {
-            let timerWithTimeLine = TimerTextTimeLine(timerViewModel: timerViewModel,
-                                                      breakColor: timerStyle.breakColor,
-                                                      customFont: timerStyle.customFont)
+            let timerWithTimeLine = TimerTextTimeLineWithLuminance(timerViewModel: timerViewModel,
+                                                                   breakColor: timerStyle.breakColor,
+                                                                   customFont: timerStyle.customFont)
             
             return TimerView(timerWithTimeLine: timerWithTimeLine, controls: controls)
         } else {
@@ -101,3 +101,5 @@ public final class TimerViewComposer {
     }
     
 }
+
+

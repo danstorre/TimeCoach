@@ -1,7 +1,8 @@
 import SwiftUI
 import LifeCoach
 
-public struct TimerTextTimeLine: View {
+public struct TimerTextTimeLineWithLuminance: View {
+    @Environment(\.isLuminanceReduced) var isLuminanceReduced
     public let timerViewModel: TimerViewModel
     public let customFont: String?
     let breakColor: Color
@@ -13,15 +14,10 @@ public struct TimerTextTimeLine: View {
     }
     
     public var body: some View {
-        TimelineView(.periodic(from: .now, by: 1)) { context in
-            switch context.cadence {
-            case .live:
-                timerText(mode: .full)
-            case .seconds, .minutes:
-                timerText(mode: .none)
-            @unknown default:
-                timerText(mode: .none)
-            }
+        if isLuminanceReduced {
+            timerText(mode: .none)
+        } else {
+            timerText(mode: .full)
         }
     }
     
@@ -30,12 +26,5 @@ public struct TimerTextTimeLine: View {
                   mode: mode,
                   breakColor: breakColor,
                   customFont: customFont)
-    }
-}
-
-struct TimerTextTimeLinePreviews: PreviewProvider {
-    static var previews: some View {
-        TimerTextTimeLine(timerViewModel: TimerViewModel(isBreak: false),
-                          breakColor: .blue)
     }
 }
