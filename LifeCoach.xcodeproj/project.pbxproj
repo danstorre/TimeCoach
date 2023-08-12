@@ -374,6 +374,8 @@
 		FB097C512A7DC55900BED235 /* LifeCoachExtensions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LifeCoachExtensions.h; sourceTree = "<group>"; };
 		FB097C562A7DC55900BED235 /* LifeCoachExtensionsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LifeCoachExtensionsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB097C642A7DC5C100BED235 /* LifeCoachExtensions.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = LifeCoachExtensions.xctestplan; sourceTree = SOURCE_ROOT; };
+		FB118E6B2A872D3500474AC1 /* TimeCoach Watch AppRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "TimeCoach Watch AppRelease.entitlements"; sourceTree = "<group>"; };
+		FB118E6C2A872E0800474AC1 /* TimeCoachWatchExtensionRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TimeCoachWatchExtensionRelease.entitlements; sourceTree = "<group>"; };
 		FB1535572A4A66E000E4B0B0 /* LifeCoachWatchOSUIPreview.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LifeCoachWatchOSUIPreview.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB15355C2A4A66E000E4B0B0 /* LifeCoachWatchOSUIPreview Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "LifeCoachWatchOSUIPreview Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB1535612A4A66E000E4B0B0 /* LifeCoachWatchOSUIPreviewApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LifeCoachWatchOSUIPreviewApp.swift; sourceTree = "<group>"; };
@@ -807,6 +809,7 @@
 		FB509E072A7C936B00AA9333 /* TimeCoachWatchExtension */ = {
 			isa = PBXGroup;
 			children = (
+				FB118E6C2A872E0800474AC1 /* TimeCoachWatchExtensionRelease.entitlements */,
 				FBB0C7C42A7DBD7C005412CF /* TimeCoachWatchExtensionDebug.entitlements */,
 				FB509E082A7C936B00AA9333 /* TimeCoachWatchExtension.swift */,
 				FB509E0A2A7C936B00AA9333 /* Assets.xcassets */,
@@ -1195,6 +1198,7 @@
 		FBE9A9782939527C00D8BF29 /* TimeCoach Watch App */ = {
 			isa = PBXGroup;
 			children = (
+				FB118E6B2A872D3500474AC1 /* TimeCoach Watch AppRelease.entitlements */,
 				FBF0209E2A7DBBFE005074CD /* TimeCoach Watch AppDebug.entitlements */,
 				FBB3D8802A770EB200A8BBAD /* Notifications */,
 				FB4AA14129379DC20076FED9 /* Timer Composition */,
@@ -2381,9 +2385,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_ENTITLEMENTS = TimeCoachWatchExtension/TimeCoachWatchExtensionRelease.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=watchos*]" = AEWQUX8MPM;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = TimeCoachWatchExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = TimeCoachWatchExtension;
@@ -2397,6 +2404,8 @@
 				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.danstorre.timeCoach.watchkitapp.TimeCoachWatchExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=watchos*]" = "TimeCoach-widget-distribution";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -2908,6 +2917,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "TimeCoach Watch App/TimeCoach Watch AppRelease.entitlements";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
@@ -2927,7 +2937,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.danstorre.timeCoach.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=watchos*]" = DanielTimeCoachWatchAppDistribution;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=watchos*]" = "timeCoach-watchKitapp-distribution";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
