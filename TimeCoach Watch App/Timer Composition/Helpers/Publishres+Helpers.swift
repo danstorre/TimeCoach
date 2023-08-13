@@ -43,7 +43,7 @@ extension Publisher where Output == Void {
     }
 }
 
-extension Publisher where Output == (TimerSet, TimerState.State) {
+extension Publisher {
     func flatsToVoid() -> AnyPublisher<Void, Failure> {
         self.flatMap({ _ in Just(()) })
             .eraseToAnyPublisher()

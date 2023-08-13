@@ -6,18 +6,23 @@ extension RegularTimer {
     typealias TimerSetPublisher = AnyPublisher<TimerState, Error>
     typealias CurrentValuePublisher = CurrentValueSubject<TimerState, Error>
     
-    func stopPublisher() -> VoidPublisher {
-        return Deferred {
-            self.stop()
-            return CurrentValueSubject<Void, Error>.init(())
-        }.eraseToAnyPublisher()
+    func stopPublisher(currentSubject: CurrentValuePublisher) -> () -> TimerSetPublisher {
+        {
+            Deferred {
+                stop()
+                return currentSubject
+            }.eraseToAnyPublisher()
+        }
+        
     }
     
-    func pausePublisher() -> VoidPublisher {
-        return Deferred {
-            pause()
-            return CurrentValueSubject<Void, Error>.init(())
-        }.eraseToAnyPublisher()
+    func pausePublisher(currentSubject: CurrentValuePublisher) -> () -> TimerSetPublisher {
+        {
+            Deferred {
+                pause()
+                return currentSubject
+            }.eraseToAnyPublisher()
+        }
     }
     
     func skipPublisher(currentSubject: CurrentValuePublisher) -> () -> TimerSetPublisher {

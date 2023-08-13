@@ -70,7 +70,6 @@ final class StateTimerAcceptanceTests: XCTestCase {
         spy.resetMessages()
         
         sut.timerView.simulateStopTimerUserInteraction()
-        spy.deliversSetAfterStart((timerSet: anySet, state: expected.state.toInfra))
         
         XCTAssertEqual(spy.receivedMessages, [
             .stopTimer,
@@ -80,13 +79,15 @@ final class StateTimerAcceptanceTests: XCTestCase {
         ])
     }
     
-    func test_onLaunch_onPauseUserInteractionShouldExecutePauseProcess() {
+    func test_onLaunch_onRunningState_onPauseUserInteractionShouldExecutePauseProcess() {
         let currentDate = Date()
         let (sut, spy) = makeSUT(currentDate: { currentDate })
         let anySet = createAnyTimerSet(startingFrom: currentDate, endDate: currentDate.adding(seconds: .pomodoroInSeconds))
-        let expected = createAnyTimerState(using: anySet, on: .pause)
+        let runningSet = createAnyTimerState(using: anySet.adding(1), on: .running)
+        let expected = createAnyTimerState(using: runningSet.localTimerSet, on: .pause)
+        
         sut.timerView.simulateToggleTimerUserInteraction()
-        spy.deliversSetAfterStart((timerSet: expected.localTimerSet, state: expected.state.toInfra))
+        spy.deliversSetAfterStart((timerSet: runningSet.localTimerSet, state: runningSet.state.toInfra))
         spy.resetMessages()
         
         sut.timerView.simulateToggleTimerUserInteraction()
@@ -172,13 +173,6 @@ final class StateTimerAcceptanceTests: XCTestCase {
     }
     
     private class Spy: TimerCoutdown, TimerStore, LocalTimerStore, Scheduler {
-        private let currenDate: Date
-        
-        init(currenDate: Date) {
-            self.currenDate = currenDate
-        }
-        var currentTimerSet: LifeCoach.LocalTimerSet { .pomodoroSet(date: currenDate) }
-        
         enum AnyMessage: Equatable, CustomStringConvertible {
             case startTimer
             case stopTimer
@@ -213,6 +207,10 @@ final class StateTimerAcceptanceTests: XCTestCase {
                 }
             }
         }
+        private let currenDate: Date
+        
+        private var currentSet: LifeCoach.LocalTimerSet
+        var currentTimerSet: LifeCoach.LocalTimerSet { currentSet }
         
         var currentSetElapsedTime: TimeInterval = 0.0
         var state: LifeCoach.TimerCoutdownState = .stop
@@ -221,13 +219,17 @@ final class StateTimerAcceptanceTests: XCTestCase {
         private var receivedStartCompletions = [StartCoundownCompletion]()
         private var receivedSkipCompletions = [SkipCountdownCompletion]()
         
+        init(currenDate: Date) {
+            self.currenDate = currenDate
+            self.currentSet = .pomodoroSet(date: currenDate)
+        }
+        
         func resetMessages() {
             receivedMessages = []
         }
         
         // MARK: - Timer
         func startCountdown(completion: @escaping StartCoundownCompletion) {
-            state = .running
             receivedMessages.append(.startTimer)
             receivedStartCompletions.append(completion)
         }
@@ -235,11 +237,14 @@ final class StateTimerAcceptanceTests: XCTestCase {
         func stopCountdown() {
             state = .stop
             receivedMessages.append(.stopTimer)
+            let startSet = LocalTimerSet(0, startDate: currentSet.startDate, endDate: currentSet.endDate)
+            receivedStartCompletions.last?(.success((startSet, state)))
         }
         
         func pauseCountdown() {
             state = .pause
             receivedMessages.append(.pauseTimer)
+            receivedStartCompletions.last?(.success((currentSet, state)))
         }
         
         func skipCountdown(completion: @escaping SkipCountdownCompletion) {
@@ -252,7 +257,13 @@ final class StateTimerAcceptanceTests: XCTestCase {
         }
         
         func deliversSetAfterStart(_ timerState: (timerSet: LocalTimerSet, state: TimerCoutdownState), index: Int = 0) {
+            setsCurrentTimer(timerState.timerSet, state: timerState.state)
             receivedStartCompletions[index](.success((timerState.timerSet, timerState.state)))
+        }
+        
+        func setsCurrentTimer(_ timerSet: LocalTimerSet, state: TimerCoutdownState) {
+            self.state = state
+            self.currentSet = timerSet
         }
         
         // MARK: - Timer Store

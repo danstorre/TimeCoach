@@ -133,30 +133,40 @@ class TimeCoachRoot {
     
     private func handleStop() -> RegularTimer.VoidPublisher {
         let localTimer = localTimer
-        let timerCountdown = timerCountdown
         let timerSavedNofitier = timerSavedNofitier
         let unregisterNotifications = unregisterNotifications
         
         return stopPublisher()
-            .mapsTimerSetAndState(timerCountdown: timerCountdown!)
-            .saveTimerState(saver: localTimer)
+            .processFirstValue { timerState in
+                Just((timerState.timerSet, timerState.state))
+                    .saveTimerState(saver: localTimer)
+                    .flatsToVoid()
+                    .unregisterTimerNotifications(unregisterNotifications)
+                    .notifySavedTimer(notifier: timerSavedNofitier)
+                    .subscribe(Subscribers.Sink(receiveCompletion: { _ in
+                    }, receiveValue: { _ in }))
+            }
             .flatsToVoid()
-            .unregisterTimerNotifications(unregisterNotifications)
-            .notifySavedTimer(notifier: timerSavedNofitier)
+            .eraseToAnyPublisher()
     }
     
     private func handlePause() -> RegularTimer.VoidPublisher {
         let localTimer = localTimer
-        let timerCountdown = timerCountdown
         let timerSavedNofitier = timerSavedNofitier
         let unregisterNotifications = unregisterNotifications
         
         return pausePublisher()
-            .mapsTimerSetAndState(timerCountdown: timerCountdown!)
-            .saveTimerState(saver: localTimer)
+            .processFirstValue { timerState in
+                Just((timerState.timerSet, timerState.state))
+                    .saveTimerState(saver: localTimer)
+                    .flatsToVoid()
+                    .unregisterTimerNotifications(unregisterNotifications)
+                    .notifySavedTimer(notifier: timerSavedNofitier)
+                    .subscribe(Subscribers.Sink(receiveCompletion: { _ in
+                    }, receiveValue: { _ in }))
+            }
             .flatsToVoid()
-            .unregisterTimerNotifications(unregisterNotifications)
-            .notifySavedTimer(notifier: timerSavedNofitier)
+            .eraseToAnyPublisher()
     }
     
     private func handleSkip() -> RegularTimer.TimerSetPublisher {
@@ -179,16 +189,16 @@ class TimeCoachRoot {
             .eraseToAnyPublisher()
     }
     
-    private func stopPublisher() -> RegularTimer.VoidPublisher {
-        regularTimer!.stopPublisher()
+    private func stopPublisher() -> RegularTimer.TimerSetPublisher {
+        regularTimer!.stopPublisher(currentSubject: currentSubject)()
     }
     
     private func playPublisher() -> RegularTimer.TimerSetPublisher {
         regularTimer!.playPublisher(currentSubject: currentSubject)()
     }
     
-    private func pausePublisher() -> RegularTimer.VoidPublisher {
-        regularTimer!.pausePublisher()
+    private func pausePublisher() -> RegularTimer.TimerSetPublisher {
+        regularTimer!.pausePublisher(currentSubject: currentSubject)()
     }
     
     private func skipPublisher() -> RegularTimer.TimerSetPublisher {
