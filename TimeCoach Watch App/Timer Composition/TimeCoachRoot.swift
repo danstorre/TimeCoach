@@ -83,6 +83,7 @@ class TimeCoachRoot {
         let notificationReceiverProcess = TimerNotificationReceiverFactory
             .notificationReceiverProcessWith(timerStateSaver: localTimer,
                                              timerStoreNotifier: timerSavedNofitier,
+                                             playNotification: WKInterfaceDevice.current(),
                                              getTimerState: { [weak self] in
                 self?.getTimerState()
             })
@@ -90,7 +91,7 @@ class TimeCoachRoot {
             WKInterfaceDevice.current().play(.notification)
         }
         return UNUserNotificationCenterDelegateComposite(delegates: [
-            UserNotificationsReceiver(receiver: notificationReceiverSoundAlert),
+            UserNotificationsReceiver(receiver: notificationReceiverProcess),
             UserNotificationsReceiver(receiver: notificationReceiverProcess)
         ])
     }
@@ -221,3 +222,6 @@ extension Publisher {
             .eraseToAnyPublisher()
     }
 }
+
+
+extension WKInterfaceDevice: PlayNotification {}
