@@ -110,17 +110,12 @@ final class StateTimerAcceptanceTests: XCTestCase {
         ])
     }
     
-    func test_onBackgroundEvent_shouldSendMessageToStartSaveStateProcess() {
-        let currentDate = Date()
-        let (sut, spy) = makeSUT(currentDate: { currentDate })
-        let expected = createAnyTimerState(using: .pomodoroSet(date: currentDate), on: .stop)
+    func test_onBackgroundEvent_shouldNotSendMessageToStartSaveStateProcess() {
+        let (sut, spy) = makeSUT(currentDate: { Date() })
         
         sut.goToBackground()
         
-        XCTAssertEqual(spy.receivedMessages, [
-            .saveStateTimer(value: expected),
-            .notifySavedTimer
-        ])
+        XCTAssertEqual(spy.receivedMessages, [])
     }
     
     // MARK: - Helpers

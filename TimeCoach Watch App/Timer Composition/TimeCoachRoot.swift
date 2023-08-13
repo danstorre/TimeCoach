@@ -104,17 +104,6 @@ class TimeCoachRoot {
     }
     
     func goToBackground() {
-        let localTimer = localTimer
-        let timerSavedNofitier = timerSavedNofitier
-        
-        Just(())
-            .mapsTimerSetAndState(timerCountdown: timerCountdown!)
-            .saveTimerState(saver: localTimer)
-            .flatsToVoid()
-            .notifySavedTimer(notifier: timerSavedNofitier)
-            .subscribe(Subscribers.Sink(receiveCompletion: { _ in
-            }, receiveValue: { _ in }))
-        
         timerSave?.saveTime(completion: { time in })
     }
     
