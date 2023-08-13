@@ -104,9 +104,9 @@ final class StateTimerAcceptanceTests: XCTestCase {
         let (sut, spy) = makeSUT(currentDate: { currentDate })
         let anySet = createAnyTimerSet(startingFrom: currentDate, endDate: currentDate.adding(seconds: .pomodoroInSeconds))
         let expected = createAnyTimerState(using: anySet, on: .stop)
-        spy.deliversTimerStateOnSkip((timerSet: anySet, state: expected.state.toInfra))
         
         sut.timerView.simulateSkipTimerUserInteraction()
+        spy.deliversSetAfterSkip((timerSet: anySet, state: expected.state.toInfra))
         
         XCTAssertEqual(spy.receivedMessages, [
             .skipTimer,
@@ -121,11 +121,9 @@ final class StateTimerAcceptanceTests: XCTestCase {
         let (sut, spy) = makeSUT(currentDate: { currentDate })
         let anySet = createAnyTimerSet(startingFrom: currentDate, endDate: currentDate.adding(seconds: .pomodoroInSeconds))
         let expected = createAnyTimerState(using: anySet, on: .stop)
-        spy.deliversTimerStateOnSkip((timerSet: anySet, state: expected.state.toInfra))
         
         sut.timerView.simulateSkipTimerUserInteraction()
-        
-        spy.deliversSetAfterSkip((timerSet: anySet, state: .stop))
+        spy.deliversSetAfterSkip((timerSet: anySet, state: expected.state.toInfra))
         
         XCTAssertEqual(spy.receivedMessages, [
             .skipTimer,
@@ -223,8 +221,6 @@ final class StateTimerAcceptanceTests: XCTestCase {
         private var receivedStartCompletions = [StartCoundownCompletion]()
         private var receivedSkipCompletions = [SkipCountdownCompletion]()
         
-        private var timerStateOnSkip: TimerCoutdown.Result?
-        
         func resetMessages() {
             receivedMessages = []
         }
@@ -247,15 +243,8 @@ final class StateTimerAcceptanceTests: XCTestCase {
         }
         
         func skipCountdown(completion: @escaping SkipCountdownCompletion) {
-            state = .stop
             receivedMessages.append(.skipTimer)
-            guard let timerStateOnSkip = timerStateOnSkip else { return }
-            completion(timerStateOnSkip)
             receivedSkipCompletions.append(completion)
-        }
-        
-        func deliversTimerStateOnSkip(_ timerState: (timerSet: LocalTimerSet, state: TimerCoutdownState)) {
-            timerStateOnSkip = .success((timerState.timerSet, timerState.state))
         }
         
         func deliversSetAfterSkip(_ timerState: (timerSet: LocalTimerSet, state: TimerCoutdownState), index: Int = 0) {
