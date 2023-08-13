@@ -128,7 +128,7 @@ final class TimerUIIntegrationTests: XCTestCase {
         typealias IsPlayingPublisher = CurrentValueSubject<Bool, Never>
         
         func play() -> AnyPublisher<TimerState, Error> {
-            let elapsedTimerState = TimerState(timerSet: makeElapsedSeconds(0, startDate: Date(), endDate: Date()),
+            let elapsedTimerState = TimerState(timerSet: makeTimerSet(0, startDate: Date(), endDate: Date()),
                                                state: .running)
             return PlayPublisher(elapsedTimerState).map { elapsed in
                 self.isPlaying = true
@@ -138,7 +138,7 @@ final class TimerUIIntegrationTests: XCTestCase {
         }
         
         func skip() -> AnyPublisher<TimerState, Error> {
-            let elapsedTimerState = TimerState(timerSet: makeElapsedSeconds(0, startDate: Date(), endDate: Date()),
+            let elapsedTimerState = TimerState(timerSet: makeTimerSet(0, startDate: Date(), endDate: Date()),
                                                state: .running)
             return SkipPublisher(elapsedTimerState).map { elapsed in
                 self.isPlaying = false
@@ -175,7 +175,7 @@ private extension TimerView {
     }
 }
 
-private func makeElapsedSeconds(
+private func makeTimerSet(
     _ seconds: TimeInterval,
     startDate: Date,
     endDate: Date

@@ -129,17 +129,17 @@ final class FoundationTimerCountdownTests: XCTestCase {
         let startSet = LocalTimerSet(0, startDate: fixedDate, endDate: fixedDate.adding(seconds: 0.002))
         let sut = makeSUT(startingSet: startSet, nextSet: createAnyTimerSet(), incrementing: 0.001)
         
-        var receivedElapsedSeconds = [LocalTimerSet]()
+        var receivedLocalTimerSets = [LocalTimerSet]()
         
         sut.startCountdown() { result in
             if case let .success((timerSet, _)) = result {
-                receivedElapsedSeconds.append(timerSet)
+                receivedLocalTimerSets.append(timerSet)
             }
         }
-        XCTAssertEqual(receivedElapsedSeconds, [startSet])
+        XCTAssertEqual(receivedLocalTimerSets, [startSet])
         
         sut.stopCountdown()
-        XCTAssertEqual(receivedElapsedSeconds, [startSet, startSet])
+        XCTAssertEqual(receivedLocalTimerSets, [startSet, startSet])
     }
     
     func test_pause_OnPauseState_DoesNotChangeStateFromPause() {
@@ -165,11 +165,11 @@ final class FoundationTimerCountdownTests: XCTestCase {
         let startSet = createAnyTimerSet()
         let sut = makeSUT(startingSet: startSet, nextSet: createAnyTimerSet())
         
-        let receivedElapsedSeconds = receivedElapsedSecondsOnRunningState(from: sut, when: {
+        let receivedLocalTimerSets = receivedLocalTimerSetsOnRunningState(from: sut, when: {
             sut.pauseCountdown()
         })
 
-        XCTAssertEqual(receivedElapsedSeconds, [startSet, startSet])
+        XCTAssertEqual(receivedLocalTimerSets, [startSet, startSet])
     }
     
     func test_skip_onStopState_deliversNextTimerSet() {
@@ -178,9 +178,9 @@ final class FoundationTimerCountdownTests: XCTestCase {
         let nextSet = createTimerSet(0, startDate: fixedDate, endDate: fixedDate.adding(seconds: 0.002))
         let sut = makeSUT(startingSet: startingSet, nextSet: nextSet)
         
-        let receivedElapsedSeconds = receivedElapsedSecondsOnSkip(from: sut)
+        let receivedLocalTimerSets = receivedLocalTimerSetsOnSkip(from: sut)
         
-        XCTAssertEqual(receivedElapsedSeconds, [nextSet])
+        XCTAssertEqual(receivedLocalTimerSets, [nextSet])
     }
     
     func test_skip_onStopState_doesNotChangesStopStateResetsTimer() {
@@ -212,11 +212,11 @@ final class FoundationTimerCountdownTests: XCTestCase {
         let nextSet = createTimerSet(0, startDate: fixedDate, endDate: fixedDate.adding(seconds: 0.002))
         let sut = makeSUT(startingSet: startingSet, nextSet: nextSet)
         
-        let receivedElapsedSecondsOnRunningState = receivedElapsedSecondsOnRunningState(from: sut, when: {
-            let receivedElapsedSecondsOnSkip = receivedElapsedSecondsOnSkip(from: sut)
-            XCTAssertEqual(receivedElapsedSecondsOnSkip, [nextSet])
+        let receivedLocalTimerSetsOnRunningState = receivedLocalTimerSetsOnRunningState(from: sut, when: {
+            let receivedLocalTimerSetsOnSkip = receivedLocalTimerSetsOnSkip(from: sut)
+            XCTAssertEqual(receivedLocalTimerSetsOnSkip, [nextSet])
         })
-        XCTAssertEqual(receivedElapsedSecondsOnRunningState, [startingSet])
+        XCTAssertEqual(receivedLocalTimerSetsOnRunningState, [startingSet])
     }
     
     // MARK: - Helpers
@@ -226,30 +226,30 @@ final class FoundationTimerCountdownTests: XCTestCase {
         XCTAssertEqual(sut.currentTimerSet, timerSet, file: file, line: line)
     }
     
-    private func receivedElapsedSecondsOnSkip(from sut: TimerCountdown) -> [LocalTimerSet] {
-        var receivedElapsedSeconds = [LocalTimerSet]()
+    private func receivedLocalTimerSetsOnSkip(from sut: TimerCountdown) -> [LocalTimerSet] {
+        var receivedLocalTimerSets = [LocalTimerSet]()
         let expectation = expectation(description: "wait for skip countdown to deliver time.")
         sut.skipCountdown() { result in
             if case let .success((timerSet, _)) = result {
-                receivedElapsedSeconds.append(timerSet)
+                receivedLocalTimerSets.append(timerSet)
             }
             expectation.fulfill()
         }
         wait(for: [expectation], timeout: 0.1)
-        return receivedElapsedSeconds
+        return receivedLocalTimerSets
     }
     
-    private func receivedElapsedSecondsOnRunningState(from sut: TimerCountdown, when action: () -> Void) -> [LocalTimerSet] {
-        var receivedElapsedSeconds = [LocalTimerSet]()
+    private func receivedLocalTimerSetsOnRunningState(from sut: TimerCountdown, when action: () -> Void) -> [LocalTimerSet] {
+        var receivedLocalTimerSets = [LocalTimerSet]()
         sut.startCountdown() { result in
             if case let .success((timerSet, _)) = result {
-                receivedElapsedSeconds.append(timerSet)
+                receivedLocalTimerSets.append(timerSet)
             }
         }
 
         action()
         
-        return receivedElapsedSeconds
+        return receivedLocalTimerSets
     }
     
     private func assertsStartCountdownTwiceKeepsStateToRunning(sut: TimerCountdown) {
@@ -278,13 +278,13 @@ final class FoundationTimerCountdownTests: XCTestCase {
     private func expect(sut: TimerCountdown, toDeliver deliverExpectation: [LocalTimerSet],
                         file: StaticString = #filePath,
                         line: UInt = #line) {
-        var receivedElapsedSeconds = [LocalTimerSet]()
+        var receivedLocalTimerSets = [LocalTimerSet]()
         let expectation = expectation(description: "wait for start countdown to deliver time.")
         expectation.expectedFulfillmentCount = deliverExpectation.count
         
         sut.startCountdown() { result in
             if case let .success((timerSet, _)) = result {
-                receivedElapsedSeconds.append(timerSet)
+                receivedLocalTimerSets.append(timerSet)
             }
             expectation.fulfill()
         }
@@ -292,7 +292,7 @@ final class FoundationTimerCountdownTests: XCTestCase {
         wait(for: [expectation], timeout: 0.1)
         invalidatesTimer(on: sut)
 
-        XCTAssertEqual(receivedElapsedSeconds, deliverExpectation, file: file, line: line)
+        XCTAssertEqual(receivedLocalTimerSets, deliverExpectation, file: file, line: line)
     }
     
     private func createAnyTimerSet(startingFrom startDate: Date = Date(), endDate: Date? = nil) -> LocalTimerSet {

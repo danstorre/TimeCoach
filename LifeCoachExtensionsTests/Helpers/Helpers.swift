@@ -21,15 +21,15 @@ func makeAnyTimerState(seconds: TimeInterval = 1,
                        startDate: Date = Date(),
                        endDate: Date = Date(),
                        state helperState: TimerStateHelper = .pause) -> TimerState {
-    let elapsedSeconds = makeAnyLocalTimerSet(seconds: seconds, startDate: startDate, endDate: endDate)
-    return TimerState(timerSet: elapsedSeconds.model, state: helperState.timerState)
+    let localTimerSet = makeAnyLocalTimerSet(seconds: seconds, startDate: startDate, endDate: endDate)
+    return TimerState(timerSet: localTimerSet.model, state: helperState.timerState)
 }
 
 func makeAnyLocalTimerSet(seconds: TimeInterval = 1,
                           startDate: Date = Date(),
                           endDate: Date = Date()) -> (model: TimerSet, local: LocalTimerSet) {
-    let modelElapsedSeconds = TimerSet(seconds, startDate: startDate, endDate: endDate)
+    let timerSet = TimerSet(seconds, startDate: startDate, endDate: endDate)
     let localTimerSet = LocalTimerSet(seconds, startDate: startDate, endDate: endDate)
     
-    return (modelElapsedSeconds, localTimerSet)
+    return (timerSet, localTimerSet)
 }

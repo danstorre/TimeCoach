@@ -74,12 +74,21 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
+            BlueprintIdentifier = "FB509E032A7C936A00AA9333"
+            BuildableName = "TimeCoachWatchExtension.appex"
+            BlueprintName = "TimeCoachWatchExtension"
+            ReferencedContainer = "container:LifeCoach.xcodeproj">
+         </BuildableReference>
+      </BuildableProductRunnable>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
             BlueprintIdentifier = "FBE9A9732939527C00D8BF29"
             BuildableName = "TimeCoach Watch App.app"
             BlueprintName = "TimeCoach Watch App"
             ReferencedContainer = "container:LifeCoach.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </MacroExpansion>
       <EnvironmentVariables>
          <EnvironmentVariable
             key = "_XCWidgetKind"

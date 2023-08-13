@@ -37,7 +37,7 @@ final class PomodoroUseCaseTests: XCTestCase {
         XCTAssertEqual(spy.messagesReceived, [.start, .stop])
     }
     
-    func test_start_deliversElapsedSecondsOnTimerCountdownSuccessDelivery() {
+    func test_start_deliversTimerSetsOnTimerCountdownSuccessDelivery() {
         var recievedResult: PomodoroTimer.Result?
         let (sut, spy) = makeSUT(timeReceiver: { result in
             recievedResult = result
@@ -97,7 +97,7 @@ final class PomodoroUseCaseTests: XCTestCase {
         XCTAssertEqual(spy.messagesReceived, [.skip, .stop])
     }
     
-    func test_skip_deliversElapsedSecondsOnTimerCountdownSuccessDelivery() {
+    func test_skip_deliversTimerSetsOnTimerCountdownSuccessDelivery() {
         var recievedResult: PomodoroTimer.Result?
         let (sut, spy) = makeSUT(timeReceiver: { result in
             recievedResult = result
@@ -112,7 +112,7 @@ final class PomodoroUseCaseTests: XCTestCase {
                                                                           state: .stop)))
     }
     
-    func test_start_doesNotDeliverElapsedSecondsAfterSUTHasBeenDeallocated() {
+    func test_start_doesNotDeliverTimerSetsAfterSUTHasBeenDeallocated() {
         var recievedResult: PomodoroTimer.Result?
         let spy = TimerSpy()
         var sut: PomodoroTimer? = PomodoroTimer(timer: spy, timeReceiver: { result in
@@ -121,12 +121,12 @@ final class PomodoroUseCaseTests: XCTestCase {
         
         sut?.start()
         sut = nil
-        spy.startDelivers(localState: (localSet: createAnyLocalElapsedSeconds(), state: TimerCountdownState.running))
+        spy.startDelivers(localState: (localSet: createAnyLocalTimerSets(), state: TimerCountdownState.running))
         
         XCTAssertNil(recievedResult)
     }
     
-    func test_skip_doesNotDeliverElapsedSecondsAfterSUTHasBeenDeallocated() {
+    func test_skip_doesNotDeliverTimerSetsAfterSUTHasBeenDeallocated() {
         var recievedResult: PomodoroTimer.Result?
         let spy = TimerSpy()
         var sut: PomodoroTimer? = PomodoroTimer(timer: spy, timeReceiver: { result in
@@ -135,7 +135,7 @@ final class PomodoroUseCaseTests: XCTestCase {
         
         sut?.skip()
         sut = nil
-        spy.skipDelivers(localState: (createAnyLocalElapsedSeconds(), TimerCountdownState.stop))
+        spy.skipDelivers(localState: (createAnyLocalTimerSets(), TimerCountdownState.stop))
         
         XCTAssertNil(recievedResult)
     }
@@ -152,7 +152,7 @@ final class PomodoroUseCaseTests: XCTestCase {
         }
     }
     
-    private func createAnyLocalElapsedSeconds() -> LocalTimerSet {
+    private func createAnyLocalTimerSets() -> LocalTimerSet {
         LocalTimerSet(1, startDate: Date(), endDate: Date())
     }
     
