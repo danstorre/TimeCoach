@@ -694,13 +694,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		FB118E692A86D40900474AC1 /* New Group */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "New Group";
-			sourceTree = "<group>";
-		};
 		FB118E6A2A86D42500474AC1 /* Infrastructure Process */ = {
 			isa = PBXGroup;
 			children = (
@@ -1183,7 +1176,6 @@
 		FBE9A92E2939247A00D8BF29 /* TimerUI */ = {
 			isa = PBXGroup;
 			children = (
-				FB118E692A86D40900474AC1 /* New Group */,
 				FB4B89602A3BBB5F0088DB5B /* Helpers */,
 				FB4AA1322936EB9A0076FED9 /* TimerUIIntegrationTests.swift */,
 				FBE9A9DD29396EA100D8BF29 /* TimeCoachAcceptanceTests.swift */,
