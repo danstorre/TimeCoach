@@ -5,7 +5,7 @@ extension FoundationTimerCountdown: TimerLoad {
         guard let timeAtSave = timeAtSave else { return }
         let elapsed = CFAbsoluteTimeGetCurrent() - timeAtSave
         
-        currentSet = .init(currentSet.elapsedSeconds + elapsed.rounded(), startDate: currentSet.startDate, endDate: currentSet.endDate)
+        currentSet = .init(currentSet.elapsedSeconds + elapsed, startDate: currentSet.startDate, endDate: currentSet.endDate)
         
         timerDelivery?(
             .success((currentTimerSet, state))
