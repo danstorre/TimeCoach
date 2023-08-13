@@ -5,7 +5,7 @@ import WatchKit
 
 final class ReceiverNotificationProcessTests: XCTestCase {
     func test_receiveNotificationExecutesReceiverNotificationProcess() {
-        let (sut, spy) = makeSUT(getTimerState: { Self.createAnyTimerState() })
+        let (sut, spy) = makeSUT(getTimerState: { makeAnyTimerState() })
         
         sut.receiveNotification()
         
@@ -65,17 +65,5 @@ final class ReceiverNotificationProcessTests: XCTestCase {
         func play(_ type: WKHapticType) {
             messagesReceived.append(.playSound(type: type))
         }
-    }
-    
-    private static func createAnyTimerState() -> TimerState {
-        TimerState(timerSet: Self.createAnyTimerSet(), state: .stop)
-    }
-    
-    private static func createAnyTimerSet(startingFrom startDate: Date = Date(), endDate: Date? = nil) -> TimerSet {
-        Self.createTimerSet(0, startDate: startDate, endDate: endDate ?? startDate.adding(seconds: 1))
-    }
-    
-    private static func createTimerSet(_ elapsedSeconds: TimeInterval, startDate: Date, endDate: Date) -> TimerSet {
-        TimerSet(elapsedSeconds, startDate: startDate, endDate: endDate)
     }
 }

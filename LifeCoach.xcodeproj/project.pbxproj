@@ -194,6 +194,7 @@
 		FBED1E4B293EDAD10061CAAF /* TimerControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBED1E4A293EDAD10061CAAF /* TimerControls.swift */; };
 		FBF182872A89927300DBAF7F /* WKInterfaceDevice+PlayNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF182862A89927300DBAF7F /* WKInterfaceDevice+PlayNotification.swift */; };
 		FBF182892A89928800DBAF7F /* PlayNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF182882A89928800DBAF7F /* PlayNotification.swift */; };
+		FBF1828A2A8995AD00DBAF7F /* CommonHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD8225F2A75B2FE002702F4 /* CommonHelpers.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1988,6 +1989,7 @@
 				FB4B89692A3BBC700088DB5B /* TimeCoach_Watch_AppApp+Helpers.swift in Sources */,
 				FB960C73293D479800ECBAD5 /* XCTestCase+MemoryLeakTracking.swift in Sources */,
 				FBE593F72A784D6600069F1C /* InstanceHelper.m in Sources */,
+				FBF1828A2A8995AD00DBAF7F /* CommonHelpers.swift in Sources */,
 				FB4B896B2A3BBCFD0088DB5B /* TimerView+ViewInspectorHelpers.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -7,7 +7,9 @@ final class StateTimerAcceptanceTests: XCTestCase {
     
     func test_onLaunch_onToggleUserInteractionShouldStartNotificationAndSaveStateProcess() {
         let (sut, spy) = makeSUT()
-        let expected = createAnyTimerState(using: spy.currentTimerSet, on: .running)
+        let expected = makeAnyState(seconds: spy.currentTimerSet.elapsedSeconds,
+                                    startDate: spy.currentTimerSet.startDate,
+                                    endDate: spy.currentTimerSet.endDate, state: .running).local
         
         sut.simulateToggleTimerUserInteraction()
         
@@ -21,11 +23,13 @@ final class StateTimerAcceptanceTests: XCTestCase {
     
     func test_onLaunch_afterTimerDeliversShouldNotStartNotificationAndSaveStateProcess() {
         let (sut, spy) = makeSUT()
-        let expected = createAnyTimerState(using: spy.currentTimerSet, on: .running)
+        let expected = makeAnyState(seconds: spy.currentTimerSet.elapsedSeconds,
+                                    startDate: spy.currentTimerSet.startDate,
+                                    endDate: spy.currentTimerSet.endDate, state: .running).local
         
         sut.simulateToggleTimerUserInteraction()
         
-        spy.deliversSetAfterStart((timerSet: expected.localTimerSet.adding(1), state: expected.state.toInfra))
+        spy.deliversSetAfterStart((timerSet: expected.localTimerSet.adding(1), state: .running))
         
         XCTAssertEqual(spy.receivedMessages, [
             .startTimer,
@@ -38,10 +42,9 @@ final class StateTimerAcceptanceTests: XCTestCase {
     func test_onLaunch_onStopUserInteractionShouldExecuteStopProcess() {
         let currentDate = Date()
         let (sut, spy) = makeSUT(currentDate: { currentDate })
-        let expected = createAnyTimerState(
-            using: createAnyTimerSet(startingFrom: currentDate, endDate: currentDate.adding(seconds: .pomodoroInSeconds)),
-            on: .stop
-        )
+        let expected = makeAnyState(seconds: 0,
+                                    startDate: currentDate,
+                                    endDate: currentDate.adding(seconds: .pomodoroInSeconds), state: .stop).local
         
         sut.timerView.simulateStopTimerUserInteraction()
         
@@ -56,13 +59,11 @@ final class StateTimerAcceptanceTests: XCTestCase {
     func test_onLaunch_onRunningState_onStopUserInteractionShouldExecuteStopProcess() {
         let currentDate = Date()
         let (sut, spy) = makeSUT(currentDate: { currentDate })
-        let anySet = createAnyTimerSet(startingFrom: currentDate, endDate: currentDate.adding(seconds: .pomodoroInSeconds))
-        let expected = createAnyTimerState(
-            using: anySet,
-            on: .stop
-        )
+        let expected = makeAnyState(seconds: 0,
+                                    startDate: currentDate,
+                                    endDate: currentDate.adding(seconds: .pomodoroInSeconds), state: .stop).local
         sut.timerView.simulateToggleTimerUserInteraction()
-        spy.deliversSetAfterStart((timerSet: anySet.adding(1), state: expected.state.toInfra))
+        spy.deliversSetAfterStart((timerSet: expected.localTimerSet.adding(1), state: .running))
         spy.resetMessages()
         
         sut.timerView.simulateStopTimerUserInteraction()
@@ -78,12 +79,12 @@ final class StateTimerAcceptanceTests: XCTestCase {
     func test_onLaunch_onRunningState_onPauseUserInteractionShouldExecutePauseProcess() {
         let currentDate = Date()
         let (sut, spy) = makeSUT(currentDate: { currentDate })
-        let anySet = createAnyTimerSet(startingFrom: currentDate, endDate: currentDate.adding(seconds: .pomodoroInSeconds))
-        let runningSet = createAnyTimerState(using: anySet.adding(1), on: .running)
-        let expected = createAnyTimerState(using: runningSet.localTimerSet, on: .pause)
+        let expected = makeAnyState(seconds: 1,
+                                    startDate: currentDate,
+                                    endDate: currentDate.adding(seconds: .pomodoroInSeconds), state: .pause).local
         
         sut.timerView.simulateToggleTimerUserInteraction()
-        spy.deliversSetAfterStart((timerSet: runningSet.localTimerSet, state: runningSet.state.toInfra))
+        spy.deliversSetAfterStart((timerSet: expected.localTimerSet, state: .running))
         spy.resetMessages()
         
         sut.timerView.simulateToggleTimerUserInteraction()
@@ -99,11 +100,12 @@ final class StateTimerAcceptanceTests: XCTestCase {
     func test_onLaunch_onSkipUserInteractionShouldExecuteSkipProcess() {
         let currentDate = Date()
         let (sut, spy) = makeSUT(currentDate: { currentDate })
-        let anySet = createAnyTimerSet(startingFrom: currentDate, endDate: currentDate.adding(seconds: .pomodoroInSeconds))
-        let expected = createAnyTimerState(using: anySet, on: .stop)
+        let expected = makeAnyState(seconds: 0,
+                                    startDate: currentDate,
+                                    endDate: currentDate.adding(seconds: .pomodoroInSeconds), state: .stop).local
         
         sut.timerView.simulateSkipTimerUserInteraction()
-        spy.deliversSetAfterSkip((timerSet: anySet, state: expected.state.toInfra))
+        spy.deliversSetAfterSkip((timerSet: expected.localTimerSet, state: .stop))
         
         XCTAssertEqual(spy.receivedMessages, [
             .skipTimer,
@@ -116,11 +118,12 @@ final class StateTimerAcceptanceTests: XCTestCase {
     func test_onLaunch_onSkipUserInteractionShouldStartNotificationAndSaveStateProcessOnce() {
         let currentDate = Date()
         let (sut, spy) = makeSUT(currentDate: { currentDate })
-        let anySet = createAnyTimerSet(startingFrom: currentDate, endDate: currentDate.adding(seconds: .pomodoroInSeconds))
-        let expected = createAnyTimerState(using: anySet, on: .stop)
+        let expected = makeAnyState(seconds: 0,
+                                    startDate: currentDate,
+                                    endDate: currentDate.adding(seconds: .pomodoroInSeconds), state: .stop).local
         
         sut.timerView.simulateSkipTimerUserInteraction()
-        spy.deliversSetAfterSkip((timerSet: anySet, state: expected.state.toInfra))
+        spy.deliversSetAfterSkip((timerSet: expected.localTimerSet, state: .stop))
         
         XCTAssertEqual(spy.receivedMessages, [
             .skipTimer,
@@ -154,18 +157,6 @@ final class StateTimerAcceptanceTests: XCTestCase {
         let sut = TimeCoach_Watch_AppApp(infrastructure: infra)
         
         return (sut, spy)
-    }
-    
-    private func createAnyTimerState(using anySet: LocalTimerSet, on state: LocalTimerState.State) -> LocalTimerState {
-        LocalTimerState(localTimerSet: anySet, state: state)
-    }
-    
-    private func createAnyTimerSet(startingFrom startDate: Date = Date(), endDate: Date? = nil) -> LocalTimerSet {
-        createTimerSet(0, startDate: startDate, endDate: endDate ?? startDate.adding(seconds: 1))
-    }
-    
-    private func createTimerSet(_ elapsedSeconds: TimeInterval, startDate: Date, endDate: Date) -> LocalTimerSet {
-        LocalTimerSet(elapsedSeconds, startDate: startDate, endDate: endDate)
     }
     
     private class Spy: TimerCountdown, TimerStore, LocalTimerStore, Scheduler {
@@ -301,15 +292,5 @@ final class StateTimerAcceptanceTests: XCTestCase {
 private extension TimeCoach_Watch_AppApp {
     func simulateToggleTimerUserInteraction() {
         timerView.simulateToggleTimerUserInteraction()
-    }
-}
-
-fileprivate extension LocalTimerState.State {
-    var toInfra: TimerCountdownState {
-        switch self {
-        case .pause: return .pause
-        case .running: return .running
-        case .stop: return .stop
-        }
     }
 }
