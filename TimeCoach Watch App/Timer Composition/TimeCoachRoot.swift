@@ -87,13 +87,7 @@ class TimeCoachRoot {
                                              getTimerState: { [weak self] in
                 self?.getTimerState()
             })
-        let notificationReceiverSoundAlert = DefaultTimerNotificationReceiver {
-            WKInterfaceDevice.current().play(.notification)
-        }
-        return UNUserNotificationCenterDelegateComposite(delegates: [
-            UserNotificationsReceiver(receiver: notificationReceiverProcess),
-            UserNotificationsReceiver(receiver: notificationReceiverProcess)
-        ])
+        return UserNotificationsReceiver(receiver: notificationReceiverProcess)
     }
     
     private func getTimerState() -> TimerState? {
