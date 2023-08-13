@@ -27,7 +27,7 @@
 		FB0239092A57548B002F55D5 /* DIGITALDREAMFAT.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FB0239072A57548B002F55D5 /* DIGITALDREAMFAT.ttf */; };
 		FB02390A2A57548B002F55D5 /* pizzadude.dk License.txt in Resources */ = {isa = PBXBuildFile; fileRef = FB0239082A57548B002F55D5 /* pizzadude.dk License.txt */; };
 		FB05D9B62A83191300EA0AE8 /* UNUserNotificationCenter+NotificationScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB05D9B52A83191300EA0AE8 /* UNUserNotificationCenter+NotificationScheduler.swift */; };
-		FB05D9B82A83198F00EA0AE8 /* Publishres+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB05D9B72A83198E00EA0AE8 /* Publishres+Helpers.swift */; };
+		FB05D9B82A83198F00EA0AE8 /* Publishers+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB05D9B72A83198E00EA0AE8 /* Publishers+Helpers.swift */; };
 		FB05D9BC2A83DB2600EA0AE8 /* ReceiverNotificationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB05D9BB2A83DB2600EA0AE8 /* ReceiverNotificationTests.swift */; };
 		FB05D9C02A83E1C200EA0AE8 /* TimerNotificationReceiverFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB05D9BF2A83E1C200EA0AE8 /* TimerNotificationReceiverFactory.swift */; };
 		FB0602372A83FCAA0085689D /* TimerPresentationValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB0602362A83FCAA0085689D /* TimerPresentationValues.swift */; };
@@ -362,7 +362,7 @@
 		FB0239072A57548B002F55D5 /* DIGITALDREAMFAT.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = DIGITALDREAMFAT.ttf; sourceTree = "<group>"; };
 		FB0239082A57548B002F55D5 /* pizzadude.dk License.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "pizzadude.dk License.txt"; sourceTree = "<group>"; };
 		FB05D9B52A83191300EA0AE8 /* UNUserNotificationCenter+NotificationScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UNUserNotificationCenter+NotificationScheduler.swift"; sourceTree = "<group>"; };
-		FB05D9B72A83198E00EA0AE8 /* Publishres+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Publishres+Helpers.swift"; sourceTree = "<group>"; };
+		FB05D9B72A83198E00EA0AE8 /* Publishers+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Publishers+Helpers.swift"; sourceTree = "<group>"; };
 		FB05D9BB2A83DB2600EA0AE8 /* ReceiverNotificationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiverNotificationTests.swift; sourceTree = "<group>"; };
 		FB05D9BF2A83E1C200EA0AE8 /* TimerNotificationReceiverFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerNotificationReceiverFactory.swift; sourceTree = "<group>"; };
 		FB0602362A83FCAA0085689D /* TimerPresentationValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerPresentationValues.swift; sourceTree = "<group>"; };
@@ -1165,7 +1165,7 @@
 				FBA8DD842A4F13F0009E48D5 /* LocalElapsedSecondsSets+Extension.swift */,
 				FB62AD422A55BD8400B2BBC1 /* TimerControlsPublishers.swift */,
 				FB05D9B52A83191300EA0AE8 /* UNUserNotificationCenter+NotificationScheduler.swift */,
-				FB05D9B72A83198E00EA0AE8 /* Publishres+Helpers.swift */,
+				FB05D9B72A83198E00EA0AE8 /* Publishers+Helpers.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -1940,7 +1940,7 @@
 				FBE646562A4A9F3F005022A2 /* TimerVoidAdapter.swift in Sources */,
 				FBE593E62A78498000069F1C /* UserNotificationsReceiver.swift in Sources */,
 				FB0238E22A57442E002F55D5 /* PreviewTimer.swift in Sources */,
-				FB05D9B82A83198F00EA0AE8 /* Publishres+Helpers.swift in Sources */,
+				FB05D9B82A83198F00EA0AE8 /* Publishers+Helpers.swift in Sources */,
 				FBE9A9A82939535800D8BF29 /* TimerViewComposer.swift in Sources */,
 				FBB3D8822A770EBC00A8BBAD /* UserNotificationsScheduler.swift in Sources */,
 				FBA8DD852A4F13F0009E48D5 /* LocalElapsedSecondsSets+Extension.swift in Sources */,
