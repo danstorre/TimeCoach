@@ -168,7 +168,7 @@ final class StateTimerAcceptanceTests: XCTestCase {
         LocalTimerSet(elapsedSeconds, startDate: startDate, endDate: endDate)
     }
     
-    private class Spy: TimerCoutdown, TimerStore, LocalTimerStore, Scheduler {
+    private class Spy: TimerCountdown, TimerStore, LocalTimerStore, Scheduler {
         enum AnyMessage: Equatable, CustomStringConvertible {
             case startTimer
             case stopTimer
@@ -209,7 +209,7 @@ final class StateTimerAcceptanceTests: XCTestCase {
         var currentTimerSet: LifeCoach.LocalTimerSet { currentSet }
         
         var currentSetElapsedTime: TimeInterval = 0.0
-        var state: LifeCoach.TimerCoutdownState = .stop
+        var state: LifeCoach.TimerCountdownState = .stop
         
         private(set) var receivedMessages = [AnyMessage]()
         private var receivedStartCompletions = [StartCoundownCompletion]()
@@ -250,16 +250,16 @@ final class StateTimerAcceptanceTests: XCTestCase {
             receivedSkipCompletions.append(completion)
         }
         
-        func deliversSetAfterSkip(_ timerState: (timerSet: LocalTimerSet, state: TimerCoutdownState), index: Int = 0) {
+        func deliversSetAfterSkip(_ timerState: (timerSet: LocalTimerSet, state: TimerCountdownState), index: Int = 0) {
             receivedSkipCompletions[index](.success((timerState.timerSet, timerState.state)))
         }
         
-        func deliversSetAfterStart(_ timerState: (timerSet: LocalTimerSet, state: TimerCoutdownState), index: Int = 0) {
+        func deliversSetAfterStart(_ timerState: (timerSet: LocalTimerSet, state: TimerCountdownState), index: Int = 0) {
             setsCurrentTimer(timerState.timerSet, state: timerState.state)
             receivedStartCompletions[index](.success((timerState.timerSet, timerState.state)))
         }
         
-        func setsCurrentTimer(_ timerSet: LocalTimerSet, state: TimerCoutdownState) {
+        func setsCurrentTimer(_ timerSet: LocalTimerSet, state: TimerCountdownState) {
             self.state = state
             self.currentSet = timerSet
         }
@@ -305,7 +305,7 @@ private extension TimeCoach_Watch_AppApp {
 }
 
 fileprivate extension LocalTimerState.State {
-    var toInfra: TimerCoutdownState {
+    var toInfra: TimerCountdownState {
         switch self {
         case .pause: return .pause
         case .running: return .running

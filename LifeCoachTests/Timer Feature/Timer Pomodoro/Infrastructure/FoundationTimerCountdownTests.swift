@@ -220,13 +220,13 @@ final class FoundationTimerCountdownTests: XCTestCase {
     }
     
     // MARK: - Helpers
-    private func assertTimerSet(_ timerSet: LocalTimerSet, state expectedState: TimerCoutdownState, from sut: TimerCoutdown, file: StaticString = #filePath, line: UInt = #line) {
+    private func assertTimerSet(_ timerSet: LocalTimerSet, state expectedState: TimerCountdownState, from sut: TimerCountdown, file: StaticString = #filePath, line: UInt = #line) {
         XCTAssertEqual(sut.state, expectedState, file: file, line: line)
         XCTAssertEqual(sut.currentSetElapsedTime, timerSet.elapsedSeconds, "should have expected \(timerSet.elapsedSeconds) but got \(sut.currentSetElapsedTime) current set.", file: file, line: line)
         XCTAssertEqual(sut.currentTimerSet, timerSet, file: file, line: line)
     }
     
-    private func receivedElapsedSecondsOnSkip(from sut: TimerCoutdown) -> [LocalTimerSet] {
+    private func receivedElapsedSecondsOnSkip(from sut: TimerCountdown) -> [LocalTimerSet] {
         var receivedElapsedSeconds = [LocalTimerSet]()
         let expectation = expectation(description: "wait for skip countdown to deliver time.")
         sut.skipCountdown() { result in
@@ -239,7 +239,7 @@ final class FoundationTimerCountdownTests: XCTestCase {
         return receivedElapsedSeconds
     }
     
-    private func receivedElapsedSecondsOnRunningState(from sut: TimerCoutdown, when action: () -> Void) -> [LocalTimerSet] {
+    private func receivedElapsedSecondsOnRunningState(from sut: TimerCountdown, when action: () -> Void) -> [LocalTimerSet] {
         var receivedElapsedSeconds = [LocalTimerSet]()
         sut.startCountdown() { result in
             if case let .success((timerSet, _)) = result {
@@ -252,13 +252,13 @@ final class FoundationTimerCountdownTests: XCTestCase {
         return receivedElapsedSeconds
     }
     
-    private func assertsStartCountdownTwiceKeepsStateToRunning(sut: TimerCoutdown) {
+    private func assertsStartCountdownTwiceKeepsStateToRunning(sut: TimerCountdown) {
         assertsStartCountdownChangesStateToRunning(sut: sut)
         assertsStartCountdownChangesStateToRunning(sut: sut)
         invalidatesTimer(on: sut)
     }
     
-    private func assertsStartCountdownChangesStateToRunning(sut: TimerCoutdown) {
+    private func assertsStartCountdownChangesStateToRunning(sut: TimerCountdown) {
         sut.startCountdown(completion: { _ in })
 
         XCTAssertEqual(sut.state, .running)
@@ -267,7 +267,7 @@ final class FoundationTimerCountdownTests: XCTestCase {
     private func makeSUT(startingSet: LocalTimerSet, nextSet: LocalTimerSet,
                          incrementing: Double = 0.001,
                          file: StaticString = #filePath,
-                         line: UInt = #line) -> TimerCoutdown {
+                         line: UInt = #line) -> TimerCountdown {
         let sut = FoundationTimerCountdown(startingSet: startingSet, nextSet: nextSet, incrementing: incrementing)
         
         trackForMemoryLeak(instance: sut, file: file, line: line)
@@ -275,7 +275,7 @@ final class FoundationTimerCountdownTests: XCTestCase {
         return sut
     }
     
-    private func expect(sut: TimerCoutdown, toDeliver deliverExpectation: [LocalTimerSet],
+    private func expect(sut: TimerCountdown, toDeliver deliverExpectation: [LocalTimerSet],
                         file: StaticString = #filePath,
                         line: UInt = #line) {
         var receivedElapsedSeconds = [LocalTimerSet]()
@@ -303,7 +303,7 @@ final class FoundationTimerCountdownTests: XCTestCase {
         LocalTimerSet(elapsedSeconds, startDate: startDate, endDate: endDate)
     }
     
-    private func invalidatesTimer(on sut: TimerCoutdown) {
+    private func invalidatesTimer(on sut: TimerCountdown) {
         (sut as? FoundationTimerCountdown)?.invalidatesTimer()
     }
 }
@@ -314,7 +314,7 @@ extension LocalTimerSet: CustomStringConvertible {
     }
 }
 
-extension TimerCoutdown {
+extension TimerCountdown {
     func commitFinishedTimer() {
         startCountdown(completion: { _ in })
     }

@@ -12,7 +12,7 @@ class TimeCoachRoot {
     
     // Timer
     private var currenDate: () -> Date = Date.init
-    var timerCountdown: TimerCoutdown?
+    var timerCountdown: TimerCountdown?
     private var regularTimer: RegularTimer?
     private lazy var currentSubject: RegularTimer.CurrentValuePublisher = .init(
         TimerState(timerSet: TimerSet.init(0, startDate: .init(), endDate: .init()),
@@ -58,7 +58,7 @@ class TimeCoachRoot {
         let date = currenDate()
         timerCountdown = createTimerCountDown(from: date)
         currentSubject = Self.createFirstValuePublisher(from: date)
-        let timerPlayerAdapterState = TimerCoutdownToTimerStateAdapter(timer: timerCountdown!, currentDate: currenDate)
+        let timerPlayerAdapterState = TimerCountdownToTimerStateAdapter(timer: timerCountdown!, currentDate: currenDate)
         regularTimer = Self.createPomodorTimer(with: timerPlayerAdapterState, and: currentSubject)
         
         if let timerCountdown = timerCountdown as? FoundationTimerCountdown {

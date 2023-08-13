@@ -13,7 +13,7 @@ func breakResponse(_ seconds: TimeInterval) -> TimerSet {
     return TimerSet(seconds, startDate: start, endDate: start.adding(seconds: .breakInSeconds))
 }
 
-class TimerCountdownSpy: TimerCoutdown {
+class TimerCountdownSpy: TimerCountdown {
     var currentTimerSet: LifeCoach.LocalTimerSet { .init(0, startDate: Date(), endDate: Date())}
     var currentSetElapsedTime: TimeInterval { 0 }
     
@@ -22,7 +22,7 @@ class TimerCountdownSpy: TimerCoutdown {
     private(set) var stopCallCount = 0
     private(set) var pauseCallCount = 0
  
-    var state: LifeCoach.TimerCoutdownState = .pause
+    var state: LifeCoach.TimerCountdownState = .pause
     
     func startCountdown(completion: @escaping StartCoundownCompletion) {
         state = .running

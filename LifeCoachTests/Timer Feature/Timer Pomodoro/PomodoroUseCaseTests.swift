@@ -46,7 +46,7 @@ final class PomodoroUseCaseTests: XCTestCase {
         let expectedDeliveredTime = makeDeliveredTime(1, startDate: startTime, endDate: startTime.adding(seconds: .pomodoroInSeconds))
         
         sut.start()
-        spy.startDelivers(localState: (expectedDeliveredTime.local, TimerCoutdownState.running))
+        spy.startDelivers(localState: (expectedDeliveredTime.local, TimerCountdownState.running))
         
         assert(recievedResult: recievedResult!, ToBe: .success(TimerState(timerSet: expectedDeliveredTime.model,
                                                                           state: .running)))
@@ -106,7 +106,7 @@ final class PomodoroUseCaseTests: XCTestCase {
         let expectedDeliveredTime = makeDeliveredTime(1, startDate: startTime, endDate: startTime.adding(seconds: .pomodoroInSeconds))
         
         sut.skip()
-        spy.skipDelivers(localState: (expectedDeliveredTime.local, TimerCoutdownState.stop))
+        spy.skipDelivers(localState: (expectedDeliveredTime.local, TimerCountdownState.stop))
         
         assert(recievedResult: recievedResult!, ToBe: .success(TimerState(timerSet: expectedDeliveredTime.model,
                                                                           state: .stop)))
@@ -121,7 +121,7 @@ final class PomodoroUseCaseTests: XCTestCase {
         
         sut?.start()
         sut = nil
-        spy.startDelivers(localState: (localSet: createAnyLocalElapsedSeconds(), state: TimerCoutdownState.running))
+        spy.startDelivers(localState: (localSet: createAnyLocalElapsedSeconds(), state: TimerCountdownState.running))
         
         XCTAssertNil(recievedResult)
     }
@@ -135,7 +135,7 @@ final class PomodoroUseCaseTests: XCTestCase {
         
         sut?.skip()
         sut = nil
-        spy.skipDelivers(localState: (createAnyLocalElapsedSeconds(), TimerCoutdownState.stop))
+        spy.skipDelivers(localState: (createAnyLocalElapsedSeconds(), TimerCountdownState.stop))
         
         XCTAssertNil(recievedResult)
     }
@@ -176,10 +176,10 @@ final class PomodoroUseCaseTests: XCTestCase {
         return (sut, spy)
     }
     
-    private class TimerSpy: TimerCoutdown {
+    private class TimerSpy: TimerCountdown {
         var currentTimerSet: LifeCoach.LocalTimerSet { .init(0, startDate: Date(), endDate: Date())}
         var currentSetElapsedTime: TimeInterval { 0 }
-        var state: LifeCoach.TimerCoutdownState { returningState }
+        var state: LifeCoach.TimerCountdownState { returningState }
         
         private(set) var messagesReceived = [TimerCountdownMessages]()
         enum TimerCountdownMessages: Equatable, CustomStringConvertible {
@@ -209,7 +209,7 @@ final class PomodoroUseCaseTests: XCTestCase {
             startCountdownCompletions[index](.failure(error))
         }
         
-        func startDelivers(localState: (localSet: LifeCoach.LocalTimerSet, state: LifeCoach.TimerCoutdownState), at index: Int = 0) {
+        func startDelivers(localState: (localSet: LifeCoach.LocalTimerSet, state: LifeCoach.TimerCountdownState), at index: Int = 0) {
             startCountdownCompletions[index](.success((localState.localSet, localState.state)))
         }
         
@@ -225,7 +225,7 @@ final class PomodoroUseCaseTests: XCTestCase {
         
         // MARK: - SkipCoutdown methods
         private var skipCountdownCompletions = [SkipCountdownCompletion]()
-        private var returningState: LifeCoach.TimerCoutdownState = .pause
+        private var returningState: LifeCoach.TimerCountdownState = .pause
         
         func skipCountdown(completion: @escaping SkipCountdownCompletion) {
             messagesReceived.append(.skip)
@@ -237,7 +237,7 @@ final class PomodoroUseCaseTests: XCTestCase {
             skipCountdownCompletions[index](.failure(error))
         }
         
-        func skipDelivers(localState: (localSet: LifeCoach.LocalTimerSet, state: LifeCoach.TimerCoutdownState), at index: Int = 0) {
+        func skipDelivers(localState: (localSet: LifeCoach.LocalTimerSet, state: LifeCoach.TimerCountdownState), at index: Int = 0) {
             returningState = localState.state
             skipCountdownCompletions[index](.success((localState.localSet, localState.state)))
         }

@@ -13,7 +13,7 @@ extension TimeCoachRoot {
     static let milisecondsPrecision = 0.001
     
     // MARK: Factory methods
-    func createTimerCountDown(from date: Date) -> TimerCoutdown {
+    func createTimerCountDown(from date: Date) -> TimerCountdown {
         #if os(watchOS)
         timerCountdown ?? FoundationTimerCountdown(startingSet: .pomodoroSet(date: date),
                                                    nextSet: .breakSet(date: date),
@@ -24,7 +24,7 @@ extension TimeCoachRoot {
         #endif
     }
     
-    static func createPomodorTimer(with timer: TimerCoutdown, and currentValue: RegularTimer.CurrentValuePublisher) -> RegularTimer {
+    static func createPomodorTimer(with timer: TimerCountdown, and currentValue: RegularTimer.CurrentValuePublisher) -> RegularTimer {
         PomodoroTimer(timer: timer, timeReceiver: { result in
             switch result {
             case let .success(seconds):

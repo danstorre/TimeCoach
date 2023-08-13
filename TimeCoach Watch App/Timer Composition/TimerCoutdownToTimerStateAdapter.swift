@@ -2,7 +2,7 @@ import Foundation
 import LifeCoach
 import Combine
 
-class TimerCoutdownToTimerStateAdapter: TimerCoutdown {
+class TimerCountdownToTimerStateAdapter: TimerCountdown {
     var currentTimerSet: LifeCoach.LocalTimerSet
     
     var isPlaying: Bool {
@@ -12,11 +12,11 @@ class TimerCoutdownToTimerStateAdapter: TimerCoutdown {
         }
     }
     
-    private let timer: TimerCoutdown
+    private let timer: TimerCountdown
     var currentSetElapsedTime: TimeInterval {
         timer.currentSetElapsedTime
     }
-    var state: LifeCoach.TimerCoutdownState {
+    var state: LifeCoach.TimerCountdownState {
         timer.state
     }
     
@@ -24,7 +24,7 @@ class TimerCoutdownToTimerStateAdapter: TimerCoutdown {
     
     private let currentDate: () -> Date
     
-    init(timer: TimerCoutdown, currentDate: @escaping () -> Date) {
+    init(timer: TimerCountdown, currentDate: @escaping () -> Date) {
         self.timer = timer
         self.currentDate = currentDate
         self.currentTimerSet = .pomodoroSet(date: currentDate())

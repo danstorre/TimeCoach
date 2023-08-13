@@ -1,7 +1,7 @@
 import Foundation
 
 public class PomodoroTimer: RegularTimer {
-    private let timer: TimerCoutdown
+    private let timer: TimerCountdown
     private let timeReceiver: (Result) -> Void
     
     public enum Error: Swift.Error {
@@ -10,7 +10,7 @@ public class PomodoroTimer: RegularTimer {
     
     public typealias Result = Swift.Result<TimerState, Error>
     
-    public init(timer: TimerCoutdown, timeReceiver: @escaping (Result) -> Void) {
+    public init(timer: TimerCountdown, timeReceiver: @escaping (Result) -> Void) {
         self.timer = timer
         self.timeReceiver = timeReceiver
     }
@@ -39,13 +39,13 @@ public class PomodoroTimer: RegularTimer {
         }
     }
     
-    private func stopCountDownOnFailure(result: TimerCoutdown.Result) {
+    private func stopCountDownOnFailure(result: TimerCountdown.Result) {
         if case .failure = result {
             self.timer.stopCountdown()
         }
     }
     
-    private static func resolveResult(result: TimerCoutdown.Result) -> Result {
+    private static func resolveResult(result: TimerCountdown.Result) -> Result {
         switch result {
         case let .success((localTimerSet, localState)):
             return .success(TimerState(timerSet: localTimerSet.toElapseSeconds, state: localState.model))
@@ -56,7 +56,7 @@ public class PomodoroTimer: RegularTimer {
 }
 
 
-private extension TimerCoutdownState {
+private extension TimerCountdownState {
     var model: TimerState.State {
         switch self {
         case .pause: return .pause
