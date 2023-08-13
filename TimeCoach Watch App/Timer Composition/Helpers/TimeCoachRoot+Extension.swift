@@ -10,7 +10,7 @@ import Combine
 import LifeCoach
 
 extension TimeCoachRoot {
-    static let milisecondsPrecision = 0.001
+    static let milisecondsPrecision = 0.1
     
     // MARK: Factory methods
     func createTimerCountDown(from date: Date) -> TimerCountdown {

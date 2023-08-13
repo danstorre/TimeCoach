@@ -39,7 +39,9 @@ class TimeCoachRoot {
     // Timer Saved Notifications
     private var notifySavedTimer: (() -> Void)?
     private lazy var timerSavedNofitier: LifeCoach.TimerStoreNotifier = DefaultTimerStoreNotifier(
-        completion: notifySavedTimer ?? { WidgetCenter.shared.reloadAllTimelines() }
+        completion: notifySavedTimer ?? {
+            WidgetCenter.shared.reloadAllTimelines()
+        }
     )
     
     convenience init(infrastructure: Infrastructure) {
