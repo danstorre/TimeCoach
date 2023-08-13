@@ -200,22 +200,4 @@ class TimeCoachRoot {
     }
 }
 
-
-extension Publisher {
-    func processFirstValue(_ process: @escaping (Output) -> Void) -> AnyPublisher<Output, Failure> {
-        var isFirstValue = true
-        
-        return self
-            .map { value in
-                if isFirstValue {
-                    process(value)
-                    isFirstValue = false
-                }
-                return value
-            }
-            .eraseToAnyPublisher()
-    }
-}
-
-
 extension WKInterfaceDevice: PlayNotification {}
