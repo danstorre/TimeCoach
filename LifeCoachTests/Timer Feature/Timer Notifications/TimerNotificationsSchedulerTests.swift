@@ -3,7 +3,7 @@ import LifeCoach
 
 final class TimerNotificationsTests: XCTestCase {
     func test_init_doesNotScheduleTimer() {
-        let (_, spy) = makeSUT(timerSet: createAnyTimerSet(), currentDate: Date.init)
+        let (_, spy) = makeSUT(timerSet: makeAnyTimerSet().model, currentDate: Date.init)
         
         XCTAssertEqual(spy.receivedMessages, [])
     }
@@ -67,7 +67,7 @@ final class TimerNotificationsTests: XCTestCase {
     }
     
     func test_scheduleNotification_onSchedulerErrorDeliversError() {
-        let anyTimerSet = createAnyTimerSet()
+        let anyTimerSet = makeAnyTimerSet().model
         let (sut, spy) = makeSUT(timerSet: anyTimerSet)
         let expectedError = anyNSError()
         spy.failScheduleWith(expectedError)
@@ -102,10 +102,6 @@ final class TimerNotificationsTests: XCTestCase {
         trackForMemoryLeak(instance: spy, file: file, line: line)
         
         return (sut, spy)
-    }
-    
-    private func createAnyTimerSet(startingFrom startDate: Date = Date()) -> TimerSet {
-        TimerSet(0, startDate: startDate, endDate: startDate.adding(seconds: 1))
     }
     
     private class SpyScheduler: Scheduler {
