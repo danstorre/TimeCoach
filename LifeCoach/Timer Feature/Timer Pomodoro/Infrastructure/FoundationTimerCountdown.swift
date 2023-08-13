@@ -32,6 +32,7 @@ public final class FoundationTimerCountdown: TimerCoutdown {
         state = .running
         timerDelivery = completion
         createTimer()
+        timerDelivery?(.success((currentTimerSet, state)))
     }
     
     public func stopCountdown() {

@@ -14,6 +14,7 @@ final class FoundationTimerCountdownTests: XCTestCase {
         let startSet = createAnyTimerSet()
         let sut = makeSUT(startingSet: startSet, nextSet: createAnyTimerSet())
         let expectation = expectation(description: "wait for start countdown to deliver time.")
+        expectation.expectedFulfillmentCount = 2
         
         sut.startCountdown(completion: { _ in
             expectation.fulfill()
@@ -28,7 +29,7 @@ final class FoundationTimerCountdownTests: XCTestCase {
         let startSet = createAnyTimerSet()
         let sut = makeSUT(startingSet: startSet, nextSet: createAnyTimerSet())
         let expectation = expectation(description: "wait for start countdown to deliver time.")
-        expectation.expectedFulfillmentCount = 2
+        expectation.expectedFulfillmentCount = 3
         
         sut.startCountdown(completion: { _ in
             expectation.fulfill()
@@ -43,7 +44,7 @@ final class FoundationTimerCountdownTests: XCTestCase {
         let startSet = createAnyTimerSet()
         let sut = makeSUT(startingSet: startSet, nextSet: createAnyTimerSet())
         
-        expect(sut: sut, toDeliver: [startSet.adding(0.001)])
+        expect(sut: sut, toDeliver: [startSet, startSet.adding(0.001)])
     }
     
     func test_start_deliversTwoMilliSecondsElapsedFromTheStartingSet() {
@@ -51,7 +52,7 @@ final class FoundationTimerCountdownTests: XCTestCase {
         let startSet = createTimerSet(0, startDate: fixedDate, endDate: fixedDate.adding(seconds: 0.002))
         let sut = makeSUT(startingSet: startSet, nextSet: createAnyTimerSet())
 
-        expect(sut: sut, toDeliver: [startSet.adding(0.001), startSet.adding(0.002)])
+        expect(sut: sut, toDeliver: [startSet, startSet.adding(0.001), startSet.adding(0.002)])
     }
     
     func test_start_afterFinishTheFirstSetTimerDoesNotChangeState() {
@@ -60,7 +61,7 @@ final class FoundationTimerCountdownTests: XCTestCase {
         let sut = makeSUT(startingSet: startSet, nextSet: createAnyTimerSet())
         let finishedStartSet = startSet.adding(0.001)
         
-        expect(sut: sut, toDeliver: [finishedStartSet])
+        expect(sut: sut, toDeliver: [startSet, finishedStartSet])
         sut.commitFinishedTimer()
         
         assertTimerSet(finishedStartSet, state: .stop, from: sut)
@@ -79,7 +80,7 @@ final class FoundationTimerCountdownTests: XCTestCase {
         let nextSet = createTimerSet(0, startDate: fixedDate, endDate: fixedDate.adding(seconds: 0.002))
         let sut = makeSUT(startingSet: startingSet, nextSet: nextSet)
         
-        expect(sut: sut, toDeliver: [startingSet.adding(0.001)])
+        expect(sut: sut, toDeliver: [startingSet, startingSet.adding(0.001)])
     }
     
     func test_stop_onStopState_doesNotChangeStateFromStop() {
@@ -126,10 +127,10 @@ final class FoundationTimerCountdownTests: XCTestCase {
                 receivedElapsedSeconds.append(timerSet)
             }
         }
-        XCTAssertEqual(receivedElapsedSeconds, [])
+        XCTAssertEqual(receivedElapsedSeconds, [startSet])
         
         sut.stopCountdown()
-        XCTAssertEqual(receivedElapsedSeconds, [startSet])
+        XCTAssertEqual(receivedElapsedSeconds, [startSet, startSet])
     }
     
     func test_pause_OnPauseState_DoesNotChangeStateFromPause() {
@@ -159,7 +160,7 @@ final class FoundationTimerCountdownTests: XCTestCase {
             sut.pauseCountdown()
         })
 
-        XCTAssertEqual(receivedElapsedSeconds, [])
+        XCTAssertEqual(receivedElapsedSeconds, [startSet])
     }
     
     func test_skip_onPauseState_deliversNextTimerSet() {
@@ -206,7 +207,7 @@ final class FoundationTimerCountdownTests: XCTestCase {
             let receivedElapsedSecondsOnSkip = receivedElapsedSecondsOnSkip(from: sut)
             XCTAssertEqual(receivedElapsedSecondsOnSkip, [nextSet])
         })
-        XCTAssertEqual(receivedElapsedSecondsOnRunningState, [])
+        XCTAssertEqual(receivedElapsedSecondsOnRunningState, [startingSet])
     }
     
     // MARK: - Helpers
