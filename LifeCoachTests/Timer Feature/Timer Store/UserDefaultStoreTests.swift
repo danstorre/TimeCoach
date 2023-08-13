@@ -27,7 +27,7 @@ final class UserDefaultTimerStoreTests: XCTestCase {
     }
     
     func test_insert_onEmptyStoreDeliversInsertedLocalTimerState() {
-        let anyTimerState = makeAnyLocalTimerState(elapsedSeconds: 0)
+        let anyTimerState = makeAnyState().local
         let sut = makeSUT()
         
         expect(sut: sut, toRetrieve: .success(anyTimerState), when: {
@@ -36,8 +36,8 @@ final class UserDefaultTimerStoreTests: XCTestCase {
     }
     
     func test_insert_doneTwiceDeliversLatestInsertedValues() {
-        let firstTimerState = makeAnyLocalTimerState(elapsedSeconds: 0)
-        let latestTimerState = makeAnyLocalTimerState(elapsedSeconds: 1)
+        let firstTimerState = makeAnyState(seconds: 0).local
+        let latestTimerState = makeAnyState(seconds: 1).local
         let sut = makeSUT()
         
         expect(sut: sut, toRetrieve: .success(latestTimerState), when: {
@@ -51,7 +51,7 @@ final class UserDefaultTimerStoreTests: XCTestCase {
         stub.startIntercepting()
         let sut = makeSUT()
         
-        let insertionError = insert(timer: makeAnyLocalTimerState(), using: sut)
+        let insertionError = insert(timer: makeAnyState().local, using: sut)
         
         XCTAssertEqual(insertionError as? UserDefaultsTimerStore.Error,
                        UserDefaultsTimerStore.Error.failInsertionObject(withKey: UserDefaultsTimerStore.DefaultKey),
@@ -76,7 +76,7 @@ final class UserDefaultTimerStoreTests: XCTestCase {
     
     func test_deleteState_onNonEmptyStoreShouldDeliverNoError() {
         let sut = makeSUT()
-        insert(timer: makeAnyLocalTimerState(), using: sut)
+        insert(timer: makeAnyState().local, using: sut)
         
         let result = deleteStore(from: sut)
         
@@ -87,7 +87,7 @@ final class UserDefaultTimerStoreTests: XCTestCase {
         let sut = makeSUT()
         
         expect(sut: sut, toRetrieve: .success(.none), when: {
-            insert(timer: makeAnyLocalTimerState(), using: sut)
+            insert(timer: makeAnyState().local, using: sut)
             deleteStore(from: sut)
         })
     }
@@ -152,11 +152,6 @@ final class UserDefaultTimerStoreTests: XCTestCase {
     
     private func cleanUserDefaultSuite(from id: String) {
         UserDefaults.standard.removePersistentDomain(forName: id)
-    }
-    
-    private func makeAnyLocalTimerState(elapsedSeconds: TimeInterval = 0) -> LocalTimerState {
-        let timerState = LocalTimerSet(elapsedSeconds, startDate: Date(), endDate: Date())
-        return LocalTimerState(localTimerSet: timerState, state: .pause)
     }
     
     private func saveInvalidData(_ invalidData: Data) {
