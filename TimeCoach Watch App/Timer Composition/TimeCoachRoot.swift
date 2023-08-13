@@ -119,7 +119,6 @@ class TimeCoachRoot {
         let timerSavedNofitier = timerSavedNofitier
         
         return playPublisher()
-            .dropFirst()
             .processFirstValue { value in
                 Just(value)
                     .saveTimerState(saver: localTimer)

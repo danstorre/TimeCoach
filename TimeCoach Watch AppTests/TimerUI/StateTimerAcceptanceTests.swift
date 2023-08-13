@@ -11,8 +11,6 @@ final class StateTimerAcceptanceTests: XCTestCase {
         
         sut.simulateToggleTimerUserInteraction()
         
-        spy.deliversSetAfterStart((timerSet: expected.localTimerSet, state: expected.state.toInfra))
-        
         XCTAssertEqual(spy.receivedMessages, [
             .startTimer,
             .saveStateTimer(value: expected),
@@ -26,8 +24,6 @@ final class StateTimerAcceptanceTests: XCTestCase {
         let expected = createAnyTimerState(using: spy.currentTimerSet, on: .running)
         
         sut.simulateToggleTimerUserInteraction()
-        
-        spy.deliversSetAfterStart((timerSet: expected.localTimerSet, state: expected.state.toInfra))
         
         spy.deliversSetAfterStart((timerSet: expected.localTimerSet.adding(1), state: expected.state.toInfra))
         
@@ -230,8 +226,10 @@ final class StateTimerAcceptanceTests: XCTestCase {
         
         // MARK: - Timer
         func startCountdown(completion: @escaping StartCoundownCompletion) {
+            state = .running
             receivedMessages.append(.startTimer)
             receivedStartCompletions.append(completion)
+            receivedStartCompletions.last?(.success((currentSet, state)))
         }
         
         func stopCountdown() {
