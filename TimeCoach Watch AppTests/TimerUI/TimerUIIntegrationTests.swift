@@ -47,11 +47,11 @@ final class TimerUIIntegrationTests: XCTestCase {
         
         sut.simulateStopTimerUserInteraction()
         
-        XCTAssertEqual(spy.commandsReceived, [.play, .pause, .play, .pause, .skip, .play, .pause, .stop], "Should execute stop.")
+        XCTAssertEqual(spy.commandsReceived, [.play, .pause, .play, .pause, .skip, .play, .stop], "Should execute stop.")
         
         sut.simulateToggleTimerUserInteraction()
         
-        XCTAssertEqual(spy.commandsReceived, [.play, .pause, .play, .pause, .skip, .play, .pause, .stop, .play], "Should execute play after stop.")
+        XCTAssertEqual(spy.commandsReceived, [.play, .pause, .play, .pause, .skip, .play, .stop, .play], "Should execute play after stop.")
     }
     
     func test_onSkipUserInteraction_sendsCommandsCorrectlyToHandler() {

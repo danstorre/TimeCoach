@@ -57,6 +57,29 @@ final class StateTimerAcceptanceTests: XCTestCase {
         ])
     }
     
+    func test_onLaunch_onRunningState_onStopUserInteractionShouldExecuteStopProcess() {
+        let currentDate = Date()
+        let (sut, spy) = makeSUT(currentDate: { currentDate })
+        let anySet = createAnyTimerSet(startingFrom: currentDate, endDate: currentDate.adding(seconds: .pomodoroInSeconds))
+        let expected = createAnyTimerState(
+            using: anySet,
+            on: .stop
+        )
+        sut.timerView.simulateToggleTimerUserInteraction()
+        spy.deliversSetAfterStart((timerSet: anySet.adding(1), state: expected.state.toInfra))
+        spy.resetMessages()
+        
+        sut.timerView.simulateStopTimerUserInteraction()
+        spy.deliversSetAfterStart((timerSet: anySet, state: expected.state.toInfra))
+        
+        XCTAssertEqual(spy.receivedMessages, [
+            .stopTimer,
+            .saveStateTimer(value: expected),
+            .unregisterTimerNotification,
+            .notifySavedTimer
+        ])
+    }
+    
     func test_onLaunch_onPauseUserInteractionShouldExecutePauseProcess() {
         let currentDate = Date()
         let (sut, spy) = makeSUT(currentDate: { currentDate })
