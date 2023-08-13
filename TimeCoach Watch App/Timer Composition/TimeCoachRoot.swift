@@ -199,5 +199,3 @@ class TimeCoachRoot {
         regularTimer!.skipPublisher(currentSubject: currentSubject)()
     }
 }
-
-extension WKInterfaceDevice: PlayNotification {}

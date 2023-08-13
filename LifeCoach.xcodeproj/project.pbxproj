@@ -192,6 +192,8 @@
 		FBEC46232A8067FD00CAB18F /* CornerTimerWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBEC46222A8067FD00CAB18F /* CornerTimerWidget.swift */; };
 		FBEC46262A80684800CAB18F /* TimerEntry+Factory.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBEC46252A80684800CAB18F /* TimerEntry+Factory.swift */; };
 		FBED1E4B293EDAD10061CAAF /* TimerControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBED1E4A293EDAD10061CAAF /* TimerControls.swift */; };
+		FBF182872A89927300DBAF7F /* WKInterfaceDevice+PlayNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF182862A89927300DBAF7F /* WKInterfaceDevice+PlayNotification.swift */; };
+		FBF182892A89928800DBAF7F /* PlayNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF182882A89928800DBAF7F /* PlayNotification.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -523,6 +525,8 @@
 		FBED1E4A293EDAD10061CAAF /* TimerControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerControls.swift; sourceTree = "<group>"; };
 		FBED1E51293EE13F0061CAAF /* TimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerView.swift; sourceTree = "<group>"; };
 		FBF0209E2A7DBBFE005074CD /* TimeCoach Watch AppDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "TimeCoach Watch AppDebug.entitlements"; sourceTree = "<group>"; };
+		FBF182862A89927300DBAF7F /* WKInterfaceDevice+PlayNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WKInterfaceDevice+PlayNotification.swift"; sourceTree = "<group>"; };
+		FBF182882A89928800DBAF7F /* PlayNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayNotification.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -650,6 +654,7 @@
 			isa = PBXGroup;
 			children = (
 				FB05D9BF2A83E1C200EA0AE8 /* TimerNotificationReceiverFactory.swift */,
+				FBF182882A89928800DBAF7F /* PlayNotification.swift */,
 			);
 			path = "Notifications Processes";
 			sourceTree = "<group>";
@@ -1166,6 +1171,7 @@
 				FB62AD422A55BD8400B2BBC1 /* TimerControlsPublishers.swift */,
 				FB05D9B52A83191300EA0AE8 /* UNUserNotificationCenter+NotificationScheduler.swift */,
 				FB05D9B72A83198E00EA0AE8 /* Publishers+Helpers.swift */,
+				FBF182862A89927300DBAF7F /* WKInterfaceDevice+PlayNotification.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -1941,6 +1947,7 @@
 				FBE593E62A78498000069F1C /* UserNotificationsReceiver.swift in Sources */,
 				FB0238E22A57442E002F55D5 /* PreviewTimer.swift in Sources */,
 				FB05D9B82A83198F00EA0AE8 /* Publishers+Helpers.swift in Sources */,
+				FBF182872A89927300DBAF7F /* WKInterfaceDevice+PlayNotification.swift in Sources */,
 				FBE9A9A82939535800D8BF29 /* TimerViewComposer.swift in Sources */,
 				FBB3D8822A770EBC00A8BBAD /* UserNotificationsScheduler.swift in Sources */,
 				FBA8DD852A4F13F0009E48D5 /* LocalElapsedSecondsSets+Extension.swift in Sources */,
@@ -1952,6 +1959,7 @@
 				FBE6465D2A4AA2DE005022A2 /* Combine+RegularTimer.swift in Sources */,
 				FBE646582A4A9F77005022A2 /* TimerAdapter.swift in Sources */,
 				FB73E909293BA2A40087F9EF /* TimeCoachRoot.swift in Sources */,
+				FBF182892A89928800DBAF7F /* PlayNotification.swift in Sources */,
 				FB62AD432A55BD8400B2BBC1 /* TimerControlsPublishers.swift in Sources */,
 				FBA8DD832A4F120E009E48D5 /* TimerStateAdapter+Publishers.swift in Sources */,
 				FBCD0A912A81EC4500086476 /* Infrastructure.swift in Sources */,

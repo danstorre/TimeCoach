@@ -1,10 +1,6 @@
 import LifeCoach
 import WatchKit
 
-public protocol PlayNotification {
-    func play(_ type: WKHapticType)
-}
-
 public enum TimerNotificationReceiverFactory {
     public static func notificationReceiverProcessWith(
         timerStateSaver: SaveTimerState,
