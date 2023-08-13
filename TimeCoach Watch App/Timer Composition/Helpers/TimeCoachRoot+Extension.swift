@@ -10,11 +10,14 @@ import Combine
 import LifeCoach
 
 extension TimeCoachRoot {
+    static let milisecondsPrecision = 0.001
+    
     // MARK: Factory methods
     func createTimerCountDown(from date: Date) -> TimerCoutdown {
         #if os(watchOS)
         timerCountdown ?? FoundationTimerCountdown(startingSet: .pomodoroSet(date: date),
-                                                  nextSet: .breakSet(date: date))
+                                                   nextSet: .breakSet(date: date),
+                                                   incrementing: Self.milisecondsPrecision)
         #elseif os(xrOS)
         FoundationTimerCountdown(startingSet: .pomodoroSet(date: date),
                                  nextSet: .breakSet(date: date))
