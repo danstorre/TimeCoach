@@ -45,6 +45,7 @@ public final class FoundationTimerCountdown: TimerCoutdown {
     public func pauseCountdown() {
         invalidatesTimer()
         state = .pause
+        timerDelivery?(.success((currentTimerSet, state)))
     }
     
     public func skipCountdown(completion: @escaping SkipCountdownCompletion) {
