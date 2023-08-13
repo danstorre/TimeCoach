@@ -91,7 +91,7 @@ class TimeCoachRoot {
     }
     
     private func getTimerState() -> TimerState? {
-        guard let timerSet = timerCountdown?.currentTimerSet.toElapseSeconds,
+        guard let timerSet = timerCountdown?.currentTimerSet.toModel,
                 let state = timerCountdown?.state.toModel else {
             return nil
         }

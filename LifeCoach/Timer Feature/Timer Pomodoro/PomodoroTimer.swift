@@ -48,7 +48,7 @@ public class PomodoroTimer: RegularTimer {
     private static func resolveResult(result: TimerCountdown.Result) -> Result {
         switch result {
         case let .success((localTimerSet, localState)):
-            return .success(TimerState(timerSet: localTimerSet.toElapseSeconds, state: localState.model))
+            return .success(TimerState(timerSet: localTimerSet.toModel, state: localState.model))
         case .failure:
             return .failure(.timerError)
         }

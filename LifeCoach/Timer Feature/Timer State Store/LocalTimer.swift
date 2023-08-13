@@ -31,6 +31,6 @@ private extension TimerState {
 
 private extension LocalTimerState {
     var toModel: TimerState {
-        TimerState(timerSet: localTimerSet.toElapseSeconds, state: StateMapper.state(from: state))
+        TimerState(timerSet: localTimerSet.toModel, state: StateMapper.state(from: state))
     }
 }
