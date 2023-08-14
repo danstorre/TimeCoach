@@ -37,8 +37,17 @@ struct TimeCoachWidget: Widget {
 }
 
 struct TimeCoachWidget_Previews: PreviewProvider {
+    
     static var previews: some View {
-        TimeCoachWidgetEntryView(entry: TimerEntry.createEntry(from: .init()))
-            .previewContext(WidgetPreviewContext(family: .accessoryRectangular))
+        Group {
+            TimeCoachWidgetEntryView(entry: .createBreakEntry())
+                .previewContext(WidgetPreviewContext(family: .accessoryRectangular))
+                .previewDisplayName("Break - rectangular")
+            
+            TimeCoachWidgetEntryView(entry: .createPomodoroEntry())
+                .previewContext(WidgetPreviewContext(family: .accessoryRectangular))
+                .previewDisplayName("Pomodoro - rectangular")
+        }
+        
     }
 }

@@ -5,22 +5,23 @@ struct RectangularTimerWidget: View {
     @Environment(\.isLuminanceReduced) var isLuminanceReduced
     
     var body: some View {
-        VStack {
+        VStack(alignment: .leading) {
             if let endDate = entry.timerPresentationValues?.endDate,
-               let startDate = entry.timerPresentationValues?.starDate {
-                Text("Pomodoro will end in:")
-                    .foregroundColor(.blue)
+               let startDate = entry.timerPresentationValues?.starDate,
+               let isBreak = entry.timerPresentationValues?.isBreak {
+                Text(isBreak ? "Taking a break" : "Pomodoro active")
+                    .foregroundColor(isBreak ? .blue : .red)
                     .privacySensitive(false)
                 
                 if !isLuminanceReduced {
                     ProgressView(timerInterval: startDate...endDate,
                                  countsDown: true)
                     .privacySensitive(false)
-                    .tint(.blue)
+                    .tint(isBreak ? .blue : .red)
                 } else {
                     ProgressView(value: 0)
                         .privacySensitive(false)
-                        .tint(.blue)
+                        .tint(isBreak ? .blue : .red)
                     Text(endDate, style: .timer)
                         .privacySensitive(false)
                 }

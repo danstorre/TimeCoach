@@ -7,4 +7,21 @@ extension TimerEntry {
                                                   endDate: currentDate.adding(seconds: 60 * 5), progress: 0),
                    isIdle: false)
     }
+    
+    
+    public static func createPomodoroEntry(from currentDate: Date = Date.init()) -> TimerEntry {
+        TimerEntry(date: currentDate,
+                   timerPresentationValues: .init(starDate: currentDate,
+                                                  endDate: currentDate.adding(seconds: 60 * 5), progress: 0),
+                   isIdle: false)
+    }
+    
+    public static func createBreakEntry(from currentDate: Date = Date.init()) -> TimerEntry {
+        TimerEntry(date: currentDate,
+                   timerPresentationValues: .init(starDate: currentDate,
+                                                  endDate: currentDate.adding(seconds: 60 * 5),
+                                                  isBreak: true,
+                                                  progress: 0),
+                   isIdle: false)
+    }
 }
