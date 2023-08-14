@@ -9,13 +9,17 @@ struct RectangularTimerWidget: View {
                let startDate = entry.timerPresentationValues?.starDate {
                 Text("Pomodoro will end in:")
                     .foregroundColor(.blue)
+                    .privacySensitive(false)
                 ProgressView(timerInterval: startDate...endDate,
                              countsDown: true)
+                .privacySensitive(false)
                 .tint(.blue)
             } else {
                 Image("widgetIcon")
                     .foregroundColor(.blue)
+                    .privacySensitive(false)
                 Text("Tap to begin.")
+                    .privacySensitive(false)
             }
         }
     }

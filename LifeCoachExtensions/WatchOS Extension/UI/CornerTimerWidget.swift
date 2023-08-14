@@ -7,6 +7,7 @@ struct CornerTimerWidget: View {
         VStack {
             Image("widgetIcon")
                 .foregroundColor(.blue)
+                .privacySensitive(false)
             Text("")
                 .widgetLabel(label: {
                     if let endDate = entry.timerPresentationValues?.endDate,
@@ -14,9 +15,11 @@ struct CornerTimerWidget: View {
                         ProgressView(timerInterval: startDate...endDate,
                                      countsDown: true)
                             .tint(.blue)
+                            .privacySensitive(false)
                     } else {
                         ProgressView("", value: 1, total: 1)
                             .tint(.blue)
+                            .privacySensitive(false)
                     }
                 })
         }

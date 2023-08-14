@@ -9,6 +9,7 @@ struct CircularTimerWidget: View {
             ProgressView(timerInterval: startDate...endDate,
                          countsDown: true)
             .progressViewStyle(.circular)
+            .privacySensitive(false)
             .tint(.blue)
         } else {
             ProgressView(value: 1, label: {
@@ -18,6 +19,7 @@ struct CircularTimerWidget: View {
                     .tint(.blue)
             })
             .progressViewStyle(.circular)
+            .privacySensitive(false)
             .tint(.blue)
         }
     }
