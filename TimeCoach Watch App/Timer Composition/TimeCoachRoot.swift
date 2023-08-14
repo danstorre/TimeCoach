@@ -160,8 +160,6 @@ class TimeCoachRoot {
     }
     
     private func handlePause() -> RegularTimer.VoidPublisher {
-        let localTimer = localTimer
-        let timerSavedNofitier = timerSavedNofitier
         let unregisterNotifications = unregisterNotifications
         
         return pausePublisher()
@@ -179,9 +177,7 @@ class TimeCoachRoot {
     }
     
     private func handleSkip() -> RegularTimer.TimerSetPublisher {
-        let localTimer = localTimer
         let currentSubject = currentSubject
-        let timerSavedNofitier = timerSavedNofitier
         let unregisterNotifications = unregisterNotifications
         
         return skipPublisher()
