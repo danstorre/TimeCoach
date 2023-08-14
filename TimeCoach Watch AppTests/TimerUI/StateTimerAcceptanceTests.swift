@@ -153,6 +153,15 @@ final class StateTimerAcceptanceTests: XCTestCase {
             .saveStateTimer(value: expected),
             .notifySavedTimer
         ])
+        
+        sut.simulateGoToInactive()
+        
+        XCTAssertEqual(spy.receivedMessages, [
+            .pauseTimer,
+            .unregisterTimerNotification,
+            .saveStateTimer(value: expected),
+            .notifySavedTimer
+        ])
     }
     
     func test_onLaunch_onSkipUserInteraction_whenGoingToInactiveAppStateShouldOnlySaveTimerStateOnce() {
@@ -168,6 +177,15 @@ final class StateTimerAcceptanceTests: XCTestCase {
         XCTAssertEqual(spy.receivedMessages, [
             .skipTimer,
             .unregisterTimerNotification
+        ])
+        
+        sut.simulateGoToInactive()
+        
+        XCTAssertEqual(spy.receivedMessages, [
+            .skipTimer,
+            .unregisterTimerNotification,
+            .saveStateTimer(value: expected),
+            .notifySavedTimer
         ])
         
         sut.simulateGoToInactive()
