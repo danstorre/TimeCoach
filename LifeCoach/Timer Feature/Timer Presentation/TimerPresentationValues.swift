@@ -6,7 +6,7 @@ public struct TimerPresentationValues: Equatable {
     public let progress: Float
     public let isBreak: Bool
     
-    public init(starDate: Date, endDate: Date, isBreak: Bool = false, progress: Float) {
+    public init(starDate: Date, endDate: Date, isBreak: Bool, progress: Float) {
         self.starDate = starDate
         self.endDate = endDate
         self.progress = progress
