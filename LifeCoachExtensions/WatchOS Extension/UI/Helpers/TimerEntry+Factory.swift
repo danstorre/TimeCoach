@@ -12,7 +12,7 @@ extension TimerEntry {
     public static func createPomodoroEntry(from currentDate: Date = Date.init()) -> TimerEntry {
         TimerEntry(date: currentDate,
                    timerPresentationValues: .init(starDate: currentDate,
-                                                  endDate: currentDate.adding(seconds: 60 * 5), progress: 0),
+                                                  endDate: currentDate.adding(seconds: 60 * 25), progress: 0),
                    isIdle: false)
     }
     
