@@ -122,7 +122,9 @@ final class StateTimerAcceptanceTests: XCTestCase {
         let (sut, spy) = makeSUT(currentDate: { currentDate })
         let expected = makeAnyState(seconds: 0,
                                     startDate: currentDate,
-                                    endDate: currentDate.adding(seconds: .pomodoroInSeconds), state: .stop).local
+                                    endDate: currentDate.adding(seconds: .pomodoroInSeconds),
+                                    isBreak: true,
+                                    state: .stop).local
         
         sut.timerView.simulateSkipTimerUserInteraction()
         spy.deliversSetAfterSkip((timerSet: expected.localTimerSet, state: .stop))
@@ -139,7 +141,7 @@ final class StateTimerAcceptanceTests: XCTestCase {
             .unregisterTimerNotification,
             .saveStateTimer(value: expected),
             .notifySavedTimer
-        ])
+        ], "on user skip interaction after going to inactive app state, should save timer state with isBreak: true")
         
         sut.simulateGoToInactive()
         
@@ -148,7 +150,7 @@ final class StateTimerAcceptanceTests: XCTestCase {
             .unregisterTimerNotification,
             .saveStateTimer(value: expected),
             .notifySavedTimer
-        ])
+        ], "on user skip interaction after going to inactive app state, should save timer state with isBreak: true")
     }
     
     func test_onBackgroundEvent_shouldNotSendMessageToStartSaveStateProcess() {
@@ -196,6 +198,7 @@ final class StateTimerAcceptanceTests: XCTestCase {
                     return """
                 saveStateTimer: seconds: \(localTimerState.localTimerSet.elapsedSeconds), state: \(localTimerState.state)
                 startDate: \(localTimerState.localTimerSet.startDate), endDate: \(localTimerState.localTimerSet.endDate)
+                isBreak: \(localTimerState.isBreak)
                 """
                 case .scheduleTimerNotification:
                     return "scheduleTimerNotification"

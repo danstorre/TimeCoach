@@ -8,11 +8,15 @@ import TimeCoachVisionOS
 #endif
 
 public final class TimerViewComposer {
-    static func handlesSkip(withSkipAdapter skipTimerAdapter: TimerAdapter,
-                            and viewModel: TimerViewModel) -> () -> Void {
+    static func handlesSkip(
+        withSkipAdapter skipTimerAdapter: TimerAdapter,
+        and viewModel: TimerViewModel,
+        isBreakPublisher currentSubject: CurrentValueSubject<IsBreakMode, Error>
+    ) -> () -> Void {
         {
             skipTimerAdapter.skip()
             viewModel.isBreak = !viewModel.isBreak
+            currentSubject.send(viewModel.isBreak)
         }
     }
     
@@ -31,9 +35,11 @@ public final class TimerViewComposer {
     
     public static func createTimer(
         timerStyle: TimerStyle = .init(),
-        timerControlPublishers: TimerControlsPublishers
+        timerControlPublishers: TimerControlsPublishers,
+        isBreakModePublisher: CurrentValueSubject<IsBreakMode,Error>
     ) -> TimerView {
         let timerViewModel = TimerViewModel(isBreak: false)
+        
         let controlsViewModel = Self.subscribeChangesFrom(isPlayingPublisher: timerControlPublishers.isPlaying,
                                                           to: ControlsViewModel())
         
@@ -41,7 +47,8 @@ public final class TimerViewComposer {
                                             deliveredElapsedTime: timerViewModel.delivered(elapsedTime:))
         
         let skipHandler = Self.handlesSkip(withSkipAdapter: skipTimerAdapter,
-                                           and: timerViewModel)
+                                           and: timerViewModel,
+                                           isBreakPublisher: isBreakModePublisher)
         
         let controls = Self.timerControls(controlsViewModel: controlsViewModel,
                                           deliveredElapsedTime: timerViewModel.delivered(elapsedTime:),

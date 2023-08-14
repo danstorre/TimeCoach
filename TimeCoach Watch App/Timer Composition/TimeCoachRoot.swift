@@ -6,9 +6,14 @@ import Combine
 import UserNotifications
 import WidgetKit
 
+public typealias IsBreakMode = Bool
+
 class TimeCoachRoot {
     private var timerSave: TimerSave?
     private var timerLoad: TimerLoad?
+    
+    // Pomodoro State
+    private lazy var currentIsBreakMode: CurrentValueSubject<IsBreakMode, Error> = .init(false)
     
     // Timer
     private var currenDate: () -> Date = Date.init
@@ -77,7 +82,8 @@ class TimeCoachRoot {
         
         UNUserNotificationCenter.current().delegate = UNUserNotificationdelegate
         
-        return TimerViewComposer.createTimer(timerControlPublishers: timerControlPublishers)
+        return TimerViewComposer.createTimer(timerControlPublishers: timerControlPublishers,
+                                             isBreakModePublisher: currentIsBreakMode)
     }
     
     private func createUNUserNotificationdelegate() -> UNUserNotificationCenterDelegate? {
@@ -113,9 +119,10 @@ class TimeCoachRoot {
         guard let timerCountdown = timerCountdown, needsUpdate else {
             return
         }
+        let currentIsBreakMode = currentIsBreakMode
         Just(())
             .mapsTimerSetAndState(timerCountdown: timerCountdown)
-            .map({ TimerState(timerSet: $0.0, state: $0.1)})
+            .map({ TimerState(timerSet: $0.0, state: $0.1, isBreak: currentIsBreakMode.value)})
             .saveTimerState(saver: localTimer)
             .notifySavedTimer(notifier: timerSavedNofitier)
             .subscribe(Subscribers.Sink(receiveCompletion: { _ in
