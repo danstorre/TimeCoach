@@ -186,11 +186,11 @@ class TimeCoachRoot {
         
         return skipPublisher()
             .processFirstValue { value in
-                Just((value.timerSet, value.state))
-                    .saveTimerState(saver: localTimer)
-                    .flatsToVoid()
+                Just(())
+                    .handleEvents(receiveOutput: { [weak self] _ in
+                        self?.needsUpdate = true
+                    })
                     .unregisterTimerNotifications(unregisterNotifications)
-                    .notifySavedTimer(notifier: timerSavedNofitier)
                     .flatsToTimerSetPublisher(currentSubject)
                     .subscribe(Subscribers.Sink(receiveCompletion: { _ in
                     }, receiveValue: { _ in }))
