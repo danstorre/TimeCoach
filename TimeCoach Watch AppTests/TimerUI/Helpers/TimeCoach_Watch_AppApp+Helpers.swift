@@ -16,4 +16,8 @@ extension TimeCoach_Watch_AppApp {
     func simulateGoToForeground() {
         goToForeground()
     }
+    
+    func simulateGoToInactive() {
+        gotoInactive()
+    }
 }

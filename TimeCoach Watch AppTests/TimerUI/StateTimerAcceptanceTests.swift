@@ -5,7 +5,7 @@ import LifeCoach
 final class StateTimerAcceptanceTests: XCTestCase {
     typealias TimerStore = TimerLoad & TimerSave
     
-    func test_onLaunch_onToggleUserInteractionShouldStartNotificationAndSaveStateProcess() {
+    func test_onLaunch_onInactiveAppStateShouldSaveLatestTimerState() {
         let (sut, spy) = makeSUT()
         let expected = makeAnyState(seconds: spy.currentTimerSet.elapsedSeconds,
                                     startDate: spy.currentTimerSet.startDate,
@@ -15,26 +15,15 @@ final class StateTimerAcceptanceTests: XCTestCase {
         
         XCTAssertEqual(spy.receivedMessages, [
             .startTimer,
-            .saveStateTimer(value: expected),
             .scheduleTimerNotification,
-            .notifySavedTimer
         ])
-    }
-    
-    func test_onLaunch_afterTimerDeliversShouldNotStartNotificationAndSaveStateProcess() {
-        let (sut, spy) = makeSUT()
-        let expected = makeAnyState(seconds: spy.currentTimerSet.elapsedSeconds,
-                                    startDate: spy.currentTimerSet.startDate,
-                                    endDate: spy.currentTimerSet.endDate, state: .running).local
         
-        sut.simulateToggleTimerUserInteraction()
-        
-        spy.deliversSetAfterStart((timerSet: expected.localTimerSet.adding(1), state: .running))
+        sut.simulateGoToInactive()
         
         XCTAssertEqual(spy.receivedMessages, [
             .startTimer,
-            .saveStateTimer(value: expected),
             .scheduleTimerNotification,
+            .saveStateTimer(value: expected),
             .notifySavedTimer
         ])
     }

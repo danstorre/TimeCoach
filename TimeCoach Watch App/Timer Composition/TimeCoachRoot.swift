@@ -108,19 +108,28 @@ class TimeCoachRoot {
         timerLoad?.loadTime()
     }
     
+    func gotoInactive() {
+        guard let timerCountdown = timerCountdown else {
+            return
+        }
+        Just(())
+            .mapsTimerSetAndState(timerCountdown: timerCountdown)
+            .map({ TimerState(timerSet: $0.0, state: $0.1)})
+            .saveTimerState(saver: localTimer)
+            .notifySavedTimer(notifier: timerSavedNofitier)
+            .subscribe(Subscribers.Sink(receiveCompletion: { _ in
+            }, receiveValue: { _ in }))
+    }
+    
     private struct UnexpectedError: Error {}
     
     private func handlePlay() -> RegularTimer.TimerSetPublisher {
-        let localTimer = localTimer
         let timerNotificationScheduler = timerNotificationScheduler
-        let timerSavedNofitier = timerSavedNofitier
         
         return playPublisher()
             .processFirstValue { value in
                 Just(value)
-                    .saveTimerState(saver: localTimer)
                     .scheduleTimerNotfication(scheduler: timerNotificationScheduler)
-                    .notifySavedTimer(notifier: timerSavedNofitier)
                     .subscribe(Subscribers.Sink(receiveCompletion: { _ in
                     }, receiveValue: { _ in }))
             }

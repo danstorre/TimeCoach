@@ -33,8 +33,7 @@ struct TimeCoach_Watch_AppApp: App {
                 case .active:
                     goToForeground()
                 case .inactive:
-                    goToForeground()
-                    goToBackground()
+                    gotoInactive()
                 case .background:
                     goToBackground()
                 @unknown default: break
@@ -59,5 +58,11 @@ struct TimeCoach_Watch_AppApp: App {
     
     func goToForeground() {
         root.goToForeground()
+    }
+    
+    func gotoInactive() {
+        goToForeground()
+        root.gotoInactive()
+        goToBackground()
     }
 }
