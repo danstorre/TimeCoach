@@ -25,7 +25,7 @@ private extension TimerSet {
 
 private extension TimerState {
     var local: LocalTimerState {
-        LocalTimerState(localTimerSet: timerSet.local, state: StateMapper.state(from: state))
+        LocalTimerState(localTimerSet: timerSet.local, state: StateMapper.state(from: state), isBreak: isBreak)
     }
 }
 

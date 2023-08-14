@@ -35,13 +35,17 @@ final class TimerSaveStateUseCaseTests: XCTestCase {
     }
     
     func test_save_onStoreDeletionSucces_sendMessageInsertionWithCorrectStateToStore() {
-        let anyTimerState = makeAnyState()
-        let (sut, spy) = makeSUT()
-        spy.completesDeletionSuccessfully()
+        let isBreakSamples = [false, true]
         
-        try? sut.save(state: anyTimerState.model)
-        
-        XCTAssertEqual(spy.receivedMessages, [.deleteState, .insert(state: anyTimerState.local)])
+        isBreakSamples.forEach { sample in
+            let anyTimerState = makeAnyState(isBreak: sample)
+            let (sut, spy) = makeSUT()
+            spy.completesDeletionSuccessfully()
+            
+            try? sut.save(state: anyTimerState.model)
+            
+            XCTAssertEqual(spy.receivedMessages, [.deleteState, .insert(state: anyTimerState.local)])
+        }
     }
     
     func test_save_OnStoreInsertionErrorShouldDeliverError() {
