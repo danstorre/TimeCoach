@@ -29,15 +29,12 @@ final class SchedulerNotificationTests: XCTestCase {
     }
     
     func test_schedule_schedulesCorrectTrigger() {
-        let samplesAddingToCurrentDate: [TimeInterval] = [1, 2, 100]
-        
-        samplesAddingToCurrentDate.forEach { sample in
-            let currentDate = Date()
+        let currentDate = Date()
+        samplesAddingToCurrentDate(currenDate: currentDate).forEach { sample in
             let (sut, mock) = makeSUT(on: { currentDate })
-            let timeScheduled = currentDate.adding(seconds: sample)
-            try? sut.setSchedule(at: timeScheduled)
+            try? sut.setSchedule(at: sample.scheduleAt)
             
-            mock.assertCorrectTrigger(from: sample)
+            mock.assertCorrectTrigger(from: sample.timeIntevalTrigger)
         }
     }
     
@@ -129,8 +126,26 @@ final class SchedulerNotificationTests: XCTestCase {
         }
     }
     
+    private func samplesAddingToCurrentDate(currenDate: Date) -> [NotificationValue] {
+        [
+            NotificationValue(scheduleAt: currenDate.adding(seconds: 1), isBreak: false, timeIntevalTrigger: 1),
+            NotificationValue(scheduleAt: currenDate.adding(seconds: 2), isBreak: false, timeIntevalTrigger: 2),
+            NotificationValue(scheduleAt: currenDate.adding(seconds: 100), isBreak: false, timeIntevalTrigger: 100),
+            NotificationValue(scheduleAt: currenDate.adding(seconds: 1), isBreak: true, timeIntevalTrigger: 1),
+            NotificationValue(scheduleAt: currenDate.adding(seconds: 2), isBreak: true, timeIntevalTrigger: 2),
+            NotificationValue(scheduleAt: currenDate.adding(seconds: 100), isBreak: true, timeIntevalTrigger: 100),
+        ]
+    }
+    
     private func anyScheduledDate() -> Date {
         Date().adding(seconds: 1)
+    }
+    
+
+    private struct NotificationValue {
+        let scheduleAt: Date
+        let isBreak: Bool
+        let timeIntevalTrigger: TimeInterval
     }
 }
 
