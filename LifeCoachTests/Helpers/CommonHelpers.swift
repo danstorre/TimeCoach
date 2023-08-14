@@ -41,9 +41,10 @@ func makeAnyState(seconds: TimeInterval = 1,
 func makeAnyTimerState(seconds: TimeInterval = 1,
                        startDate: Date = Date(),
                        endDate: Date = Date(),
+                       isBreak: Bool = false,
                        state helperState: TimerStateHelper = .pause) -> TimerState {
     let localTimerSet = makeAnyTimerSet(seconds: seconds, startDate: startDate, endDate: endDate)
-    return TimerState(timerSet: localTimerSet.model, state: helperState.timerState)
+    return TimerState(timerSet: localTimerSet.model, state: helperState.timerState, isBreak: isBreak)
 }
 
 func makeAnyTimerSet(seconds: TimeInterval = 0,

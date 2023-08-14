@@ -8,7 +8,7 @@ public struct TimerState: Equatable {
     }
     public let timerSet: TimerSet
     public let state: State
-    let isBreak: Bool
+    public let isBreak: Bool
     
     public init(timerSet: TimerSet, state: TimerState.State, isBreak: Bool = false) {
         self.timerSet = timerSet

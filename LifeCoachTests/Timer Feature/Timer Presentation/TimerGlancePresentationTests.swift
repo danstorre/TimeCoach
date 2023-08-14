@@ -26,6 +26,7 @@ final class TimerGlancePresentationTests: XCTestCase {
             makeAnyTimerState(seconds: 0, startDate: currentDate.adding(seconds: -1), endDate: currentDate.adding(seconds: 1), state: .running),
             makeAnyTimerState(seconds: 1, startDate: currentDate.adding(seconds: -1), endDate: currentDate.adding(seconds: 1), state: .running),
             makeAnyTimerState(seconds: 2, startDate: currentDate.adding(seconds: -1), endDate: currentDate.adding(seconds: 1), state: .running),
+            makeAnyTimerState(seconds: 2, startDate: currentDate.adding(seconds: -1), endDate: currentDate.adding(seconds: 1), isBreak: true, state: .running),
         ]
         
         samples.forEach { sample in
@@ -40,7 +41,7 @@ final class TimerGlancePresentationTests: XCTestCase {
     func expect(sut: TimerGlanceViewModel, toSendEvent expected: TimerGlanceViewModel.TimerStatusEvent, on state: TimerState, file: StaticString = #filePath, line: UInt = #line) {
         let result = resultOfStatusCheck(from: sut, withState: state)
         
-        XCTAssertEqual(result, expected, "expected: \(expected), sample: \(state)",
+        XCTAssertEqual(result, expected,
                        file: file, line: line)
     }
     
@@ -73,6 +74,7 @@ final class TimerGlancePresentationTests: XCTestCase {
         return TimerPresentationValues(
             starDate: currentDate.adding(seconds: -elapsedSeconds),
             endDate: currentDate.adding(seconds: remainingSeconds),
+            isBreak: timerState.isBreak,
             progress: Float(remainingSeconds/totalTime))
     }
 }

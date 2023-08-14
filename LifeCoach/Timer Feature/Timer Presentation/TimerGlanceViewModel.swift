@@ -35,6 +35,7 @@ public class TimerGlanceViewModel {
         return TimerPresentationValues(
             starDate: currentDate - elapsedSeconds,
             endDate: currentDate.adding(seconds: remainingSeconds),
+            isBreak: timerState.isBreak,
             progress: Float(remainingSeconds/totalTime))
     }
 }
