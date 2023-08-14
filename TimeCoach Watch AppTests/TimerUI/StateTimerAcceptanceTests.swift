@@ -28,6 +28,16 @@ final class StateTimerAcceptanceTests: XCTestCase {
         ])
     }
     
+    func test_onLaunch_onInactiveAppStateShouldSaveOnlyOnUserInteraction() {
+        let (sut, spy) = makeSUT()
+        
+        XCTAssertEqual(spy.receivedMessages, [])
+        
+        sut.simulateGoToInactive()
+        
+        XCTAssertEqual(spy.receivedMessages, [])
+    }
+    
     func test_onLaunch_onStopUserInteractionShouldExecuteStopProcess() {
         let currentDate = Date()
         let (sut, spy) = makeSUT(currentDate: { currentDate })

@@ -109,7 +109,7 @@ class TimeCoachRoot {
     }
     
     func gotoInactive() {
-        guard let timerCountdown = timerCountdown else {
+        guard let timerCountdown = timerCountdown, needsUpdate else {
             return
         }
         Just(())
@@ -123,12 +123,17 @@ class TimeCoachRoot {
     
     private struct UnexpectedError: Error {}
     
+    private var needsUpdate: Bool = false
+    
     private func handlePlay() -> RegularTimer.TimerSetPublisher {
         let timerNotificationScheduler = timerNotificationScheduler
         
         return playPublisher()
             .processFirstValue { value in
                 Just(value)
+                    .handleEvents(receiveOutput: { [weak self] _ in
+                        self?.needsUpdate = true
+                    })
                     .scheduleTimerNotfication(scheduler: timerNotificationScheduler)
                     .subscribe(Subscribers.Sink(receiveCompletion: { _ in
                     }, receiveValue: { _ in }))
