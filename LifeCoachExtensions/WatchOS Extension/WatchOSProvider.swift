@@ -16,7 +16,7 @@ public class WatchOSProvider: WatchOSProviderProtocol {
     }
     
     public func getSnapshot(completion: @escaping (TimerEntry) -> ()) {
-        completion(getTimerEntry())
+        completion(TimerEntry.createPomodoroEntry(from: currentDate()))
     }
     
     public func getTimeline(completion: @escaping (Timeline<TimerEntry>) -> ()) {
