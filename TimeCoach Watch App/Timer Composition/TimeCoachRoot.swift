@@ -6,8 +6,6 @@ import Combine
 import UserNotifications
 import WidgetKit
 
-public typealias IsBreakMode = Bool
-
 class TimeCoachRoot {
     private var timerSave: TimerSave?
     private var timerLoad: TimerLoad?
