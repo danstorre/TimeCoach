@@ -296,7 +296,7 @@ final class FoundationTimerCountdownTests: XCTestCase {
     }
     
     private func createAnyTimerSet(startingFrom startDate: Date = Date(), endDate: Date? = nil) -> LocalTimerSet {
-        makeAnyTimerSet(startDate: startDate, endDate: endDate ?? .init()).local
+        makeAnyTimerSet(startDate: startDate, endDate: endDate ?? startDate.adding(seconds: 1)).local
     }
     
     private func createTimerSet(_ elapsedSeconds: TimeInterval, startDate: Date, endDate: Date) -> LocalTimerSet {

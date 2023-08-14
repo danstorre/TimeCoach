@@ -41,7 +41,7 @@ func makeAnyTimerState(seconds: TimeInterval = 1,
     return TimerState(timerSet: localTimerSet.model, state: helperState.timerState)
 }
 
-func makeAnyTimerSet(seconds: TimeInterval = 1,
+func makeAnyTimerSet(seconds: TimeInterval = 0,
                      startDate: Date = Date(),
                      endDate: Date = Date()) -> (model: TimerSet, local: LocalTimerSet) {
     let timerSet = TimerSet(seconds, startDate: startDate, endDate: endDate)
