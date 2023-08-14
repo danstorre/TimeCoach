@@ -6,19 +6,20 @@ struct CircularTimerWidget: View {
     
     var body: some View {
         if let endDate = entry.timerPresentationValues?.endDate,
-           let startDate = entry.timerPresentationValues?.starDate {
+           let startDate = entry.timerPresentationValues?.starDate,
+           let isBreak = entry.timerPresentationValues?.isBreak {
             if !isLuminanceReduced {
                 ProgressView(timerInterval: startDate...endDate,
                              countsDown: true)
                 .progressViewStyle(.circular)
                 .privacySensitive(false)
-                .tint(.blue)
+                .tint(isBreak ? .blue : .red)
             } else {
                 ZStack {
                     ProgressView(value: 0)
                         .progressViewStyle(.circular)
                         .privacySensitive(false)
-                        .tint(.blue)
+                        .tint(isBreak ? .blue : .red)
                     
                     ZStack {
                         Text(endDate, style: .relative)

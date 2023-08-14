@@ -47,6 +47,14 @@ struct TimeCoachWidget_Previews: PreviewProvider {
             TimeCoachWidgetEntryView(entry: .createPomodoroEntry())
                 .previewContext(WidgetPreviewContext(family: .accessoryRectangular))
                 .previewDisplayName("Pomodoro - rectangular")
+            
+            TimeCoachWidgetEntryView(entry: .createBreakEntry())
+                .previewContext(WidgetPreviewContext(family: .accessoryCircular))
+                .previewDisplayName("Break - circular")
+            
+            TimeCoachWidgetEntryView(entry: .createPomodoroEntry())
+                .previewContext(WidgetPreviewContext(family: .accessoryCircular))
+                .previewDisplayName("Pomodoro - circular")
         }
         
     }
