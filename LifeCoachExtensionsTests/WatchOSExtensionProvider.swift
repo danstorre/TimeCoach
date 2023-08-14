@@ -24,15 +24,19 @@ final class WatchOSExtensionProvider: XCTestCase {
     }
     
     func test_getTimeLine_onLoadTimerStateRunningDeliversCorrectTimeLineEntry() {
-        let currentDate = Date()
-        let endDate = currentDate.adding(seconds: 1)
-        let runningTimeLineEntry = createTimerEntry(currentDate: currentDate, endDate: endDate, isIdle: false)
-        let (sut, spy) = makeSUT(currentDate: { currentDate })
-        spy.loadsSuccess(with: makeAnyTimerState(seconds: 0, startDate: currentDate, endDate: endDate, state: .running))
+        let isBreakSamples = [false, true]
         
-        let timeLineResult = sut.getTimeLineResult()
-        
-        assertCorrectTimeLine(with: runningTimeLineEntry, from: timeLineResult)
+        isBreakSamples.forEach { isBreak in
+            let currentDate = Date()
+            let endDate = currentDate.adding(seconds: 1)
+            let runningTimeLineEntry = createTimerEntry(currentDate: currentDate, endDate: endDate, isIdle: false, isBreak: isBreak)
+            let (sut, spy) = makeSUT(currentDate: { currentDate })
+            spy.loadsSuccess(with: makeAnyTimerState(seconds: 0, startDate: currentDate, endDate: endDate, isBreak: isBreak, state: .running))
+            
+            let timeLineResult = sut.getTimeLineResult()
+            
+            assertCorrectTimeLine(with: runningTimeLineEntry, from: timeLineResult, onSample: isBreak)
+        }
     }
     
     func test_getTimeLine_onLoadIdleTimerStateDeliversCorrectIsIdleTimeLineEntry() {
@@ -152,7 +156,7 @@ final class WatchOSExtensionProvider: XCTestCase {
     
     // MARK: - Helpers
     private func createTimerEntry(currentDate: Date, endDate: Date, isIdle: Bool, isBreak: Bool = false) -> TimerEntry {
-        let timerPresentationValues = TimerPresentationValues(starDate: currentDate, endDate: endDate, isBreak: false)
+        let timerPresentationValues = TimerPresentationValues(starDate: currentDate, endDate: endDate, isBreak: isBreak)
         return TimerEntry(date: currentDate, timerPresentationValues: timerPresentationValues, isIdle: isIdle)
     }
     
@@ -164,6 +168,12 @@ final class WatchOSExtensionProvider: XCTestCase {
         trackForMemoryLeak(instance: spy, file: file, line: line)
         
         return (sut, spy)
+    }
+    
+    private func assertCorrectTimeLine(with simpleEntry: TimerEntry, from timeLine: Timeline<TimerEntry>?, onSample isBreak: Bool,
+                                       file: StaticString = #filePath, line: UInt = #line) {
+        XCTAssertEqual(timeLine?.entries, [simpleEntry], "on sample isBreak: \(isBreak)", file: file, line: line)
+        XCTAssertEqual(timeLine?.policy, .never, "on sample isBreak: \(isBreak)", file: file, line: line)
     }
     
     private func assertCorrectTimeLine(with simpleEntry: TimerEntry, from timeLine: Timeline<TimerEntry>?, file: StaticString = #filePath, line: UInt = #line) {
