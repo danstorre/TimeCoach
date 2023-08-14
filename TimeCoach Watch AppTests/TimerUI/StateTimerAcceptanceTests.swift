@@ -5,6 +5,16 @@ import LifeCoach
 final class StateTimerAcceptanceTests: XCTestCase {
     typealias TimerStore = TimerLoad & TimerSave
     
+    func test_onLaunch_onInactiveAppStateShouldSaveOnlyOnUserInteraction() {
+        let (sut, spy) = makeSUT()
+        
+        XCTAssertEqual(spy.receivedMessages, [])
+        
+        sut.simulateGoToInactive()
+        
+        XCTAssertEqual(spy.receivedMessages, [])
+    }
+
     func test_onLaunch_onInactiveAppStateShouldSaveLatestTimerState() {
         let (sut, spy) = makeSUT()
         let expected = makeAnyState(seconds: spy.currentTimerSet.elapsedSeconds,
@@ -26,16 +36,6 @@ final class StateTimerAcceptanceTests: XCTestCase {
             .saveStateTimer(value: expected),
             .notifySavedTimer
         ])
-    }
-    
-    func test_onLaunch_onInactiveAppStateShouldSaveOnlyOnUserInteraction() {
-        let (sut, spy) = makeSUT()
-        
-        XCTAssertEqual(spy.receivedMessages, [])
-        
-        sut.simulateGoToInactive()
-        
-        XCTAssertEqual(spy.receivedMessages, [])
     }
     
     func test_onLaunch_onInactiveAppStateTwiceAfterToggleShouldOnlySaveTimerStateOnce() {
