@@ -133,6 +133,7 @@ class TimeCoachRoot {
     
     private func handlePlay() -> RegularTimer.TimerSetPublisher {
         let timerNotificationScheduler = timerNotificationScheduler
+        let currentIsBreakMode = currentIsBreakMode
         
         return playPublisher()
             .processFirstValue { value in
@@ -140,7 +141,7 @@ class TimeCoachRoot {
                     .handleEvents(receiveOutput: { [weak self] _ in
                         self?.needsUpdate = true
                     })
-                    .scheduleTimerNotfication(scheduler: timerNotificationScheduler, isBreak: false)
+                    .scheduleTimerNotfication(scheduler: timerNotificationScheduler, isBreak: currentIsBreakMode.value)
                     .subscribe(Subscribers.Sink(receiveCompletion: { _ in
                     }, receiveValue: { _ in }))
             }

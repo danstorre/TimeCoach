@@ -47,6 +47,42 @@ final class StateTimerAcceptanceTests: XCTestCase {
         ])
     }
     
+    func test_onLaunch_onToggleAfterSkipUserInteraction_whenGoingToInactiveAppStateTwiceShouldOnlySaveTimerStateOnce() {
+        let (sut, spy) = makeSUT()
+        let expected = makeAnyState(seconds: spy.currentTimerSet.elapsedSeconds,
+                                    startDate: spy.currentTimerSet.startDate,
+                                    endDate: spy.currentTimerSet.endDate,
+                                    isBreak: true,
+                                    state: .running).local
+        sut.timerView.simulateSkipTimerUserInteraction()
+        spy.resetMessages()
+        
+        sut.simulateToggleTimerUserInteraction()
+        
+        XCTAssertEqual(spy.receivedMessages, [
+            .startTimer,
+            .scheduleTimerNotification(isBreak: true),
+        ])
+        
+        sut.simulateGoToInactive()
+        
+        XCTAssertEqual(spy.receivedMessages, [
+            .startTimer,
+            .scheduleTimerNotification(isBreak: true),
+            .saveStateTimer(value: expected),
+            .notifySavedTimer
+        ])
+        
+        sut.simulateGoToInactive()
+        
+        XCTAssertEqual(spy.receivedMessages, [
+            .startTimer,
+            .scheduleTimerNotification(isBreak: true),
+            .saveStateTimer(value: expected),
+            .notifySavedTimer
+        ])
+    }
+    
     func test_onLaunch_onStopUserInteraction_whenGoingToInactiveAppStateTwiceShouldOnlySaveTimerStateOnce() {
         let currentDate = Date()
         let (sut, spy) = makeSUT(currentDate: { currentDate })
@@ -200,8 +236,8 @@ final class StateTimerAcceptanceTests: XCTestCase {
                 startDate: \(localTimerState.localTimerSet.startDate), endDate: \(localTimerState.localTimerSet.endDate)
                 isBreak: \(localTimerState.isBreak)
                 """
-                case .scheduleTimerNotification:
-                    return "scheduleTimerNotification"
+                case let .scheduleTimerNotification(isBreak):
+                    return "scheduleTimerNotification isBreak \(isBreak)"
                 case .notifySavedTimer:
                     return "notifySavedTimer"
                 case .stopTimer:
