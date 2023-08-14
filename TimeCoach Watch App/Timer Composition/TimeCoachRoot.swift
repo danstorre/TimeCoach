@@ -143,17 +143,15 @@ class TimeCoachRoot {
     }
     
     private func handleStop() -> RegularTimer.VoidPublisher {
-        let localTimer = localTimer
-        let timerSavedNofitier = timerSavedNofitier
         let unregisterNotifications = unregisterNotifications
         
         return stopPublisher()
-            .processFirstValue { timerState in
-                Just((timerState.timerSet, timerState.state))
-                    .saveTimerState(saver: localTimer)
-                    .flatsToVoid()
+            .processFirstValue { _ in
+                Just(())
+                    .handleEvents(receiveOutput: { [weak self] _ in
+                        self?.needsUpdate = true
+                    })
                     .unregisterTimerNotifications(unregisterNotifications)
-                    .notifySavedTimer(notifier: timerSavedNofitier)
                     .subscribe(Subscribers.Sink(receiveCompletion: { _ in
                     }, receiveValue: { _ in }))
             }

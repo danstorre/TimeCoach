@@ -70,9 +70,9 @@ final class StateTimerAcceptanceTests: XCTestCase {
         ])
     }
     
-    func test_onLaunch_onStopUserInteractionShouldExecuteStopProcess() {
+    func test_onLaunch_onStopUserInteraction_whenGoingToInactiveAppStateShouldSaveLatestTimerState() {
         let currentDate = Date()
-        let (sut, spy) = makeSUT(currentDate: { currentDate })
+        let (sut, spy) = makeSUT()
         let expected = makeAnyState(seconds: 0,
                                     startDate: currentDate,
                                     endDate: currentDate.adding(seconds: .pomodoroInSeconds), state: .stop).local
@@ -81,28 +81,15 @@ final class StateTimerAcceptanceTests: XCTestCase {
         
         XCTAssertEqual(spy.receivedMessages, [
             .stopTimer,
-            .saveStateTimer(value: expected),
-            .unregisterTimerNotification,
-            .notifySavedTimer
+            .unregisterTimerNotification
         ])
-    }
-    
-    func test_onLaunch_onRunningState_onStopUserInteractionShouldExecuteStopProcess() {
-        let currentDate = Date()
-        let (sut, spy) = makeSUT(currentDate: { currentDate })
-        let expected = makeAnyState(seconds: 0,
-                                    startDate: currentDate,
-                                    endDate: currentDate.adding(seconds: .pomodoroInSeconds), state: .stop).local
-        sut.timerView.simulateToggleTimerUserInteraction()
-        spy.deliversSetAfterStart((timerSet: expected.localTimerSet.adding(1), state: .running))
-        spy.resetMessages()
         
-        sut.timerView.simulateStopTimerUserInteraction()
+        sut.simulateGoToInactive()
         
         XCTAssertEqual(spy.receivedMessages, [
             .stopTimer,
-            .saveStateTimer(value: expected),
             .unregisterTimerNotification,
+            .saveStateTimer(value: expected),
             .notifySavedTimer
         ])
     }
