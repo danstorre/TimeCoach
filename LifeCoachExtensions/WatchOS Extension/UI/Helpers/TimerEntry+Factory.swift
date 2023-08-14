@@ -5,8 +5,7 @@ extension TimerEntry {
         TimerEntry(date: currentDate,
                    timerPresentationValues: .init(starDate: currentDate,
                                                   endDate: currentDate.adding(seconds: 60 * 5),
-                                                  isBreak: false,
-                                                  progress: 0),
+                                                  isBreak: false),
                    isIdle: false)
     }
     
@@ -15,8 +14,7 @@ extension TimerEntry {
         TimerEntry(date: currentDate,
                    timerPresentationValues: .init(starDate: currentDate,
                                                   endDate: currentDate.adding(seconds: 60 * 25),
-                                                  isBreak: false,
-                                                  progress: 0),
+                                                  isBreak: false),
                    isIdle: false)
     }
     
@@ -24,8 +22,7 @@ extension TimerEntry {
         TimerEntry(date: currentDate,
                    timerPresentationValues: .init(starDate: currentDate,
                                                   endDate: currentDate.adding(seconds: 60 * 5),
-                                                  isBreak: true,
-                                                  progress: 0),
+                                                  isBreak: true),
                    isIdle: false)
     }
     

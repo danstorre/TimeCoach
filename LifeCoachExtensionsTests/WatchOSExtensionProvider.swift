@@ -151,8 +151,8 @@ final class WatchOSExtensionProvider: XCTestCase {
     }
     
     // MARK: - Helpers
-    private func createTimerEntry(currentDate: Date, endDate: Date, isIdle: Bool) -> TimerEntry {
-        let timerPresentationValues = TimerPresentationValues(starDate: currentDate, endDate: endDate, progress: 1)
+    private func createTimerEntry(currentDate: Date, endDate: Date, isIdle: Bool, isBreak: Bool = false) -> TimerEntry {
+        let timerPresentationValues = TimerPresentationValues(starDate: currentDate, endDate: endDate, isBreak: false)
         return TimerEntry(date: currentDate, timerPresentationValues: timerPresentationValues, isIdle: isIdle)
     }
     
@@ -192,7 +192,7 @@ extension TimerEntry: CustomStringConvertible {
 values related to currentDate:
 startDate: \(String(describing: timerPresentationValues?.starDate)),
 endDate: \(String(describing: timerPresentationValues?.endDate)),
-and progress: \(String(describing: timerPresentationValues?.progress)),
+and isBreak: \(String(describing: timerPresentationValues?.isBreak)),
 idle: \(isIdle)
 """
     }
