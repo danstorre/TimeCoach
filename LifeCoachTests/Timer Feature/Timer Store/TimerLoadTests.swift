@@ -40,13 +40,17 @@ final class TimerLoadTests: XCTestCase {
     }
     
     func test_load_onStoreRetrieveSuccessDeliversTimerState() throws {
-        let (sut, spy) = makeSUT()
-        let state = makeAnyState()
-        spy.completesRetrieveSuccessfully(with: state.local)
+        let isBreakSamples = [false, true]
         
-        let result = try sut.load()
-        
-        XCTAssertEqual(result, state.model)
+        try isBreakSamples.forEach { sample in
+            let (sut, spy) = makeSUT()
+            let state = makeAnyState(isBreak: sample)
+            spy.completesRetrieveSuccessfully(with: state.local)
+            
+            let result = try sut.load()
+            
+            XCTAssertEqual(result, state.model)
+        }
     }
     
     // MARK:- Helper Methods
