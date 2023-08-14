@@ -12,7 +12,7 @@ public class WatchOSProvider: WatchOSProviderProtocol {
     }
     
     public func placeholder() -> TimerEntry {
-        getTimerEntry()
+        TimerEntry.createPomodoroEntry(from: currentDate())
     }
     
     public func getSnapshot(completion: @escaping (TimerEntry) -> ()) {

@@ -58,52 +58,13 @@ final class WatchOSExtensionProvider: XCTestCase {
         }
     }
     
-    func test_placeholder_messagesLoadState() {
-        let (sut, spy) = makeSUT(currentDate: { Date() })
-        
-        _ = sut.placeholder()
-        
-        XCTAssertEqual(spy.loadStateCallCount, 1, "should have called load state")
-    }
-    
-    func test_placeholder_onLoaderErrorDeliversEmptyTimerEntry() {
+    func test_placeholder_deliversCorrectTimerEntry() {
         let currentDate = Date()
         let (sut, _) = makeSUT(currentDate: { currentDate })
         
         let result = sut.placeholder()
         
-        XCTAssertEqual(result, TimerEntry.createEntry(from: currentDate), "should have called load state")
-    }
-    
-    func test_placeholder_onLoadTimerStateRunningDeliversCorrectTimerEntry() {
-        let currentDate = Date()
-        let endDate = currentDate.adding(seconds: 1)
-        let runningTimeLineEntry = createTimerEntry(currentDate: currentDate, endDate: endDate, isIdle: false)
-        let (sut, spy) = makeSUT(currentDate: { currentDate })
-        spy.loadsSuccess(with: makeAnyTimerState(seconds: 0, startDate: currentDate, endDate: endDate, state: .running))
-        
-        let timerEntryResult = sut.placeholder()
-        
-        XCTAssertEqual(timerEntryResult, runningTimeLineEntry)
-    }
-    
-    func test_placeholder_onLoadIdleTimerStateDeliversCorrectIsIdleTimerEntry() {
-        let currentDate = Date()
-        let (sut, spy) = makeSUT(currentDate: { currentDate })
-        
-        let pauseState = makeAnyTimerState(startDate: currentDate, state: .pause)
-        let stopState = makeAnyTimerState(startDate: currentDate, state: .stop)
-        
-        let samples = [pauseState, stopState]
-        
-        samples.forEach { sample in
-            let expected = TimerEntry(date: currentDate, timerPresentationValues: .none, isIdle: true)
-            spy.loadsSuccess(with: sample)
-            
-            let timerEntryResult = sut.placeholder()
-            
-            XCTAssertEqual(timerEntryResult, expected)
-        }
+        XCTAssertEqual(result, TimerEntry.createPomodoroEntry(from: currentDate), "placeholder should return pomodoro.")
     }
     
     func test_getSnapshot_messagesLoadState() {
