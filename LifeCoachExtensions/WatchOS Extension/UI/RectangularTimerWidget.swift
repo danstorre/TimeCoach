@@ -25,12 +25,15 @@ struct RectangularTimerWidget: View {
                     Text(endDate, style: .timer)
                         .privacySensitive(false)
                 }
-            } else {
-                Image("widgetIcon")
-                    .foregroundColor(.blue)
-                    .privacySensitive(false)
-                Text("Tap to begin.")
-                    .privacySensitive(false)
+            } else if entry.isIdle {
+                VStack(alignment: .center) {
+                    Image("widgetIcon")
+                        .foregroundColor(.blue)
+                        .privacySensitive(false)
+                    Text("Tap to Open")
+                        .privacySensitive(false)
+                    
+                }
             }
         }
     }

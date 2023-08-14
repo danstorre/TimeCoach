@@ -24,4 +24,10 @@ extension TimerEntry {
                                                   progress: 0),
                    isIdle: false)
     }
+    
+    public static func createIdleEntry(from currentDate: Date = Date.init()) -> TimerEntry {
+        TimerEntry(date: currentDate,
+                   timerPresentationValues: nil,
+                   isIdle: true)
+    }
 }
