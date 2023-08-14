@@ -69,9 +69,9 @@ extension Publisher where Output == Void {
 }
 
 extension Publisher where Output == TimerState {
-    func scheduleTimerNotfication(scheduler: TimerNotificationScheduler) -> AnyPublisher<TimerState, Failure> {
+    func scheduleTimerNotfication(scheduler: TimerNotificationScheduler, isBreak: Bool) -> AnyPublisher<TimerState, Failure> {
         handleEvents(receiveOutput: { timerState in
-            try? scheduler.scheduleNotification(from: timerState.timerSet)
+            try? scheduler.scheduleNotification(from: timerState.timerSet, isBreak: isBreak)
         })
         .eraseToAnyPublisher()
     }

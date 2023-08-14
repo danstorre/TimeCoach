@@ -25,14 +25,14 @@ final class StateTimerAcceptanceTests: XCTestCase {
         
         XCTAssertEqual(spy.receivedMessages, [
             .startTimer,
-            .scheduleTimerNotification,
+            .scheduleTimerNotification(isBreak: false),
         ])
         
         sut.simulateGoToInactive()
         
         XCTAssertEqual(spy.receivedMessages, [
             .startTimer,
-            .scheduleTimerNotification,
+            .scheduleTimerNotification(isBreak: false),
             .saveStateTimer(value: expected),
             .notifySavedTimer
         ])
@@ -41,7 +41,7 @@ final class StateTimerAcceptanceTests: XCTestCase {
         
         XCTAssertEqual(spy.receivedMessages, [
             .startTimer,
-            .scheduleTimerNotification,
+            .scheduleTimerNotification(isBreak: false),
             .saveStateTimer(value: expected),
             .notifySavedTimer
         ])
@@ -186,7 +186,7 @@ final class StateTimerAcceptanceTests: XCTestCase {
             case pauseTimer
             case skipTimer
             case saveStateTimer(value: LifeCoach.LocalTimerState)
-            case scheduleTimerNotification
+            case scheduleTimerNotification(isBreak: Bool)
             case unregisterTimerNotification
             case notifySavedTimer
             
@@ -296,7 +296,7 @@ final class StateTimerAcceptanceTests: XCTestCase {
         
         // MARK: - Scheduler
         func setSchedule(at scheduledDate: Date, isBreak: Bool) throws {
-            receivedMessages.append(.scheduleTimerNotification)
+            receivedMessages.append(.scheduleTimerNotification(isBreak: isBreak))
         }
         
         func unregisterTimerNotification() {

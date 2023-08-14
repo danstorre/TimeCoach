@@ -140,7 +140,7 @@ class TimeCoachRoot {
                     .handleEvents(receiveOutput: { [weak self] _ in
                         self?.needsUpdate = true
                     })
-                    .scheduleTimerNotfication(scheduler: timerNotificationScheduler)
+                    .scheduleTimerNotfication(scheduler: timerNotificationScheduler, isBreak: false)
                     .subscribe(Subscribers.Sink(receiveCompletion: { _ in
                     }, receiveValue: { _ in }))
             }
