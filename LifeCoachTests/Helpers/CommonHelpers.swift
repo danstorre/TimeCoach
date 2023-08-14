@@ -24,11 +24,16 @@ extension TimerStateHelper {
 func makeAnyState(seconds: TimeInterval = 1,
                   startDate: Date = Date(),
                   endDate: Date = Date(),
+                  isBreak: Bool = false,
                   state helperState: TimerStateHelper = .pause) -> (model: TimerState, local: LocalTimerState) {
     let elapsedSeconds = makeAnyTimerSet(seconds: seconds, startDate: startDate, endDate: endDate)
     
-    let model = TimerState(timerSet: elapsedSeconds.model, state: helperState.timerState)
-    let local = LocalTimerState(localTimerSet: elapsedSeconds.local, state: StateMapper.state(from: helperState.timerState))
+    let model = TimerState(timerSet: elapsedSeconds.model,
+                           state: helperState.timerState,
+                           isBreak: isBreak)
+    let local = LocalTimerState(localTimerSet: elapsedSeconds.local,
+                                state: StateMapper.state(from: helperState.timerState),
+                                isBreak: isBreak)
     
     return (model, local)
 }

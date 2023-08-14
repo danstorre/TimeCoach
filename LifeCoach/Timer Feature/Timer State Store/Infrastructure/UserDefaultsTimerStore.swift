@@ -6,18 +6,20 @@ public final class UserDefaultsTimerStore: LocalTimerStore {
         private let starDate: Date
         private let endDate: Date
         private let state: Int
+        private let isBreak: Bool
         
         init(local: LocalTimerState) {
             self.elapsed = Float(local.localTimerSet.elapsedSeconds)
             self.endDate = local.localTimerSet.endDate
             self.starDate = local.localTimerSet.startDate
             self.state = getInt(from: local.state)
+            self.isBreak = local.isBreak
         }
         
         var local: LocalTimerState? {
             guard let state = getLocalState(from: state) else { return nil}
             let localTimerSet = LocalTimerSet(TimeInterval(elapsed), startDate: starDate, endDate: endDate)
-            return LocalTimerState(localTimerSet: localTimerSet, state: state)
+            return LocalTimerState(localTimerSet: localTimerSet, state: state, isBreak: isBreak)
         }
     }
     

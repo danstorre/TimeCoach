@@ -36,8 +36,8 @@ final class UserDefaultTimerStoreTests: XCTestCase {
     }
     
     func test_insert_doneTwiceDeliversLatestInsertedValues() {
-        let firstTimerState = makeAnyState(seconds: 0).local
-        let latestTimerState = makeAnyState(seconds: 1).local
+        let firstTimerState = makeAnyState(seconds: 0, isBreak: false).local
+        let latestTimerState = makeAnyState(seconds: 1, isBreak: true).local
         let sut = makeSUT()
         
         expect(sut: sut, toRetrieve: .success(latestTimerState), when: {

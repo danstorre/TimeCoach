@@ -3,7 +3,7 @@ import LifeCoach
 
 extension LocalTimerState: CustomStringConvertible {
     public var description: String {
-        "localState: \(localTimerSet)"
+        "localState: \(localTimerSet), isBreak: \(isBreak)"
     }
 }
 
