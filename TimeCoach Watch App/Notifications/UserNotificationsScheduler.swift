@@ -45,7 +45,8 @@ public class UserNotificationsScheduler: Scheduler {
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: timeInterval, repeats: false)
         
         let content = UNMutableNotificationContent()
-        content.title = isBreak ? "Break timer is complete!" : "Pomodoro timer is complete, Nice work!"
+        content.title = isBreak ? "Break complete!" : "Pomodoro complete!"
+        content.body = isBreak ? "Continue doing a great work." : "Pomodoro timer is complete!, Nice work!"
         content.interruptionLevel = .critical
         
         let notification = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)

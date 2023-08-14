@@ -112,7 +112,8 @@ final class SchedulerNotificationTests: XCTestCase {
         
         func assertCorrectContent(isBreak: Bool, file: StaticString = #filePath, line: UInt = #line) {
             let content = UNMutableNotificationContent()
-            content.title = isBreak ? "Break timer is complete!" : "Pomodoro timer is complete, Nice work!"
+            content.title = isBreak ? "Break complete!" : "Pomodoro complete!"
+            content.body = isBreak ? "Continue doing a great work." : "Pomodoro timer is complete!, Nice work!"
             content.interruptionLevel = .critical
             
             XCTAssertEqual(receivedNotifications.first?.content, content, "on isBreak mode: \(isBreak)", file: file, line: line)
