@@ -2,7 +2,6 @@ import SwiftUI
 
 struct RectangularTimerWidget: View {
     let entry: TimerEntry
-    @Environment(\.isLuminanceReduced) var isLuminanceReduced
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -13,18 +12,10 @@ struct RectangularTimerWidget: View {
                     .foregroundColor(isBreak ? .blue : .red)
                     .privacySensitive(false)
                 
-                if !isLuminanceReduced {
-                    ProgressView(timerInterval: startDate...endDate,
-                                 countsDown: true)
-                    .privacySensitive(false)
-                    .tint(isBreak ? .blue : .red)
-                } else {
-                    ProgressView(value: 0)
-                        .privacySensitive(false)
-                        .tint(isBreak ? .blue : .red)
-                    Text(endDate, style: .timer)
-                        .privacySensitive(false)
-                }
+                ProgressView(timerInterval: startDate...endDate,
+                             countsDown: true)
+                .privacySensitive(false)
+                .tint(isBreak ? .blue : .red)
             } else if entry.isIdle {
                 VStack(alignment: .center) {
                     Image("widgetIcon")
