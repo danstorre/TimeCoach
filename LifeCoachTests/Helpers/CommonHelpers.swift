@@ -54,3 +54,10 @@ func makeAnyTimerSet(seconds: TimeInterval = 0,
     
     return (timerSet, localTimerSet)
 }
+
+// MARK: - CustomStringConvertible
+extension LocalTimerSet: CustomStringConvertible {
+    public var description: String {
+        "elapsed seconds: \(elapsedSeconds), startDate: \(startDate), endDate: \(endDate)"
+    }
+}

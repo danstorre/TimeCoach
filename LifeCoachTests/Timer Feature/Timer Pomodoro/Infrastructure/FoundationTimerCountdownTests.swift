@@ -308,12 +308,6 @@ final class FoundationTimerCountdownTests: XCTestCase {
     }
 }
 
-extension LocalTimerSet: CustomStringConvertible {
-    public var description: String {
-        "elapsed seconds: \(elapsedSeconds), startDate: \(startDate), endDate: \(endDate)"
-    }
-}
-
 extension TimerCountdown {
     func commitFinishedTimer() {
         startCountdown(completion: { _ in })
