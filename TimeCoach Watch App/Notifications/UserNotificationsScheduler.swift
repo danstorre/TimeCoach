@@ -33,4 +33,23 @@ public class UserNotificationsScheduler: Scheduler {
         
         notificationCenter.add(notification, withCompletionHandler: {_ in })
     }
+    
+    public func setSchedule(at date: Date, isBreak: Bool) throws {
+        guard currentDate().distance(to: date) >= 1 else {
+            throw Error.invalidDate
+        }
+        notificationCenter.removeAllDeliveredNotifications()
+        notificationCenter.removeAllPendingNotificationRequests()
+        
+        let timeInterval = currentDate().distance(to: date)
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: timeInterval, repeats: false)
+        
+        let content = UNMutableNotificationContent()
+        content.title = isBreak ? "Break timer is complete!" : "Pomodoro timer is complete, Nice work!"
+        content.interruptionLevel = .critical
+        
+        let notification = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+        
+        notificationCenter.add(notification, withCompletionHandler: {_ in })
+    }
 }

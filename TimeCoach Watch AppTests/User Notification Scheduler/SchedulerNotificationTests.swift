@@ -14,7 +14,7 @@ final class SchedulerNotificationTests: XCTestCase {
         let currentDate = Date()
         let (sut, spy) = makeSUT(on: { currentDate })
         
-        try? sut.setSchedule(at: currentDate.adding(seconds: 1))
+        try? sut.setSchedule(at: currentDate.adding(seconds: 1), isBreak: false)
         
         XCTAssertEqual(spy.removeAllDeliveredNotificationsCallCount, 1)
     }
@@ -23,42 +23,39 @@ final class SchedulerNotificationTests: XCTestCase {
         let currentDate = Date()
         let (sut, spy) = makeSUT(on: { currentDate })
         
-        try? sut.setSchedule(at: currentDate.adding(seconds: 1))
+        try? sut.setSchedule(at: currentDate.adding(seconds: 1), isBreak: false)
         
         XCTAssertEqual(spy.removeAllPendingNotificationRequestsCallCount, 1)
     }
     
     func test_schedule_schedulesCorrectTrigger() {
-        let currentDate = Date()
-        samplesAddingToCurrentDate(currenDate: currentDate).forEach { sample in
+        samplesAddingToCurrentDate().forEach { sample in
+            let currentDate = Date()
             let (sut, mock) = makeSUT(on: { currentDate })
-            try? sut.setSchedule(at: sample.scheduleAt)
+            let timeScheduled = currentDate.adding(seconds: sample.timeIntevalTrigger)
+            try? sut.setSchedule(at: timeScheduled, isBreak: sample.isBreak)
             
             mock.assertCorrectTrigger(from: sample.timeIntevalTrigger)
         }
     }
     
     func test_schedule_schedulesCorrectContent() {
-        let samplesAddingToCurrentDate: [TimeInterval] = [1, 2, 100]
-        
-        samplesAddingToCurrentDate.forEach { sample in
+        samplesAddingToCurrentDate().forEach { sample in
             let currentDate = Date()
             let (sut, mock) = makeSUT(on: { currentDate })
-            let timeScheduled = currentDate.adding(seconds: sample)
-            try? sut.setSchedule(at: timeScheduled)
+            let timeScheduled = currentDate.adding(seconds: sample.timeIntevalTrigger)
+            try? sut.setSchedule(at: timeScheduled, isBreak: sample.isBreak)
             
-            mock.assertCorrectContent(from: sample)
+            mock.assertCorrectContent(isBreak: sample.isBreak)
         }
     }
     
     func test_schedule_schedulesCorrectNotificationRequest() {
-        let samplesAddingToCurrentDate: [TimeInterval] = [1, 2, 100]
-        
-        samplesAddingToCurrentDate.forEach { sample in
+        samplesAddingToCurrentDate().forEach { sample in
             let currentDate = Date()
             let (sut, mock) = makeSUT(on: { currentDate })
-            let timeScheduled = currentDate.adding(seconds: sample)
-            try? sut.setSchedule(at: timeScheduled)
+            let timeScheduled = currentDate.adding(seconds: sample.timeIntevalTrigger)
+            try? sut.setSchedule(at: timeScheduled, isBreak: false)
             
             mock.assertCorrectNotificationRequest()
         }
@@ -71,7 +68,7 @@ final class SchedulerNotificationTests: XCTestCase {
         let (sut, _) = makeSUT(on: { currentDate })
         
         do {
-            try sut.setSchedule(at: invalidDate)
+            try sut.setSchedule(at: invalidDate, isBreak: false)
             
             XCTFail("setSchedule should have failed on invalid date.")
         } catch {
@@ -113,12 +110,12 @@ final class SchedulerNotificationTests: XCTestCase {
             XCTAssertEqual(receivedNotifications.first?.trigger, trigger, file: file, line: line)
         }
         
-        func assertCorrectContent(from sample: TimeInterval, file: StaticString = #filePath, line: UInt = #line) {
+        func assertCorrectContent(isBreak: Bool, file: StaticString = #filePath, line: UInt = #line) {
             let content = UNMutableNotificationContent()
-            content.title = "timer's up!"
+            content.title = isBreak ? "Break timer is complete!" : "Pomodoro timer is complete, Nice work!"
             content.interruptionLevel = .critical
             
-            XCTAssertEqual(receivedNotifications.first?.content, content, file: file, line: line)
+            XCTAssertEqual(receivedNotifications.first?.content, content, "on isBreak mode: \(isBreak)", file: file, line: line)
         }
         
         func assertCorrectNotificationRequest(file: StaticString = #filePath, line: UInt = #line) {
@@ -126,14 +123,14 @@ final class SchedulerNotificationTests: XCTestCase {
         }
     }
     
-    private func samplesAddingToCurrentDate(currenDate: Date) -> [NotificationValue] {
+    private func samplesAddingToCurrentDate() -> [NotificationValue] {
         [
-            NotificationValue(scheduleAt: currenDate.adding(seconds: 1), isBreak: false, timeIntevalTrigger: 1),
-            NotificationValue(scheduleAt: currenDate.adding(seconds: 2), isBreak: false, timeIntevalTrigger: 2),
-            NotificationValue(scheduleAt: currenDate.adding(seconds: 100), isBreak: false, timeIntevalTrigger: 100),
-            NotificationValue(scheduleAt: currenDate.adding(seconds: 1), isBreak: true, timeIntevalTrigger: 1),
-            NotificationValue(scheduleAt: currenDate.adding(seconds: 2), isBreak: true, timeIntevalTrigger: 2),
-            NotificationValue(scheduleAt: currenDate.adding(seconds: 100), isBreak: true, timeIntevalTrigger: 100),
+            NotificationValue(isBreak: false, timeIntevalTrigger: 1),
+            NotificationValue(isBreak: false, timeIntevalTrigger: 2),
+            NotificationValue(isBreak: false, timeIntevalTrigger: 100),
+            NotificationValue(isBreak: true, timeIntevalTrigger: 1),
+            NotificationValue(isBreak: true, timeIntevalTrigger: 2),
+            NotificationValue(isBreak: true, timeIntevalTrigger: 100),
         ]
     }
     
@@ -141,9 +138,7 @@ final class SchedulerNotificationTests: XCTestCase {
         Date().adding(seconds: 1)
     }
     
-
     private struct NotificationValue {
-        let scheduleAt: Date
         let isBreak: Bool
         let timeIntevalTrigger: TimeInterval
     }

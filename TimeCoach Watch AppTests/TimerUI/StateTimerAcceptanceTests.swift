@@ -295,6 +295,10 @@ final class StateTimerAcceptanceTests: XCTestCase {
         }
         
         // MARK: - Scheduler
+        func setSchedule(at scheduledDate: Date, isBreak: Bool) throws {
+            receivedMessages.append(.scheduleTimerNotification)
+        }
+        
         func setSchedule(at scheduledDate: Date) throws {
             receivedMessages.append(.scheduleTimerNotification)
         }

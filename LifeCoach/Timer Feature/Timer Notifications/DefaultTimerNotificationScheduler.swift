@@ -13,6 +13,6 @@ public class DefaultTimerNotificationScheduler: TimerNotificationScheduler {
         let currentDate = currentDate()
         let scheduleTime = set.endDate.adding(seconds: set.startDate.distance(to: currentDate))
         
-        try scheduler.setSchedule(at: scheduleTime.adding(seconds: -set.elapsedSeconds)) 
+        try scheduler.setSchedule(at: scheduleTime.adding(seconds: -set.elapsedSeconds), isBreak: false)
     }
 }
