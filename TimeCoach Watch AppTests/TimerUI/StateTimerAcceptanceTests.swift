@@ -15,7 +15,7 @@ final class StateTimerAcceptanceTests: XCTestCase {
         XCTAssertEqual(spy.receivedMessages, [])
     }
     
-    func test_onLaunch_onInactiveAppStateTwiceAfterToggleShouldOnlySaveTimerStateOnce() {
+    func test_onLaunch_onToggleUserInteraction_whenGoingToInactiveAppStateTwiceShouldOnlySaveTimerStateOnce() {
         let (sut, spy) = makeSUT()
         let expected = makeAnyState(seconds: spy.currentTimerSet.elapsedSeconds,
                                     startDate: spy.currentTimerSet.startDate,
@@ -47,7 +47,7 @@ final class StateTimerAcceptanceTests: XCTestCase {
         ])
     }
     
-    func test_onLaunch_onStopUserInteraction_whenGoingToInactiveAppStateShouldOnlySaveTimerStateOnce() {
+    func test_onLaunch_onStopUserInteraction_whenGoingToInactiveAppStateTwiceShouldOnlySaveTimerStateOnce() {
         let currentDate = Date()
         let (sut, spy) = makeSUT(currentDate: { currentDate })
         let expected = makeAnyState(seconds: 0,
@@ -80,7 +80,7 @@ final class StateTimerAcceptanceTests: XCTestCase {
         ])
     }
     
-    func test_onLaunch_onPauseUserInteraction_whenGoingToInactiveAppStateShouldOnlySaveTimerStateOnce() {
+    func test_onLaunch_onPauseUserInteraction_whenGoingToInactiveAppStateTwiceShouldOnlySaveTimerStateOnce() {
         let currentDate = Date()
         let (sut, spy) = makeSUT(currentDate: { currentDate })
         let expected = makeAnyState(seconds: 1,
@@ -117,7 +117,7 @@ final class StateTimerAcceptanceTests: XCTestCase {
         ])
     }
     
-    func test_onLaunch_onSkipUserInteraction_whenGoingToInactiveAppStateShouldOnlySaveTimerStateOnce() {
+    func test_onLaunch_onSkipUserInteraction_whenGoingToInactiveAppStateTwiceShouldOnlySaveTimerStateOnce() {
         let currentDate = Date()
         let (sut, spy) = makeSUT(currentDate: { currentDate })
         let expected = makeAnyState(seconds: 0,
