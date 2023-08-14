@@ -38,6 +38,38 @@ final class StateTimerAcceptanceTests: XCTestCase {
         XCTAssertEqual(spy.receivedMessages, [])
     }
     
+    func test_onLaunch_onInactiveAppStateTwiceAfterToggleShouldOnlySaveTimerStateOnce() {
+        let (sut, spy) = makeSUT()
+        let expected = makeAnyState(seconds: spy.currentTimerSet.elapsedSeconds,
+                                    startDate: spy.currentTimerSet.startDate,
+                                    endDate: spy.currentTimerSet.endDate, state: .running).local
+        
+        sut.simulateToggleTimerUserInteraction()
+        
+        XCTAssertEqual(spy.receivedMessages, [
+            .startTimer,
+            .scheduleTimerNotification,
+        ])
+        
+        sut.simulateGoToInactive()
+        
+        XCTAssertEqual(spy.receivedMessages, [
+            .startTimer,
+            .scheduleTimerNotification,
+            .saveStateTimer(value: expected),
+            .notifySavedTimer
+        ])
+        
+        sut.simulateGoToInactive()
+        
+        XCTAssertEqual(spy.receivedMessages, [
+            .startTimer,
+            .scheduleTimerNotification,
+            .saveStateTimer(value: expected),
+            .notifySavedTimer
+        ])
+    }
+    
     func test_onLaunch_onStopUserInteractionShouldExecuteStopProcess() {
         let currentDate = Date()
         let (sut, spy) = makeSUT(currentDate: { currentDate })

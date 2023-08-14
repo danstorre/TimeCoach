@@ -37,6 +37,7 @@ class TimeCoachRoot {
     }
     
     // Timer Saved Notifications
+    private var needsUpdate: Bool = false
     private var notifySavedTimer: (() -> Void)?
     private lazy var timerSavedNofitier: LifeCoach.TimerStoreNotifier = DefaultTimerStoreNotifier(
         completion: notifySavedTimer ?? {
@@ -119,11 +120,11 @@ class TimeCoachRoot {
             .notifySavedTimer(notifier: timerSavedNofitier)
             .subscribe(Subscribers.Sink(receiveCompletion: { _ in
             }, receiveValue: { _ in }))
+        
+        needsUpdate = false
     }
     
     private struct UnexpectedError: Error {}
-    
-    private var needsUpdate: Bool = false
     
     private func handlePlay() -> RegularTimer.TimerSetPublisher {
         let timerNotificationScheduler = timerNotificationScheduler
