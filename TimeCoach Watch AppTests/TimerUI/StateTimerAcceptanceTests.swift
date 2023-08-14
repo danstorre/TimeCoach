@@ -72,7 +72,7 @@ final class StateTimerAcceptanceTests: XCTestCase {
     
     func test_onLaunch_onStopUserInteraction_whenGoingToInactiveAppStateShouldSaveLatestTimerState() {
         let currentDate = Date()
-        let (sut, spy) = makeSUT()
+        let (sut, spy) = makeSUT(currentDate: { currentDate })
         let expected = makeAnyState(seconds: 0,
                                     startDate: currentDate,
                                     endDate: currentDate.adding(seconds: .pomodoroInSeconds), state: .stop).local
@@ -96,7 +96,7 @@ final class StateTimerAcceptanceTests: XCTestCase {
     
     func test_onLaunch_onStopUserInteraction_whenGoingToInactiveAppStateShouldOnlySaveTimerStateOnce() {
         let currentDate = Date()
-        let (sut, spy) = makeSUT()
+        let (sut, spy) = makeSUT(currentDate: { currentDate })
         let expected = makeAnyState(seconds: 0,
                                     startDate: currentDate,
                                     endDate: currentDate.adding(seconds: .pomodoroInSeconds), state: .stop).local
@@ -127,7 +127,7 @@ final class StateTimerAcceptanceTests: XCTestCase {
         ])
     }
     
-    func test_onLaunch_onRunningState_onPauseUserInteractionShouldExecutePauseProcess() {
+    func test_onLaunch_onPauseUserInteraction_whenGoingToInactiveAppStateShouldOnlySaveTimerStateOnce() {
         let currentDate = Date()
         let (sut, spy) = makeSUT(currentDate: { currentDate })
         let expected = makeAnyState(seconds: 1,
@@ -142,8 +142,15 @@ final class StateTimerAcceptanceTests: XCTestCase {
         
         XCTAssertEqual(spy.receivedMessages, [
             .pauseTimer,
-            .saveStateTimer(value: expected),
+            .unregisterTimerNotification
+        ])
+        
+        sut.simulateGoToInactive()
+        
+        XCTAssertEqual(spy.receivedMessages, [
+            .pauseTimer,
             .unregisterTimerNotification,
+            .saveStateTimer(value: expected),
             .notifySavedTimer
         ])
     }

@@ -166,11 +166,11 @@ class TimeCoachRoot {
         
         return pausePublisher()
             .processFirstValue { timerState in
-                Just((timerState.timerSet, timerState.state))
-                    .saveTimerState(saver: localTimer)
-                    .flatsToVoid()
+                Just(())
+                    .handleEvents(receiveOutput: { [weak self] _ in
+                        self?.needsUpdate = true
+                    })
                     .unregisterTimerNotifications(unregisterNotifications)
-                    .notifySavedTimer(notifier: timerSavedNofitier)
                     .subscribe(Subscribers.Sink(receiveCompletion: { _ in
                     }, receiveValue: { _ in }))
             }
