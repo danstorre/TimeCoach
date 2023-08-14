@@ -9,11 +9,19 @@ struct CircularTimerWidget: View {
            let startDate = entry.timerPresentationValues?.starDate,
            let isBreak = entry.timerPresentationValues?.isBreak {
             if !isLuminanceReduced {
-                ProgressView(timerInterval: startDate...endDate,
-                             countsDown: true)
-                .progressViewStyle(.circular)
-                .privacySensitive(false)
-                .tint(isBreak ? .blue : .red)
+                ZStack {
+                    ProgressView(timerInterval: startDate...endDate,
+                                 countsDown: true)
+                    .progressViewStyle(.circular)
+                    .privacySensitive(false)
+                    .tint(isBreak ? .blue : .red)
+                    .transaction { transaction in
+                        transaction.animation = nil
+                    }
+                }
+                .transaction { transaction in
+                    transaction.animation = nil
+                }
             } else {
                 ZStack {
                     ProgressView(value: 0)
@@ -23,11 +31,18 @@ struct CircularTimerWidget: View {
                     
                     ZStack {
                         Text(endDate, style: .relative)
-                            .padding(5) // Add some padding to avoid text touching the edges
+                            .padding(
+                                startDate.distance(to: endDate) < ((60*10)-1)
+                                ? EdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 0)
+                                : EdgeInsets(top: 0, leading: 5, bottom: 0, trailing: 0)
+                            )
                             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
                             .privacySensitive(false)
                     }
                     .clipShape(Circle())
+                }
+                .transaction { transaction in
+                    transaction.animation = nil
                 }
             }
         } else {
