@@ -9,10 +9,10 @@ public class DefaultTimerNotificationScheduler: TimerNotificationScheduler {
         self.currentDate = currentDate
     }
     
-    public func scheduleNotification(from set: TimerSet) throws {
+    public func scheduleNotification(from set: TimerSet, isBreak: Bool) throws {
         let currentDate = currentDate()
         let scheduleTime = set.endDate.adding(seconds: set.startDate.distance(to: currentDate))
         
-        try scheduler.setSchedule(at: scheduleTime.adding(seconds: -set.elapsedSeconds), isBreak: false)
+        try scheduler.setSchedule(at: scheduleTime.adding(seconds: -set.elapsedSeconds), isBreak: isBreak)
     }
 }

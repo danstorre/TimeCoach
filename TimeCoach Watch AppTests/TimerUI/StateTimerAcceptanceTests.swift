@@ -299,10 +299,6 @@ final class StateTimerAcceptanceTests: XCTestCase {
             receivedMessages.append(.scheduleTimerNotification)
         }
         
-        func setSchedule(at scheduledDate: Date) throws {
-            receivedMessages.append(.scheduleTimerNotification)
-        }
-        
         func unregisterTimerNotification() {
             receivedMessages.append(.unregisterTimerNotification)
         }

@@ -13,10 +13,10 @@ final class TimerNotificationsTests: XCTestCase {
         let endTimerDate = startDate.adding(seconds: 1)
         let timerSet = TimerSet(0, startDate: startDate, endDate: endTimerDate)
         
-        let spyReceivedMessages = receivedMessagesFromSpyOnScheduleAfter(seconds: 0, with: timerSet)
+        let spyReceivedMessages = receivedMessagesFromSpyOnScheduleAfter(seconds: 0, with: timerSet, isBreak: false)
         
         XCTAssertEqual(spyReceivedMessages, [
-            .scheduleExecution(at: endTimerDate)
+            .scheduleExecution(at: endTimerDate, isBreak: false)
         ])
     }
     
@@ -26,24 +26,28 @@ final class TimerNotificationsTests: XCTestCase {
         let timerSet = TimerSet(0, startDate: startDate, endDate: endTimerDate)
         let secondsAfterTimerStartDate: TimeInterval = 1
         
-        let spyReceivedMessages = receivedMessagesFromSpyOnScheduleAfter(seconds: secondsAfterTimerStartDate, with: timerSet)
+        let spyReceivedMessages = receivedMessagesFromSpyOnScheduleAfter(seconds: secondsAfterTimerStartDate, with: timerSet, isBreak: false)
         
         XCTAssertEqual(spyReceivedMessages, [
-            .scheduleExecution(at: endTimerDate.adding(seconds: secondsAfterTimerStartDate))
+            .scheduleExecution(at: endTimerDate.adding(seconds: secondsAfterTimerStartDate), isBreak: false)
         ])
     }
     
     func test_scheduleNotification_onSameDateAsStartDateAndOneElapsedSecondOnTimer_sendsCorrectMessageToScheduler() {
-        let startDate = Date()
-        let endTimerDate = startDate.adding(seconds: 1)
-        let elapsedSecondsOnTimer: TimeInterval = 1
-        let timerSet = TimerSet(elapsedSecondsOnTimer, startDate: startDate, endDate: endTimerDate)
+        let isBreakSamples = [false, true]
         
-        let spyReceivedMessages = receivedMessagesFromSpyOnScheduleAfter(seconds: 0, with: timerSet)
-        
-        XCTAssertEqual(spyReceivedMessages, [
-            .scheduleExecution(at: endTimerDate - elapsedSecondsOnTimer)
-        ])
+        isBreakSamples.forEach { sample in
+            let startDate = Date()
+            let endTimerDate = startDate.adding(seconds: 1)
+            let elapsedSecondsOnTimer: TimeInterval = 1
+            let timerSet = TimerSet(elapsedSecondsOnTimer, startDate: startDate, endDate: endTimerDate)
+            
+            let spyReceivedMessages = receivedMessagesFromSpyOnScheduleAfter(seconds: 0, with: timerSet, isBreak: sample)
+            
+            XCTAssertEqual(spyReceivedMessages, [
+                .scheduleExecution(at: endTimerDate - elapsedSecondsOnTimer, isBreak: sample)
+            ])
+        }
     }
     
     func test_scheduleNotification_sendsCorrectMessageToScheduler() {
@@ -57,10 +61,10 @@ final class TimerNotificationsTests: XCTestCase {
             let secondsAfterTimerStartDateSamples: [TimeInterval] = [0, 1, 100]
             
             secondsAfterTimerStartDateSamples.forEach { secondsAfterTimerStartDate in
-                let spyReceivedMessages = receivedMessagesFromSpyOnScheduleAfter(seconds: secondsAfterTimerStartDate, with: timerSet)
+                let spyReceivedMessages = receivedMessagesFromSpyOnScheduleAfter(seconds: secondsAfterTimerStartDate, with: timerSet, isBreak: false)
                 
                 XCTAssertEqual(spyReceivedMessages, [
-                    .scheduleExecution(at: endTimerDate.adding(seconds: secondsAfterTimerStartDate) - elapsedSecondsOfTimer)
+                    .scheduleExecution(at: endTimerDate.adding(seconds: secondsAfterTimerStartDate) - elapsedSecondsOfTimer, isBreak: false)
                 ])
             }
         }
@@ -73,7 +77,7 @@ final class TimerNotificationsTests: XCTestCase {
         spy.failScheduleWith(expectedError)
         
         do {
-            try sut.scheduleNotification(from: anyTimerSet)
+            try sut.scheduleNotification(from: anyTimerSet, isBreak: false)
             
             XCTFail("scheduleNotification should have failed")
         } catch {
@@ -84,10 +88,11 @@ final class TimerNotificationsTests: XCTestCase {
     // MARK: - Helpers
     private func receivedMessagesFromSpyOnScheduleAfter(seconds secondsAfterTimerStartDate: TimeInterval,
                                                         with timerSet: TimerSet,
+                                                        isBreak: Bool,
                                                         file: StaticString = #filePath, line: UInt = #line) -> [SpyScheduler.AnyMessage] {
         let (sut, spy) = makeSUT(timerSet: timerSet, currentDate: { timerSet.startDate.adding(seconds: secondsAfterTimerStartDate) })
         
-        try? sut.scheduleNotification(from: timerSet)
+        try? sut.scheduleNotification(from: timerSet, isBreak: isBreak)
         
         return spy.receivedMessages
     }
@@ -104,20 +109,26 @@ final class TimerNotificationsTests: XCTestCase {
         return (sut, spy)
     }
     
-    private class SpyScheduler: Scheduler {
-        private(set) var receivedMessages = [AnyMessage]()
+    private class SpyScheduler: Scheduler {        private(set) var receivedMessages = [AnyMessage]()
         private(set) var receivedResult: Result<Void,Error>?
         
-        enum AnyMessage: Equatable {
-            case scheduleExecution(at: Date)
+        enum AnyMessage: Equatable, CustomStringConvertible {
+            case scheduleExecution(at: Date, isBreak: Bool)
+            
+            var description: String {
+                switch self {
+                case let .scheduleExecution(at: date, isBreak: isBreak):
+                    return "scheduleExecution at \(date) isBreak mode \(isBreak)"
+                }
+            }
         }
         
-        func setSchedule(at scheduledDate: Date) throws {
-            receivedMessages.append(.scheduleExecution(at: scheduledDate))
+        func setSchedule(at scheduledDate: Date, isBreak: Bool) throws {
+            receivedMessages.append(.scheduleExecution(at: scheduledDate, isBreak: isBreak))
             
             try receivedResult?.get()
         }
-        
+            
         func failScheduleWith(_ error: Error) {
             receivedResult = .failure(error)
         }
