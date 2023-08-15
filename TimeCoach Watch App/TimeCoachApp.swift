@@ -6,6 +6,7 @@ import LifeCoachWatchOS
 import LifeCoach
 import Combine
 import UserNotifications
+import LifeCoachExtensions
 
 @main
 struct TimeCoach_Watch_AppApp: App {
@@ -18,13 +19,12 @@ struct TimeCoach_Watch_AppApp: App {
         self.root = root
         self.timerView = root.createTimer()
     }
-
-    init(pomodoroTimer: TimerCoutdown, timerState: TimerSave & TimerLoad) {
-        let root = TimeCoachRoot(timerCoutdown: pomodoroTimer, timerState: timerState)
-        self.root = root
-        self.timerView = root.createTimer(withTimeLine: false)
-    }
     
+    init(infrastructure: Infrastructure) {
+        self.root = TimeCoachRoot(infrastructure: infrastructure)
+        self.timerView = root.createTimer()
+    }
+
     var body: some Scene {
         WindowGroup {
             timerView
@@ -33,8 +33,7 @@ struct TimeCoach_Watch_AppApp: App {
                 case .active:
                     goToForeground()
                 case .inactive:
-                    goToForeground()
-                    goToBackground()
+                    gotoInactive()
                 case .background:
                     goToBackground()
                 @unknown default: break
@@ -59,5 +58,11 @@ struct TimeCoach_Watch_AppApp: App {
     
     func goToForeground() {
         root.goToForeground()
+    }
+    
+    func gotoInactive() {
+        goToForeground()
+        root.gotoInactive()
+        goToBackground()
     }
 }

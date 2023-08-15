@@ -47,11 +47,11 @@ final class TimerUIIntegrationTests: XCTestCase {
         
         sut.simulateStopTimerUserInteraction()
         
-        XCTAssertEqual(spy.commandsReceived, [.play, .pause, .play, .pause, .skip, .play, .pause, .stop], "Should execute stop.")
+        XCTAssertEqual(spy.commandsReceived, [.play, .pause, .play, .pause, .skip, .play, .stop], "Should execute stop.")
         
         sut.simulateToggleTimerUserInteraction()
         
-        XCTAssertEqual(spy.commandsReceived, [.play, .pause, .play, .pause, .skip, .play, .pause, .stop, .play], "Should execute play after stop.")
+        XCTAssertEqual(spy.commandsReceived, [.play, .pause, .play, .pause, .skip, .play, .stop, .play], "Should execute play after stop.")
     }
     
     func test_onSkipUserInteraction_sendsCommandsCorrectlyToHandler() {
@@ -87,16 +87,14 @@ final class TimerUIIntegrationTests: XCTestCase {
         let timerControlPublishers = TimerControlsPublishers(
             playPublisher: { timeLoader.play() },
             skipPublisher: { timeLoader.skip() },
-            stopPublisher: timeLoader.stop(),
-            pausePublisher: timeLoader.pause(),
+            stopPublisher: { timeLoader.stop() },
+            pausePublisher: { timeLoader.pause() },
             isPlaying: timeLoader.isPlayingPusblisher.eraseToAnyPublisher()
         )
         
         let timerView = TimerViewComposer
-            .createTimer(
-                timerControlPublishers: timerControlPublishers,
-                withTimeLine: false // the integration tests do not contemplate the time line since this an watchOS specific trait.
-            )
+            .createTimer(timerControlPublishers: timerControlPublishers,
+                         isBreakModePublisher: CurrentValueSubject<IsBreakMode, Error>.init(false))
     
         trackForMemoryLeak(instance: timeLoader, file: file, line: line)
         
@@ -124,24 +122,26 @@ final class TimerUIIntegrationTests: XCTestCase {
             }
         }
         
-        typealias PlayPublisher = CurrentValueSubject<ElapsedSeconds, Error>
-        typealias SkipPublisher = CurrentValueSubject<ElapsedSeconds, Error>
+        typealias PlayPublisher = CurrentValueSubject<TimerState, Error>
+        typealias SkipPublisher = CurrentValueSubject<TimerState, Error>
         typealias StopPublisher = CurrentValueSubject<Void, Error>
         typealias PausePublisher = CurrentValueSubject<Void, Error>
         typealias IsPlayingPublisher = CurrentValueSubject<Bool, Never>
         
-        func play() -> AnyPublisher<ElapsedSeconds, Error> {
-            let elapsed = makeElapsedSeconds(0, startDate: Date(), endDate: Date())
-            return PlayPublisher(elapsed).map { elapsed in
+        func play() -> AnyPublisher<TimerState, Error> {
+            let elapsedTimerState = TimerState(timerSet: makeTimerSet(0, startDate: Date(), endDate: Date()),
+                                               state: .running)
+            return PlayPublisher(elapsedTimerState).map { elapsed in
                 self.isPlaying = true
                 self.commandsReceived.append(.play)
                 return elapsed
             }.eraseToAnyPublisher()
         }
         
-        func skip() -> AnyPublisher<ElapsedSeconds, Error> {
-            let elapsedTime = makeElapsedSeconds(0, startDate: Date(), endDate: Date())
-            return SkipPublisher(elapsedTime).map { elapsed in
+        func skip() -> AnyPublisher<TimerState, Error> {
+            let elapsedTimerState = TimerState(timerSet: makeTimerSet(0, startDate: Date(), endDate: Date()),
+                                               state: .running)
+            return SkipPublisher(elapsedTimerState).map { elapsed in
                 self.isPlaying = false
                 self.commandsReceived.append(.skip)
                 return elapsed
@@ -172,14 +172,14 @@ final class TimerUIIntegrationTests: XCTestCase {
 
 private extension TimerView {
     var customFont: String? {
-        timerWithoutTimeLine?.customFont
+        timerWithTimeLine?.customFont
     }
 }
 
-private func makeElapsedSeconds(
+private func makeTimerSet(
     _ seconds: TimeInterval,
     startDate: Date,
     endDate: Date
-) -> ElapsedSeconds {
-    ElapsedSeconds(seconds, startDate: startDate, endDate: endDate)
+) -> TimerSet {
+    TimerSet(seconds, startDate: startDate, endDate: endDate)
 }

@@ -2,11 +2,11 @@ import LifeCoach
 import SwiftUI
 
 public struct TimerView: View {
-    public var timerWithTimeLine: TimerTextTimeLine?
+    public var timerWithTimeLine: TimerTextTimeLineWithLuminance?
     public var timerWithoutTimeLine: TimerText?
     public var controls: TimerControls
     
-    public init(timerWithTimeLine: TimerTextTimeLine? = nil,
+    public init(timerWithTimeLine: TimerTextTimeLineWithLuminance? = nil,
                 timerWithoutTimeLine: TimerText? = nil,
                 controls: TimerControls) {
         self.timerWithTimeLine = timerWithTimeLine

@@ -37,10 +37,6 @@ class ToggleStrategy {
     }
     
     func stopHandler() {
-        if isPlaying {
-            pause?()
-        }
-        
         stop?()
     }
 }

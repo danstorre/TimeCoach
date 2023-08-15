@@ -3,24 +3,29 @@ import Combine
 
 extension RegularTimer {
     typealias VoidPublisher = AnyPublisher<Void, Error>
-    typealias ElapsedSecondsPublisher = AnyPublisher<ElapsedSeconds, Error>
-    typealias CurrentValuePublisher = CurrentValueSubject<ElapsedSeconds, Error>
+    typealias TimerSetPublisher = AnyPublisher<TimerState, Error>
+    typealias CurrentValuePublisher = CurrentValueSubject<TimerState, Error>
     
-    func stopPublisher() -> VoidPublisher {
-        return Deferred {
-            self.stop()
-            return PassthroughSubject<Void, Error>()
-        }.eraseToAnyPublisher()
+    func stopPublisher(currentSubject: CurrentValuePublisher) -> () -> TimerSetPublisher {
+        {
+            Deferred {
+                stop()
+                return currentSubject
+            }.eraseToAnyPublisher()
+        }
+        
     }
     
-    func pausePublisher() -> VoidPublisher {
-        return Deferred {
-            self.pause()
-            return PassthroughSubject<Void, Error>()
-        }.eraseToAnyPublisher()
+    func pausePublisher(currentSubject: CurrentValuePublisher) -> () -> TimerSetPublisher {
+        {
+            Deferred {
+                pause()
+                return currentSubject
+            }.eraseToAnyPublisher()
+        }
     }
     
-    func skipPublisher(currentSubject: CurrentValuePublisher) -> () -> ElapsedSecondsPublisher {
+    func skipPublisher(currentSubject: CurrentValuePublisher) -> () -> TimerSetPublisher {
         {
             Deferred {
                 skip()
@@ -29,7 +34,7 @@ extension RegularTimer {
         }
     }
     
-    func playPublisher(currentSubject: CurrentValuePublisher) -> () -> ElapsedSecondsPublisher {
+    func playPublisher(currentSubject: CurrentValuePublisher) -> () -> TimerSetPublisher {
         {
             Deferred {
                 start()

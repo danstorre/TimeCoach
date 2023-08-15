@@ -11,7 +11,7 @@ class TimeCoachRoot {
         let date = Date()
         let timerCountdown = createTimerCountDown(from: date)
         let currentSubject = Self.createFirstValuePublisher(from: date)
-        let timerPlayerAdapterState = TimerCoutdownToTimerStateAdapter(timer: timerCountdown)
+        let timerPlayerAdapterState = TimerCountdownToTimerStateAdapter(timer: timerCountdown)
         regularTimer = Self.createPomodorTimer(with: timerPlayerAdapterState, and: currentSubject)
         
         let timerControlPublishers = TimerControlsPublishers(playPublisher: regularTimer!.playPublisher(currentSubject: currentSubject),

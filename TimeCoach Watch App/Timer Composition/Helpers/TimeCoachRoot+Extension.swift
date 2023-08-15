@@ -10,18 +10,21 @@ import Combine
 import LifeCoach
 
 extension TimeCoachRoot {
+    static let milisecondsPrecision = 0.1
+    
     // MARK: Factory methods
-    func createTimerCountDown(from date: Date) -> TimerCoutdown {
+    func createTimerCountDown(from date: Date) -> TimerCountdown {
         #if os(watchOS)
-        timerCoutdown ?? FoundationTimerCountdown(startingSet: .pomodoroSet(date: date),
-                                                  nextSet: .breakSet(date: date))
+        timerCountdown ?? FoundationTimerCountdown(startingSet: .pomodoroSet(date: date),
+                                                   nextSet: .breakSet(date: date),
+                                                   incrementing: Self.milisecondsPrecision)
         #elseif os(xrOS)
         FoundationTimerCountdown(startingSet: .pomodoroSet(date: date),
                                  nextSet: .breakSet(date: date))
         #endif
     }
     
-    static func createPomodorTimer(with timer: TimerCoutdown, and currentValue: RegularTimer.CurrentValuePublisher) -> RegularTimer {
+    static func createPomodorTimer(with timer: TimerCountdown, and currentValue: RegularTimer.CurrentValuePublisher) -> RegularTimer {
         PomodoroTimer(timer: timer, timeReceiver: { result in
             switch result {
             case let .success(seconds):
@@ -33,9 +36,12 @@ extension TimeCoachRoot {
     }
     
     static func createFirstValuePublisher(from date: Date) -> RegularTimer.CurrentValuePublisher {
-        CurrentValueSubject<ElapsedSeconds, Error>(ElapsedSeconds(0,
-                                                                  startDate: date,
-                                                                  endDate: date.adding(seconds: .pomodoroInSeconds)))
+        CurrentValueSubject<TimerState, Error>(
+            TimerState(timerSet: TimerSet(0,
+                                          startDate: date,
+                                          endDate: date.adding(seconds: .pomodoroInSeconds)),
+                       state: .stop)
+        )
     }
 }
 

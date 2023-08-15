@@ -39,6 +39,16 @@
          </BuildableReference>
       </CodeCoverageTargets>
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "FB566A0F2A7D935000506CBA"
+               BuildableName = "LifeCoachWatchOSTests.xctest"
+               BlueprintName = "LifeCoachWatchOSTests"
+               ReferencedContainer = "container:LifeCoach.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

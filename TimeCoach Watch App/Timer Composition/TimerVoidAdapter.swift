@@ -3,16 +3,16 @@ import LifeCoach
 import Combine
 
 final class TimerVoidAdapter {
-    private let loader: AnyPublisher<Void, Error>
+    private let loader: () -> AnyPublisher<Void, Error>
     private var cancellable: Cancellable?
     var presenter: TimerViewModel?
     
-    init(loader: AnyPublisher<Void, Error>) {
+    init(loader: @escaping () -> AnyPublisher<Void, Error>) {
         self.loader = loader
     }
     
     private func subscribe() {
-        cancellable = loader
+        cancellable = loader()
             .sink(
                 receiveCompletion: { _ in }, receiveValue: {})
     }
