@@ -132,14 +132,9 @@ class TimeCoachRoot {
     private struct UnexpectedError: Error {}
     
     private func handlePlay() -> RegularTimer.TimerSetPublisher {
-        let timerNotificationScheduler = timerNotificationScheduler
-        let currentIsBreakMode = currentIsBreakMode
-        
         return playPublisher()
-            .processFirstValue { value in
-                Just(value)
-                    .setsNeedsUpdate(self)
-                    .scheduleTimerNotfication(scheduler: timerNotificationScheduler, isBreak: currentIsBreakMode.value)
+            .processFirstValue { [weak self] timerState in
+                self?.registerTimerProcessPublisher(timerState: timerState)
                     .subscribe(Subscribers.Sink(receiveCompletion: { _ in
                     }, receiveValue: { _ in }))
             }
@@ -202,6 +197,17 @@ class TimeCoachRoot {
             .setsNeedsUpdate(self)
             .unregisterTimerNotifications(unregisterNotifications)
             .flatsToTimerSetPublisher(currentSubject)
+            .tryMap { $0 }
+            .eraseToAnyPublisher()
+    }
+    
+    private func registerTimerProcessPublisher(timerState: TimerState) -> RegularTimer.TimerSetPublisher {
+        let timerNotificationScheduler = timerNotificationScheduler
+        let currentIsBreakMode = currentIsBreakMode
+        
+        return Just(timerState)
+            .setsNeedsUpdate(self)
+            .scheduleTimerNotfication(scheduler: timerNotificationScheduler, isBreak: currentIsBreakMode.value)
             .tryMap { $0 }
             .eraseToAnyPublisher()
     }
