@@ -99,7 +99,7 @@ class TimeCoachRoot {
     
     private func getTimerState() -> TimerState? {
         guard let timerSet = timerCountdown?.currentTimerSet.toModel,
-                let state = timerCountdown?.state.toModel else {
+              let state = timerCountdown?.state.toModel else {
             return nil
         }
         return TimerState(timerSet: timerSet, state: state)
@@ -114,19 +114,9 @@ class TimeCoachRoot {
     }
     
     func gotoInactive() {
-        guard let timerCountdown = timerCountdown, needsUpdate else {
-            return
-        }
-        let currentIsBreakMode = currentIsBreakMode.value
-        
-        Just(())
-            .mapsTimerSetAndState(timerCountdown: timerCountdown, currentIsBreakMode: currentIsBreakMode)
-            .saveTimerState(saver: localTimer)
-            .notifySavedTimer(notifier: timerSavedNofitier)
-            .subscribe(Subscribers.Sink(receiveCompletion: { _ in
-            }, receiveValue: { _ in }))
-        
-        needsUpdate = false
+        saveTimerProcessPublisher(timerCoachRoot: self)?
+        .subscribe(Subscribers.Sink(receiveCompletion: { _ in
+        }, receiveValue: { _ in }))
     }
     
     private struct UnexpectedError: Error {}
@@ -210,5 +200,23 @@ class TimeCoachRoot {
             .scheduleTimerNotfication(scheduler: timerNotificationScheduler, isBreak: currentIsBreakMode.value)
             .tryMap { $0 }
             .eraseToAnyPublisher()
+    }
+    
+    private func saveTimerProcessPublisher(
+        timerCoachRoot: TimeCoachRoot
+    ) -> AnyPublisher<TimerState, Never>? {
+        guard let timerCountdown = timerCoachRoot.timerCountdown,
+              timerCoachRoot.needsUpdate else {
+            return nil
+        }
+        let currentIsBreakMode = timerCoachRoot.currentIsBreakMode.value
+        
+        return Just(())
+            .mapsTimerSetAndState(timerCountdown: timerCountdown, currentIsBreakMode: currentIsBreakMode)
+            .saveTimerState(saver: localTimer)
+            .notifySavedTimer(notifier: timerSavedNofitier)
+            .handleEvents(receiveOutput: { [weak timerCoachRoot] _ in
+                timerCoachRoot?.needsUpdate = false
+            }).eraseToAnyPublisher()
     }
 }
