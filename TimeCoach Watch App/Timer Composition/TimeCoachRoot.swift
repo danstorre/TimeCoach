@@ -147,13 +147,9 @@ class TimeCoachRoot {
     }
     
     private func handleStop() -> RegularTimer.VoidPublisher {
-        let unregisterNotifications = unregisterNotifications
-        
         return stopPublisher()
-            .processFirstValue { _ in
-                Just(())
-                    .setsNeedsUpdate(self)
-                    .unregisterTimerNotifications(unregisterNotifications)
+            .processFirstValue { [weak self] _ in
+                self?.unregisterTimerProcessPublisher()
                     .subscribe(Subscribers.Sink(receiveCompletion: { _ in
                     }, receiveValue: { _ in }))
             }
@@ -162,13 +158,9 @@ class TimeCoachRoot {
     }
     
     private func handlePause() -> RegularTimer.VoidPublisher {
-        let unregisterNotifications = unregisterNotifications
-        
         return pausePublisher()
-            .processFirstValue { timerState in
-                Just(())
-                    .setsNeedsUpdate(self)
-                    .unregisterTimerNotifications(unregisterNotifications)
+            .processFirstValue { [weak self] timerState in
+                self?.unregisterTimerProcessPublisher()
                     .subscribe(Subscribers.Sink(receiveCompletion: { _ in
                     }, receiveValue: { _ in }))
             }
@@ -177,15 +169,9 @@ class TimeCoachRoot {
     }
     
     private func handleSkip() -> RegularTimer.TimerSetPublisher {
-        let currentSubject = currentSubject
-        let unregisterNotifications = unregisterNotifications
-        
         return skipPublisher()
-            .processFirstValue { value in
-                Just(())
-                    .setsNeedsUpdate(self)
-                    .unregisterTimerNotifications(unregisterNotifications)
-                    .flatsToTimerSetPublisher(currentSubject)
+            .processFirstValue { [weak self] value in
+                self?.unregisterTimerProcessPublisher()
                     .subscribe(Subscribers.Sink(receiveCompletion: { _ in
                     }, receiveValue: { _ in }))
             }
@@ -206,5 +192,17 @@ class TimeCoachRoot {
     
     private func skipPublisher() -> RegularTimer.TimerSetPublisher {
         regularTimer!.skipPublisher(currentSubject: currentSubject)()
+    }
+    
+    private func unregisterTimerProcessPublisher() -> RegularTimer.TimerSetPublisher {
+        let currentSubject = currentSubject
+        let unregisterNotifications = unregisterNotifications
+        
+        return Just(())
+            .setsNeedsUpdate(self)
+            .unregisterTimerNotifications(unregisterNotifications)
+            .flatsToTimerSetPublisher(currentSubject)
+            .tryMap { $0 }
+            .eraseToAnyPublisher()
     }
 }
