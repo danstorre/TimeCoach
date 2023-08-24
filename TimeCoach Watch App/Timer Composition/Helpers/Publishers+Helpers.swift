@@ -112,3 +112,21 @@ extension Publisher {
             .eraseToAnyPublisher()
     }
 }
+
+extension Publisher where Output == Void {
+    func setsNeedsUpdate(_ root: TimeCoachRoot) -> AnyPublisher<(), Failure> {
+        self.handleEvents(receiveOutput: { [weak root] _ in
+            root?.needsUpdate = true
+        })
+        .eraseToAnyPublisher()
+    }
+}
+
+extension Publisher where Output == TimerState {
+    func setsNeedsUpdate(_ root: TimeCoachRoot) -> AnyPublisher<TimerState, Failure> {
+        self.handleEvents(receiveOutput: { [weak root] _ in
+            root?.needsUpdate = true
+        })
+        .eraseToAnyPublisher()
+    }
+}
