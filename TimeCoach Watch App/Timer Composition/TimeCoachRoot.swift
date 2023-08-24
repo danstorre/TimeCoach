@@ -40,7 +40,7 @@ class TimeCoachRoot {
     }
     
     // Timer Saved Notifications
-    private var needsUpdate: Bool = false
+    var needsUpdate: Bool = false
     private var notifySavedTimer: (() -> Void)?
     private lazy var timerSavedNofitier: LifeCoach.TimerStoreNotifier = DefaultTimerStoreNotifier(
         completion: notifySavedTimer ?? {
@@ -138,9 +138,7 @@ class TimeCoachRoot {
         return playPublisher()
             .processFirstValue { value in
                 Just(value)
-                    .handleEvents(receiveOutput: { [weak self] _ in
-                        self?.needsUpdate = true
-                    })
+                    .setsNeedsUpdate(self)
                     .scheduleTimerNotfication(scheduler: timerNotificationScheduler, isBreak: currentIsBreakMode.value)
                     .subscribe(Subscribers.Sink(receiveCompletion: { _ in
                     }, receiveValue: { _ in }))
@@ -154,9 +152,7 @@ class TimeCoachRoot {
         return stopPublisher()
             .processFirstValue { _ in
                 Just(())
-                    .handleEvents(receiveOutput: { [weak self] _ in
-                        self?.needsUpdate = true
-                    })
+                    .setsNeedsUpdate(self)
                     .unregisterTimerNotifications(unregisterNotifications)
                     .subscribe(Subscribers.Sink(receiveCompletion: { _ in
                     }, receiveValue: { _ in }))
@@ -171,9 +167,7 @@ class TimeCoachRoot {
         return pausePublisher()
             .processFirstValue { timerState in
                 Just(())
-                    .handleEvents(receiveOutput: { [weak self] _ in
-                        self?.needsUpdate = true
-                    })
+                    .setsNeedsUpdate(self)
                     .unregisterTimerNotifications(unregisterNotifications)
                     .subscribe(Subscribers.Sink(receiveCompletion: { _ in
                     }, receiveValue: { _ in }))
@@ -189,9 +183,7 @@ class TimeCoachRoot {
         return skipPublisher()
             .processFirstValue { value in
                 Just(())
-                    .handleEvents(receiveOutput: { [weak self] _ in
-                        self?.needsUpdate = true
-                    })
+                    .setsNeedsUpdate(self)
                     .unregisterTimerNotifications(unregisterNotifications)
                     .flatsToTimerSetPublisher(currentSubject)
                     .subscribe(Subscribers.Sink(receiveCompletion: { _ in
@@ -214,5 +206,23 @@ class TimeCoachRoot {
     
     private func skipPublisher() -> RegularTimer.TimerSetPublisher {
         regularTimer!.skipPublisher(currentSubject: currentSubject)()
+    }
+}
+
+extension Publisher where Output == Void {
+    func setsNeedsUpdate(_ root: TimeCoachRoot) -> AnyPublisher<(), Failure> {
+        self.handleEvents(receiveOutput: { [weak root] _ in
+            root?.needsUpdate = true
+        })
+        .eraseToAnyPublisher()
+    }
+}
+
+extension Publisher where Output == TimerState {
+    func setsNeedsUpdate(_ root: TimeCoachRoot) -> AnyPublisher<TimerState, Failure> {
+        self.handleEvents(receiveOutput: { [weak root] _ in
+            root?.needsUpdate = true
+        })
+        .eraseToAnyPublisher()
     }
 }
