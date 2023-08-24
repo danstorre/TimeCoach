@@ -117,10 +117,10 @@ class TimeCoachRoot {
         guard let timerCountdown = timerCountdown, needsUpdate else {
             return
         }
-        let currentIsBreakMode = currentIsBreakMode
+        let currentIsBreakMode = currentIsBreakMode.value
+        
         Just(())
-            .mapsTimerSetAndState(timerCountdown: timerCountdown)
-            .map({ TimerState(timerSet: $0.0, state: $0.1, isBreak: currentIsBreakMode.value)})
+            .mapsTimerSetAndState(timerCountdown: timerCountdown, currentIsBreakMode: currentIsBreakMode)
             .saveTimerState(saver: localTimer)
             .notifySavedTimer(notifier: timerSavedNofitier)
             .subscribe(Subscribers.Sink(receiveCompletion: { _ in
