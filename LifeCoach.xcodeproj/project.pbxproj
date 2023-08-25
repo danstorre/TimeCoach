@@ -169,9 +169,9 @@
 		FBE646582A4A9F77005022A2 /* TimerAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE646572A4A9F77005022A2 /* TimerAdapter.swift */; };
 		FBE646592A4A9FBC005022A2 /* TimerAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE646572A4A9F77005022A2 /* TimerAdapter.swift */; };
 		FBE6465A2A4A9FC1005022A2 /* TimerVoidAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE646552A4A9F3F005022A2 /* TimerVoidAdapter.swift */; };
-		FBE6465D2A4AA2DE005022A2 /* Combine+RegularTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE6465C2A4AA2DE005022A2 /* Combine+RegularTimer.swift */; };
+		FBE6465D2A4AA2DE005022A2 /* RegularTimer+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE6465C2A4AA2DE005022A2 /* RegularTimer+Combine.swift */; };
 		FBE6465E2A4AA59F005022A2 /* FoundationTimerCountdownTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD56F772A3D184C002736AD /* FoundationTimerCountdownTests.swift */; };
-		FBE646642A4AA7CA005022A2 /* Combine+RegularTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE6465C2A4AA2DE005022A2 /* Combine+RegularTimer.swift */; };
+		FBE646642A4AA7CA005022A2 /* RegularTimer+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE6465C2A4AA2DE005022A2 /* RegularTimer+Combine.swift */; };
 		FBE646652A4AA84F005022A2 /* TimerViewComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4AA14229379DC90076FED9 /* TimerViewComposer.swift */; };
 		FBE646672A4AA924005022A2 /* TimeCoachRoot+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE646662A4AA924005022A2 /* TimeCoachRoot+Extension.swift */; };
 		FBE646682A4AA98B005022A2 /* TimeCoachRoot+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE646662A4AA924005022A2 /* TimeCoachRoot+Extension.swift */; };
@@ -508,7 +508,7 @@
 		FBE593F82A784E6000069F1C /* InstanceHelper+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "InstanceHelper+Extensions.swift"; sourceTree = "<group>"; };
 		FBE646552A4A9F3F005022A2 /* TimerVoidAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerVoidAdapter.swift; sourceTree = "<group>"; };
 		FBE646572A4A9F77005022A2 /* TimerAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerAdapter.swift; sourceTree = "<group>"; };
-		FBE6465C2A4AA2DE005022A2 /* Combine+RegularTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Combine+RegularTimer.swift"; sourceTree = "<group>"; };
+		FBE6465C2A4AA2DE005022A2 /* RegularTimer+Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RegularTimer+Combine.swift"; sourceTree = "<group>"; };
 		FBE646662A4AA924005022A2 /* TimeCoachRoot+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimeCoachRoot+Extension.swift"; sourceTree = "<group>"; };
 		FBE9A96F2939527C00D8BF29 /* TimeCoach.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TimeCoach.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FBE9A9742939527C00D8BF29 /* TimeCoach Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "TimeCoach Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1167,7 +1167,7 @@
 		FBE6465B2A4AA2D2005022A2 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				FBE6465C2A4AA2DE005022A2 /* Combine+RegularTimer.swift */,
+				FBE6465C2A4AA2DE005022A2 /* RegularTimer+Combine.swift */,
 				FBE646662A4AA924005022A2 /* TimeCoachRoot+Extension.swift */,
 				FBA8DD822A4F120E009E48D5 /* TimerStateAdapter+Publishers.swift */,
 				FBA8DD842A4F13F0009E48D5 /* LocalElapsedSecondsSets+Extension.swift */,
@@ -1851,7 +1851,7 @@
 				FBBF06212A4F2CC30020695A /* TimerView.swift in Sources */,
 				FB53989A2A45DA7C000B9CFD /* ContentView.swift in Sources */,
 				FB53992E2A46202D000B9CFD /* TimeCoachRoot.swift in Sources */,
-				FBE646642A4AA7CA005022A2 /* Combine+RegularTimer.swift in Sources */,
+				FBE646642A4AA7CA005022A2 /* RegularTimer+Combine.swift in Sources */,
 				FBBF061C2A4F28C40020695A /* TimerStateAdapter+Publishers.swift in Sources */,
 				FBBF061E2A4F28F40020695A /* ToggleStrategy.swift in Sources */,
 				FB5398982A45DA7C000B9CFD /* TimeCoachVisionApp.swift in Sources */,
@@ -1961,7 +1961,7 @@
 				FBE9A97A2939527C00D8BF29 /* TimeCoachApp.swift in Sources */,
 				FB05D9C02A83E1C200EA0AE8 /* TimerNotificationReceiverFactory.swift in Sources */,
 				FBB3D8842A770F1F00A8BBAD /* NotificationScheduler.swift in Sources */,
-				FBE6465D2A4AA2DE005022A2 /* Combine+RegularTimer.swift in Sources */,
+				FBE6465D2A4AA2DE005022A2 /* RegularTimer+Combine.swift in Sources */,
 				FBE646582A4A9F77005022A2 /* TimerAdapter.swift in Sources */,
 				FB73E909293BA2A40087F9EF /* TimeCoachRoot.swift in Sources */,
 				FBF182892A89928800DBAF7F /* PlayNotification.swift in Sources */,
