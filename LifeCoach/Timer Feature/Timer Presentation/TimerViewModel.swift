@@ -16,7 +16,7 @@ public class TimerViewModel: ObservableObject {
         }
     }
     private var hasFinished = false
-    
+    private let formatter = makeTimerFormatter()
     private var currentTimerString: String = .defaultPomodoroTimerString
     
     public enum TimePresentation {
@@ -39,8 +39,8 @@ public class TimerViewModel: ObservableObject {
             return
         }
         
+        currentTimerString = formatter.string(from: startDate, to: endDate)!
         timerString = makeStringFrom(startDate: startDate, endDate: endDate, elapsedTime: elapsedTime)
-        currentTimerString = makeTimerFormatter().string(from: startDate, to: endDate)!
     }
     
     private func makeStringFrom(startDate: Date, endDate: Date, elapsedTime: TimerSet) -> String {
@@ -48,7 +48,7 @@ public class TimerViewModel: ObservableObject {
         case .none:
             return "--:--"
         case .full:
-            return makeTimerFormatter().string(from: startDate, to: endDate)!
+            return currentTimerString
         }
     }
 }
