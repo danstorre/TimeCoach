@@ -221,6 +221,8 @@ class TimeCoachRoot {
         return Just(())
             .mapsTimerSetAndState(timerCountdown: timerCountdown, currentIsBreakMode: currentIsBreakMode)
             .saveTimerState(saver: localTimer)
+            .subscribe(on: mainScheduler)
+            .dispatchOnMainQueue()
             .notifySavedTimer(notifier: timerSavedNofitier)
             .handleEvents(receiveOutput: { [weak timerCoachRoot] _ in
                 timerCoachRoot?.needsUpdate = false
