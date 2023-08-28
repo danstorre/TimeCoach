@@ -9,6 +9,7 @@ public struct Infrastructure {
     let notifySavedTimer: (() -> Void)?
     let unregisterTimerNotification: (() -> Void)?
     let currentDate: () -> Date
+    let mainScheduler: AnyDispatchQueueScheduler
     
     init(timerCountdown: TimerCountdown,
          timerState: TimerSave & TimerLoad,
@@ -16,7 +17,8 @@ public struct Infrastructure {
          scheduler: LifeCoach.Scheduler,
          notifySavedTimer: (() -> Void)? = nil,
          currentDate: @escaping () -> Date = Date.init,
-         unregisterTimerNotification: (() -> Void)? = nil
+         unregisterTimerNotification: (() -> Void)? = nil,
+         mainScheduler: AnyDispatchQueueScheduler = .immediateOnMainQueue
     ) {
         self.timerCountdown = timerCountdown
         self.timerState = timerState
@@ -25,5 +27,6 @@ public struct Infrastructure {
         self.notifySavedTimer = notifySavedTimer
         self.currentDate = currentDate
         self.unregisterTimerNotification = unregisterTimerNotification
+        self.mainScheduler = mainScheduler
     }
 }

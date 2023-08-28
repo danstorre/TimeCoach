@@ -48,6 +48,12 @@ class TimeCoachRoot {
         }
     )
     
+    // Concurrency
+    private lazy var mainScheduler: AnyDispatchQueueScheduler = DispatchQueue(
+        label: "com.danstorre.timeCoach.watchkitapp",
+        qos: .userInitiated
+    ).eraseToAnyScheduler()
+    
     convenience init(infrastructure: Infrastructure) {
         self.init()
         self.timerSave = infrastructure.timerState
@@ -58,6 +64,7 @@ class TimeCoachRoot {
         self.notifySavedTimer = infrastructure.notifySavedTimer
         self.currenDate = infrastructure.currentDate
         self.unregisterNotifications = infrastructure.unregisterTimerNotification ?? {}
+        self.mainScheduler = infrastructure.mainScheduler
     }
     
     func createTimer() -> TimerView {
