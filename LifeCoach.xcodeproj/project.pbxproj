@@ -49,6 +49,7 @@
 		FB1535902A4A674A00E4B0B0 /* TimerLabelStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE9A9DB2939654400D8BF29 /* TimerLabelStyle.swift */; };
 		FB1535912A4A677F00E4B0B0 /* LifeCoach.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBAD475028FC8BB0003D2F7A /* LifeCoach.framework */; };
 		FB1535922A4A677F00E4B0B0 /* LifeCoach.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FBAD475028FC8BB0003D2F7A /* LifeCoach.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		FB155ECE2A9D53C900A4551D /* Combine+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB155ECD2A9D53C900A4551D /* Combine+Helpers.swift */; };
 		FB40D18B2A79CDA5008D3A36 /* UserDefaultStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB40D18A2A79CDA5008D3A36 /* UserDefaultStoreTests.swift */; };
 		FB4AA1382936F1730076FED9 /* TimerText.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4AA1372936F1730076FED9 /* TimerText.swift */; };
 		FB4AA1542937C0F30076FED9 /* ExtensionHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4AA1532937C0F30076FED9 /* ExtensionHelpers.swift */; };
@@ -381,6 +382,7 @@
 		FB1535572A4A66E000E4B0B0 /* LifeCoachWatchOSUIPreview.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LifeCoachWatchOSUIPreview.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB15355C2A4A66E000E4B0B0 /* LifeCoachWatchOSUIPreview Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "LifeCoachWatchOSUIPreview Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB1535612A4A66E000E4B0B0 /* LifeCoachWatchOSUIPreviewApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LifeCoachWatchOSUIPreviewApp.swift; sourceTree = "<group>"; };
+		FB155ECD2A9D53C900A4551D /* Combine+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Combine+Helpers.swift"; sourceTree = "<group>"; };
 		FB2A10E62A6B1854004A1784 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		FB2A10E82A6B1854004A1784 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		FB40D18A2A79CDA5008D3A36 /* UserDefaultStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultStoreTests.swift; sourceTree = "<group>"; };
@@ -811,6 +813,7 @@
 				FB509E082A7C936B00AA9333 /* TimeCoachWatchExtension.swift */,
 				FB509E0A2A7C936B00AA9333 /* Assets.xcassets */,
 				FB509E0C2A7C936B00AA9333 /* Info.plist */,
+				FB155ECD2A9D53C900A4551D /* Combine+Helpers.swift */,
 			);
 			path = TimeCoachWatchExtension;
 			sourceTree = "<group>";
@@ -1833,6 +1836,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FB509E092A7C936B00AA9333 /* TimeCoachWatchExtension.swift in Sources */,
+				FB155ECE2A9D53C900A4551D /* Combine+Helpers.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

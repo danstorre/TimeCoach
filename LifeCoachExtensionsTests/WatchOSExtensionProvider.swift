@@ -14,12 +14,12 @@ final class WatchOSExtensionProvider: XCTestCase {
     
     func test_getTimeline_onLoaderErrorDeliversIsIdleTimeLineEntry() {
         let currentDate = Date()
-        let (sut, _) = makeSUT(currentDate: { currentDate })
+        let (sut, spy) = makeSUT(currentDate: { currentDate })
         let idleTimelineEntry = TimerEntry(date: currentDate, timerPresentationValues: .none, isIdle: true)
         
-        sut.getTimeline() { _ in }
-        
-        let timeLineResult = sut.getTimeLineResult()
+        let timeLineResult = sut.getTimeLineResult(when: {
+            spy.loadsError()
+        })
         assertCorrectTimeLine(with: idleTimelineEntry, from: timeLineResult)
     }
     
@@ -31,9 +31,10 @@ final class WatchOSExtensionProvider: XCTestCase {
             let endDate = currentDate.adding(seconds: 1)
             let runningTimeLineEntry = createTimerEntry(currentDate: currentDate, endDate: endDate, isIdle: false, isBreak: isBreak)
             let (sut, spy) = makeSUT(currentDate: { currentDate })
-            spy.loadsSuccess(with: makeAnyTimerState(seconds: 0, startDate: currentDate, endDate: endDate, isBreak: isBreak, state: .running))
             
-            let timeLineResult = sut.getTimeLineResult()
+            let timeLineResult = sut.getTimeLineResult(when: {
+                spy.loadsSuccess(with: makeAnyTimerState(seconds: 0, startDate: currentDate, endDate: endDate, isBreak: isBreak, state: .running))
+            })
             
             assertCorrectTimeLine(with: runningTimeLineEntry, from: timeLineResult, onSample: isBreak)
         }
@@ -50,9 +51,10 @@ final class WatchOSExtensionProvider: XCTestCase {
         
         samples.forEach { sample in
             let idleTimelineEntry = TimerEntry(date: currentDate, timerPresentationValues: .none, isIdle: true)
-            spy.loadsSuccess(with: sample)
             
-            let timeLineResult = sut.getTimeLineResult()
+            let timeLineResult = sut.getTimeLineResult(when: {
+                spy.loadsSuccess(with: sample)
+            })
             
             assertCorrectTimeLine(with: idleTimelineEntry, from: timeLineResult)
         }
@@ -84,7 +86,7 @@ final class WatchOSExtensionProvider: XCTestCase {
     
     private func makeSUT(currentDate: @escaping () -> Date, file: StaticString = #filePath, line: UInt = #line) -> (sut: WatchOSProviderProtocol, spy: Spy) {
         let spy = Spy()
-        let sut = WatchOSProvider(stateLoader: spy, currentDate: currentDate)
+        let sut = WatchOSProvider(stateLoader: spy.load(completion:), currentDate: currentDate)
         
         trackForMemoryLeak(instance: sut, file: file, line: line)
         trackForMemoryLeak(instance: spy, file: file, line: line)
@@ -103,17 +105,21 @@ final class WatchOSExtensionProvider: XCTestCase {
         XCTAssertEqual(timeLine?.policy, .never, file: file, line: line)
     }
     
-    private class Spy: LoadTimerState {
+    private class Spy {
         private(set) var loadStateCallCount = 0
+        private var completions: [(LifeCoach.TimerState?) -> ()] = []
         
-        private var timerStateResult: LifeCoach.TimerState? = nil
-        func load() throws -> LifeCoach.TimerState? {
-            loadStateCallCount += 1
-            return timerStateResult
+        func loadsSuccess(with state: LifeCoach.TimerState, at index: Int = 0) {
+            completions[index](state)
         }
         
-        func loadsSuccess(with state: LifeCoach.TimerState) {
-            timerStateResult = state
+        func loadsError(at index: Int = 0) {
+            completions[index](nil)
+        }
+        
+        func load(completion: @escaping (LifeCoach.TimerState?) -> ()) {
+            loadStateCallCount += 1
+            completions.append(completion)
         }
     }
 }
@@ -131,11 +137,12 @@ idle: \(isIdle)
 }
 
 private extension WatchOSProviderProtocol {
-    func getTimeLineResult() -> Timeline<TimerEntry>? {
+    func getTimeLineResult(when action: () -> Void) -> Timeline<TimerEntry>? {
         var receivedEntry: Timeline<TimerEntry>?
         getTimeline() { entry in
             receivedEntry = entry
         }
+        action()
         return receivedEntry
     }
     

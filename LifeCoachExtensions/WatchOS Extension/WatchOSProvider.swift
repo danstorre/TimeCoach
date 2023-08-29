@@ -3,10 +3,11 @@ import WidgetKit
 import LifeCoach
 
 public class WatchOSProvider: WatchOSProviderProtocol {
-    private let stateLoader: LoadTimerState
+    private let stateLoader: (@escaping (TimerState?) -> Void) -> Void
     private let currentDate: () -> Date
+    private var completion: ((Timeline<TimerEntry>) -> ())?
     
-    public init(stateLoader: LoadTimerState, currentDate: @escaping () -> Date = Date.init) {
+    public init(stateLoader: @escaping ( @escaping (TimerState?) -> Void) -> Void, currentDate: @escaping () -> Date = Date.init) {
         self.stateLoader = stateLoader
         self.currentDate = currentDate
     }
@@ -20,25 +21,16 @@ public class WatchOSProvider: WatchOSProviderProtocol {
     }
     
     public func getTimeline(completion: @escaping (Timeline<TimerEntry>) -> ()) {
-        completion(getTimeLine())
+        self.completion = completion
+        stateLoader({ [weak self] loadedTimerState in
+            guard let self = self else { return }
+            self.completion?(getTimeLine(state: loadedTimerState))
+        })
     }
     
     // MARK: - Helpers
-    private func getTimerEntry() -> TimerEntry {
-        guard let state = try? stateLoader.load() else {
-            return TimerEntry.createEntry(from: currentDate())
-        }
-        
-        switch getEvent(from: state, andCurrentDate: currentDate) {
-        case let .showTimerWith(values: values):
-            return TimerEntry(date: currentDate(), timerPresentationValues: values, isIdle: false)
-        case .showIdle:
-            return TimerEntry(date: currentDate(), timerPresentationValues: .none, isIdle: true)
-        }
-    }
-    
-    private func getTimeLine() -> Timeline<TimerEntry> {
-        guard let state = try? stateLoader.load() else {
+    private func getTimeLine(state: TimerState?) -> Timeline<TimerEntry> {
+        guard let state = state else {
             return idleTimeLine()
         }
         
