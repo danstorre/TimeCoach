@@ -191,7 +191,7 @@ class TimeCoachRoot {
         let unregisterNotifications = unregisterNotifications
         
         return Just(())
-            .setsNeedsUpdate(self)
+            .setsNeedsUpdate(self, needsUpdate: true)
             .unregisterTimerNotifications(unregisterNotifications)
             .flatsToTimerSetPublisher(currentSubject)
             .tryMap { $0 }
@@ -203,7 +203,7 @@ class TimeCoachRoot {
         let currentIsBreakMode = currentIsBreakMode
         
         return Just(timerState)
-            .setsNeedsUpdate(self)
+            .setsNeedsUpdate(self, needsUpdate: true)
             .scheduleTimerNotfication(scheduler: timerNotificationScheduler, isBreak: currentIsBreakMode.value)
             .tryMap { $0 }
             .eraseToAnyPublisher()
@@ -224,8 +224,7 @@ class TimeCoachRoot {
             .subscribe(on: mainScheduler)
             .dispatchOnMainQueue()
             .notifySavedTimer(notifier: timerSavedNofitier)
-            .handleEvents(receiveOutput: { [weak timerCoachRoot] _ in
-                timerCoachRoot?.needsUpdate = false
-            }).eraseToAnyPublisher()
+            .setsNeedsUpdate(self, needsUpdate: false)
+            .eraseToAnyPublisher()
     }
 }
