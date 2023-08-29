@@ -1,5 +1,6 @@
 import Foundation
 import Combine
+import LifeCoach
 
 // MARK: - Publisher Main DispatchQueue
 extension Publisher {
@@ -102,3 +103,19 @@ struct AnyScheduler<SchedulerTimeType: Strideable, SchedulerOptions>: Combine.Sc
     }
 }
 
+
+// MARK: - Load timer State
+extension LoadTimerState {
+    typealias Publisher = AnyPublisher<LifeCoach.TimerState?, Error>
+    
+    func publisher() -> Publisher {
+        Deferred {
+            Future { completion in
+                completion(Result {
+                    try load()
+                })
+            }
+        }
+        .eraseToAnyPublisher()
+    }
+}
