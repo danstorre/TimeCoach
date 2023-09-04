@@ -9,7 +9,7 @@ public final class FoundationTimerCountdown: TimerCountdown {
     var timerDelivery: StartCoundownCompletion?
     
     var currentTimer: DispatchSourceTimer?
-    
+    private let timerQueue: DispatchQueue
     var timeAtSave: CFTimeInterval? = nil
     
     public var currentTimerSet: LocalTimerSet {
@@ -20,11 +20,12 @@ public final class FoundationTimerCountdown: TimerCountdown {
         currentSet.elapsedSeconds
     }
     
-    public init(startingSet: LocalTimerSet, nextSet: LocalTimerSet, incrementing: Double = 1.0) {
+    public init(startingSet: LocalTimerSet, nextSet: LocalTimerSet, incrementing: Double = 1.0, queue timerQueue: DispatchQueue = .main) {
         self.setA = startingSet
         self.setB = nextSet
         self.currentSet = startingSet
         self.incrementing = incrementing
+        self.timerQueue = timerQueue
     }
     
     public func startCountdown(completion: @escaping StartCoundownCompletion) {
@@ -55,7 +56,7 @@ public final class FoundationTimerCountdown: TimerCountdown {
     }
     
     private func createTimer() {
-        currentTimer = DispatchSource.makeTimerSource(queue: DispatchQueue.main)
+        currentTimer = DispatchSource.makeTimerSource(queue: timerQueue)
         currentTimer?.schedule(deadline: .now(), repeating: incrementing)
         currentTimer?.setEventHandler(handler: { [weak self] in
             self?.elapsedCompletion()
