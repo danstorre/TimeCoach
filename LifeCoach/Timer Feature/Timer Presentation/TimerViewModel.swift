@@ -3,18 +3,6 @@ import SwiftUI
 public class TimerViewModel: ObservableObject {
     @Published public var timerString: String = .defaultPomodoroTimerString
     public var isBreak: Bool
-    
-    public var mode: TimePresentation = .full {
-        didSet {
-            guard !hasFinished else { return }
-            switch mode {
-            case .full:
-                timerString = currentTimerString
-            case .none:
-                timerString = "--:--"
-            }
-        }
-    }
     private var hasFinished = false
     private let formatter = makeTimerFormatter()
     private var currentTimerString: String = .defaultPomodoroTimerString
@@ -40,15 +28,6 @@ public class TimerViewModel: ObservableObject {
         }
         
         currentTimerString = formatter.string(from: startDate, to: endDate)!
-        timerString = makeStringFrom(startDate: startDate, endDate: endDate, elapsedTime: elapsedTime)
-    }
-    
-    private func makeStringFrom(startDate: Date, endDate: Date, elapsedTime: TimerSet) -> String {
-        switch mode {
-        case .none:
-            return "--:--"
-        case .full:
-            return currentTimerString
-        }
+        timerString = currentTimerString
     }
 }

@@ -5,19 +5,29 @@ public struct TimerText: View {
     @Environment(\.isLuminanceReduced) var isLuminanceReduced
     @ObservedObject var timerViewModel: TimerViewModel
     public var customFont: String?
+    private var mode: TimerViewModel.TimePresentation
     
     let breakColor: Color
     
     public init(timerViewModel: TimerViewModel,
                 breakColor: Color,
-                customFont: String? = nil) {
+                customFont: String? = nil,
+                mode: TimerViewModel.TimePresentation = .full) {
         self.timerViewModel = timerViewModel
         self.customFont = customFont
         self.breakColor = breakColor
+        self.mode = mode
     }
     
     public var body: some View {
-        Label(title: { Text(timerViewModel.timerString) }, icon: {})
+        Label(title: {
+            switch mode {
+            case .full:
+                Text(timerViewModel.timerString)
+            case .none:
+                Text("--:--")
+            }
+        }, icon: {})
             .labelStyle(TimerLabelStyle(isLuminanceReduced: isLuminanceReduced,
                                         customFont: customFont,
                                         color: color()))
@@ -36,7 +46,7 @@ extension TimerText {
         self.timerViewModel = timerViewModel
         self.customFont = customFont
         self.breakColor = breakColor
-        timerViewModel.mode = mode
+        self.mode = mode
     }
 }
 
