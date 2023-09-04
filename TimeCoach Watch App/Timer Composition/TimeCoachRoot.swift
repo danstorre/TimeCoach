@@ -148,6 +148,8 @@ class TimeCoachRoot {
     
     private func handleStop() -> RegularTimer.VoidPublisher {
         return stopPublisher()
+            .subscribe(on: timerScheduler)
+            .dispatchOnMainQueue()
             .processFirstValue { [weak self] _ in
                 self?.unregisterTimerProcessPublisher()
                     .subscribe(Subscribers.Sink(receiveCompletion: { _ in
@@ -159,6 +161,8 @@ class TimeCoachRoot {
     
     private func handlePause() -> RegularTimer.VoidPublisher {
         return pausePublisher()
+            .subscribe(on: timerScheduler)
+            .dispatchOnMainQueue()
             .processFirstValue { [weak self] timerState in
                 self?.unregisterTimerProcessPublisher()
                     .subscribe(Subscribers.Sink(receiveCompletion: { _ in
@@ -170,6 +174,8 @@ class TimeCoachRoot {
     
     private func handleSkip() -> RegularTimer.TimerSetPublisher {
         return skipPublisher()
+            .subscribe(on: timerScheduler)
+            .dispatchOnMainQueue()
             .processFirstValue { [weak self] value in
                 self?.unregisterTimerProcessPublisher()
                     .subscribe(Subscribers.Sink(receiveCompletion: { _ in
