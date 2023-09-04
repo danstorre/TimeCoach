@@ -5,12 +5,12 @@ public struct TimerText: View {
     @Environment(\.isLuminanceReduced) var isLuminanceReduced
     @ObservedObject var timerViewModel: TimerViewModel
     public var customFont: String?
-    private var mode: TimerViewModel.TimePresentation
+    private var mode: TimePresentation
     
     let breakColor: Color
     
     init(timerViewModel: TimerViewModel,
-         mode: TimerViewModel.TimePresentation,
+         mode: TimePresentation,
          breakColor: Color,
          customFont: String? = nil) {
         self.timerViewModel = timerViewModel

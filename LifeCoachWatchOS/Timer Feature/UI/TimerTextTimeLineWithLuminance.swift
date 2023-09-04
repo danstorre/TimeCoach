@@ -21,7 +21,7 @@ public struct TimerTextTimeLineWithLuminance: View {
         }
     }
     
-    private func timerText(mode: TimerViewModel.TimePresentation) -> TimerText {
+    private func timerText(mode: TimePresentation) -> TimerText {
         TimerText(timerViewModel: timerViewModel,
                   mode: mode,
                   breakColor: breakColor,

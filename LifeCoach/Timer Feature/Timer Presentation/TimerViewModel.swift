@@ -7,11 +7,6 @@ public class TimerViewModel: ObservableObject {
     private let formatter = makeTimerFormatter()
     private var currentTimerString: String = .defaultPomodoroTimerString
     
-    public enum TimePresentation {
-        case full
-        case none
-    }
-    
     public init(isBreak: Bool) {
         self.isBreak = isBreak
     }
