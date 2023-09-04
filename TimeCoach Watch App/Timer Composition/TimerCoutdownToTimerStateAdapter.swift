@@ -31,9 +31,12 @@ class TimerCountdownToTimerStateAdapter: TimerCountdown {
     }
     
     func startCountdown(completion: @escaping StartCoundownCompletion) {
-        timer.startCountdown { [unowned self] result in
-            self.isRunning = self.isPlaying
-            completion(result)
+        timer.startCountdown { [weak self] result in
+            guard let self = self else { return }
+            DispatchQueue.main.async { [unowned self] in
+                self.isRunning = self.isPlaying
+                completion(result)
+            }
         }
         isRunning = isPlaying
     }
@@ -49,9 +52,12 @@ class TimerCountdownToTimerStateAdapter: TimerCountdown {
     }
     
     func skipCountdown(completion: @escaping SkipCountdownCompletion) {
-        timer.skipCountdown{ [unowned self] result in
-            self.isRunning = self.isPlaying
-            completion(result)
+        timer.skipCountdown { [weak self] result in
+            guard let self = self else { return }
+            DispatchQueue.main.async { [unowned self] in
+                self.isRunning = self.isPlaying
+                completion(result)
+            }
         }
         isRunning = isPlaying
     }
