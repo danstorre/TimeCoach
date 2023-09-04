@@ -9,10 +9,10 @@ public struct TimerText: View {
     
     let breakColor: Color
     
-    public init(timerViewModel: TimerViewModel,
-                breakColor: Color,
-                customFont: String? = nil,
-                mode: TimerViewModel.TimePresentation = .full) {
+    init(timerViewModel: TimerViewModel,
+         mode: TimerViewModel.TimePresentation,
+         breakColor: Color,
+         customFont: String? = nil) {
         self.timerViewModel = timerViewModel
         self.customFont = customFont
         self.breakColor = breakColor
@@ -38,26 +38,14 @@ public struct TimerText: View {
     }
 }
 
-extension TimerText {
-    public init(timerViewModel: TimerViewModel,
-                mode: TimerViewModel.TimePresentation,
-                breakColor: Color,
-                customFont: String? = nil) {
-        self.timerViewModel = timerViewModel
-        self.customFont = customFont
-        self.breakColor = breakColor
-        self.mode = mode
-    }
-}
-
 struct TimerText_Previews: PreviewProvider {
     static func pomodoroTimer() -> TimerText {
-        TimerText(timerViewModel: TimerViewModel(isBreak: false), breakColor: .blue)
+        TimerText(timerViewModel: TimerViewModel(isBreak: false), mode: .full, breakColor: .blue)
     }
     
     static func breakTimer() -> TimerText {
         let vm = TimerViewModel(isBreak: true)
-        return TimerText(timerViewModel: vm, breakColor: .blue)
+        return TimerText(timerViewModel: vm, mode: .full, breakColor: .blue)
     }
     
     static var previews: some View {
