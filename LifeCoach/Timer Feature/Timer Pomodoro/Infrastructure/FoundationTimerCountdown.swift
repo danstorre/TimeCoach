@@ -8,7 +8,8 @@ public final class FoundationTimerCountdown: TimerCountdown {
     private let incrementing: Double
     var timerDelivery: StartCoundownCompletion?
     
-    var currentTimer: Timer?
+    var currentTimer: DispatchSourceTimer?
+    
     var timeAtSave: CFTimeInterval? = nil
     
     public var currentTimerSet: LocalTimerSet {
@@ -54,8 +55,12 @@ public final class FoundationTimerCountdown: TimerCountdown {
     }
     
     private func createTimer() {
-        currentTimer = Timer.init(timeInterval: incrementing, target: self, selector: #selector(elapsedCompletion), userInfo: nil, repeats: true)
-        RunLoop.current.add(currentTimer!, forMode: .common)
+        currentTimer = DispatchSource.makeTimerSource(queue: DispatchQueue.main)
+        currentTimer?.schedule(deadline: .now(), repeating: incrementing)
+        currentTimer?.setEventHandler(handler: { [weak self] in
+            self?.elapsedCompletion()
+        })
+        currentTimer?.activate()
     }
     
     @objc
@@ -87,7 +92,16 @@ public final class FoundationTimerCountdown: TimerCountdown {
     }
     
     public func invalidatesTimer() {
-        currentTimer?.invalidate()
+        currentTimer?.setEventHandler {}
+        currentTimer?.cancel()
+        currentTimer = nil
+    }
+    
+    deinit {
+        currentTimer?.setEventHandler {}
+        currentTimer?.cancel()
+        currentTimer?.resume()
+        currentTimer = nil
     }
 }
 
