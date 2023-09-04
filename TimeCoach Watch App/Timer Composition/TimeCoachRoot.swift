@@ -54,6 +54,11 @@ class TimeCoachRoot {
         qos: .userInitiated
     ).eraseToAnyScheduler()
     
+    private lazy var timerScheduler: AnyDispatchQueueScheduler = DispatchQueue(
+        label: "com.danstorre.timeCoach.watchkitapp.timer",
+        qos: .default
+    ).eraseToAnyScheduler()
+    
     convenience init(infrastructure: Infrastructure) {
         self.init()
         self.timerSave = infrastructure.timerState
@@ -65,6 +70,7 @@ class TimeCoachRoot {
         self.currenDate = infrastructure.currentDate
         self.unregisterNotifications = infrastructure.unregisterTimerNotification ?? {}
         self.mainScheduler = infrastructure.mainScheduler
+        self.timerScheduler = infrastructure.mainScheduler
     }
     
     func createTimer() -> TimerView {
@@ -130,6 +136,8 @@ class TimeCoachRoot {
     
     private func handlePlay() -> RegularTimer.TimerSetPublisher {
         return playPublisher()
+            .subscribe(on: timerScheduler)
+            .dispatchOnMainQueue()
             .processFirstValue { [weak self] timerState in
                 self?.registerTimerProcessPublisher(timerState: timerState)
                     .subscribe(Subscribers.Sink(receiveCompletion: { _ in
