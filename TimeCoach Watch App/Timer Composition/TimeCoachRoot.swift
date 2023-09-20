@@ -93,7 +93,7 @@ class TimeCoachRoot {
         
         UNUserNotificationCenter.current().delegate = UNUserNotificationdelegate
         
-        return TimerViewComposer.createTimer2(timerControlPublishers: timerControlPublishers,
+        return TimerViewComposer.createTimer(timerControlPublishers: timerControlPublishers,
                                               isBreakModePublisher: currentIsBreakMode)
     }
     

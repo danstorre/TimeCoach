@@ -33,7 +33,7 @@ public final class TimerViewComposer {
         return controlsViewModel
     }
     
-    public static func createTimer2(
+    public static func createTimer(
         timerStyle: TimerStyle = .init(),
         timerControlPublishers: TimerControlsPublishers,
         isBreakModePublisher: CurrentValueSubject<IsBreakMode,Error>

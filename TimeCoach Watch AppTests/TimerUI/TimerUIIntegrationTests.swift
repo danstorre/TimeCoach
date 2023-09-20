@@ -93,7 +93,7 @@ final class TimerUIIntegrationTests: XCTestCase {
         )
         
         let timerView = TimerViewComposer
-            .createTimer2(timerControlPublishers: timerControlPublishers,
+            .createTimer(timerControlPublishers: timerControlPublishers,
                           isBreakModePublisher: CurrentValueSubject<IsBreakMode, Error>.init(false))
     
         trackForMemoryLeak(instance: timeLoader, file: file, line: line)
