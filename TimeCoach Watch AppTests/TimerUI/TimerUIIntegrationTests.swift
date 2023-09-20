@@ -81,7 +81,7 @@ final class TimerUIIntegrationTests: XCTestCase {
     // MARK: - Helpers
     private func makeSUT(
         file: StaticString = #filePath, line: UInt = #line
-    ) -> (sut: TimerView, spy: TimerPublisherSpy) {
+    ) -> (sut: TimerView2, spy: TimerPublisherSpy) {
         let timeLoader = TimerPublisherSpy()
         
         let timerControlPublishers = TimerControlsPublishers(
@@ -93,8 +93,8 @@ final class TimerUIIntegrationTests: XCTestCase {
         )
         
         let timerView = TimerViewComposer
-            .createTimer(timerControlPublishers: timerControlPublishers,
-                         isBreakModePublisher: CurrentValueSubject<IsBreakMode, Error>.init(false))
+            .createTimer2(timerControlPublishers: timerControlPublishers,
+                          isBreakModePublisher: CurrentValueSubject<IsBreakMode, Error>.init(false))
     
         trackForMemoryLeak(instance: timeLoader, file: file, line: line)
         
@@ -170,9 +170,9 @@ final class TimerUIIntegrationTests: XCTestCase {
     }
 }
 
-private extension TimerView {
+private extension TimerView2 {
     var customFont: String? {
-        timerWithTimeLine?.customFont
+        timerStyle.customFont
     }
 }
 
