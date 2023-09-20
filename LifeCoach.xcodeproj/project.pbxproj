@@ -52,6 +52,7 @@
 		FB155ECE2A9D53C900A4551D /* Combine+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB155ECD2A9D53C900A4551D /* Combine+Helpers.swift */; };
 		FB155ED02A9D7BCA00A4551D /* Root.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB155ECF2A9D7BCA00A4551D /* Root.swift */; };
 		FB155ED22A9D7C3300A4551D /* AdapterLoadTimerState.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB155ED12A9D7C3300A4551D /* AdapterLoadTimerState.swift */; };
+		FB3B06EE2ABBA9EE00E54FAD /* TimerView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB3B06ED2ABBA9EE00E54FAD /* TimerView2.swift */; };
 		FB40D18B2A79CDA5008D3A36 /* UserDefaultStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB40D18A2A79CDA5008D3A36 /* UserDefaultStoreTests.swift */; };
 		FB4AA1382936F1730076FED9 /* TimerText.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4AA1372936F1730076FED9 /* TimerText.swift */; };
 		FB4AA1542937C0F30076FED9 /* ExtensionHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4AA1532937C0F30076FED9 /* ExtensionHelpers.swift */; };
@@ -404,6 +405,7 @@
 		FB155ED12A9D7C3300A4551D /* AdapterLoadTimerState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdapterLoadTimerState.swift; sourceTree = "<group>"; };
 		FB2A10E62A6B1854004A1784 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		FB2A10E82A6B1854004A1784 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		FB3B06ED2ABBA9EE00E54FAD /* TimerView2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerView2.swift; sourceTree = "<group>"; };
 		FB40D18A2A79CDA5008D3A36 /* UserDefaultStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultStoreTests.swift; sourceTree = "<group>"; };
 		FB4AA1322936EB9A0076FED9 /* TimerUIIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerUIIntegrationTests.swift; sourceTree = "<group>"; };
 		FB4AA1372936F1730076FED9 /* TimerText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerText.swift; sourceTree = "<group>"; };
@@ -749,6 +751,7 @@
 				FBE646552A4A9F3F005022A2 /* TimerVoidAdapter.swift */,
 				FBE646572A4A9F77005022A2 /* TimerAdapter.swift */,
 				FBA8DD7C2A4F10D9009E48D5 /* TimerCoutdownToTimerStateAdapter.swift */,
+				FB3B06ED2ABBA9EE00E54FAD /* TimerView2.swift */,
 			);
 			path = "Timer Composition";
 			sourceTree = "<group>";
@@ -1978,6 +1981,7 @@
 			files = (
 				FBE9A9A72939534000D8BF29 /* TimerPresentationAdapter.swift in Sources */,
 				FB05D9B62A83191300EA0AE8 /* UNUserNotificationCenter+NotificationScheduler.swift in Sources */,
+				FB3B06EE2ABBA9EE00E54FAD /* TimerView2.swift in Sources */,
 				FBA1A96A2A8A9DA000F71A81 /* CommonTypes.swift in Sources */,
 				FBE646672A4AA924005022A2 /* TimeCoachRoot+Extension.swift in Sources */,
 				FBE646562A4A9F3F005022A2 /* TimerVoidAdapter.swift in Sources */,
