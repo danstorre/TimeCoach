@@ -37,7 +37,7 @@ public final class TimerViewComposer {
         timerStyle: TimerStyle = .init(),
         timerControlPublishers: TimerControlsPublishers,
         isBreakModePublisher: CurrentValueSubject<IsBreakMode,Error>
-    ) -> TimerView2 {
+    ) -> TimerView {
         let timerViewModel = TimerViewModel(isBreak: false)
         
         let controlsViewModel = Self.subscribeChangesFrom(isPlayingPublisher: timerControlPublishers.isPlaying,
@@ -64,7 +64,7 @@ public final class TimerViewComposer {
                                             stop: stopTimerAdapter.stop,
                                             isPlaying: timerControlPublishers.isPlaying)
         
-        return TimerView2(timerViewModel: timerViewModel, controlsViewModel: controlsViewModel, toggleStrategy: toggleStrategy)
+        return TimerView(timerViewModel: timerViewModel, controlsViewModel: controlsViewModel, toggleStrategy: toggleStrategy)
     }
 }
 

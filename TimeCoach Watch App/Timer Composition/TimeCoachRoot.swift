@@ -73,7 +73,7 @@ class TimeCoachRoot {
         self.timerScheduler = infrastructure.mainScheduler
     }
     
-    func createTimer() -> TimerView2 {
+    func createTimer() -> TimerView {
         let date = currenDate()
         timerCountdown = createTimerCountDown(from: date)
         currentSubject = Self.createFirstValuePublisher(from: date)

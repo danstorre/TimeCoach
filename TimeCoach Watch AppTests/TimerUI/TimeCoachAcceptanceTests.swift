@@ -105,7 +105,7 @@ final class TimeCoachAcceptanceTests: XCTestCase {
         breakSecondsToBeFlushed: TimeInterval = 1.0,
         file: StaticString = #filePath,
         line: UInt = #line
-    ) -> (timerView: TimerView2, spy: TimerCountdownSpy) {
+    ) -> (timerView: TimerView, spy: TimerCountdownSpy) {
         let spy = TimerCountdownSpy.delivers(
             afterPomoroSeconds: 0.0...pomodoroSecondsToBeFlushed,
             pomodoroStub: pomodoroResponse,
@@ -130,7 +130,7 @@ final class TimeCoachAcceptanceTests: XCTestCase {
     
     private func timerViewOnPlayUserInteraction(afterSeconds seconds: TimeInterval,
                                                 file: StaticString = #filePath,
-                                                line: UInt = #line) -> TimerView2 {
+                                                line: UInt = #line) -> TimerView {
         let (sut, stub) = makeSUT(pomodoroSecondsToBeFlushed: seconds, breakSecondsToBeFlushed: 1.0, file: file, line: line)
         
         sut.simulateToggleTimerUserInteraction()

@@ -11,7 +11,7 @@ import LifeCoachExtensions
 @main
 struct TimeCoach_Watch_AppApp: App {
     @Environment(\.scenePhase) private var scenePhase
-    var timerView: TimerView2
+    var timerView: TimerView
     private var root: TimeCoachRoot
     
     init() {

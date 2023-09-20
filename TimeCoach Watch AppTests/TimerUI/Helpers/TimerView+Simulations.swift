@@ -6,9 +6,9 @@ extension TimerText: Inspectable {}
 extension TimerControls: Inspectable {}
 extension ToggleButton: Inspectable {}
 extension TimerTextTimeLineWithLuminance: Inspectable {}
-extension TimerView2: Inspectable {}
+extension TimerView: Inspectable {}
 
-extension TimerView2 {
+extension TimerView {
     func timerLabelString() -> String {
         inspectTimerLabel()
     }

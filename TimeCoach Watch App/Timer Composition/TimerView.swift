@@ -2,7 +2,7 @@ import LifeCoach
 import LifeCoachWatchOS
 import SwiftUI
 
-public struct TimerView2: View {
+public struct TimerView: View {
     let timerViewModel: TimerViewModel
     let controlsViewModel: ControlsViewModel
     public let timerStyle: TimerStyle = TimerStyle()
@@ -27,7 +27,7 @@ public struct TimerView2: View {
     }
 }
 
-extension TimerView2 {
+extension TimerView {
     public static let togglePlaybackButtonIdentifier: Int = 2
     
     public static let skipButtonIdentifier: Int = 1

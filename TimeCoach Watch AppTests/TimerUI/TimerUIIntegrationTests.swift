@@ -81,7 +81,7 @@ final class TimerUIIntegrationTests: XCTestCase {
     // MARK: - Helpers
     private func makeSUT(
         file: StaticString = #filePath, line: UInt = #line
-    ) -> (sut: TimerView2, spy: TimerPublisherSpy) {
+    ) -> (sut: TimerView, spy: TimerPublisherSpy) {
         let timeLoader = TimerPublisherSpy()
         
         let timerControlPublishers = TimerControlsPublishers(
@@ -170,7 +170,7 @@ final class TimerUIIntegrationTests: XCTestCase {
     }
 }
 
-private extension TimerView2 {
+private extension TimerView {
     var customFont: String? {
         timerStyle.customFont
     }
