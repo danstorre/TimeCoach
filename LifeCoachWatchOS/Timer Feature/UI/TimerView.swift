@@ -26,10 +26,17 @@ public struct TimerView: View {
     }
 }
 
+public enum TimerViewFactory {
+    public static func pomodoroTimerWithTimeLine() -> TimerView {
+        return TimerView(timerWithTimeLine: TimerView_Previews.timerTextTimeLine(),
+                         controls: TimerView_Previews.defaultTimerControls())
+    }
+}
+
 struct TimerView_Previews: PreviewProvider {
     
     static func pomodoroTimerWithTimeLine() -> TimerView {
-        return TimerView(timerWithTimeLine: Self.timerTextTimeLine(), controls: Self.defaultTimerControls())
+        TimerViewFactory.pomodoroTimerWithTimeLine()
     }
     
     static func breakTimerWithTimeLine() -> TimerView {
