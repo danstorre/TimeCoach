@@ -2,7 +2,7 @@ import Foundation
 import LifeCoach
 import Combine
 
-class ToggleStrategy {
+public class ToggleStrategy {
     private var isPlaying: Bool = false
     private let start: (() -> Void)?
     private let pause: (() -> Void)?

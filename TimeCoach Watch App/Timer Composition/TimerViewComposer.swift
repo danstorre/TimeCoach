@@ -66,6 +66,40 @@ public final class TimerViewComposer {
         
         return TimerView(timerViewModel: timerViewModel, controlsViewModel: controlsViewModel, toggleStrategy: toggleStrategy)
     }
+    
+    public static func createTimerDependencies(
+        timerStyle: TimerStyle = .init(),
+        timerControlPublishers: TimerControlsPublishers,
+        isBreakModePublisher: CurrentValueSubject<IsBreakMode,Error>
+    ) -> (timerViewModel: TimerViewModel, controlsViewModel: ControlsViewModel, toggleStrategy: ToggleStrategy) {
+        let timerViewModel = TimerViewModel(isBreak: false)
+        
+        let controlsViewModel = Self.subscribeChangesFrom(isPlayingPublisher: timerControlPublishers.isPlaying,
+                                                          to: ControlsViewModel())
+        
+        let skipTimerAdapter = TimerAdapter(loader: timerControlPublishers.skipPublisher,
+                                            deliveredElapsedTime: timerViewModel.delivered(elapsedTime:))
+        
+        let skipHandler = Self.handlesSkip(withSkipAdapter: skipTimerAdapter,
+                                           and: timerViewModel,
+                                           isBreakPublisher: isBreakModePublisher)
+
+        
+        let starTimerAdapter = TimerAdapter(loader: timerControlPublishers.playPublisher,
+                                            deliveredElapsedTime: timerViewModel.delivered(elapsedTime:))
+        
+        let stopTimerAdapter = TimerVoidAdapter(loader: timerControlPublishers.stopPublisher)
+        
+        let pauseTimerAdapter = TimerVoidAdapter(loader: timerControlPublishers.pausePublisher)
+        
+        let toggleStrategy = ToggleStrategy(start: starTimerAdapter.start,
+                                            pause: pauseTimerAdapter.pause,
+                                            skip: skipHandler,
+                                            stop: stopTimerAdapter.stop,
+                                            isPlaying: timerControlPublishers.isPlaying)
+        
+        return (timerViewModel: timerViewModel, controlsViewModel: controlsViewModel, toggleStrategy: toggleStrategy)
+    }
 }
 
 

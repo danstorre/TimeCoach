@@ -92,9 +92,13 @@ final class TimerUIIntegrationTests: XCTestCase {
             isPlaying: timeLoader.isPlayingPusblisher.eraseToAnyPublisher()
         )
         
-        let timerView = TimerViewComposer
-            .createTimer(timerControlPublishers: timerControlPublishers,
-                          isBreakModePublisher: CurrentValueSubject<IsBreakMode, Error>.init(false))
+        let dependencies = TimerViewComposer
+            .createTimerDependencies(timerControlPublishers: timerControlPublishers,
+                                     isBreakModePublisher: CurrentValueSubject<IsBreakMode, Error>.init(false))
+        
+        let timerView = TimerView(timerViewModel: dependencies.timerViewModel,
+                                  controlsViewModel: dependencies.controlsViewModel,
+                                  toggleStrategy: dependencies.toggleStrategy)
     
         trackForMemoryLeak(instance: timeLoader, file: file, line: line)
         

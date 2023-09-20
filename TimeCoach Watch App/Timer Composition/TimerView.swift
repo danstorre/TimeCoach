@@ -8,7 +8,7 @@ public struct TimerView: View {
     public let timerStyle: TimerStyle = TimerStyle()
     let toggleStrategy: ToggleStrategy
     
-    init(timerViewModel: TimerViewModel, controlsViewModel: ControlsViewModel, toggleStrategy: ToggleStrategy) {
+    public init(timerViewModel: TimerViewModel, controlsViewModel: ControlsViewModel, toggleStrategy: ToggleStrategy) {
         self.timerViewModel = timerViewModel
         self.controlsViewModel = controlsViewModel
         self.toggleStrategy = toggleStrategy
