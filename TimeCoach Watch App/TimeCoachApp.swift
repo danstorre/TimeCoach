@@ -44,7 +44,7 @@ extension TimerView2 {
 @main
 struct TimeCoach_Watch_AppApp: App {
     @Environment(\.scenePhase) private var scenePhase
-    var timerView: TimerView
+    var timerView: TimerView2
     private var root: TimeCoachRoot
     
     init() {

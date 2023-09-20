@@ -73,7 +73,7 @@ class TimeCoachRoot {
         self.timerScheduler = infrastructure.mainScheduler
     }
     
-    func createTimer() -> TimerView {
+    func createTimer() -> TimerView2 {
         let date = currenDate()
         timerCountdown = createTimerCountDown(from: date)
         currentSubject = Self.createFirstValuePublisher(from: date)
@@ -93,8 +93,8 @@ class TimeCoachRoot {
         
         UNUserNotificationCenter.current().delegate = UNUserNotificationdelegate
         
-        return TimerViewComposer.createTimer(timerControlPublishers: timerControlPublishers,
-                                             isBreakModePublisher: currentIsBreakMode)
+        return TimerViewComposer.createTimer2(timerControlPublishers: timerControlPublishers,
+                                              isBreakModePublisher: currentIsBreakMode)
     }
     
     private func createUNUserNotificationdelegate() -> UNUserNotificationCenterDelegate? {
