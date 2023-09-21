@@ -9,6 +9,29 @@ import Foundation
 import LifeCoachExtensions
 import Combine
 import LifeCoach
+import WidgetKit
+
+class WatchOSProviderOnMainDecorator: WatchOSProviderProtocol {
+    let decoratee: WatchOSProviderProtocol
+    
+    init(decoratee: WatchOSProviderProtocol) {
+        self.decoratee = decoratee
+    }
+    
+    func placeholder() -> TimerEntry {
+        decoratee.placeholder()
+    }
+    func getSnapshot(completion: @escaping (TimerEntry) -> ()) {
+        decoratee.getSnapshot(completion: completion)
+    }
+    func getTimeline(completion: @escaping (Timeline<TimerEntry>) -> ()) {
+        decoratee.getTimeline(completion: { timeLine in
+            DispatchQueue.main.async {
+                completion(timeLine)
+            }
+        })
+    }
+}
 
 class Root {
     private lazy var mainScheduler: AnyDispatchQueueScheduler = DispatchQueue(
@@ -18,8 +41,10 @@ class Root {
     
     lazy var provider = {
         Provider.init(
-            provider: WatchOSProvider(
-                stateLoader: adapter.load(completion:)
+            provider: WatchOSProviderOnMainDecorator(
+                decoratee: WatchOSProvider(
+                    stateLoader: adapter.load(completion:)
+                )
             )
         )
     }()
@@ -39,7 +64,6 @@ class Root {
             timerLoader
                 .publisher()
                 .subscribe(on: mainScheduler)
-                .dispatchOnMainQueue()
                 .eraseToAnyPublisher()
         }
     }
