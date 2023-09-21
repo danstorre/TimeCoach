@@ -140,3 +140,9 @@ final class TimeCoachAcceptanceTests: XCTestCase {
         return sut
     }
 }
+
+extension TimeCoach_Watch_AppApp {
+    var timerView: TimerView {
+        _timerView as! TimerView
+    }
+}

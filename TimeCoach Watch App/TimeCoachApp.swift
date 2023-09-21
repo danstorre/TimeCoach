@@ -11,23 +11,28 @@ import LifeCoachExtensions
 @main
 struct TimeCoach_Watch_AppApp: App {
     @Environment(\.scenePhase) private var scenePhase
-    var timerView: TimerView
-    private var root: TimeCoachRoot
+    private let root: TimeCoachRoot
     
     init() {
         let root = TimeCoachRoot()
+        root.createTimer()
         self.root = root
-        self.timerView = root.createTimer()
     }
     
     init(infrastructure: Infrastructure) {
         self.root = TimeCoachRoot(infrastructure: infrastructure)
-        self.timerView = root.createTimer()
+        root.createTimer()
+    }
+    
+    var _timerView: some View {
+        TimerView(timerViewModel: root.timerViewModel!,
+                  controlsViewModel: root.controlsViewModel!,
+                  toggleStrategy: root.toggleStrategy!)
     }
 
     var body: some Scene {
         WindowGroup {
-            timerView
+            _timerView
             .onChange(of: scenePhase) { phase in
                 switch phase {
                 case .active:

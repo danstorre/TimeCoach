@@ -73,11 +73,18 @@ class TimeCoachRoot {
         self.timerScheduler = infrastructure.mainScheduler
     }
     
-    func createTimer() -> TimerView {
+    var timerViewModel: TimerViewModel?
+    var controlsViewModel: ControlsViewModel?
+    var toggleStrategy: ToggleStrategy?
+    
+    func createTimer() {
         let date = currenDate()
         timerCountdown = createTimerCountDown(from: date)
         currentSubject = Self.createFirstValuePublisher(from: date)
+        let timerCountdown = timerCountdown
+        let currenDate = currenDate
         let timerPlayerAdapterState = TimerCountdownToTimerStateAdapter(timer: timerCountdown!, currentDate: currenDate)
+        let currentSubject = currentSubject
         regularTimer = Self.createPomodorTimer(with: timerPlayerAdapterState, and: currentSubject)
         
         if let timerCountdown = timerCountdown as? FoundationTimerCountdown {
@@ -85,16 +92,22 @@ class TimeCoachRoot {
             self.timerLoad = timerCountdown
         }
         
-        let timerControlPublishers = TimerControlsPublishers(playPublisher: handlePlay,
-                                                             skipPublisher: handleSkip,
-                                                             stopPublisher: handleStop,
-                                                             pausePublisher: handlePause,
+        let timerControlPublishers = TimerControlsPublishers(playPublisher: handlePlay(),
+                                                             skipPublisher: handleSkip(),
+                                                             stopPublisher: handleStop(),
+                                                             pausePublisher: handlePause(),
                                                              isPlaying: timerPlayerAdapterState.isPlayingPublisherProvider())
         
         UNUserNotificationCenter.current().delegate = UNUserNotificationdelegate
         
-        return TimerViewComposer.createTimer(timerControlPublishers: timerControlPublishers,
-                                              isBreakModePublisher: currentIsBreakMode)
+        let dependencies = TimerViewComposer.createTimerDependencies(
+            timerControlPublishers: timerControlPublishers,
+            isBreakModePublisher: currentIsBreakMode
+        )
+        
+        timerViewModel = dependencies.timerViewModel
+        controlsViewModel = dependencies.controlsViewModel
+        toggleStrategy = dependencies.toggleStrategy
     }
     
     private func createUNUserNotificationdelegate() -> UNUserNotificationCenterDelegate? {
@@ -134,70 +147,66 @@ class TimeCoachRoot {
     
     private struct UnexpectedError: Error {}
     
-    private func handlePlay() -> RegularTimer.TimerSetPublisher {
-        return playPublisher()
-            .subscribe(on: timerScheduler)
-            .dispatchOnMainQueue()
-            .processFirstValue { [weak self] timerState in
-                self?.registerTimerProcessPublisher(timerState: timerState)
-                    .subscribe(Subscribers.Sink(receiveCompletion: { _ in
-                    }, receiveValue: { _ in }))
-            }
-            .eraseToAnyPublisher()
+    private func handlePlay() -> () -> RegularTimer.TimerSetPublisher {
+        return { [weak self, timerScheduler, regularTimer, currentSubject] in
+            regularTimer!.playPublisher(currentSubject: currentSubject)()
+                .subscribe(on: timerScheduler)
+                .dispatchOnMainQueue()
+                .processFirstValue { [weak self] timerState in
+                    self?.registerTimerProcessPublisher(timerState: timerState)
+                        .subscribe(Subscribers.Sink(receiveCompletion: { _ in
+                        }, receiveValue: { _ in }))
+                }
+                .eraseToAnyPublisher()
+        }
     }
     
-    private func handleStop() -> RegularTimer.VoidPublisher {
-        return stopPublisher()
-            .subscribe(on: timerScheduler)
-            .dispatchOnMainQueue()
-            .processFirstValue { [weak self] _ in
-                self?.unregisterTimerProcessPublisher()
-                    .subscribe(Subscribers.Sink(receiveCompletion: { _ in
-                    }, receiveValue: { _ in }))
-            }
-            .flatsToVoid()
-            .eraseToAnyPublisher()
+    private func handleStop() -> () -> RegularTimer.VoidPublisher {
+        return { [weak self, timerScheduler, regularTimer, currentSubject] in
+            regularTimer!.stopPublisher(currentSubject: currentSubject)()
+                .subscribe(on: timerScheduler)
+                .dispatchOnMainQueue()
+                .processFirstValue { [weak self] _ in
+                    self?.unregisterTimerProcessPublisher()
+                        .subscribe(Subscribers.Sink(receiveCompletion: { _ in
+                        }, receiveValue: { _ in }))
+                }
+                .flatsToVoid()
+                .eraseToAnyPublisher()
+        }
     }
     
-    private func handlePause() -> RegularTimer.VoidPublisher {
-        return pausePublisher()
-            .subscribe(on: timerScheduler)
-            .dispatchOnMainQueue()
-            .processFirstValue { [weak self] timerState in
-                self?.unregisterTimerProcessPublisher()
-                    .subscribe(Subscribers.Sink(receiveCompletion: { _ in
-                    }, receiveValue: { _ in }))
-            }
-            .flatsToVoid()
-            .eraseToAnyPublisher()
+    private func handlePause() -> () -> RegularTimer.VoidPublisher {
+        return { [weak self, timerScheduler, currentSubject, regularTimer] in
+            regularTimer!.pausePublisher(currentSubject: currentSubject)()
+                .subscribe(on: timerScheduler)
+                .dispatchOnMainQueue()
+                .processFirstValue { [weak self] timerState in
+                    self?.unregisterTimerProcessPublisher()
+                        .subscribe(Subscribers.Sink(receiveCompletion: { _ in
+                        }, receiveValue: { _ in }))
+                }
+                .flatsToVoid()
+                .eraseToAnyPublisher()
+        }
     }
     
-    private func handleSkip() -> RegularTimer.TimerSetPublisher {
-        return skipPublisher()
-            .subscribe(on: timerScheduler)
-            .dispatchOnMainQueue()
-            .processFirstValue { [weak self] value in
-                self?.unregisterTimerProcessPublisher()
-                    .subscribe(Subscribers.Sink(receiveCompletion: { _ in
-                    }, receiveValue: { _ in }))
-            }
-            .eraseToAnyPublisher()
-    }
-    
-    private func stopPublisher() -> RegularTimer.TimerSetPublisher {
-        regularTimer!.stopPublisher(currentSubject: currentSubject)()
+    private func handleSkip() -> () -> RegularTimer.TimerSetPublisher {
+        return { [weak self, regularTimer, timerScheduler, currentSubject] in
+            regularTimer!.skipPublisher(currentSubject: currentSubject)()
+                .subscribe(on: timerScheduler)
+                .dispatchOnMainQueue()
+                .processFirstValue { [weak self] value in
+                    self?.unregisterTimerProcessPublisher()
+                        .subscribe(Subscribers.Sink(receiveCompletion: { _ in
+                        }, receiveValue: { _ in }))
+                }
+                .eraseToAnyPublisher()
+        }
     }
     
     private func playPublisher() -> RegularTimer.TimerSetPublisher {
         regularTimer!.playPublisher(currentSubject: currentSubject)()
-    }
-    
-    private func pausePublisher() -> RegularTimer.TimerSetPublisher {
-        regularTimer!.pausePublisher(currentSubject: currentSubject)()
-    }
-    
-    private func skipPublisher() -> RegularTimer.TimerSetPublisher {
-        regularTimer!.skipPublisher(currentSubject: currentSubject)()
     }
     
     private func unregisterTimerProcessPublisher() -> RegularTimer.TimerSetPublisher {
