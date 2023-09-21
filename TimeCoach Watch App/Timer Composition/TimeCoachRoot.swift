@@ -73,9 +73,19 @@ class TimeCoachRoot {
         self.timerScheduler = infrastructure.mainScheduler
     }
     
-    var timerViewModel: TimerViewModel?
-    var controlsViewModel: ControlsViewModel?
-    var toggleStrategy: ToggleStrategy?
+    private var _timerViewModel: TimerViewModel?
+    private var _controlsViewModel: ControlsViewModel?
+    private var _toggleStrategy: ToggleStrategy?
+    
+    var timerViewModel: TimerViewModel {
+        return checkingDependencyInstance(_timerViewModel, description: String(describing: TimerViewModel.self))
+    }
+    var controlsViewModel: ControlsViewModel {
+        return checkingDependencyInstance(_controlsViewModel, description: String(describing: ControlsViewModel.self))
+    }
+    var toggleStrategy: ToggleStrategy {
+        return checkingDependencyInstance(_toggleStrategy, description: String(describing: ToggleStrategy.self))
+    }
     
     func createTimer() {
         let date = currenDate()
@@ -105,9 +115,9 @@ class TimeCoachRoot {
             isBreakModePublisher: currentIsBreakMode
         )
         
-        timerViewModel = dependencies.timerViewModel
-        controlsViewModel = dependencies.controlsViewModel
-        toggleStrategy = dependencies.toggleStrategy
+        _timerViewModel = dependencies.timerViewModel
+        _controlsViewModel = dependencies.controlsViewModel
+        _toggleStrategy = dependencies.toggleStrategy
     }
     
     private func createUNUserNotificationdelegate() -> UNUserNotificationCenterDelegate? {
@@ -249,5 +259,12 @@ class TimeCoachRoot {
             .notifySavedTimer(notifier: timerSavedNofitier)
             .setsNeedsUpdate(self, needsUpdate: false)
             .eraseToAnyPublisher()
+    }
+    
+    private func checkingDependencyInstance<T: AnyObject>(_ instance: T?, description: String) -> T {
+        guard let instance = instance else {
+            fatalError("Unable to load instance \(description), Please initialize the timer by calling createTimer before accessing this property.")
+        }
+        return instance
     }
 }

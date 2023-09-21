@@ -25,9 +25,9 @@ struct TimeCoach_Watch_AppApp: App {
     }
     
     var _timerView: some View {
-        TimerView(timerViewModel: root.timerViewModel!,
-                  controlsViewModel: root.controlsViewModel!,
-                  toggleStrategy: root.toggleStrategy!)
+        TimerView(timerViewModel: root.timerViewModel,
+                  controlsViewModel: root.controlsViewModel,
+                  toggleStrategy: root.toggleStrategy)
     }
 
     var body: some Scene {
