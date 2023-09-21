@@ -96,6 +96,7 @@
 		FB60C6812A5714790048AF8F /* TimerControlsPublishers.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB62AD422A55BD8400B2BBC1 /* TimerControlsPublishers.swift */; };
 		FB62AD432A55BD8400B2BBC1 /* TimerControlsPublishers.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB62AD422A55BD8400B2BBC1 /* TimerControlsPublishers.swift */; };
 		FB73E909293BA2A40087F9EF /* TimeCoachRoot.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB73E908293BA2A40087F9EF /* TimeCoachRoot.swift */; };
+		FB7457CE2ABCCE21002CB0C8 /* WatchOSProviderOnMainDecorator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB7457CD2ABCCE21002CB0C8 /* WatchOSProviderOnMainDecorator.swift */; };
 		FB74AFB22AA682EC0088BD07 /* TimePresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB74AFB12AA682EC0088BD07 /* TimePresentation.swift */; };
 		FB960C72293D462900ECBAD5 /* ToggleStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB960C71293D462900ECBAD5 /* ToggleStrategy.swift */; };
 		FB960C73293D479800ECBAD5 /* XCTestCase+MemoryLeakTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC9ADAE2919E8B500E0BEFC /* XCTestCase+MemoryLeakTracking.swift */; };
@@ -455,6 +456,7 @@
 		FB5BF6A82A7C034A001B81CB /* TimerGlanceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerGlanceViewModel.swift; sourceTree = "<group>"; };
 		FB62AD422A55BD8400B2BBC1 /* TimerControlsPublishers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerControlsPublishers.swift; sourceTree = "<group>"; };
 		FB73E908293BA2A40087F9EF /* TimeCoachRoot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeCoachRoot.swift; sourceTree = "<group>"; };
+		FB7457CD2ABCCE21002CB0C8 /* WatchOSProviderOnMainDecorator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchOSProviderOnMainDecorator.swift; sourceTree = "<group>"; };
 		FB74AFB12AA682EC0088BD07 /* TimePresentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimePresentation.swift; sourceTree = "<group>"; };
 		FB960C71293D462900ECBAD5 /* ToggleStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleStrategy.swift; sourceTree = "<group>"; };
 		FB960C74293D484000ECBAD5 /* TimerPresentationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerPresentationTests.swift; sourceTree = "<group>"; };
@@ -833,6 +835,7 @@
 				FB509E082A7C936B00AA9333 /* TimeCoachWatchExtension.swift */,
 				FB509E0A2A7C936B00AA9333 /* Assets.xcassets */,
 				FB509E0C2A7C936B00AA9333 /* Info.plist */,
+				FB7457CD2ABCCE21002CB0C8 /* WatchOSProviderOnMainDecorator.swift */,
 			);
 			path = TimeCoachWatchExtension;
 			sourceTree = "<group>";
@@ -1858,6 +1861,7 @@
 				FB509E092A7C936B00AA9333 /* TimeCoachWatchExtension.swift in Sources */,
 				FB155ED22A9D7C3300A4551D /* AdapterLoadTimerState.swift in Sources */,
 				FB155ECE2A9D53C900A4551D /* Combine+Helpers.swift in Sources */,
+				FB7457CE2ABCCE21002CB0C8 /* WatchOSProviderOnMainDecorator.swift in Sources */,
 				FB155ED02A9D7BCA00A4551D /* Root.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
