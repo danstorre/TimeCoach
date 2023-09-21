@@ -13,7 +13,7 @@ final class LoadTimerAcceptanceTests: XCTestCase {
     }
     
     // MARK: - Helpers
-    private func makeSUT() -> (timerView: TimeCoach_Watch_AppApp, spy: TimerStateSpy) {
+    private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> (timerView: TimeCoach_Watch_AppApp, spy: TimerStateSpy) {
         let spy = TimerCountdownSpy.delivers(
             afterPomoroSeconds: 0.0...0.0,
             pomodoroStub: pomodoroResponse,
@@ -30,7 +30,7 @@ final class LoadTimerAcceptanceTests: XCTestCase {
         
         let sut = TimeCoach_Watch_AppApp(infrastructure: infra)
         
-        trackForMemoryLeak(instance: spy)
+        trackForMemoryLeak(instance: spy, file: file, line: line)
         
         return (sut, spyTimeState)
     }
