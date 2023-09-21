@@ -7,19 +7,12 @@ import UserNotifications
 import WidgetKit
 
 class TimeCoachRoot {
+    // Timer State
     private var timerSave: TimerSave?
     private var timerLoad: TimerLoad?
     
     // Pomodoro State
     private lazy var currentIsBreakMode: CurrentValueSubject<IsBreakMode, Error> = .init(false)
-    
-    // Timer
-    private var currenDate: () -> Date = Date.init
-    var timerCountdown: TimerCountdown?
-    private var regularTimer: RegularTimer?
-    private lazy var currentSubject: RegularTimer.CurrentValuePublisher = .init(
-        TimerState(timerSet: TimerSet.init(0, startDate: .init(), endDate: .init()),
-                   state: .stop))
     
     // Local Timer
     private lazy var stateTimerStore: LocalTimerStore = UserDefaultsTimerStore(storeID: "group.timeCoach.timerState")
@@ -58,20 +51,14 @@ class TimeCoachRoot {
         label: "com.danstorre.timeCoach.watchkitapp.timer",
         qos: .default
     ).eraseToAnyScheduler()
-    
-    convenience init(infrastructure: Infrastructure) {
-        self.init()
-        self.timerSave = infrastructure.timerState
-        self.timerLoad = infrastructure.timerState
-        self.timerCountdown = infrastructure.timerCountdown
-        self.stateTimerStore = infrastructure.stateTimerStore
-        self.scheduler = infrastructure.scheduler
-        self.notifySavedTimer = infrastructure.notifySavedTimer
-        self.currenDate = infrastructure.currentDate
-        self.unregisterNotifications = infrastructure.unregisterTimerNotification ?? {}
-        self.mainScheduler = infrastructure.mainScheduler
-        self.timerScheduler = infrastructure.mainScheduler
-    }
+
+    // Timer
+    private var currenDate: () -> Date = Date.init
+    var timerCountdown: TimerCountdown?
+    private var regularTimer: RegularTimer?
+    private lazy var currentSubject: RegularTimer.CurrentValuePublisher = .init(
+        TimerState(timerSet: TimerSet.init(0, startDate: .init(), endDate: .init()),
+                   state: .stop))
     
     private var _timerViewModel: TimerViewModel?
     private var _controlsViewModel: ControlsViewModel?
@@ -87,7 +74,31 @@ class TimeCoachRoot {
         return checkingDependencyInstance(_toggleStrategy, description: String(describing: ToggleStrategy.self))
     }
     
+    convenience init(infrastructure: Infrastructure) {
+        self.init()
+        self.timerSave = infrastructure.timerState
+        self.timerLoad = infrastructure.timerState
+        self.timerCountdown = infrastructure.timerCountdown
+        self.stateTimerStore = infrastructure.stateTimerStore
+        self.scheduler = infrastructure.scheduler
+        self.notifySavedTimer = infrastructure.notifySavedTimer
+        self.currenDate = infrastructure.currentDate
+        self.unregisterNotifications = infrastructure.unregisterTimerNotification ?? {}
+        self.mainScheduler = infrastructure.mainScheduler
+        self.timerScheduler = infrastructure.mainScheduler
+    }
+    
     func createTimer() {
+        initializeDependencies()
+        setNotificationDelegate()
+    }
+    
+    // MARK: - helpers
+    private func setNotificationDelegate() {
+        UNUserNotificationCenter.current().delegate = UNUserNotificationdelegate
+    }
+    
+    private func initializeDependencies() {
         let date = currenDate()
         timerCountdown = createTimerCountDown(from: date)
         currentSubject = Self.createFirstValuePublisher(from: date)
@@ -107,8 +118,6 @@ class TimeCoachRoot {
                                                              stopPublisher: handleStop(),
                                                              pausePublisher: handlePause(),
                                                              isPlaying: timerPlayerAdapterState.isPlayingPublisherProvider())
-        
-        UNUserNotificationCenter.current().delegate = UNUserNotificationdelegate
         
         let dependencies = TimerViewComposer.createTimerDependencies(
             timerControlPublishers: timerControlPublishers,
