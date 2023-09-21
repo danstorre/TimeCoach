@@ -14,16 +14,8 @@ public struct TimerTextTimeLineWithLuminance: View {
     }
     
     public var body: some View {
-        if isLuminanceReduced {
-            timerText(mode: .none)
-        } else {
-            timerText(mode: .full)
-        }
-    }
-    
-    private func timerText(mode: TimePresentation) -> TimerText {
         TimerText(timerViewModel: timerViewModel,
-                  mode: mode,
+                  mode: isLuminanceReduced ? .none : .full,
                   breakColor: breakColor,
                   customFont: customFont)
     }
