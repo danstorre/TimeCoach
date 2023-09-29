@@ -5,7 +5,8 @@ extension TimerEntry {
         TimerEntry(date: currentDate,
                    timerPresentationValues: .init(starDate: currentDate,
                                                   endDate: currentDate.adding(seconds: 60 * 5),
-                                                  isBreak: false),
+                                                  isBreak: false,
+                                                  title: "Pomodoro"),
                    isIdle: false)
     }
     
@@ -14,7 +15,7 @@ extension TimerEntry {
         TimerEntry(date: currentDate,
                    timerPresentationValues: .init(starDate: currentDate,
                                                   endDate: currentDate.adding(seconds: 60 * 25),
-                                                  isBreak: false),
+                                                  isBreak: false, title: "Pomodoro"),
                    isIdle: false)
     }
     
@@ -22,13 +23,15 @@ extension TimerEntry {
         TimerEntry(date: currentDate,
                    timerPresentationValues: .init(starDate: currentDate,
                                                   endDate: currentDate.adding(seconds: 60 * 5),
-                                                  isBreak: true),
+                                                  isBreak: true, title: "Break"),
                    isIdle: false)
     }
     
     public static func createIdleEntry(from currentDate: Date = Date.init()) -> TimerEntry {
         TimerEntry(date: currentDate,
-                   timerPresentationValues: nil,
+                   timerPresentationValues: .init(starDate: currentDate,
+                                                  endDate: currentDate.adding(seconds: 60 * 25),
+                                                  isBreak: false, title: "Click To Start"),
                    isIdle: true)
     }
 }

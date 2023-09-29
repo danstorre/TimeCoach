@@ -1,31 +1,23 @@
 import SwiftUI
+import LifeCoach
 
-struct RectangularTimerWidget: View {
+public struct RectangularTimerWidget: View {
     let entry: TimerEntry
     
-    var body: some View {
+    public init(entry: TimerEntry) {
+        self.entry = entry
+    }
+    
+    public var body: some View {
         VStack(alignment: .leading) {
-            if let endDate = entry.timerPresentationValues?.endDate,
-               let startDate = entry.timerPresentationValues?.starDate,
-               let isBreak = entry.timerPresentationValues?.isBreak {
-                Text(isBreak ? "Taking a break" : "Pomodoro active")
-                    .foregroundColor(isBreak ? .blue : .red)
-                    .privacySensitive(false)
-                
-                ProgressView(timerInterval: startDate...endDate,
-                             countsDown: true)
+            Text(entry.timerPresentationValues!.title)
+                .foregroundColor(entry.timerPresentationValues!.isBreak ? .blue : .red)
                 .privacySensitive(false)
-                .tint(isBreak ? .blue : .red)
-            } else if entry.isIdle {
-                VStack(alignment: .center) {
-                    Image("widgetIcon")
-                        .foregroundColor(.blue)
-                        .privacySensitive(false)
-                    Text("Tap to Open")
-                        .privacySensitive(false)
-                    
-                }
-            }
+            
+            ProgressView(timerInterval: entry.timerPresentationValues!.starDate...entry.timerPresentationValues!.endDate,
+                         countsDown: true)
+            .privacySensitive(false)
+            .tint(entry.timerPresentationValues!.isBreak ? .blue : .red)
         }
     }
 }

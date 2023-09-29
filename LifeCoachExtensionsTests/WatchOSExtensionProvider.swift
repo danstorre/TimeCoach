@@ -24,19 +24,19 @@ final class WatchOSExtensionProvider: XCTestCase {
     }
     
     func test_getTimeLine_onLoadTimerStateRunningDeliversCorrectTimeLineEntry() {
-        let isBreakSamples = [false, true]
+        let isBreakSamples = [(false, "Pomodoro"), (true, "Break")]
         
-        isBreakSamples.forEach { isBreak in
+        isBreakSamples.forEach { sample in
             let currentDate = Date()
             let endDate = currentDate.adding(seconds: 1)
-            let runningTimeLineEntry = createTimerEntry(currentDate: currentDate, endDate: endDate, isIdle: false, isBreak: isBreak)
+            let runningTimeLineEntry = createTimerEntry(currentDate: currentDate, endDate: endDate, isIdle: false, isBreak: sample.0, title: sample.1)
             let (sut, spy) = makeSUT(currentDate: { currentDate })
             
             let timeLineResult = sut.getTimeLineResult(when: {
-                spy.loadsSuccess(with: makeAnyTimerState(seconds: 0, startDate: currentDate, endDate: endDate, isBreak: isBreak, state: .running))
+                spy.loadsSuccess(with: makeAnyTimerState(seconds: 0, startDate: currentDate, endDate: endDate, isBreak: sample.0, state: .running))
             })
             
-            assertCorrectTimeLine(with: runningTimeLineEntry, from: timeLineResult, onSample: isBreak)
+            assertCorrectTimeLine(with: runningTimeLineEntry, from: timeLineResult, onSample: sample.0)
         }
     }
     
@@ -79,8 +79,8 @@ final class WatchOSExtensionProvider: XCTestCase {
     }
     
     // MARK: - Helpers
-    private func createTimerEntry(currentDate: Date, endDate: Date, isIdle: Bool, isBreak: Bool = false) -> TimerEntry {
-        let timerPresentationValues = TimerPresentationValues(starDate: currentDate, endDate: endDate, isBreak: isBreak)
+    private func createTimerEntry(currentDate: Date, endDate: Date, isIdle: Bool, isBreak: Bool = false, title: String) -> TimerEntry {
+        let timerPresentationValues = TimerPresentationValues(starDate: currentDate, endDate: endDate, isBreak: isBreak, title: title)
         return TimerEntry(date: currentDate, timerPresentationValues: timerPresentationValues, isIdle: isIdle)
     }
     
@@ -131,7 +131,8 @@ values related to currentDate:
 startDate: \(String(describing: timerPresentationValues?.starDate)),
 endDate: \(String(describing: timerPresentationValues?.endDate)),
 and isBreak: \(String(describing: timerPresentationValues?.isBreak)),
-idle: \(isIdle)
+idle: \(isIdle),
+title: \(String(describing: timerPresentationValues?.title))
 """
     }
 }

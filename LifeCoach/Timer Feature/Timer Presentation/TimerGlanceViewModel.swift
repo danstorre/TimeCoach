@@ -33,6 +33,7 @@ public class TimerGlanceViewModel {
         return TimerPresentationValues(
             starDate: currentDate - elapsedSeconds,
             endDate: currentDate.adding(seconds: remainingSeconds),
-            isBreak: timerState.isBreak)
+            isBreak: timerState.isBreak,
+            title: timerState.isBreak ? "Break" : "Pomodoro")
     }
 }
