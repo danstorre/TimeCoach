@@ -6,14 +6,28 @@ final class TimerGlancePresentationTests: XCTestCase {
         let pauseState = makeAnyTimerState(state: .pause)
         let sut = makeSUT()
         
-        expect(sut: sut, toSendEvent: .showIdle, on: pauseState)
+        let expectedTimerPresentation = TimerPresentationValues(
+            starDate: pauseState.timerSet.endDate,
+            endDate: pauseState.timerSet.endDate,
+            isBreak: pauseState.isBreak,
+            title: "Pomodoro Paused"
+        )
+        
+        expect(sut: sut, toSendEvent: .showIdle(expectedTimerPresentation), on: pauseState)
     }
     
     func test_checkTimerState_onStopTimerStateSendsShowIdle() {
         let stopState = makeAnyTimerState(state: .stop)
         let sut = makeSUT()
         
-        expect(sut: sut, toSendEvent: .showIdle, on: stopState)
+        let expectedTimerPresentation = TimerPresentationValues(
+            starDate: stopState.timerSet.endDate,
+            endDate: stopState.timerSet.endDate,
+            isBreak: stopState.isBreak,
+            title: "Pomodoro"
+        )
+        
+        expect(sut: sut, toSendEvent: .showIdle(expectedTimerPresentation), on: stopState)
     }
     
     func test_checkTimerState_onRunningTimerStateSendsShowTimerValues() {

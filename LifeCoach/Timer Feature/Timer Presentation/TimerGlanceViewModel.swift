@@ -2,7 +2,7 @@ import Foundation
 
 public class TimerGlanceViewModel {
     public enum TimerStatusEvent: Equatable {
-        case showIdle
+        case showIdle(TimerPresentationValues)
         case showTimerWith(values: TimerPresentationValues)
     }
     
@@ -15,8 +15,16 @@ public class TimerGlanceViewModel {
     
     public func check(timerState: TimerState) {
         switch timerState.state {
-        case .pause, .stop:
-            onStatusCheck?(.showIdle)
+        case .pause:
+            let date = timerState.timerSet.endDate
+            onStatusCheck?(.showIdle(.init(starDate: date, endDate: date,
+                                           isBreak: timerState.isBreak,
+                                           title: "Pomodoro Paused")))
+        case .stop:
+            let date = timerState.timerSet.endDate
+            onStatusCheck?(.showIdle(.init(starDate: date, endDate: date,
+                                           isBreak: timerState.isBreak,
+                                           title: "Pomodoro")))
         case .running:
             let values = getCurrentTimersEndDate(from: timerState)
             
