@@ -31,21 +31,24 @@ public class WatchOSProvider: WatchOSProviderProtocol {
     // MARK: - Helpers
     private func getTimeLine(state: TimerState?) -> Timeline<TimerEntry> {
         guard let state = state else {
-            return idleTimeLine()
+            let date = currentDate()
+            return idleTimeLine(with: TimerPresentationValues.init(starDate: date,
+                                                                     endDate: date, isBreak: false,
+                                                                     title: "Pomodoro"))
         }
         
         switch getEvent(from: state, andCurrentDate: currentDate) {
         case let .showTimerWith(values: values):
             return runningTimeLine(with: values)
-        case .showIdle:
-            return idleTimeLine()
+        case let .showIdle(values: values):
+            return idleTimeLine(with: values)
         }
     }
     
-    private func idleTimeLine() -> Timeline<TimerEntry> {
+    private func idleTimeLine(with values: TimerPresentationValues) -> Timeline<TimerEntry> {
         var entries: [TimerEntry] = []
 
-        entries.append(TimerEntry(date: currentDate(), timerPresentationValues: .none, isIdle: true))
+        entries.append(TimerEntry(date: currentDate(), timerPresentationValues: values, isIdle: true))
 
         return Timeline(entries: entries, policy: .never)
     }
@@ -61,12 +64,12 @@ public class WatchOSProvider: WatchOSProviderProtocol {
     private func getEvent(from state: TimerState, andCurrentDate: @escaping () -> Date) -> TimerGlanceViewModel.TimerStatusEvent {
         let viewModel = TimerGlanceViewModel(currentDate: currentDate)
         
-        var receivedEvent: TimerGlanceViewModel.TimerStatusEvent = .showIdle
+        var receivedEvent: TimerGlanceViewModel.TimerStatusEvent?
         viewModel.onStatusCheck = { event in
             receivedEvent = event
         }
         viewModel.check(timerState: state)
         
-        return receivedEvent
+        return receivedEvent!
     }
 }

@@ -15,7 +15,10 @@ final class WatchOSExtensionProvider: XCTestCase {
     func test_getTimeline_onLoaderErrorDeliversIsIdleTimeLineEntry() {
         let currentDate = Date()
         let (sut, spy) = makeSUT(currentDate: { currentDate })
-        let idleTimelineEntry = TimerEntry(date: currentDate, timerPresentationValues: .none, isIdle: true)
+        let idleTimelineEntry = TimerEntry(date: currentDate, timerPresentationValues: .init(starDate: currentDate,
+                                                                                             endDate: currentDate,
+                                                                                             isBreak: false, title: "Pomodoro"),
+                                           isIdle: true)
         
         let timeLineResult = sut.getTimeLineResult(when: {
             spy.loadsError()
@@ -47,13 +50,19 @@ final class WatchOSExtensionProvider: XCTestCase {
         let pauseState = makeAnyTimerState(startDate: currentDate, state: .pause)
         let stopState = makeAnyTimerState(startDate: currentDate, state: .stop)
         
-        let samples = [pauseState, stopState]
+        let samples = [(title: "Pomodoro Paused", state: pauseState), (title: "Pomodoro", state: stopState)]
         
         samples.forEach { sample in
-            let idleTimelineEntry = TimerEntry(date: currentDate, timerPresentationValues: .none, isIdle: true)
+            
+            let idleTimelineEntry = TimerEntry(date: currentDate,
+                                               timerPresentationValues: .init(starDate: sample.state.timerSet.endDate,
+                                                                              endDate: sample.state.timerSet.endDate,
+                                                                              isBreak: sample.state.isBreak,
+                                                                              title: sample.title),
+                                               isIdle: true)
             
             let timeLineResult = sut.getTimeLineResult(when: {
-                spy.loadsSuccess(with: sample)
+                spy.loadsSuccess(with: sample.state)
             })
             
             assertCorrectTimeLine(with: idleTimelineEntry, from: timeLineResult)
