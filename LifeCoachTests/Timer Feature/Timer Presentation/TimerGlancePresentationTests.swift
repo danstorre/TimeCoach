@@ -72,6 +72,8 @@ final class TimerGlancePresentationTests: XCTestCase {
         return TimerPresentationValues(
             starDate: currentDate.adding(seconds: -elapsedSeconds),
             endDate: currentDate.adding(seconds: remainingSeconds),
-            isBreak: timerState.isBreak)
+            isBreak: timerState.isBreak,
+            title: timerState.isBreak ? "Break" : "Pomodoro"
+        )
     }
 }

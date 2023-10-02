@@ -33,7 +33,7 @@ final class TimerPresentationTests: XCTestCase {
 }
 
 fileprivate extension String {
-    static var emptyTimer: String { "--:--" }
+    static var emptyTimer: String { .defaultPomodoroTimerString }
 }
 
 fileprivate extension TimerSet {
