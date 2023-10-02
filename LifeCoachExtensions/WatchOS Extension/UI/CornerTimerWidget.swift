@@ -11,7 +11,7 @@ struct CornerTimerWidget: View {
             Text("")
                 .widgetLabel(label: {
                     ProgressView(timerInterval: entry.timerPresentationValues.starDate...entry.timerPresentationValues.endDate,
-                                 countsDown: true)
+                                 countsDown: entry.timerPresentationValues.starDate != entry.timerPresentationValues.endDate)
                     .tint(.blue)
                     .privacySensitive(false)
                 })

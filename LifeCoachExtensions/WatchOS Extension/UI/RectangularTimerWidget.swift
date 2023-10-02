@@ -15,7 +15,7 @@ public struct RectangularTimerWidget: View {
                 .privacySensitive(false)
             
             ProgressView(timerInterval: entry.timerPresentationValues.starDate...entry.timerPresentationValues.endDate,
-                         countsDown: true)
+                         countsDown: entry.timerPresentationValues.starDate != entry.timerPresentationValues.endDate)
             .privacySensitive(false)
             .tint(entry.timerPresentationValues.isBreak ? .blue : .red)
         }
