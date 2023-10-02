@@ -47,10 +47,14 @@ class TimeCoachRoot {
         qos: .userInitiated
     ).eraseToAnyScheduler()
     
-    private lazy var timerScheduler: AnyDispatchQueueScheduler = DispatchQueue(
+    private lazy var timerQueue: DispatchQueue = DispatchQueue(
         label: "com.danstorre.timeCoach.watchkitapp.timer",
         qos: .default
-    ).eraseToAnyScheduler()
+    )
+    
+    private lazy var timerScheduler: AnyDispatchQueueScheduler = {
+        timerQueue.eraseToAnyScheduler()
+    }()
 
     // Timer
     private var currenDate: () -> Date = Date.init
@@ -100,7 +104,7 @@ class TimeCoachRoot {
     
     private func initializeDependencies() {
         let date = currenDate()
-        timerCountdown = createTimerCountDown(from: date)
+        timerCountdown = createTimerCountDown(from: date, dispatchQueue: timerQueue)
         currentSubject = Self.createFirstValuePublisher(from: date)
         let timerCountdown = timerCountdown
         let currenDate = currenDate
