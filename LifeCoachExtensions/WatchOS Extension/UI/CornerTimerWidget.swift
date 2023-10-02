@@ -10,17 +10,10 @@ struct CornerTimerWidget: View {
                 .privacySensitive(false)
             Text("")
                 .widgetLabel(label: {
-                    if let endDate = entry.timerPresentationValues?.endDate,
-                       let startDate = entry.timerPresentationValues?.starDate {
-                        ProgressView(timerInterval: startDate...endDate,
-                                     countsDown: true)
-                            .tint(.blue)
-                            .privacySensitive(false)
-                    } else {
-                        ProgressView("", value: 1, total: 1)
-                            .tint(.blue)
-                            .privacySensitive(false)
-                    }
+                    ProgressView(timerInterval: entry.timerPresentationValues.starDate...entry.timerPresentationValues.endDate,
+                                 countsDown: true)
+                    .tint(.blue)
+                    .privacySensitive(false)
                 })
         }
     }

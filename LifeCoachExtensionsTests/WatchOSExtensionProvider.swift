@@ -137,11 +137,11 @@ extension TimerEntry: CustomStringConvertible {
     public var description: String {
         """
 values related to currentDate:
-startDate: \(String(describing: timerPresentationValues?.starDate)),
-endDate: \(String(describing: timerPresentationValues?.endDate)),
-and isBreak: \(String(describing: timerPresentationValues?.isBreak)),
+startDate: \(String(describing: timerPresentationValues.starDate)),
+endDate: \(String(describing: timerPresentationValues.endDate)),
+and isBreak: \(String(describing: timerPresentationValues.isBreak)),
 idle: \(isIdle),
-title: \(String(describing: timerPresentationValues?.title))
+title: \(String(describing: timerPresentationValues.title))
 """
     }
 }

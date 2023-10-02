@@ -10,14 +10,14 @@ public struct RectangularTimerWidget: View {
     
     public var body: some View {
         VStack(alignment: .leading) {
-            Text(entry.timerPresentationValues!.title)
-                .foregroundColor(entry.timerPresentationValues!.isBreak ? .blue : .red)
+            Text(entry.timerPresentationValues.title)
+                .foregroundColor(entry.timerPresentationValues.isBreak ? .blue : .red)
                 .privacySensitive(false)
             
-            ProgressView(timerInterval: entry.timerPresentationValues!.starDate...entry.timerPresentationValues!.endDate,
+            ProgressView(timerInterval: entry.timerPresentationValues.starDate...entry.timerPresentationValues.endDate,
                          countsDown: true)
             .privacySensitive(false)
-            .tint(entry.timerPresentationValues!.isBreak ? .blue : .red)
+            .tint(entry.timerPresentationValues.isBreak ? .blue : .red)
         }
     }
 }
