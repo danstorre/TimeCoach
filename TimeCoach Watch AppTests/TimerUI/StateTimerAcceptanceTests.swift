@@ -15,7 +15,7 @@ final class StateTimerAcceptanceTests: XCTestCase {
         XCTAssertEqual(spy.receivedMessages, [])
     }
     
-    func test_onLaunch_onToggleUserInteraction_whenGoingToInactiveAppStateTwiceShouldOnlySaveTimerStateOnce() {
+    func test_onLaunch_onToggleUserInteraction_startsSaveTimerProcess() {
         let (sut, spy) = makeSUT()
         let expected = makeAnyState(seconds: spy.currentTimerSet.elapsedSeconds,
                                     startDate: spy.currentTimerSet.startDate,
@@ -29,27 +29,9 @@ final class StateTimerAcceptanceTests: XCTestCase {
             .saveStateTimer(value: expected),
             .notifySavedTimer
         ])
-        
-        sut.simulateGoToInactive()
-        
-        XCTAssertEqual(spy.receivedMessages, [
-            .startTimer,
-            .scheduleTimerNotification(isBreak: false),
-            .saveStateTimer(value: expected),
-            .notifySavedTimer
-        ])
-        
-        sut.simulateGoToInactive()
-        
-        XCTAssertEqual(spy.receivedMessages, [
-            .startTimer,
-            .scheduleTimerNotification(isBreak: false),
-            .saveStateTimer(value: expected),
-            .notifySavedTimer
-        ])
     }
     
-    func test_onLaunch_onToggleAfterSkipUserInteraction_whenGoingToInactiveAppStateTwiceShouldOnlySaveTimerStateOnce() {
+    func test_onLaunch_onToggleAfterSkipUserInteraction_startsSaveTimerProcess() {
         let (sut, spy) = makeSUT()
         let expected = makeAnyState(seconds: spy.currentTimerSet.elapsedSeconds,
                                     startDate: spy.currentTimerSet.startDate,
@@ -67,27 +49,9 @@ final class StateTimerAcceptanceTests: XCTestCase {
             .saveStateTimer(value: expected),
             .notifySavedTimer
         ])
-        
-        sut.simulateGoToInactive()
-        
-        XCTAssertEqual(spy.receivedMessages, [
-            .startTimer,
-            .scheduleTimerNotification(isBreak: true),
-            .saveStateTimer(value: expected),
-            .notifySavedTimer
-        ])
-        
-        sut.simulateGoToInactive()
-        
-        XCTAssertEqual(spy.receivedMessages, [
-            .startTimer,
-            .scheduleTimerNotification(isBreak: true),
-            .saveStateTimer(value: expected),
-            .notifySavedTimer
-        ])
     }
     
-    func test_onLaunch_onStopUserInteraction_whenGoingToInactiveAppStateTwiceShouldOnlySaveTimerStateOnce() {
+    func test_onLaunch_onStopUserInteraction_startsSaveTimerProcess() {
         let currentDate = Date()
         let (sut, spy) = makeSUT(currentDate: { currentDate })
         let expected = makeAnyState(seconds: 0,
@@ -102,27 +66,9 @@ final class StateTimerAcceptanceTests: XCTestCase {
             .saveStateTimer(value: expected),
             .notifySavedTimer
         ])
-        
-        sut.simulateGoToInactive()
-        
-        XCTAssertEqual(spy.receivedMessages, [
-            .stopTimer,
-            .unregisterTimerNotification,
-            .saveStateTimer(value: expected),
-            .notifySavedTimer
-        ])
-        
-        sut.simulateGoToInactive()
-        
-        XCTAssertEqual(spy.receivedMessages, [
-            .stopTimer,
-            .unregisterTimerNotification,
-            .saveStateTimer(value: expected),
-            .notifySavedTimer
-        ])
     }
     
-    func test_onLaunch_onPauseUserInteraction_whenGoingToInactiveAppStateTwiceShouldOnlySaveTimerStateOnce() {
+    func test_onLaunch_onPauseUserInteraction_StartsSaveTimerProcess() {
         let currentDate = Date()
         let (sut, spy) = makeSUT(currentDate: { currentDate })
         let expected = makeAnyState(seconds: 1,
@@ -141,27 +87,9 @@ final class StateTimerAcceptanceTests: XCTestCase {
             .saveStateTimer(value: expected),
             .notifySavedTimer
         ])
-        
-        sut.simulateGoToInactive()
-        
-        XCTAssertEqual(spy.receivedMessages, [
-            .pauseTimer,
-            .unregisterTimerNotification,
-            .saveStateTimer(value: expected),
-            .notifySavedTimer
-        ])
-        
-        sut.simulateGoToInactive()
-        
-        XCTAssertEqual(spy.receivedMessages, [
-            .pauseTimer,
-            .unregisterTimerNotification,
-            .saveStateTimer(value: expected),
-            .notifySavedTimer
-        ])
     }
     
-    func test_onLaunch_onSkipUserInteraction_whenGoingToInactiveAppStateTwiceShouldOnlySaveTimerStateOnce() {
+    func test_onLaunch_onSkipUserInteraction_StartsSaveTimerProcess() {
         let currentDate = Date()
         let (sut, spy) = makeSUT(currentDate: { currentDate })
         let expected = makeAnyState(seconds: 0,
@@ -179,24 +107,6 @@ final class StateTimerAcceptanceTests: XCTestCase {
             .saveStateTimer(value: expected),
             .notifySavedTimer
         ], "on user skip interaction should save timer state and notify saved timer")
-        
-        sut.simulateGoToInactive()
-        
-        XCTAssertEqual(spy.receivedMessages, [
-            .skipTimer,
-            .unregisterTimerNotification,
-            .saveStateTimer(value: expected),
-            .notifySavedTimer
-        ], "on user skip interaction after going to inactive app state, should save timer state with isBreak: true")
-        
-        sut.simulateGoToInactive()
-        
-        XCTAssertEqual(spy.receivedMessages, [
-            .skipTimer,
-            .unregisterTimerNotification,
-            .saveStateTimer(value: expected),
-            .notifySavedTimer
-        ], "on user skip interaction after going to inactive app state, should save timer state with isBreak: true")
     }
     
     func test_onBackgroundEvent_shouldNotSendMessageToStartSaveStateProcess() {

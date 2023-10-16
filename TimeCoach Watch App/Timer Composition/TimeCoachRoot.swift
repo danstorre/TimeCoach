@@ -162,9 +162,7 @@ class TimeCoachRoot {
         timerLoad?.loadTime()
     }
     
-    func gotoInactive() {
-        saveTimerProcess()
-    }
+    func gotoInactive() {}
     
     private func saveTimerProcess() {
         saveTimerProcessPublisher(timerCoachRoot: self)?
