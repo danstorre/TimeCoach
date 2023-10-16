@@ -163,6 +163,10 @@ class TimeCoachRoot {
     }
     
     func gotoInactive() {
+        saveTimerProcess()
+    }
+    
+    private func saveTimerProcess() {
         saveTimerProcessPublisher(timerCoachRoot: self)?
         .subscribe(Subscribers.Sink(receiveCompletion: { _ in
         }, receiveValue: { _ in }))
@@ -179,6 +183,8 @@ class TimeCoachRoot {
                     self?.registerTimerProcessPublisher(timerState: timerState)
                         .subscribe(Subscribers.Sink(receiveCompletion: { _ in
                         }, receiveValue: { _ in }))
+                    
+                    self?.saveTimerProcess()
                 }
                 .eraseToAnyPublisher()
         }
