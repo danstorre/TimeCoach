@@ -173,8 +173,10 @@ final class StateTimerAcceptanceTests: XCTestCase {
         
         XCTAssertEqual(spy.receivedMessages, [
             .skipTimer,
-            .unregisterTimerNotification
-        ])
+            .unregisterTimerNotification,
+            .saveStateTimer(value: expected),
+            .notifySavedTimer
+        ], "on user skip interaction should save timer state and notify saved timer")
         
         sut.simulateGoToInactive()
         

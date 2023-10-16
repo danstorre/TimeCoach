@@ -14,9 +14,9 @@ public final class TimerViewComposer {
         isBreakPublisher currentSubject: CurrentValueSubject<IsBreakMode, Error>
     ) -> () -> Void {
         {
-            skipTimerAdapter.skip()
             viewModel.isBreak = !viewModel.isBreak
             currentSubject.send(viewModel.isBreak)
+            skipTimerAdapter.skip()
         }
     }
     
