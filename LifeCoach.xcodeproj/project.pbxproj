@@ -393,7 +393,7 @@
 		FB097C512A7DC55900BED235 /* LifeCoachExtensions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LifeCoachExtensions.h; sourceTree = "<group>"; };
 		FB097C562A7DC55900BED235 /* LifeCoachExtensionsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LifeCoachExtensionsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB097C642A7DC5C100BED235 /* LifeCoachExtensions.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = LifeCoachExtensions.xctestplan; sourceTree = SOURCE_ROOT; };
-		FB1105902ADDCC2E000DC19E /* TimeCoach Watch - Debug.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = file; name = "TimeCoach Watch - Debug.xctestplan"; path = "TimeCoach Watch App/TimeCoach Watch - Debug.xctestplan"; sourceTree = SOURCE_ROOT; };
+		FB1105902ADDCC2E000DC19E /* TimeCoach Watch - Debug.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; name = "TimeCoach Watch - Debug.xctestplan"; path = "TimeCoach Watch App/TimeCoach Watch - Debug.xctestplan"; sourceTree = SOURCE_ROOT; };
 		FB118E6B2A872D3500474AC1 /* TimeCoach Watch AppRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "TimeCoach Watch AppRelease.entitlements"; sourceTree = "<group>"; };
 		FB118E6C2A872E0800474AC1 /* TimeCoachWatchExtensionRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TimeCoachWatchExtensionRelease.entitlements; sourceTree = "<group>"; };
 		FB118E6D2A87BB0500474AC1 /* TimerTextTimeLineWithLuminance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerTextTimeLineWithLuminance.swift; sourceTree = "<group>"; };
@@ -2412,7 +2412,7 @@
 					"@executable_path/../../Frameworks",
 					"@executable_path/../../../../Frameworks",
 				);
-				MARKETING_VERSION = 1.1.3;
+				MARKETING_VERSION = 1.1.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.danstorre.timeCoach.watchkitapp.widget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2447,7 +2447,7 @@
 					"@executable_path/../../Frameworks",
 					"@executable_path/../../../../Frameworks",
 				);
-				MARKETING_VERSION = 1.1.3;
+				MARKETING_VERSION = 1.1.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.danstorre.timeCoach.watchkitapp.TimeCoachWatchExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2889,7 +2889,7 @@
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = AEWQUX8MPM;
 				INFOPLIST_FILE = "TimeCoach-Watch-App-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = TimeCoach;
-				MARKETING_VERSION = 1.1.3;
+				MARKETING_VERSION = 1.1.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.danstorre.timeCoach;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2910,7 +2910,7 @@
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = AEWQUX8MPM;
 				INFOPLIST_FILE = "TimeCoach-Watch-App-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = TimeCoach;
-				MARKETING_VERSION = 1.1.3;
+				MARKETING_VERSION = 1.1.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.danstorre.timeCoach;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2943,7 +2943,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.3;
+				MARKETING_VERSION = 1.1.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.danstorre.timeCoach.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2979,7 +2979,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.3;
+				MARKETING_VERSION = 1.1.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.danstorre.timeCoach.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
