@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "F2E37322-DBBE-4E30-91BD-9D11387615E6",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:LifeCoach.xcodeproj",
+        "identifier" : "FBE9A9852939527E00D8BF29",
+        "name" : "TimeCoach Watch AppTests"
+      }
+    }
+  ],
+  "version" : 1
+}

@@ -393,6 +393,7 @@
 		FB097C512A7DC55900BED235 /* LifeCoachExtensions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LifeCoachExtensions.h; sourceTree = "<group>"; };
 		FB097C562A7DC55900BED235 /* LifeCoachExtensionsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LifeCoachExtensionsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB097C642A7DC5C100BED235 /* LifeCoachExtensions.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = LifeCoachExtensions.xctestplan; sourceTree = SOURCE_ROOT; };
+		FB1105902ADDCC2E000DC19E /* TimeCoach Watch - Debug.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = file; name = "TimeCoach Watch - Debug.xctestplan"; path = "TimeCoach Watch App/TimeCoach Watch - Debug.xctestplan"; sourceTree = SOURCE_ROOT; };
 		FB118E6B2A872D3500474AC1 /* TimeCoach Watch AppRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "TimeCoach Watch AppRelease.entitlements"; sourceTree = "<group>"; };
 		FB118E6C2A872E0800474AC1 /* TimeCoachWatchExtensionRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TimeCoachWatchExtensionRelease.entitlements; sourceTree = "<group>"; };
 		FB118E6D2A87BB0500474AC1 /* TimerTextTimeLineWithLuminance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerTextTimeLineWithLuminance.swift; sourceTree = "<group>"; };
@@ -1223,6 +1224,7 @@
 		FBE9A9782939527C00D8BF29 /* TimeCoach Watch App */ = {
 			isa = PBXGroup;
 			children = (
+				FB1105902ADDCC2E000DC19E /* TimeCoach Watch - Debug.xctestplan */,
 				FB118E6B2A872D3500474AC1 /* TimeCoach Watch AppRelease.entitlements */,
 				FBF0209E2A7DBBFE005074CD /* TimeCoach Watch AppDebug.entitlements */,
 				FBB3D8802A770EB200A8BBAD /* Notifications */,
