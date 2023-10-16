@@ -10,7 +10,7 @@ import LifeCoachExtensions
 import Combine
 import LifeCoach
 
-class Root {
+class Root: ObservableObject {
     private lazy var mainScheduler: AnyDispatchQueueScheduler = DispatchQueue(
         label: "com.danstorre.timeCoach.watchkitapp",
         qos: .userInitiated

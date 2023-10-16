@@ -6,7 +6,7 @@ import LifeCoachExtensions
 struct TimeCoachWidget: Widget {
     let kind: String = "TimeCoachWidget"
     
-    private let root = Root()
+    @StateObject private var root = Root()
     
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: root.provider) { entry in
