@@ -15,9 +15,10 @@ final class WatchOSExtensionProvider: XCTestCase {
     func test_getTimeline_onLoaderErrorDeliversIsIdleTimeLineEntry() {
         let currentDate = Date()
         let (sut, spy) = makeSUT(currentDate: { currentDate })
-        let idleTimelineEntry = TimerEntry(date: currentDate, timerPresentationValues: .init(starDate: currentDate,
-                                                                                             endDate: currentDate,
-                                                                                             isBreak: false, title: "Pomodoro"),
+        let idleTimelineEntry = TimerEntry(date: currentDate, 
+                                           timerPresentationValues: .init(starDate: currentDate,
+                                                                          endDate: currentDate,
+                                                                          isBreak: false, title: "Pomodoro"),
                                            isIdle: true)
         
         let timeLineResult = sut.getTimeLineResult(when: {
@@ -105,13 +106,29 @@ final class WatchOSExtensionProvider: XCTestCase {
     
     private func assertCorrectTimeLine(with simpleEntry: TimerEntry, from timeLine: Timeline<TimerEntry>?, onSample isBreak: Bool,
                                        file: StaticString = #filePath, line: UInt = #line) {
-        XCTAssertEqual(timeLine?.entries, [simpleEntry], "on sample isBreak: \(isBreak)", file: file, line: line)
-        XCTAssertEqual(timeLine?.policy, .never, "on sample isBreak: \(isBreak)", file: file, line: line)
+        XCTAssertEqual(timeLine?.entries, [simpleEntry], 
+                        """
+                        expected entries \([simpleEntry]),
+                        got \(String(describing: timeLine?.entries)) instead
+                        """, file: file, line: line)
+        XCTAssertEqual(timeLine?.policy, .after(simpleEntry.date.adding(seconds: 0.1)),
+                        """
+                        expected policy \(TimelineReloadPolicy.after(simpleEntry.date.adding(seconds: 0.1))),
+                        got \(String(describing: timeLine?.policy)) instead
+                        """, file: file, line: line)
     }
     
     private func assertCorrectTimeLine(with simpleEntry: TimerEntry, from timeLine: Timeline<TimerEntry>?, file: StaticString = #filePath, line: UInt = #line) {
-        XCTAssertEqual(timeLine?.entries, [simpleEntry], file: file, line: line)
-        XCTAssertEqual(timeLine?.policy, .never, file: file, line: line)
+        XCTAssertEqual(timeLine?.entries, [simpleEntry], 
+                       """
+                       expected entries \([simpleEntry]),
+                       got \(String(describing: timeLine?.entries))
+                       """, file: file, line: line)
+        XCTAssertEqual(timeLine?.policy, .after(simpleEntry.date.adding(seconds: 0.1)),
+                       """
+                       expected policy \(TimelineReloadPolicy.after(simpleEntry.date.adding(seconds: 0.1))),
+                       got \(String(describing: timeLine?.policy))
+                       """, file: file, line: line)
     }
     
     private class Spy {

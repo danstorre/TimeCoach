@@ -48,17 +48,19 @@ public class WatchOSProvider: WatchOSProviderProtocol {
     private func idleTimeLine(with values: TimerPresentationValues) -> Timeline<TimerEntry> {
         var entries: [TimerEntry] = []
 
-        entries.append(TimerEntry(date: currentDate(), timerPresentationValues: values, isIdle: true))
+        let date = currentDate()
+        entries.append(TimerEntry(date: date, timerPresentationValues: values, isIdle: true))
 
-        return Timeline(entries: entries, policy: .never)
+        return Timeline(entries: entries, policy: .after(date.adding(seconds: 0.1)))
     }
     
     private func runningTimeLine(with values: TimerPresentationValues) -> Timeline<TimerEntry> {
         var entries: [TimerEntry] = []
 
-        entries.append(TimerEntry(date: currentDate(), timerPresentationValues: values, isIdle: false))
+        let date = currentDate()
+        entries.append(TimerEntry(date: date, timerPresentationValues: values, isIdle: false))
 
-        return Timeline(entries: entries, policy: .never)
+        return Timeline(entries: entries, policy: .after(date.adding(seconds: 0.1)))
     }
     
     private func getEvent(from state: TimerState, andCurrentDate: @escaping () -> Date) -> TimerGlanceViewModel.TimerStatusEvent {
