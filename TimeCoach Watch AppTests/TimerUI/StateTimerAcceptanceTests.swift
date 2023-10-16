@@ -137,7 +137,9 @@ final class StateTimerAcceptanceTests: XCTestCase {
         
         XCTAssertEqual(spy.receivedMessages, [
             .pauseTimer,
-            .unregisterTimerNotification
+            .unregisterTimerNotification,
+            .saveStateTimer(value: expected),
+            .notifySavedTimer
         ])
         
         sut.simulateGoToInactive()
