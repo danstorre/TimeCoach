@@ -38,6 +38,8 @@
 		FB097C6A2A7DC78B00BED235 /* WatchOSProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA223E72A7DB2D1003FF5A8 /* WatchOSProvider.swift */; };
 		FB097C702A7DC9AA00BED235 /* LifeCoachExtensions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB097C4F2A7DC55900BED235 /* LifeCoachExtensions.framework */; };
 		FB097C752A7DC9B100BED235 /* LifeCoach.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBAD475028FC8BB0003D2F7A /* LifeCoach.framework */; };
+		FB1105912ADEEC94000DC19E /* TimerTextTimeLineWithLuminance.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB118E6D2A87BB0500474AC1 /* TimerTextTimeLineWithLuminance.swift */; };
+		FB1105922ADEECC9000DC19E /* TimePresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB74AFB12AA682EC0088BD07 /* TimePresentation.swift */; };
 		FB118E6E2A87BB0500474AC1 /* TimerTextTimeLineWithLuminance.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB118E6D2A87BB0500474AC1 /* TimerTextTimeLineWithLuminance.swift */; };
 		FB15355D2A4A66E000E4B0B0 /* LifeCoachWatchOSUIPreview Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = FB15355C2A4A66E000E4B0B0 /* LifeCoachWatchOSUIPreview Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		FB1535622A4A66E000E4B0B0 /* LifeCoachWatchOSUIPreviewApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1535612A4A66E000E4B0B0 /* LifeCoachWatchOSUIPreviewApp.swift */; };
@@ -1844,11 +1846,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FB1105922ADEECC9000DC19E /* TimePresentation.swift in Sources */,
 				FB0238D22A57352C002F55D5 /* CustomFont.swift in Sources */,
 				FB0238D42A57354A002F55D5 /* Colors.swift in Sources */,
 				FB15358F2A4A673C00E4B0B0 /* TimerText.swift in Sources */,
 				FB0238D32A57352F002F55D5 /* ColorSwiftUI+Extension.swift in Sources */,
 				FB0238E02A574309002F55D5 /* TimerStyle.swift in Sources */,
+				FB1105912ADEEC94000DC19E /* TimerTextTimeLineWithLuminance.swift in Sources */,
 				FB594CBF2A4E547F00C4A32C /* ToggleButton.swift in Sources */,
 				FB0238D12A573515002F55D5 /* PreviewProvider+FactoryMethods.swift in Sources */,
 				FB1535622A4A66E000E4B0B0 /* LifeCoachWatchOSUIPreviewApp.swift in Sources */,

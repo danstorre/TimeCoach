@@ -11,25 +11,33 @@ public struct ToggleButton: View {
     }
     
     public var body: some View {
-        if playing {
-            Button.init(action: {
-                togglePlayback?()
-            }) {
-                image
-            }
-            .buttonStyle(.borderedProminent)
-        } else {
-            Button.init(action: {
-                togglePlayback?()
-            }) {
-                image
-            }
-            .buttonStyle(.automatic)
-        }
+        CustomButton(action: togglePlayback,
+                     image: "playpause.fill",
+                     color: playing ? Color(uiColor: .lightGray) : Color.defaultButtonColor)
     }
+}
+
+struct CustomButton: View {
+    let action: (() -> Void)?
+    let image: String
+    let color: Color
     
-    private var image: Image {
-        Image(systemName: "playpause.fill")
+    var body: some View  {
+        GeometryReader(content: { geometry in
+            Button.init(action: {
+                action?()
+            }) {
+                Image(systemName: image)
+            }
+            .buttonStyle(.borderless)
+            .frame(width: geometry.size.width)
+            .frame(height: geometry.size.height)
+            .foregroundColor(.white)
+        })
+        .background(color)
+        .frame(maxHeight: 53)
+        .cornerRadius(40)
+        .animation(.interactiveSpring, value: color)
     }
 }
 

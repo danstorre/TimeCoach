@@ -9,4 +9,5 @@ import Foundation
 
 enum Colors {
     static var blueTimer: String { "BlueTimer" }
+    static var defaultButtonColor: String { "DefaultButtonColor" }
 }
