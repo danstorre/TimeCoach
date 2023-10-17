@@ -111,9 +111,9 @@ final class WatchOSExtensionProvider: XCTestCase {
                         expected entries \([simpleEntry]),
                         got \(String(describing: timeLine?.entries)) instead
                         """, file: file, line: line)
-        XCTAssertEqual(timeLine?.policy, .after(simpleEntry.date.adding(seconds: 0.1)),
+        XCTAssertEqual(timeLine?.policy, .never,
                         """
-                        expected policy \(TimelineReloadPolicy.after(simpleEntry.date.adding(seconds: 0.1))),
+                        expected policy \(TimelineReloadPolicy.never),
                         got \(String(describing: timeLine?.policy)) instead
                         """, file: file, line: line)
     }
@@ -124,9 +124,9 @@ final class WatchOSExtensionProvider: XCTestCase {
                        expected entries \([simpleEntry]),
                        got \(String(describing: timeLine?.entries))
                        """, file: file, line: line)
-        XCTAssertEqual(timeLine?.policy, .after(simpleEntry.date.adding(seconds: 0.1)),
+        XCTAssertEqual(timeLine?.policy, .never,
                        """
-                       expected policy \(TimelineReloadPolicy.after(simpleEntry.date.adding(seconds: 0.1))),
+                       expected policy \(TimelineReloadPolicy.never),
                        got \(String(describing: timeLine?.policy))
                        """, file: file, line: line)
     }
