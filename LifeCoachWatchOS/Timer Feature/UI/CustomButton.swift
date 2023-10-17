@@ -12,19 +12,28 @@ public struct CustomButton: View {
     }
     
     public var body: some View  {
-        GeometryReader(content: { geometry in
-            Button.init(action: {
-                action?()
-            }) {
-                Image(systemName: image)
-            }
-            .frame(width: geometry.size.width)
-            .frame(height: geometry.size.height)
-            .foregroundColor(.white)
-        })
-        .background(color)
-        .frame(maxHeight: 53)
-        .cornerRadius(40)
-        .animation(.interactiveSpring, value: color)
+        Button.init(action: {
+            action?()
+        }) {
+            Image(systemName: image)
+        }
+        .buttonStyle(CustomButtonStyle(background: color))
+    }
+}
+
+
+struct CustomButtonStyle: ButtonStyle {
+    let background: Color
+    
+    func makeBody(configuration: Configuration) -> some View {
+        HStack {
+            Spacer()
+            configuration.label.foregroundColor(.white)
+            Spacer()
+        }
+        .padding()
+        .padding(EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0))
+        .background(background.cornerRadius(10))
+        .scaleEffect(configuration.isPressed ? 0.95 : 1)
     }
 }
