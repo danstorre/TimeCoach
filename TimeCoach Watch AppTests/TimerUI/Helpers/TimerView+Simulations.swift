@@ -2,12 +2,6 @@ import LifeCoachWatchOS
 import ViewInspector
 import TimeCoach_Watch_App
 
-extension TimerText: Inspectable {}
-extension TimerControls: Inspectable {}
-extension ToggleButton: Inspectable {}
-extension TimerTextTimeLineWithLuminance: Inspectable {}
-extension TimerView: Inspectable {}
-
 extension TimerView {
     func timerLabelString() -> String {
         inspectTimerLabel()
@@ -32,9 +26,11 @@ extension TimerView {
     
     private func tapToggle() {
         do {
-            try inspect().find(ToggleButton.self)
-                .button()
-                .tap()
+            try inspect()
+                .find(ToggleButton.self)
+                .find(CustomButton.self)
+                .actualView()
+                .action?()
         } catch {
             fatalError("couldn't inspect toggle button")
         }
@@ -42,10 +38,12 @@ extension TimerView {
     
     private func tapButton(index: Int) {
         do {
-            try inspect().find(TimerControls.self)
+            try inspect()
+                .find(TimerControls.self)
                 .hStack()
-                .button(index)
-                .tap()
+                .findAll(CustomButton.self)[index]
+                .actualView()
+                .action?()
         } catch {
             fatalError("couldn't inspect button at \(index)")
         }

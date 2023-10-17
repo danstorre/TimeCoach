@@ -60,7 +60,6 @@
 		FB4B895F2A3BBB090088DB5B /* LoadTimerAcceptanceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4B895E2A3BBB090088DB5B /* LoadTimerAcceptanceTests.swift */; };
 		FB4B89622A3BBB6D0088DB5B /* TimerStateSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4B89612A3BBB6D0088DB5B /* TimerStateSpy.swift */; };
 		FB4B89692A3BBC700088DB5B /* TimeCoach_Watch_AppApp+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4B89682A3BBC700088DB5B /* TimeCoach_Watch_AppApp+Helpers.swift */; };
-		FB4B896B2A3BBCFD0088DB5B /* TimerView+ViewInspectorHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4B896A2A3BBCFD0088DB5B /* TimerView+ViewInspectorHelpers.swift */; };
 		FB509E052A7C936A00AA9333 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB2A10E62A6B1854004A1784 /* WidgetKit.framework */; };
 		FB509E062A7C936A00AA9333 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB2A10E82A6B1854004A1784 /* SwiftUI.framework */; };
 		FB509E092A7C936B00AA9333 /* TimeCoachWatchExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB509E082A7C936B00AA9333 /* TimeCoachWatchExtension.swift */; };
@@ -423,7 +422,6 @@
 		FB4B895E2A3BBB090088DB5B /* LoadTimerAcceptanceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadTimerAcceptanceTests.swift; sourceTree = "<group>"; };
 		FB4B89612A3BBB6D0088DB5B /* TimerStateSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerStateSpy.swift; sourceTree = "<group>"; };
 		FB4B89682A3BBC700088DB5B /* TimeCoach_Watch_AppApp+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimeCoach_Watch_AppApp+Helpers.swift"; sourceTree = "<group>"; };
-		FB4B896A2A3BBCFD0088DB5B /* TimerView+ViewInspectorHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimerView+ViewInspectorHelpers.swift"; sourceTree = "<group>"; };
 		FB509E042A7C936A00AA9333 /* TimeCoachWatchExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TimeCoachWatchExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB509E082A7C936B00AA9333 /* TimeCoachWatchExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeCoachWatchExtension.swift; sourceTree = "<group>"; };
 		FB509E0A2A7C936B00AA9333 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -820,7 +818,6 @@
 				FBC612F2293AC2ED008D9EF8 /* TimerCountDownSpy.swift */,
 				FB4B89612A3BBB6D0088DB5B /* TimerStateSpy.swift */,
 				FB4B89682A3BBC700088DB5B /* TimeCoach_Watch_AppApp+Helpers.swift */,
-				FB4B896A2A3BBCFD0088DB5B /* TimerView+ViewInspectorHelpers.swift */,
 				FBCD0A8C2A81B50300086476 /* DummyLocalTimerStore.swift */,
 				FBCD0A8E2A81E15900086476 /* DummyScheduler.swift */,
 				FB983CE42A82A86E009DEB2D /* LocalTimerState-State+Extensions.swift */,
@@ -2032,7 +2029,6 @@
 				FB960C73293D479800ECBAD5 /* XCTestCase+MemoryLeakTracking.swift in Sources */,
 				FBE593F72A784D6600069F1C /* InstanceHelper.m in Sources */,
 				FBF1828A2A8995AD00DBAF7F /* CommonHelpers.swift in Sources */,
-				FB4B896B2A3BBCFD0088DB5B /* TimerView+ViewInspectorHelpers.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2150,7 +2146,7 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 9.0;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
 			};
 			name = Debug;
 		};
@@ -2189,7 +2185,7 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				VALIDATE_PRODUCT = YES;
-				WATCHOS_DEPLOYMENT_TARGET = 9.0;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
 			};
 			name = Release;
 		};
@@ -2224,7 +2220,7 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 9.0;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
 			};
 			name = Debug;
 		};
@@ -2260,7 +2256,7 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				VALIDATE_PRODUCT = YES;
-				WATCHOS_DEPLOYMENT_TARGET = 9.0;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
 			};
 			name = Release;
 		};
@@ -2279,7 +2275,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 9.0;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
 			};
 			name = Debug;
 		};
@@ -2299,7 +2295,7 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				VALIDATE_PRODUCT = YES;
-				WATCHOS_DEPLOYMENT_TARGET = 9.0;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
 			};
 			name = Release;
 		};
@@ -2328,7 +2324,7 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 9.4;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
 			};
 			name = Debug;
 		};
@@ -2358,7 +2354,7 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				VALIDATE_PRODUCT = YES;
-				WATCHOS_DEPLOYMENT_TARGET = 9.4;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
 			};
 			name = Release;
 		};
@@ -2426,7 +2422,7 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 9.0;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
 			};
 			name = Debug;
 		};
@@ -2462,7 +2458,7 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				VALIDATE_PRODUCT = YES;
-				WATCHOS_DEPLOYMENT_TARGET = 9.0;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
 			};
 			name = Release;
 		};
@@ -2776,7 +2772,7 @@
 				SWIFT_PRECOMPILE_BRIDGING_HEADER = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "4,7";
-				WATCHOS_DEPLOYMENT_TARGET = 9.0;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
 			};
 			name = Debug;
 		};
@@ -2821,7 +2817,7 @@
 				SWIFT_PRECOMPILE_BRIDGING_HEADER = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "4,7";
-				WATCHOS_DEPLOYMENT_TARGET = 9.0;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
 			};
 			name = Release;
 		};
@@ -2957,7 +2953,7 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 9.0;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
 			};
 			name = Debug;
 		};
@@ -2994,7 +2990,7 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				VALIDATE_PRODUCT = YES;
-				WATCHOS_DEPLOYMENT_TARGET = 9.0;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
 			};
 			name = Release;
 		};
@@ -3020,7 +3016,7 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TimeCoach Watch App.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/TimeCoach Watch App";
-				WATCHOS_DEPLOYMENT_TARGET = 9.0;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
 			};
 			name = Debug;
 		};
@@ -3044,7 +3040,7 @@
 				TARGETED_DEVICE_FAMILY = 4;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TimeCoach Watch App.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/TimeCoach Watch App";
 				VALIDATE_PRODUCT = YES;
-				WATCHOS_DEPLOYMENT_TARGET = 9.0;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
 			};
 			name = Release;
 		};

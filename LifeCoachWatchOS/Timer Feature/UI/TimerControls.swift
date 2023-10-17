@@ -31,13 +31,9 @@ public struct TimerControls: View {
     
     public var body: some View {
         HStack {
-            Button.init(action: stopHandler ?? {}) {
-                Image(systemName: "stop.fill")
-            }
+            CustomButton(action: stopHandler, image: "stop.fill")
             
-            Button.init(action: skipHandler ?? {}) {
-                Image(systemName: "forward.end.fill")
-            }
+            CustomButton(action: skipHandler, image: "forward.end.fill")
             
             ToggleButton(togglePlayback: togglePlayback, playing: playing)
         }

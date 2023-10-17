@@ -17,12 +17,18 @@ public struct ToggleButton: View {
     }
 }
 
-struct CustomButton: View {
-    let action: (() -> Void)?
+public struct CustomButton: View {
+    public let action: (() -> Void)?
     let image: String
     let color: Color
     
-    var body: some View  {
+    init(action: (() -> Void)?, image: String, color: Color = Color.defaultButtonColor) {
+        self.action = action
+        self.image = image
+        self.color = color
+    }
+    
+    public var body: some View  {
         GeometryReader(content: { geometry in
             Button.init(action: {
                 action?()
