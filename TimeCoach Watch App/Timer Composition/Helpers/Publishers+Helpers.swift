@@ -113,15 +113,6 @@ extension Publisher {
     }
 }
 
-extension Publisher {
-    func setsNeedsUpdate(_ root: TimeCoachRoot, needsUpdate: Bool) -> AnyPublisher<Output, Failure> {
-        self.handleEvents(receiveOutput: { [weak root] _ in
-            root?.needsUpdate = needsUpdate
-        })
-        .eraseToAnyPublisher()
-    }
-}
-
 // MARK: - Publisher Main DispatchQueue
 extension Publisher {
     func dispatchOnMainQueue() -> AnyPublisher<Output, Failure> {

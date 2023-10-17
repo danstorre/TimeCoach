@@ -33,7 +33,6 @@ class TimeCoachRoot {
     }
     
     // Timer Saved Notifications
-    var needsUpdate: Bool = false
     private var notifySavedTimer: (() -> Void)?
     private lazy var timerSavedNofitier: LifeCoach.TimerStoreNotifier = DefaultTimerStoreNotifier(
         completion: notifySavedTimer ?? {
@@ -162,7 +161,9 @@ class TimeCoachRoot {
         timerLoad?.loadTime()
     }
     
-    func gotoInactive() {}
+    func gotoInactive() {
+        saveTimerProcess()
+    }
     
     private func saveTimerProcess() {
         saveTimerProcessPublisher(timerCoachRoot: self)?
@@ -244,7 +245,6 @@ class TimeCoachRoot {
         let unregisterNotifications = unregisterNotifications
         
         return Just(())
-            .setsNeedsUpdate(self, needsUpdate: true)
             .unregisterTimerNotifications(unregisterNotifications)
             .flatsToTimerSetPublisher(currentSubject)
             .tryMap { $0 }
@@ -256,7 +256,6 @@ class TimeCoachRoot {
         let currentIsBreakMode = currentIsBreakMode
         
         return Just(timerState)
-            .setsNeedsUpdate(self, needsUpdate: true)
             .scheduleTimerNotfication(scheduler: timerNotificationScheduler, isBreak: currentIsBreakMode.value)
             .tryMap { $0 }
             .eraseToAnyPublisher()
@@ -265,8 +264,7 @@ class TimeCoachRoot {
     private func saveTimerProcessPublisher(
         timerCoachRoot: TimeCoachRoot
     ) -> AnyPublisher<TimerState, Never>? {
-        guard let timerCountdown = timerCoachRoot.timerCountdown,
-              timerCoachRoot.needsUpdate else {
+        guard let timerCountdown = timerCoachRoot.timerCountdown else {
             return nil
         }
         let currentIsBreakMode = timerCoachRoot.currentIsBreakMode.value
@@ -277,7 +275,6 @@ class TimeCoachRoot {
             .subscribe(on: mainScheduler)
             .dispatchOnMainQueue()
             .notifySavedTimer(notifier: timerSavedNofitier)
-            .setsNeedsUpdate(self, needsUpdate: false)
             .eraseToAnyPublisher()
     }
     

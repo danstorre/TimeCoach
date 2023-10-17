@@ -7,15 +7,21 @@ final class StateTimerAcceptanceTests: XCTestCase {
     
     func test_onLaunch_onInactiveAppStateShouldSaveOnlyOnUserInteraction() {
         let (sut, spy) = makeSUT()
+        let expected = makeAnyState(seconds: spy.currentTimerSet.elapsedSeconds,
+                                    startDate: spy.currentTimerSet.startDate,
+                                    endDate: spy.currentTimerSet.endDate, state: .stop).local
         
         XCTAssertEqual(spy.receivedMessages, [])
         
         sut.simulateGoToInactive()
         
-        XCTAssertEqual(spy.receivedMessages, [])
+        XCTAssertEqual(spy.receivedMessages, [
+            .saveStateTimer(value: expected),
+            .notifySavedTimer
+        ])
     }
     
-    func test_onLaunch_onToggleUserInteraction_startsSaveTimerProcess() {
+    func test_onLaunch_onToggleUserInteraction_whenGoingToInactiveAppStateShouldSaveTimerStateTwice() {
         let (sut, spy) = makeSUT()
         let expected = makeAnyState(seconds: spy.currentTimerSet.elapsedSeconds,
                                     startDate: spy.currentTimerSet.startDate,
@@ -29,9 +35,51 @@ final class StateTimerAcceptanceTests: XCTestCase {
             .saveStateTimer(value: expected),
             .notifySavedTimer
         ])
+        
+        sut.simulateGoToInactive()
+        
+        XCTAssertEqual(spy.receivedMessages, [
+            .startTimer,
+            .scheduleTimerNotification(isBreak: false),
+            .saveStateTimer(value: expected),
+            .notifySavedTimer,
+            .saveStateTimer(value: expected),
+            .notifySavedTimer
+        ])
     }
     
-    func test_onLaunch_onStopUserInteraction_startsSaveTimerProcess() {
+    func test_onLaunch_onToggleAfterSkipUserInteraction_whenGoingToInactiveAppStateShouldSaveTimerStateTwice() {
+        let (sut, spy) = makeSUT()
+        let expected = makeAnyState(seconds: spy.currentTimerSet.elapsedSeconds,
+                                    startDate: spy.currentTimerSet.startDate,
+                                    endDate: spy.currentTimerSet.endDate,
+                                    isBreak: true,
+                                    state: .running).local
+        sut.timerView.simulateSkipTimerUserInteraction()
+        spy.resetMessages()
+        
+        sut.simulateToggleTimerUserInteraction()
+        
+        XCTAssertEqual(spy.receivedMessages, [
+            .startTimer,
+            .scheduleTimerNotification(isBreak: true),
+            .saveStateTimer(value: expected),
+            .notifySavedTimer
+        ])
+        
+        sut.simulateGoToInactive()
+        
+        XCTAssertEqual(spy.receivedMessages, [
+            .startTimer,
+            .scheduleTimerNotification(isBreak: true),
+            .saveStateTimer(value: expected),
+            .notifySavedTimer,
+            .saveStateTimer(value: expected),
+            .notifySavedTimer
+        ])
+    }
+    
+    func test_onLaunch_onStopUserInteraction_whenGoingToInactiveAppStateShouldSaveTimerStateTwice() {
         let currentDate = Date()
         let (sut, spy) = makeSUT(currentDate: { currentDate })
         let expected = makeAnyState(seconds: 0,
@@ -46,9 +94,23 @@ final class StateTimerAcceptanceTests: XCTestCase {
             .saveStateTimer(value: expected),
             .notifySavedTimer
         ])
+        
+        sut.simulateGoToInactive()
+        
+        let expectedMessages: [Spy.AnyMessage] = [
+            .stopTimer,
+            .unregisterTimerNotification,
+            .saveStateTimer(value: expected),
+            .notifySavedTimer,
+            .saveStateTimer(value: expected),
+            .notifySavedTimer
+        ]
+        XCTAssertEqual(spy.receivedMessages,
+                       expectedMessages,
+                        "expected spy messages \(expectedMessages), got \(spy.receivedMessages))")
     }
     
-    func test_onLaunch_onPauseUserInteraction_StartsSaveTimerProcess() {
+    func test_onLaunch_onPauseUserInteraction_whenGoingToInactiveAppStateTwiceShouldOnlySaveTimerStateOnce() {
         let currentDate = Date()
         let (sut, spy) = makeSUT(currentDate: { currentDate })
         let expected = makeAnyState(seconds: 1,
@@ -67,9 +129,22 @@ final class StateTimerAcceptanceTests: XCTestCase {
             .saveStateTimer(value: expected),
             .notifySavedTimer
         ])
+        
+        sut.simulateGoToInactive()
+                     
+        let expectedMessages: [Spy.AnyMessage] = [
+            .pauseTimer,
+            .unregisterTimerNotification,
+            .saveStateTimer(value: expected),
+            .notifySavedTimer,
+            .saveStateTimer(value: expected),
+            .notifySavedTimer
+        ]
+        XCTAssertEqual(spy.receivedMessages,
+                       expectedMessages, "expected spy messages \(expectedMessages), got \(spy.receivedMessages))")
     }
     
-    func test_onLaunch_onSkipUserInteraction_StartsSaveTimerProcess() {
+    func test_onLaunch_onSkipUserInteraction_whenGoingToInactiveAppStateTwiceShouldOnlySaveTimerStateOnce() {
         let currentDate = Date()
         let (sut, spy) = makeSUT(currentDate: { currentDate })
         let expected = makeAnyState(seconds: 0,
@@ -87,6 +162,20 @@ final class StateTimerAcceptanceTests: XCTestCase {
             .saveStateTimer(value: expected),
             .notifySavedTimer
         ], "on user skip interaction should save timer state and notify saved timer")
+        
+        sut.simulateGoToInactive()
+        
+        let expectedMessages: [Spy.AnyMessage] = [
+            .skipTimer,
+            .unregisterTimerNotification,
+            .saveStateTimer(value: expected),
+            .notifySavedTimer,
+            .saveStateTimer(value: expected),
+            .notifySavedTimer
+        ]
+        
+        XCTAssertEqual(spy.receivedMessages,
+                       expectedMessages, "expected spy messages \(expectedMessages), got \(spy.receivedMessages))")
     }
     
     func test_onBackgroundEvent_shouldNotSendMessageToStartSaveStateProcess() {
