@@ -23,7 +23,7 @@ public struct TimerText: View {
         Label(title: {
             switch mode {
             case .full:
-                Text(timerViewModel.timerString)
+                Text(timerViewModel.timerString).minimumScaleFactor(0.5)
             case .none:
                 Text("--:--")
             }

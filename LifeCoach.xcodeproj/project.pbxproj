@@ -153,6 +153,8 @@
 		FBDBAC4A29762AE5009E440A /* FoundationTimerCountdown+TimerSave.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDBAC4929762AE5009E440A /* FoundationTimerCountdown+TimerSave.swift */; };
 		FBDBAC4C29762AFE009E440A /* FoundationTimerCountdown+TimerLoad.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDBAC4B29762AFE009E440A /* FoundationTimerCountdown+TimerLoad.swift */; };
 		FBDDAB362ADF0FFC00933B4E /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDDAB352ADF0FFC00933B4E /* CustomButton.swift */; };
+		FBDDAB372ADF168500933B4E /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDDAB352ADF0FFC00933B4E /* CustomButton.swift */; };
+		FBDDAB392ADF16FA00933B4E /* Previews+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDDAB382ADF16FA00933B4E /* Previews+Extension.swift */; };
 		FBDEE8082A7B0BC200D1120A /* UserDefaultsTimerStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDEE8072A7B0BC200D1120A /* UserDefaultsTimerStore.swift */; };
 		FBDEE80A2A7B0C6400D1120A /* StoreJSONEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDEE8092A7B0C6400D1120A /* StoreJSONEncoder.swift */; };
 		FBDEE80D2A7B0D2F00D1120A /* StoreJSONEncoder+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDEE80C2A7B0D2F00D1120A /* StoreJSONEncoder+Helpers.swift */; };
@@ -513,6 +515,7 @@
 		FBDBAC4929762AE5009E440A /* FoundationTimerCountdown+TimerSave.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FoundationTimerCountdown+TimerSave.swift"; sourceTree = "<group>"; };
 		FBDBAC4B29762AFE009E440A /* FoundationTimerCountdown+TimerLoad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FoundationTimerCountdown+TimerLoad.swift"; sourceTree = "<group>"; };
 		FBDDAB352ADF0FFC00933B4E /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
+		FBDDAB382ADF16FA00933B4E /* Previews+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Previews+Extension.swift"; sourceTree = "<group>"; };
 		FBDEE8072A7B0BC200D1120A /* UserDefaultsTimerStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsTimerStore.swift; sourceTree = "<group>"; };
 		FBDEE8092A7B0C6400D1120A /* StoreJSONEncoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreJSONEncoder.swift; sourceTree = "<group>"; };
 		FBDEE80C2A7B0D2F00D1120A /* StoreJSONEncoder+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StoreJSONEncoder+Helpers.swift"; sourceTree = "<group>"; };
@@ -964,6 +967,7 @@
 		FB960C7E293D530900ECBAD5 /* Previews */ = {
 			isa = PBXGroup;
 			children = (
+				FBDDAB382ADF16FA00933B4E /* Previews+Extension.swift */,
 			);
 			path = Previews;
 			sourceTree = "<group>";
@@ -1847,6 +1851,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FBDDAB372ADF168500933B4E /* CustomButton.swift in Sources */,
 				FB1105922ADEECC9000DC19E /* TimePresentation.swift in Sources */,
 				FB0238D22A57352C002F55D5 /* CustomFont.swift in Sources */,
 				FB0238D42A57354A002F55D5 /* Colors.swift in Sources */,
@@ -2002,6 +2007,7 @@
 				FBB3D8842A770F1F00A8BBAD /* NotificationScheduler.swift in Sources */,
 				FBE6465D2A4AA2DE005022A2 /* RegularTimer+Combine.swift in Sources */,
 				FBE646582A4A9F77005022A2 /* TimerAdapter.swift in Sources */,
+				FBDDAB392ADF16FA00933B4E /* Previews+Extension.swift in Sources */,
 				FB73E909293BA2A40087F9EF /* TimeCoachRoot.swift in Sources */,
 				FBF182892A89928800DBAF7F /* PlayNotification.swift in Sources */,
 				FB62AD432A55BD8400B2BBC1 /* TimerControlsPublishers.swift in Sources */,
