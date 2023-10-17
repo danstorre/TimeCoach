@@ -35,7 +35,6 @@ public struct CustomButton: View {
             }) {
                 Image(systemName: image)
             }
-            .buttonStyle(.borderless)
             .frame(width: geometry.size.width)
             .frame(height: geometry.size.height)
             .foregroundColor(.white)
