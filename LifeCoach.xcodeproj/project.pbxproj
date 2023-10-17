@@ -1671,19 +1671,19 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				FBAD474F28FC8BB0003D2F7A /* LifeCoach */,
-				FBAD475928FC8BB0003D2F7A /* LifeCoachTests */,
+				FBE9A9732939527C00D8BF29 /* TimeCoach Watch App */,
+				FBE9A96E2939527B00D8BF29 /* TimeCoach */,
+				FBE9A9852939527E00D8BF29 /* TimeCoach Watch AppTests */,
 				FB06B52C292BF71C00AE6079 /* LifeCoachWatchOS */,
 				FB1535562A4A66E000E4B0B0 /* LifeCoachWatchOSUIPreview */,
 				FB15355B2A4A66E000E4B0B0 /* LifeCoachWatchOSUIPreview Watch App */,
-				FBE9A96E2939527B00D8BF29 /* TimeCoach */,
-				FBE9A9732939527C00D8BF29 /* TimeCoach Watch App */,
-				FBE9A9852939527E00D8BF29 /* TimeCoach Watch AppTests */,
-				FB5398902A45DA7C000B9CFD /* TimeCoachVision */,
-				FB5398E22A4617EF000B9CFD /* TimeCoachVisionOS */,
-				FB509E032A7C936A00AA9333 /* TimeCoachWatchExtension */,
+				FBAD474F28FC8BB0003D2F7A /* LifeCoach */,
+				FBAD475928FC8BB0003D2F7A /* LifeCoachTests */,
 				FB097C4E2A7DC55900BED235 /* LifeCoachExtensions */,
 				FB097C552A7DC55900BED235 /* LifeCoachExtensionsTests */,
+				FB509E032A7C936A00AA9333 /* TimeCoachWatchExtension */,
+				FB5398902A45DA7C000B9CFD /* TimeCoachVision */,
+				FB5398E22A4617EF000B9CFD /* TimeCoachVisionOS */,
 			);
 		};
 /* End PBXProject section */
