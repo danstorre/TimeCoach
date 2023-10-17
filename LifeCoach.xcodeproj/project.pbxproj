@@ -125,7 +125,6 @@
 		FBBF06212A4F2CC30020695A /* TimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBBF06202A4F2CC30020695A /* TimerView.swift */; };
 		FBBF06232A4F2DA20020695A /* ToggleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBBF06222A4F2DA20020695A /* ToggleButton.swift */; };
 		FBBF06242A4F2FC80020695A /* TimeCoach-Watch-App-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FBE9A9DF293974FF00D8BF29 /* TimeCoach-Watch-App-Info.plist */; };
-		FBBF06262A4F41D60020695A /* TimeCoach-VisionOS-App-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FBBF06252A4F41D60020695A /* TimeCoach-VisionOS-App-Info.plist */; };
 		FBC612F3293AC2ED008D9EF8 /* TimerCountDownSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC612F2293AC2ED008D9EF8 /* TimerCountDownSpy.swift */; };
 		FBC9ADAF2919E8B500E0BEFC /* XCTestCase+MemoryLeakTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC9ADAE2919E8B500E0BEFC /* XCTestCase+MemoryLeakTracking.swift */; };
 		FBC9CC002A806E4A001B5975 /* TimerStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC9CBFF2A806E4A001B5975 /* TimerStyle.swift */; };
@@ -1739,7 +1738,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FBBF06262A4F41D60020695A /* TimeCoach-VisionOS-App-Info.plist in Resources */,
 				FBBF06242A4F2FC80020695A /* TimeCoach-Watch-App-Info.plist in Resources */,
 				FB53989F2A45DA7D000B9CFD /* Preview Assets.xcassets in Resources */,
 				FB5399172A461BBF000B9CFD /* DIGITALDREAMFAT.ttf in Resources */,
@@ -2155,7 +2153,7 @@
 		FB06B53F292BF71C00AE6079 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -2194,6 +2192,7 @@
 		FB097C5E2A7DC55900BED235 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -2228,6 +2227,7 @@
 		FB097C5F2A7DC55900BED235 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -2779,7 +2779,7 @@
 		FBAD476628FC8BB0003D2F7A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
