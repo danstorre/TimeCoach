@@ -31,9 +31,7 @@ final class StateTimerAcceptanceTests: XCTestCase {
         
         XCTAssertEqual(spy.receivedMessages, [
             .startTimer,
-            .scheduleTimerNotification(isBreak: false),
-            .saveStateTimer(value: expected),
-            .notifySavedTimer
+            .scheduleTimerNotification(isBreak: false)
         ])
         
         sut.simulateGoToInactive()
@@ -41,8 +39,6 @@ final class StateTimerAcceptanceTests: XCTestCase {
         XCTAssertEqual(spy.receivedMessages, [
             .startTimer,
             .scheduleTimerNotification(isBreak: false),
-            .saveStateTimer(value: expected),
-            .notifySavedTimer,
             .saveStateTimer(value: expected),
             .notifySavedTimer
         ])
@@ -63,8 +59,6 @@ final class StateTimerAcceptanceTests: XCTestCase {
         XCTAssertEqual(spy.receivedMessages, [
             .startTimer,
             .scheduleTimerNotification(isBreak: true),
-            .saveStateTimer(value: expected),
-            .notifySavedTimer
         ])
         
         sut.simulateGoToInactive()
@@ -72,8 +66,6 @@ final class StateTimerAcceptanceTests: XCTestCase {
         XCTAssertEqual(spy.receivedMessages, [
             .startTimer,
             .scheduleTimerNotification(isBreak: true),
-            .saveStateTimer(value: expected),
-            .notifySavedTimer,
             .saveStateTimer(value: expected),
             .notifySavedTimer
         ])
