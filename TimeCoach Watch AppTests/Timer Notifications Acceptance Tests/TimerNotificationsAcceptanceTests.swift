@@ -3,7 +3,7 @@ import LifeCoach
 import TimeCoach_Watch_App
 import WatchKit
 
-final class ReceiverNotificationProcessTests: XCTestCase {
+final class TimerNotificationsAcceptanceTests: XCTestCase {
     func test_receiveNotificationExecutesReceiverNotificationProcess() {
         let (sut, spy) = makeSUT(getTimerState: { makeAnyTimerState() })
         

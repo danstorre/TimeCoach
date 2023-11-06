@@ -25,7 +25,7 @@
 		FB02390A2A57548B002F55D5 /* pizzadude.dk License.txt in Resources */ = {isa = PBXBuildFile; fileRef = FB0239082A57548B002F55D5 /* pizzadude.dk License.txt */; };
 		FB05D9B62A83191300EA0AE8 /* UNUserNotificationCenter+NotificationScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB05D9B52A83191300EA0AE8 /* UNUserNotificationCenter+NotificationScheduler.swift */; };
 		FB05D9B82A83198F00EA0AE8 /* Publishers+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB05D9B72A83198E00EA0AE8 /* Publishers+Helpers.swift */; };
-		FB05D9BC2A83DB2600EA0AE8 /* ReceiverNotificationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB05D9BB2A83DB2600EA0AE8 /* ReceiverNotificationTests.swift */; };
+		FB05D9BC2A83DB2600EA0AE8 /* TimerNotificationsAcceptanceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB05D9BB2A83DB2600EA0AE8 /* TimerNotificationsAcceptanceTests.swift */; };
 		FB05D9C02A83E1C200EA0AE8 /* TimerNotificationReceiverFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB05D9BF2A83E1C200EA0AE8 /* TimerNotificationReceiverFactory.swift */; };
 		FB0602372A83FCAA0085689D /* TimerPresentationValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB0602362A83FCAA0085689D /* TimerPresentationValues.swift */; };
 		FB097C572A7DC55900BED235 /* LifeCoachExtensions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB097C4F2A7DC55900BED235 /* LifeCoachExtensions.framework */; };
@@ -388,7 +388,7 @@
 		FB0239082A57548B002F55D5 /* pizzadude.dk License.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "pizzadude.dk License.txt"; sourceTree = "<group>"; };
 		FB05D9B52A83191300EA0AE8 /* UNUserNotificationCenter+NotificationScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UNUserNotificationCenter+NotificationScheduler.swift"; sourceTree = "<group>"; };
 		FB05D9B72A83198E00EA0AE8 /* Publishers+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Publishers+Helpers.swift"; sourceTree = "<group>"; };
-		FB05D9BB2A83DB2600EA0AE8 /* ReceiverNotificationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiverNotificationTests.swift; sourceTree = "<group>"; };
+		FB05D9BB2A83DB2600EA0AE8 /* TimerNotificationsAcceptanceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerNotificationsAcceptanceTests.swift; sourceTree = "<group>"; };
 		FB05D9BF2A83E1C200EA0AE8 /* TimerNotificationReceiverFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerNotificationReceiverFactory.swift; sourceTree = "<group>"; };
 		FB0602362A83FCAA0085689D /* TimerPresentationValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerPresentationValues.swift; sourceTree = "<group>"; };
 		FB06B52D292BF71C00AE6079 /* LifeCoachWatchOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LifeCoachWatchOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -727,14 +727,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		FB118E6A2A86D42500474AC1 /* Notification Process Receiver */ = {
-			isa = PBXGroup;
-			children = (
-				FB05D9BB2A83DB2600EA0AE8 /* ReceiverNotificationTests.swift */,
-			);
-			path = "Notification Process Receiver";
-			sourceTree = "<group>";
-		};
 		FB4AA13E29379D9F0076FED9 /* Timer Feature */ = {
 			isa = PBXGroup;
 			children = (
@@ -967,7 +959,7 @@
 		FB62B73F2AF96A8E00CEF92B /* Timer Notifications Acceptance Tests */ = {
 			isa = PBXGroup;
 			children = (
-				FB118E6A2A86D42500474AC1 /* Notification Process Receiver */,
+				FB05D9BB2A83DB2600EA0AE8 /* TimerNotificationsAcceptanceTests.swift */,
 			);
 			path = "Timer Notifications Acceptance Tests";
 			sourceTree = "<group>";
@@ -2039,7 +2031,7 @@
 				FB4B895D2A3BB9D90088DB5B /* SaveTimerAcceptanceTests.swift in Sources */,
 				FBE593E42A7836C200069F1C /* ReceiverNotifcationTests.swift in Sources */,
 				FBE9A9DE29396EA100D8BF29 /* TimeCoachAcceptanceTests.swift in Sources */,
-				FB05D9BC2A83DB2600EA0AE8 /* ReceiverNotificationTests.swift in Sources */,
+				FB05D9BC2A83DB2600EA0AE8 /* TimerNotificationsAcceptanceTests.swift in Sources */,
 				FBE9A9A5293952EB00D8BF29 /* TimerUIIntegrationTests.swift in Sources */,
 				FBE593F92A784E6000069F1C /* InstanceHelper+Extensions.swift in Sources */,
 				FB5926102A76FEFC0011D53E /* SchedulerNotificationTests.swift in Sources */,
