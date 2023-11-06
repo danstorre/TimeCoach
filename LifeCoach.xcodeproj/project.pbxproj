@@ -727,12 +727,12 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		FB118E6A2A86D42500474AC1 /* Infrastructure Process */ = {
+		FB118E6A2A86D42500474AC1 /* Notification Process Receiver */ = {
 			isa = PBXGroup;
 			children = (
 				FB05D9BB2A83DB2600EA0AE8 /* ReceiverNotificationTests.swift */,
 			);
-			path = "Infrastructure Process";
+			path = "Notification Process Receiver";
 			sourceTree = "<group>";
 		};
 		FB4AA13E29379D9F0076FED9 /* Timer Feature */ = {
@@ -947,13 +947,13 @@
 			path = Legacy;
 			sourceTree = "<group>";
 		};
-		FB59260E2A76FECC0011D53E /* User Notification Scheduler */ = {
+		FB59260E2A76FECC0011D53E /* User Notification Integration Tests */ = {
 			isa = PBXGroup;
 			children = (
 				FB59260F2A76FEFC0011D53E /* SchedulerNotificationTests.swift */,
 				FBE593E32A7836C200069F1C /* ReceiverNotifcationTests.swift */,
 			);
-			path = "User Notification Scheduler";
+			path = "User Notification Integration Tests";
 			sourceTree = "<group>";
 		};
 		FB594CC02A4E716800C4A32C /* Colors */ = {
@@ -962,6 +962,22 @@
 				FB594CC12A4E717000C4A32C /* Colors.swift */,
 			);
 			path = Colors;
+			sourceTree = "<group>";
+		};
+		FB62B73F2AF96A8E00CEF92B /* Timer Notifications Acceptance Tests */ = {
+			isa = PBXGroup;
+			children = (
+				FB118E6A2A86D42500474AC1 /* Notification Process Receiver */,
+			);
+			path = "Timer Notifications Acceptance Tests";
+			sourceTree = "<group>";
+		};
+		FB62B7402AF96AF500CEF92B /* Timer Integration Tests */ = {
+			isa = PBXGroup;
+			children = (
+				FB4AA1322936EB9A0076FED9 /* TimerUIIntegrationTests.swift */,
+			);
+			path = "Timer Integration Tests";
 			sourceTree = "<group>";
 		};
 		FB960C7E293D530900ECBAD5 /* Previews */ = {
@@ -1213,17 +1229,16 @@
 			path = Helpers;
 			sourceTree = "<group>";
 		};
-		FBE9A92E2939247A00D8BF29 /* TimerUI */ = {
+		FBE9A92E2939247A00D8BF29 /* Timer Acceptance Tests */ = {
 			isa = PBXGroup;
 			children = (
 				FB4B89602A3BBB5F0088DB5B /* Helpers */,
-				FB4AA1322936EB9A0076FED9 /* TimerUIIntegrationTests.swift */,
 				FBE9A9DD29396EA100D8BF29 /* TimeCoachAcceptanceTests.swift */,
 				FB4B895C2A3BB9D90088DB5B /* SaveTimerAcceptanceTests.swift */,
 				FB4B895E2A3BBB090088DB5B /* LoadTimerAcceptanceTests.swift */,
 				FBCD0A8A2A8188B000086476 /* StateTimerAcceptanceTests.swift */,
 			);
-			path = TimerUI;
+			path = "Timer Acceptance Tests";
 			sourceTree = "<group>";
 		};
 		FBE9A9782939527C00D8BF29 /* TimeCoach Watch App */ = {
@@ -1247,9 +1262,10 @@
 			isa = PBXGroup;
 			children = (
 				FBE593F32A784D4D00069F1C /* Helpers */,
-				FB118E6A2A86D42500474AC1 /* Infrastructure Process */,
-				FB59260E2A76FECC0011D53E /* User Notification Scheduler */,
-				FBE9A92E2939247A00D8BF29 /* TimerUI */,
+				FB62B7402AF96AF500CEF92B /* Timer Integration Tests */,
+				FB59260E2A76FECC0011D53E /* User Notification Integration Tests */,
+				FBE9A92E2939247A00D8BF29 /* Timer Acceptance Tests */,
+				FB62B73F2AF96A8E00CEF92B /* Timer Notifications Acceptance Tests */,
 			);
 			path = "TimeCoach Watch AppTests";
 			sourceTree = "<group>";
