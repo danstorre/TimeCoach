@@ -211,7 +211,6 @@ class TimeCoachRoot {
                     self?.unregisterTimerProcessPublisher()
                         .subscribe(Subscribers.Sink(receiveCompletion: { _ in
                         }, receiveValue: { _ in }))
-                    self?.saveTimerProcess()
                 }
                 .flatsToVoid()
                 .eraseToAnyPublisher()

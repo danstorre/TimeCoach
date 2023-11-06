@@ -113,9 +113,7 @@ final class StateTimerAcceptanceTests: XCTestCase {
         
         XCTAssertEqual(spy.receivedMessages, [
             .pauseTimer,
-            .unregisterTimerNotification,
-            .saveStateTimer(value: expected),
-            .notifySavedTimer
+            .unregisterTimerNotification
         ])
         
         sut.simulateGoToInactive()
@@ -123,8 +121,6 @@ final class StateTimerAcceptanceTests: XCTestCase {
         let expectedMessages: [Spy.AnyMessage] = [
             .pauseTimer,
             .unregisterTimerNotification,
-            .saveStateTimer(value: expected),
-            .notifySavedTimer,
             .saveStateTimer(value: expected),
             .notifySavedTimer
         ]
