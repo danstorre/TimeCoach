@@ -213,13 +213,6 @@
 			remoteGlobalIDString = FB097C4E2A7DC55900BED235;
 			remoteInfo = LifeCoachExtensions;
 		};
-		FB097C772A7DC9B100BED235 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = FBAD474728FC8BB0003D2F7A /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = FBAD474F28FC8BB0003D2F7A;
-			remoteInfo = LifeCoach;
-		};
 		FB15355E2A4A66E000E4B0B0 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = FBAD474728FC8BB0003D2F7A /* Project object */;
@@ -1347,7 +1340,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				FB097C782A7DC9B100BED235 /* PBXTargetDependency */,
 			);
 			name = LifeCoachExtensions;
 			productName = LifeCoachExtensions;
@@ -2001,11 +1993,6 @@
 			isa = PBXTargetDependency;
 			target = FB097C4E2A7DC55900BED235 /* LifeCoachExtensions */;
 			targetProxy = FB097C582A7DC55900BED235 /* PBXContainerItemProxy */;
-		};
-		FB097C782A7DC9B100BED235 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = FBAD474F28FC8BB0003D2F7A /* LifeCoach */;
-			targetProxy = FB097C772A7DC9B100BED235 /* PBXContainerItemProxy */;
 		};
 		FB15355F2A4A66E000E4B0B0 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
