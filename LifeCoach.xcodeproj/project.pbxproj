@@ -269,13 +269,6 @@
 			remoteGlobalIDString = FBAD474F28FC8BB0003D2F7A;
 			remoteInfo = LifeCoach;
 		};
-		FBE9A9762939527C00D8BF29 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = FBAD474728FC8BB0003D2F7A /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = FBE9A9732939527C00D8BF29;
-			remoteInfo = "TimeCoach Watch App";
-		};
 		FBE9A9872939527E00D8BF29 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = FBAD474728FC8BB0003D2F7A /* Project object */;
@@ -1535,7 +1528,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				FBE9A9772939527C00D8BF29 /* PBXTargetDependency */,
 			);
 			name = TimeCoach;
 			productName = TimeCoach;
@@ -2065,11 +2057,6 @@
 			isa = PBXTargetDependency;
 			target = FBAD474F28FC8BB0003D2F7A /* LifeCoach */;
 			targetProxy = FBC0AF052A7C8BA30034C593 /* PBXContainerItemProxy */;
-		};
-		FBE9A9772939527C00D8BF29 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = FBE9A9732939527C00D8BF29 /* TimeCoach Watch App */;
-			targetProxy = FBE9A9762939527C00D8BF29 /* PBXContainerItemProxy */;
 		};
 		FBE9A9882939527E00D8BF29 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
