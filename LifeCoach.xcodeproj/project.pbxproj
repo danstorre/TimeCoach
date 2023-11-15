@@ -213,6 +213,20 @@
 			remoteGlobalIDString = FB097C4E2A7DC55900BED235;
 			remoteInfo = LifeCoachExtensions;
 		};
+		FB097C722A7DC9AA00BED235 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FBAD474728FC8BB0003D2F7A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FB097C4E2A7DC55900BED235;
+			remoteInfo = LifeCoachExtensions;
+		};
+		FB097C772A7DC9B100BED235 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FBAD474728FC8BB0003D2F7A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FBAD474F28FC8BB0003D2F7A;
+			remoteInfo = LifeCoach;
+		};
 		FB15355E2A4A66E000E4B0B0 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = FBAD474728FC8BB0003D2F7A /* Project object */;
@@ -247,6 +261,48 @@
 			proxyType = 1;
 			remoteGlobalIDString = FBAD474F28FC8BB0003D2F7A;
 			remoteInfo = LifeCoach;
+		};
+		FBC0AF052A7C8BA30034C593 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FBAD474728FC8BB0003D2F7A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FBAD474F28FC8BB0003D2F7A;
+			remoteInfo = LifeCoach;
+		};
+		FBE113E32AA6A7D300236193 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FBAD474728FC8BB0003D2F7A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FBAD474F28FC8BB0003D2F7A;
+			remoteInfo = LifeCoach;
+		};
+		FBE113E52AA6A7DB00236193 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FBAD474728FC8BB0003D2F7A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FB06B52C292BF71C00AE6079;
+			remoteInfo = LifeCoachWatchOS;
+		};
+		FBE113E72AA6A7E300236193 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FBAD474728FC8BB0003D2F7A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FB097C4E2A7DC55900BED235;
+			remoteInfo = LifeCoachExtensions;
+		};
+		FBE113E92AA6A83A00236193 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FBAD474728FC8BB0003D2F7A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FB509E032A7C936A00AA9333;
+			remoteInfo = TimeCoachWatchExtension;
+		};
+		FBE9A9762939527C00D8BF29 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FBAD474728FC8BB0003D2F7A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FBE9A9732939527C00D8BF29;
+			remoteInfo = "TimeCoach Watch App";
 		};
 		FBE9A9872939527E00D8BF29 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1322,6 +1378,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				FBC0AF062A7C8BA30034C593 /* PBXTargetDependency */,
 			);
 			name = LifeCoachWatchOS;
 			productName = LifeCoachWatchOS;
@@ -1340,6 +1397,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				FB097C782A7DC9B100BED235 /* PBXTargetDependency */,
 			);
 			name = LifeCoachExtensions;
 			productName = LifeCoachExtensions;
@@ -1411,6 +1469,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				FB097C732A7DC9AA00BED235 /* PBXTargetDependency */,
 			);
 			name = TimeCoachWatchExtension;
 			productName = TimeCoachWatchExtensionExtension;
@@ -1504,6 +1563,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				FBE9A9772939527C00D8BF29 /* PBXTargetDependency */,
 			);
 			name = TimeCoach;
 			productName = TimeCoach;
@@ -1523,6 +1583,10 @@
 			buildRules = (
 			);
 			dependencies = (
+				FBE113EA2AA6A83A00236193 /* PBXTargetDependency */,
+				FBE113E82AA6A7E300236193 /* PBXTargetDependency */,
+				FBE113E62AA6A7DB00236193 /* PBXTargetDependency */,
+				FBE113E42AA6A7D300236193 /* PBXTargetDependency */,
 			);
 			name = "TimeCoach Watch App";
 			productName = "TimeCoach Watch App";
@@ -1994,6 +2058,16 @@
 			target = FB097C4E2A7DC55900BED235 /* LifeCoachExtensions */;
 			targetProxy = FB097C582A7DC55900BED235 /* PBXContainerItemProxy */;
 		};
+		FB097C732A7DC9AA00BED235 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FB097C4E2A7DC55900BED235 /* LifeCoachExtensions */;
+			targetProxy = FB097C722A7DC9AA00BED235 /* PBXContainerItemProxy */;
+		};
+		FB097C782A7DC9B100BED235 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FBAD474F28FC8BB0003D2F7A /* LifeCoach */;
+			targetProxy = FB097C772A7DC9B100BED235 /* PBXContainerItemProxy */;
+		};
 		FB15355F2A4A66E000E4B0B0 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = FB15355B2A4A66E000E4B0B0 /* LifeCoachWatchOSUIPreview Watch App */;
@@ -2018,6 +2092,36 @@
 			isa = PBXTargetDependency;
 			target = FBAD474F28FC8BB0003D2F7A /* LifeCoach */;
 			targetProxy = FBAD475C28FC8BB0003D2F7A /* PBXContainerItemProxy */;
+		};
+		FBC0AF062A7C8BA30034C593 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FBAD474F28FC8BB0003D2F7A /* LifeCoach */;
+			targetProxy = FBC0AF052A7C8BA30034C593 /* PBXContainerItemProxy */;
+		};
+		FBE113E42AA6A7D300236193 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FBAD474F28FC8BB0003D2F7A /* LifeCoach */;
+			targetProxy = FBE113E32AA6A7D300236193 /* PBXContainerItemProxy */;
+		};
+		FBE113E62AA6A7DB00236193 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FB06B52C292BF71C00AE6079 /* LifeCoachWatchOS */;
+			targetProxy = FBE113E52AA6A7DB00236193 /* PBXContainerItemProxy */;
+		};
+		FBE113E82AA6A7E300236193 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FB097C4E2A7DC55900BED235 /* LifeCoachExtensions */;
+			targetProxy = FBE113E72AA6A7E300236193 /* PBXContainerItemProxy */;
+		};
+		FBE113EA2AA6A83A00236193 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FB509E032A7C936A00AA9333 /* TimeCoachWatchExtension */;
+			targetProxy = FBE113E92AA6A83A00236193 /* PBXContainerItemProxy */;
+		};
+		FBE9A9772939527C00D8BF29 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FBE9A9732939527C00D8BF29 /* TimeCoach Watch App */;
+			targetProxy = FBE9A9762939527C00D8BF29 /* PBXContainerItemProxy */;
 		};
 		FBE9A9882939527E00D8BF29 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
