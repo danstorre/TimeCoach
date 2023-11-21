@@ -10,6 +10,7 @@ public struct Infrastructure {
     let unregisterTimerNotification: (() -> Void)?
     let currentDate: () -> Date
     let mainScheduler: AnyDispatchQueueScheduler
+    let backgroundTimeExtender: BackgroundExtendedTime?
     
     init(timerCountdown: TimerCountdown,
          timerState: TimerSave & TimerLoad,
@@ -18,7 +19,8 @@ public struct Infrastructure {
          notifySavedTimer: (() -> Void)? = nil,
          currentDate: @escaping () -> Date = Date.init,
          unregisterTimerNotification: (() -> Void)? = nil,
-         mainScheduler: AnyDispatchQueueScheduler = .immediateOnMainQueue
+         mainScheduler: AnyDispatchQueueScheduler = .immediateOnMainQueue,
+         backgroundTimeExtender: BackgroundExtendedTime? = nil
     ) {
         self.timerCountdown = timerCountdown
         self.timerState = timerState
@@ -28,5 +30,6 @@ public struct Infrastructure {
         self.currentDate = currentDate
         self.unregisterTimerNotification = unregisterTimerNotification
         self.mainScheduler = mainScheduler
+        self.backgroundTimeExtender = backgroundTimeExtender
     }
 }

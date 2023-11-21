@@ -6,7 +6,14 @@ import Combine
 import UserNotifications
 import WidgetKit
 
+protocol BackgroundExtendedTime {
+    func requestTime(reason: String)
+}
+
 class TimeCoachRoot {
+    // Background Activity
+    private var backgroundTimeExtender: BackgroundExtendedTime?
+    
     // Timer State
     private var timerSave: TimerSave?
     private var timerLoad: TimerLoad?
@@ -89,6 +96,7 @@ class TimeCoachRoot {
         self.unregisterNotifications = infrastructure.unregisterTimerNotification ?? {}
         self.mainScheduler = infrastructure.mainScheduler
         self.timerScheduler = infrastructure.mainScheduler
+        self.backgroundTimeExtender = infrastructure.backgroundTimeExtender
     }
     
     func createTimer() {
@@ -155,7 +163,7 @@ class TimeCoachRoot {
     
     func goToBackground() {
         timerSave?.saveTime(completion: { time in })
-        saveTimerProcess()
+        backgroundTimeExtender?.requestTime(reason: "TimerSaveStateProcess")
     }
     
     func goToForeground() {
