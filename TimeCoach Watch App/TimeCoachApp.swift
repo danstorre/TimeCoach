@@ -66,8 +66,6 @@ struct TimeCoach_Watch_AppApp: App {
     }
     
     func gotoInactive() {
-        goToForeground()
         root.gotoInactive()
-        goToBackground()
     }
 }

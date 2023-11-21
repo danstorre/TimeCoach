@@ -155,15 +155,14 @@ class TimeCoachRoot {
     
     func goToBackground() {
         timerSave?.saveTime(completion: { time in })
+        saveTimerProcess()
     }
     
     func goToForeground() {
         timerLoad?.loadTime()
     }
     
-    func gotoInactive() {
-        saveTimerProcess()
-    }
+    func gotoInactive() {}
     
     private func saveTimerProcess() {
         saveTimerProcessPublisher(timerCoachRoot: self)?
