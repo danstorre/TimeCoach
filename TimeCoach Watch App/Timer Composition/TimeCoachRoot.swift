@@ -164,7 +164,11 @@ class TimeCoachRoot {
     
     func goToBackground() {
         timerSave?.saveTime(completion: { time in })
-        backgroundTimeExtender?.requestTime(reason: "TimerSaveStateProcess", completion: { expired in })
+        backgroundTimeExtender?.requestTime(reason: "TimerSaveStateProcess", completion: { [unowned self] expired in
+            guard !expired else { return }
+            
+            self.saveTimerProcess()
+        })
     }
     
     func goToForeground() {

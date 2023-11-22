@@ -17,9 +17,8 @@ final class StateTimerAcceptanceTests: XCTestCase {
         ])
     }
     
-    func test_onBackgroundAppStateChange_onExpiredTimeExtension_shouldNotSaveTimerState() {
+    func test_onBackgroundAppStateChange_shouldNotSaveTimerStateOnExpiredTimeExtensionCompletion() {
         let (sut, spy) = makeSUT()
-        
         sut.simulateGoToBackground()
         
         XCTAssertEqual(spy.receivedMessages, [
@@ -33,29 +32,40 @@ final class StateTimerAcceptanceTests: XCTestCase {
         ])
     }
     
-//    func test_onLaunch_onPlayTimerState_whenBackgroundAppStateShouldSaveTimerStateOnce() {
-//        let (sut, spy) = makeSUT()
-//        let expected = makeAnyState(seconds: spy.currentTimerSet.elapsedSeconds,
-//                                    startDate: spy.currentTimerSet.startDate,
-//                                    endDate: spy.currentTimerSet.endDate, state: .running).local
-//        
-//        sut.simulateToggleTimerUserInteraction()
-//        
-//        XCTAssertEqual(spy.receivedMessages, [
-//            .startTimer,
-//            .scheduleTimerNotification(isBreak: false)
-//        ])
-//        
-//        sut.simulateGoToBackground()
-//        
-//        XCTAssertEqual(spy.receivedMessages, [
-//            .startTimer,
-//            .scheduleTimerNotification(isBreak: false),
-//            .saveStateTimer(value: expected),
-//            .notifySavedTimer
-//        ])
-//    }
-//    
+    func test_onPlayTimerState_onBackgroundAppStateChange_shouldSaveTimerStateOnNonExpiredTimeExtensionCompletion() {
+        let (sut, spy) = makeSUT()
+        let expectedLocalTimerState = expectedTimerState(from: spy, state: .running)
+        
+        sut.simulateToggleTimerUserInteraction()
+        
+        XCTAssertEqual(spy.receivedMessages, [
+            .startTimer,
+            .scheduleTimerNotification(isBreak: false)
+        ])
+        
+        sut.simulateGoToBackground()
+        
+        XCTAssertEqual(spy.receivedMessages, [
+            .startTimer,
+            .scheduleTimerNotification(isBreak: false),
+            .requestExtendedBackgroundTime(reason: "TimerSaveStateProcess")
+        ])
+        
+        spy.extendedTimeFinished(expiring: false)
+        
+        XCTAssertEqual(spy.receivedMessages, [
+            .startTimer,
+            .scheduleTimerNotification(isBreak: false),
+            .requestExtendedBackgroundTime(reason: "TimerSaveStateProcess"),
+            .saveStateTimer(value: expectedLocalTimerState),
+            .notifySavedTimer
+        ])
+    }
+    
+    private func expectedTimerState(from spy: Spy, state: TimerStateHelper) -> LocalTimerState {
+        makeAnyState(seconds: spy.currentTimerSet.elapsedSeconds, startDate: spy.currentTimerSet.startDate, endDate: spy.currentTimerSet.endDate, state: state).local
+    }
+    
 //    func test_onLaunch_onStopTimerState_onBackgroundAppStateChangeShouldSaveTimerStateOnce() {
 //        let currentDate = Date()
 //        let (sut, spy) = makeSUT(currentDate: { currentDate })
