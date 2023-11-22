@@ -7,7 +7,8 @@ import UserNotifications
 import WidgetKit
 
 protocol BackgroundExtendedTime {
-    func requestTime(reason: String)
+    typealias ExtendedTimeCompletion = (Bool) -> Void
+    func requestTime(reason: String, completion: @escaping ExtendedTimeCompletion)
 }
 
 class TimeCoachRoot {
@@ -163,7 +164,7 @@ class TimeCoachRoot {
     
     func goToBackground() {
         timerSave?.saveTime(completion: { time in })
-        backgroundTimeExtender?.requestTime(reason: "TimerSaveStateProcess")
+        backgroundTimeExtender?.requestTime(reason: "TimerSaveStateProcess", completion: { expired in })
     }
     
     func goToForeground() {

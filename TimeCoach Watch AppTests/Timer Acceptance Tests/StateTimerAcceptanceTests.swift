@@ -17,22 +17,22 @@ final class StateTimerAcceptanceTests: XCTestCase {
         ])
     }
     
-//    func test_onLaunch_onBackgroundAppStateShouldSaveOnlyOnUserInteraction() {
-//        let (sut, spy) = makeSUT()
-//        let expected = makeAnyState(seconds: spy.currentTimerSet.elapsedSeconds,
-//                                    startDate: spy.currentTimerSet.startDate,
-//                                    endDate: spy.currentTimerSet.endDate, state: .stop).local
-//        
-//        XCTAssertEqual(spy.receivedMessages, [])
-//        
-//        sut.simulateGoToBackground()
-//        
-//        XCTAssertEqual(spy.receivedMessages, [
-//            .saveStateTimer(value: expected),
-//            .notifySavedTimer
-//        ])
-//    }
-//    
+    func test_onBackgroundAppStateChange_onExpiredTimeExtension_shouldNotSaveTimerState() {
+        let (sut, spy) = makeSUT()
+        
+        sut.simulateGoToBackground()
+        
+        XCTAssertEqual(spy.receivedMessages, [
+            .requestExtendedBackgroundTime(reason: "TimerSaveStateProcess")
+        ])
+        
+        spy.extendedTimeFinished(expiring: true)
+        
+        XCTAssertEqual(spy.receivedMessages, [
+            .requestExtendedBackgroundTime(reason: "TimerSaveStateProcess")
+        ])
+    }
+    
 //    func test_onLaunch_onPlayTimerState_whenBackgroundAppStateShouldSaveTimerStateOnce() {
 //        let (sut, spy) = makeSUT()
 //        let expected = makeAnyState(seconds: spy.currentTimerSet.elapsedSeconds,
@@ -303,8 +303,15 @@ final class StateTimerAcceptanceTests: XCTestCase {
         }
         
         // MARK: - Background Extended Time
-        func requestTime(reason: String) {
+        private var requestExtendedBackgroundTimeCompletions = [ExtendedTimeCompletion]()
+        
+        func requestTime(reason: String, completion: @escaping ExtendedTimeCompletion) {
             receivedMessages.append(.requestExtendedBackgroundTime(reason: reason))
+            requestExtendedBackgroundTimeCompletions.append(completion)
+        }
+        
+        func extendedTimeFinished(expiring: Bool, at index: Int = 0) {
+            requestExtendedBackgroundTimeCompletions[index](expiring)
         }
     }
 }
