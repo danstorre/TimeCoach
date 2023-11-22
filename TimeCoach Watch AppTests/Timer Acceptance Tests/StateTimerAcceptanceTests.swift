@@ -166,19 +166,19 @@ final class StateTimerAcceptanceTests: XCTestCase {
         ])
     }
     
+    func test_onInactiveAppStateChange_shouldNotSendMessageToStartSaveStateProcess() {
+        let (sut, spy) = makeSUT(currentDate: { Date() })
+        
+        sut.gotoInactive()
+        
+        XCTAssertEqual(spy.receivedMessages, [])
+    }
+    
+    // MARK: - Helpers
     private func expectedTimerState(from spy: Spy, state: TimerStateHelper) -> LocalTimerState {
         makeAnyState(seconds: spy.currentTimerSet.elapsedSeconds, startDate: spy.currentTimerSet.startDate, endDate: spy.currentTimerSet.endDate, state: state).local
     }
-//    
-//    func test_onInactiveAppStateChange_shouldNotSendMessageToStartSaveStateProcess() {
-//        let (sut, spy) = makeSUT(currentDate: { Date() })
-//        
-//        sut.gotoInactive()
-//        
-//        XCTAssertEqual(spy.receivedMessages, [])
-//    }
     
-    // MARK: - Helpers
     private func makeSUT(currentDate: @escaping () -> Date = Date.init) -> (sut: TimeCoach_Watch_AppApp, spy: Spy) {
         let spy = Spy(currenDate: currentDate())
         let infra = Infrastructure(
