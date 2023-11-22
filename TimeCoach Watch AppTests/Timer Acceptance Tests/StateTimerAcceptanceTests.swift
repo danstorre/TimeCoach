@@ -131,39 +131,44 @@ final class StateTimerAcceptanceTests: XCTestCase {
         ])
     }
     
+    func test_onSkipUserInteraction_OnBackgroundAppStateChange_shouldSaveTimerStateOnNonExpiredTimeExtensionCompletion() {
+        let currentDate = Date()
+        let (sut, spy) = makeSUT(currentDate: { currentDate })
+        let expected = makeAnyState(seconds: 0,
+                                    startDate: currentDate,
+                                    endDate: currentDate.adding(seconds: .pomodoroInSeconds),
+                                    isBreak: true,
+                                    state: .stop).local
+        sut.simulateSkipUserInteraction()
+        
+        XCTAssertEqual(spy.receivedMessages, [
+            .skipTimer,
+            .unregisterTimerNotification
+        ], "on user skip interaction should unregister timer notification.")
+        
+        spy.deliversSetAfterSkip((timerSet: expected.localTimerSet, state: .stop))
+        sut.simulateGoToBackground()
+        
+        XCTAssertEqual(spy.receivedMessages, [
+            .skipTimer,
+            .unregisterTimerNotification,
+            .requestExtendedBackgroundTime(reason: "TimerSaveStateProcess")
+        ])
+        
+        spy.extendedTimeFinished(expiring: false)
+        
+        XCTAssertEqual(spy.receivedMessages, [
+            .skipTimer,
+            .unregisterTimerNotification,
+            .requestExtendedBackgroundTime(reason: "TimerSaveStateProcess"),
+            .saveStateTimer(value: expected),
+            .notifySavedTimer
+        ])
+    }
+    
     private func expectedTimerState(from spy: Spy, state: TimerStateHelper) -> LocalTimerState {
         makeAnyState(seconds: spy.currentTimerSet.elapsedSeconds, startDate: spy.currentTimerSet.startDate, endDate: spy.currentTimerSet.endDate, state: state).local
     }
-//    
-//    func test_onLaunch_onSkipUserInteraction_onBackgroundAppStateChangeShouldSaveTimerStateOnce() {
-//        let currentDate = Date()
-//        let (sut, spy) = makeSUT(currentDate: { currentDate })
-//        let expected = makeAnyState(seconds: 0,
-//                                    startDate: currentDate,
-//                                    endDate: currentDate.adding(seconds: .pomodoroInSeconds),
-//                                    isBreak: true,
-//                                    state: .stop).local
-//        
-//        sut.timerView.simulateSkipTimerUserInteraction()
-//        spy.deliversSetAfterSkip((timerSet: expected.localTimerSet, state: .stop))
-//        
-//        XCTAssertEqual(spy.receivedMessages, [
-//            .skipTimer,
-//            .unregisterTimerNotification
-//        ], "on user skip interaction should unregister timer notification.")
-//        
-//        sut.simulateGoToBackground()
-//        
-//        let expectedMessages: [Spy.AnyMessage] = [
-//            .skipTimer,
-//            .unregisterTimerNotification,
-//            .saveStateTimer(value: expected),
-//            .notifySavedTimer
-//        ]
-//        
-//        XCTAssertEqual(spy.receivedMessages,
-//                       expectedMessages, "expected spy messages \(expectedMessages), got \(spy.receivedMessages))")
-//    }
 //    
 //    func test_onInactiveAppStateChange_shouldNotSendMessageToStartSaveStateProcess() {
 //        let (sut, spy) = makeSUT(currentDate: { Date() })
