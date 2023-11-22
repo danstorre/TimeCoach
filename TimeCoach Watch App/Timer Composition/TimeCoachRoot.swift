@@ -6,9 +6,25 @@ import Combine
 import UserNotifications
 import WidgetKit
 
+class DefaultBackgroundExtendedTime: BackgroundExtendedTime {
+    typealias BackgroundTimeExtender = (String, @escaping ExtendedTimeCompletion) -> Void
+    private let extender: BackgroundTimeExtender
+    
+    init(completion: @escaping BackgroundTimeExtender) {
+        self.extender = completion
+    }
+    
+    func requestTime(reason: String, completion: @escaping ExtendedTimeCompletion) {
+        extender(reason, completion)
+    }
+}
+
 class TimeCoachRoot {
     // Background Activity
     private var backgroundTimeExtender: BackgroundExtendedTime?
+    private lazy var defaultTimeExtender: DefaultBackgroundExtendedTime = DefaultBackgroundExtendedTime { [weak self] reason, completion in
+        self?.backgroundTimeExtender?.requestTime(reason: reason, completion: completion)
+    }
     
     // Timer State
     private var timerSave: TimerSave?
@@ -159,7 +175,7 @@ class TimeCoachRoot {
     
     func goToBackground() {
         timerSave?.saveTime(completion: { time in })
-        backgroundTimeExtender?.requestTime(reason: "TimerSaveStateProcess", completion: { [unowned self] expired in
+        defaultTimeExtender.requestTime(reason: "TimerSaveStateProcess", completion: { [unowned self] expired in
             guard !expired else { return }
             
             self.saveTimerProcess()
