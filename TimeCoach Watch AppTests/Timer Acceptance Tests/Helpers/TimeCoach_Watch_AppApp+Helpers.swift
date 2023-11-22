@@ -20,4 +20,8 @@ extension TimeCoach_Watch_AppApp {
     func simulateGoToInactive() {
         gotoInactive()
     }
+    
+    func simulateStopTimerUserInteraction() {
+        timerView.simulateStopTimerUserInteraction()
+    }
 }

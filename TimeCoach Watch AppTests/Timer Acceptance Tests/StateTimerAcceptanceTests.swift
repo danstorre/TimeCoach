@@ -62,37 +62,44 @@ final class StateTimerAcceptanceTests: XCTestCase {
         ])
     }
     
+    func test_onStopTimerState_onBackgroundAppStateChange_shouldSaveTimerStateOnNonExpiredTimeExtensionCompletion() {
+        let currentDate = Date()
+        let (sut, spy) = makeSUT(currentDate: { currentDate })
+        let expectedLocalTimerState = makeAnyState(seconds: 0,
+                                                   startDate: currentDate,
+                                                   endDate: currentDate.adding(seconds: .pomodoroInSeconds),
+                                                   state: .stop).local
+        
+        sut.simulateStopTimerUserInteraction()
+        
+        XCTAssertEqual(spy.receivedMessages, [
+            .stopTimer,
+            .unregisterTimerNotification,
+        ])
+        
+        sut.simulateGoToBackground()
+        
+        XCTAssertEqual(spy.receivedMessages, [
+            .stopTimer,
+            .unregisterTimerNotification,
+            .requestExtendedBackgroundTime(reason: "TimerSaveStateProcess")
+        ])
+        
+        spy.extendedTimeFinished(expiring: false)
+        
+        XCTAssertEqual(spy.receivedMessages, [
+            .stopTimer,
+            .unregisterTimerNotification,
+            .requestExtendedBackgroundTime(reason: "TimerSaveStateProcess"),
+            .saveStateTimer(value: expectedLocalTimerState),
+            .notifySavedTimer
+        ])
+    }
+    
     private func expectedTimerState(from spy: Spy, state: TimerStateHelper) -> LocalTimerState {
         makeAnyState(seconds: spy.currentTimerSet.elapsedSeconds, startDate: spy.currentTimerSet.startDate, endDate: spy.currentTimerSet.endDate, state: state).local
     }
-    
-//    func test_onLaunch_onStopTimerState_onBackgroundAppStateChangeShouldSaveTimerStateOnce() {
-//        let currentDate = Date()
-//        let (sut, spy) = makeSUT(currentDate: { currentDate })
-//        let expected = makeAnyState(seconds: 0,
-//                                    startDate: currentDate,
-//                                    endDate: currentDate.adding(seconds: .pomodoroInSeconds), state: .stop).local
-//        
-//        sut.timerView.simulateStopTimerUserInteraction()
-//        
-//        XCTAssertEqual(spy.receivedMessages, [
-//            .stopTimer,
-//            .unregisterTimerNotification
-//        ])
-//        
-//        sut.goToBackground()
-//        
-//        let expectedMessages: [Spy.AnyMessage] = [
-//            .stopTimer,
-//            .unregisterTimerNotification,
-//            .saveStateTimer(value: expected),
-//            .notifySavedTimer
-//        ]
-//        XCTAssertEqual(spy.receivedMessages,
-//                       expectedMessages,
-//                        "expected spy messages \(expectedMessages), got \(spy.receivedMessages))")
-//    }
-//    
+//
 //    func test_onLaunch_onPauseTimerState_onBackgroundAppStateChangeShouldSaveTimerStateOnce() {
 //        let currentDate = Date()
 //        let (sut, spy) = makeSUT(currentDate: { currentDate })
