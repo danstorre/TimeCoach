@@ -128,6 +128,7 @@
 		FBBF06242A4F2FC80020695A /* TimeCoach-Watch-App-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FBE9A9DF293974FF00D8BF29 /* TimeCoach-Watch-App-Info.plist */; };
 		FBC41FE12B0E4573008E4F20 /* BackgroundExtendedTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC41FE02B0E4573008E4F20 /* BackgroundExtendedTime.swift */; };
 		FBC41FE32B0E47DC008E4F20 /* DefaultBackgroundExtendedTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC41FE22B0E47DC008E4F20 /* DefaultBackgroundExtendedTime.swift */; };
+		FBC41FE52B0E4EE3008E4F20 /* BackgroundExtendedTimeNullObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC41FE42B0E4EE3008E4F20 /* BackgroundExtendedTimeNullObject.swift */; };
 		FBC612F3293AC2ED008D9EF8 /* TimerCountDownSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC612F2293AC2ED008D9EF8 /* TimerCountDownSpy.swift */; };
 		FBC9ADAF2919E8B500E0BEFC /* XCTestCase+MemoryLeakTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC9ADAE2919E8B500E0BEFC /* XCTestCase+MemoryLeakTracking.swift */; };
 		FBC9CC002A806E4A001B5975 /* TimerStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC9CBFF2A806E4A001B5975 /* TimerStyle.swift */; };
@@ -489,6 +490,7 @@
 		FBBF06252A4F41D60020695A /* TimeCoach-VisionOS-App-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "TimeCoach-VisionOS-App-Info.plist"; sourceTree = SOURCE_ROOT; };
 		FBC41FE02B0E4573008E4F20 /* BackgroundExtendedTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundExtendedTime.swift; sourceTree = "<group>"; };
 		FBC41FE22B0E47DC008E4F20 /* DefaultBackgroundExtendedTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultBackgroundExtendedTime.swift; sourceTree = "<group>"; };
+		FBC41FE42B0E4EE3008E4F20 /* BackgroundExtendedTimeNullObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundExtendedTimeNullObject.swift; sourceTree = "<group>"; };
 		FBC612F2293AC2ED008D9EF8 /* TimerCountDownSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerCountDownSpy.swift; sourceTree = "<group>"; };
 		FBC9ADAE2919E8B500E0BEFC /* XCTestCase+MemoryLeakTracking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+MemoryLeakTracking.swift"; sourceTree = "<group>"; };
 		FBC9CBFF2A806E4A001B5975 /* TimerStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerStyle.swift; sourceTree = "<group>"; };
@@ -823,6 +825,7 @@
 				FBCD0A8C2A81B50300086476 /* DummyLocalTimerStore.swift */,
 				FBCD0A8E2A81E15900086476 /* DummyScheduler.swift */,
 				FB983CE42A82A86E009DEB2D /* LocalTimerState-State+Extensions.swift */,
+				FBC41FE42B0E4EE3008E4F20 /* BackgroundExtendedTimeNullObject.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -2047,6 +2050,7 @@
 				FB4B895D2A3BB9D90088DB5B /* SaveTimerAcceptanceTests.swift in Sources */,
 				FBE593E42A7836C200069F1C /* ReceiverNotifcationTests.swift in Sources */,
 				FBE9A9DE29396EA100D8BF29 /* TimeCoachAcceptanceTests.swift in Sources */,
+				FBC41FE52B0E4EE3008E4F20 /* BackgroundExtendedTimeNullObject.swift in Sources */,
 				FB05D9BC2A83DB2600EA0AE8 /* TimerNotificationsAcceptanceTests.swift in Sources */,
 				FBE9A9A5293952EB00D8BF29 /* TimerUIIntegrationTests.swift in Sources */,
 				FBE593F92A784E6000069F1C /* InstanceHelper+Extensions.swift in Sources */,

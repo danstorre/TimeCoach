@@ -117,7 +117,8 @@ final class TimeCoachAcceptanceTests: XCTestCase {
             timerCountdown: spy,
             timerState: spyTimerState,
             stateTimerStore: DummyLocalTimerStore(),
-            scheduler: DummyScheduler()
+            scheduler: DummyScheduler(),
+            backgroundTimeExtender: BackgroundExtendedTimeNullObject()
         )
         
         let sut = TimeCoach_Watch_AppApp(infrastructure: infra).timerView

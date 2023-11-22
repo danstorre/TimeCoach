@@ -25,7 +25,8 @@ final class SaveTimerAcceptanceTests: XCTestCase {
             timerCountdown: spy,
             timerState: spyTimeState,
             stateTimerStore: DummyLocalTimerStore(),
-            scheduler: DummyScheduler()
+            scheduler: DummyScheduler(),
+            backgroundTimeExtender: BackgroundExtendedTimeNullObject()
         )
         
         let sut = TimeCoach_Watch_AppApp(infrastructure: infra)

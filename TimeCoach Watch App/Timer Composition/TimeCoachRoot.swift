@@ -10,7 +10,7 @@ class TimeCoachRoot {
     // Background Activity
     private var backgroundTimeExtender: BackgroundExtendedTime?
     private lazy var defaultTimeExtender: DefaultBackgroundExtendedTime = DefaultBackgroundExtendedTime { [weak self] reason, completion in
-        self?.backgroundTimeExtender?.requestTime(reason: reason, completion: completion)
+        self?.backgroundTimeExtender?.requestTime(reason: reason, completion: completion) ?? ProcessInfo().performExpiringActivity(withReason: reason, using: completion)
     }
     
     // Timer State
