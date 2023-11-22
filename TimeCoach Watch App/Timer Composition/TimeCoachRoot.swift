@@ -6,11 +6,6 @@ import Combine
 import UserNotifications
 import WidgetKit
 
-protocol BackgroundExtendedTime {
-    typealias ExtendedTimeCompletion = (Bool) -> Void
-    func requestTime(reason: String, completion: @escaping ExtendedTimeCompletion)
-}
-
 class TimeCoachRoot {
     // Background Activity
     private var backgroundTimeExtender: BackgroundExtendedTime?
