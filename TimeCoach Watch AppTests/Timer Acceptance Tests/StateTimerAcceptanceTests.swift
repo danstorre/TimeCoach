@@ -32,6 +32,21 @@ final class StateTimerAcceptanceTests: XCTestCase {
         ])
     }
     
+    func test_onTimeExtensionCompletionExpiredTheSecondTime_ShouldSaveTimerStateOnce() {
+        let (sut, spy) = makeSUT()
+        let expectedLocalTimerState = expectedTimerState(from: spy, state: .stop)
+        sut.simulateGoToBackground()
+        
+        spy.extendedTimeFinished(expiring: false)
+        spy.extendedTimeFinished(expiring: true)
+        
+        XCTAssertEqual(spy.receivedMessages, [
+            .requestExtendedBackgroundTime(reason: "TimerSaveStateProcess"),
+            .saveStateTimer(value: expectedLocalTimerState),
+            .notifySavedTimer
+        ])
+    }
+    
     func test_onPlayTimerState_onBackgroundAppStateChange_shouldSaveTimerStateOnNonExpiredTimeExtensionCompletion() {
         let (sut, spy) = makeSUT()
         let expectedLocalTimerState = expectedTimerState(from: spy, state: .running)
