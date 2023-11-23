@@ -17,13 +17,9 @@ final class StateTimerAcceptanceTests: XCTestCase {
         ])
     }
     
-    func test_onBackgroundAppStateChange_shouldNotSaveTimerStateOnExpiredTimeExtensionCompletion() {
+    func test_onTimeExtensionCompletionExpired_shouldNotSaveTimerState() {
         let (sut, spy) = makeSUT()
         sut.simulateGoToBackground()
-        
-        XCTAssertEqual(spy.receivedMessages, [
-            .requestExtendedBackgroundTime(reason: "TimerSaveStateProcess")
-        ])
         
         spy.extendedTimeFinished(expiring: true)
         
