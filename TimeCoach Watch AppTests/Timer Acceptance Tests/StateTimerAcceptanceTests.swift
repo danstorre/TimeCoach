@@ -38,7 +38,7 @@ final class StateTimerAcceptanceTests: XCTestCase {
         
         XCTAssertEqual(spy.receivedMessages, [
             .requestExtendedBackgroundTime(reason: "TimerSaveStateProcess"),
-            .saveStateTimer(value: expectedLocalTimerState),
+            .insertStateTimer(value: expectedLocalTimerState),
             .notifySavedTimer
         ])
     }
@@ -68,7 +68,7 @@ final class StateTimerAcceptanceTests: XCTestCase {
             .startTimer,
             .scheduleTimerNotification(isBreak: false),
             .requestExtendedBackgroundTime(reason: "TimerSaveStateProcess"),
-            .saveStateTimer(value: expectedLocalTimerState),
+            .insertStateTimer(value: expectedLocalTimerState),
             .notifySavedTimer
         ])
     }
@@ -102,7 +102,7 @@ final class StateTimerAcceptanceTests: XCTestCase {
             .stopTimer,
             .unregisterTimerNotification,
             .requestExtendedBackgroundTime(reason: "TimerSaveStateProcess"),
-            .saveStateTimer(value: expectedLocalTimerState),
+            .insertStateTimer(value: expectedLocalTimerState),
             .notifySavedTimer
         ])
     }
@@ -137,7 +137,7 @@ final class StateTimerAcceptanceTests: XCTestCase {
             .pauseTimer,
             .unregisterTimerNotification,
             .requestExtendedBackgroundTime(reason: "TimerSaveStateProcess"),
-            .saveStateTimer(value: expected),
+            .insertStateTimer(value: expected),
             .notifySavedTimer
         ])
     }
@@ -172,7 +172,7 @@ final class StateTimerAcceptanceTests: XCTestCase {
             .skipTimer,
             .unregisterTimerNotification,
             .requestExtendedBackgroundTime(reason: "TimerSaveStateProcess"),
-            .saveStateTimer(value: expected),
+            .insertStateTimer(value: expected),
             .notifySavedTimer
         ])
     }
@@ -214,7 +214,7 @@ final class StateTimerAcceptanceTests: XCTestCase {
             case stopTimer
             case pauseTimer
             case skipTimer
-            case saveStateTimer(value: LifeCoach.LocalTimerState)
+            case insertStateTimer(value: LifeCoach.LocalTimerState)
             case scheduleTimerNotification(isBreak: Bool)
             case unregisterTimerNotification
             case notifySavedTimer
@@ -226,7 +226,7 @@ final class StateTimerAcceptanceTests: XCTestCase {
                     return "requestedExtendedTime with reason: \(reason)"
                 case .startTimer:
                     return "startTimer"
-                case let .saveStateTimer(value: localTimerState):
+                case let .insertStateTimer(value: localTimerState):
                     return """
                 saveStateTimer: seconds: \(localTimerState.localTimerSet.elapsedSeconds), state: \(localTimerState.state)
                 startDate: \(localTimerState.localTimerSet.startDate), endDate: \(localTimerState.localTimerSet.endDate)
@@ -323,7 +323,7 @@ final class StateTimerAcceptanceTests: XCTestCase {
         }
         
         func insert(state: LifeCoach.LocalTimerState) throws {
-            receivedMessages.append(.saveStateTimer(value: state))
+            receivedMessages.append(.insertStateTimer(value: state))
         }
         
         // MARK: - Scheduler
