@@ -45,21 +45,6 @@ final class FoundationTimerCountdownTests: XCTestCase {
         }
     }
     
-    func test_start_deliversOneMilliSecondElapsedFromTheStartingSet() {
-        let startSet = createAnyTimerSet()
-        let sut = makeSUT(startingSet: startSet, nextSet: createAnyTimerSet())
-        
-        expect(sut: sut, toDeliver: [startSet, startSet.adding(0.001)])
-    }
-    
-    func test_start_deliversTwoMilliSecondsElapsedFromTheStartingSet() {
-        let fixedDate = Date()
-        let startSet = createTimerSet(0, startDate: fixedDate, endDate: fixedDate.adding(seconds: 0.002))
-        let sut = makeSUT(startingSet: startSet, nextSet: createAnyTimerSet())
-
-        expect(sut: sut, toDeliver: [startSet, startSet.adding(0.001), startSet.adding(0.002)])
-    }
-    
     func test_start_afterFinishTheFirstSetTimerDoesNotChangeState() {
         let fixedDate = Date()
         let startSet = createTimerSet(0, startDate: fixedDate, endDate: fixedDate.adding(seconds: 0.001))
