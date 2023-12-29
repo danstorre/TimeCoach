@@ -12,11 +12,20 @@ final class FoundationTimerCountdownTests: XCTestCase {
     
     func test_start_deliversCorrectsTimerValues() {
         let startSet = createAnyTimerSet()
-        let sut = makeSUT(startingSet: startSet, nextSet: createAnyTimerSet())
+        let samples: [(deliveryCount: Int, expectedTimerValues: (state: TimerCountdownState, set: LocalTimerSet))] = [
+            (deliveryCount: 2, expectedTimerValues: (state: TimerCountdownState.running,
+                                                   set: startSet.adding(0.001))),
+            (deliveryCount: 3, expectedTimerValues: (state: TimerCountdownState.running,
+                                                   set: startSet.adding(0.002)))
+        ]
         
-        starts(sut: sut, waitUntilDeliveryCount: 2)
-        
-        assertTimerSet(startSet.adding(0.001), state: .running, from: sut)
+        samples.forEach { sample in
+            let sut = makeSUT(startingSet: startSet, nextSet: createAnyTimerSet())
+            
+            starts(sut: sut, waitUntilDeliveryCount: sample.deliveryCount)
+            
+            assertTimerSet(sample.expectedTimerValues.set, state: sample.expectedTimerValues.state, from: sut)
+        }
     }
     
     private func starts(sut: TimerCountdown, waitUntilDeliveryCount count: Int) {
