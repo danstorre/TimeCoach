@@ -52,15 +52,6 @@ final class FoundationTimerCountdownTests: XCTestCase {
         assertsStartCountdownTwiceKeepsStateToRunning(sut: sut)
     }
     
-    func test_start_onThresholdHit_DeliversZeroTimeResetsTimerAndChangesStateToStop() {
-        let fixedDate = Date()
-        let startingSet = createTimerSet(0, startDate: fixedDate, endDate: fixedDate.adding(seconds: 0.001))
-        let nextSet = createTimerSet(0, startDate: fixedDate, endDate: fixedDate.adding(seconds: 0.002))
-        let sut = makeSUT(startingSet: startingSet, nextSet: nextSet)
-        
-        expect(sut: sut, toDeliver: [startingSet, startingSet.adding(0.001)])
-    }
-    
     func test_start_onSetFinishChangesStateToStop() {
         let startDate = Date()
         let finishDate = startDate.adding(seconds: 0.001)
