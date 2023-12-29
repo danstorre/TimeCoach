@@ -28,6 +28,23 @@ final class FoundationTimerCountdownTests: XCTestCase {
         }
     }
     
+    func test_start_deliversCorrectTimerValues() {
+        let fixedDate = Date()
+        let startSet1 = createAnyTimerSet()
+        let startSet2 = createTimerSet(0, startDate: fixedDate, endDate: fixedDate.adding(seconds: 0.002))
+        
+        let samples: [(startSet: LocalTimerSet, expected: [LocalTimerSet])] = [
+            (startSet: startSet1, expected: [startSet1, startSet1.adding(0.001)]),
+            (startSet: startSet2, expected: [startSet2, startSet2.adding(0.001), startSet2.adding(0.002)])
+        ]
+        
+        samples.forEach { sample in
+            let sut = makeSUT(startingSet: sample.startSet, nextSet: createAnyTimerSet())
+            
+            expect(sut: sut, toDeliver: sample.expected)
+        }
+    }
+    
     func test_start_deliversOneMilliSecondElapsedFromTheStartingSet() {
         let startSet = createAnyTimerSet()
         let sut = makeSUT(startingSet: startSet, nextSet: createAnyTimerSet())
