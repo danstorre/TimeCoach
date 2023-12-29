@@ -10,7 +10,7 @@ final class FoundationTimerCountdownTests: XCTestCase {
         assertTimerSet(startSet, state: .stop, from: sut)
     }
     
-    func test_start_deliversCorrectsTimerValues() {
+    func test_start_setsCorrectTimerValues() {
         let startSet = createAnyTimerSet()
         let samples: [(deliveryCount: Int, expectedTimerValues: (state: TimerCountdownState, set: LocalTimerSet))] = [
             (deliveryCount: 2, expectedTimerValues: (state: TimerCountdownState.running,
