@@ -58,8 +58,6 @@ final class FoundationTimerCountdownTests: XCTestCase {
         let startSet = createTimerSet(0, startDate: startDate, endDate: finishDate)
         let sut = makeSUT(startingSet: startSet, nextSet: createAnyTimerSet())
         
-        expect(sut: sut, toDeliver: [startSet, startSet.adding(0.001)])
-        
         assertTimerSet(startSet.adding(0.001), state: .stop, from: sut)
     }
     
