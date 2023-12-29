@@ -46,14 +46,14 @@ final class FoundationTimerCountdownTests: XCTestCase {
     }
     
     func test_start_onSetFinishChangesStateToStop() {
-        let fixedDate = Date()
-        let startSet = createTimerSet(0, startDate: fixedDate, endDate: fixedDate.adding(seconds: 0.001))
+        let startDate = Date()
+        let finishDate = startDate.adding(seconds: 0.001)
+        let startSet = createTimerSet(0, startDate: startDate, endDate: finishDate)
         let sut = makeSUT(startingSet: startSet, nextSet: createAnyTimerSet())
-        let finishedStartSet = startSet.adding(0.001)
         
-        expect(sut: sut, toDeliver: [startSet, finishedStartSet])
+        expect(sut: sut, toDeliver: [startSet, startSet.adding(0.001)])
         
-        assertTimerSet(finishedStartSet, state: .stop, from: sut)
+        assertTimerSet(startSet.adding(0.001), state: .stop, from: sut)
     }
     
     func test_startTwice_doesNotChangeStateOfRunning() {
