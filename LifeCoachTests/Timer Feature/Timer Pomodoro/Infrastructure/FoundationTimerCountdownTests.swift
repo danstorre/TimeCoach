@@ -41,7 +41,7 @@ final class FoundationTimerCountdownTests: XCTestCase {
         samples.forEach { sample in
             let sut = makeSUT(startingSet: sample.startSet, nextSet: createAnyTimerSet())
             
-            expect(sut: sut, toDeliver: sample.expected)
+            starts(sut: sut, expectingToDeliver: sample.expected)
         }
     }
     
@@ -58,7 +58,7 @@ final class FoundationTimerCountdownTests: XCTestCase {
         let startSet = createTimerSet(0, startDate: startDate, endDate: finishDate)
         let sut = makeSUT(startingSet: startSet, nextSet: createAnyTimerSet())
         
-        expect(sut: sut, toDeliver: [startSet, startSet.adding(0.001)])
+        starts(sut: sut, expectingToDeliver: [startSet, startSet.adding(0.001)])
         assertTimerSet(startSet.adding(0.001), state: .stop, from: sut)
     }
     
@@ -68,7 +68,7 @@ final class FoundationTimerCountdownTests: XCTestCase {
         
         sut.stopCountdown()
         
-        expect(sut: sut, toDeliver: [currentSet])
+        starts(sut: sut, expectingToDeliver: [currentSet])
     }
     
     func test_stop_onStopState_doesNotChangeStateFromStop() {
@@ -265,7 +265,7 @@ final class FoundationTimerCountdownTests: XCTestCase {
         return sut
     }
     
-    private func expect(sut: TimerCountdown, toDeliver deliverExpectation: [LocalTimerSet],
+    private func starts(sut: TimerCountdown, expectingToDeliver deliverExpectation: [LocalTimerSet],
                         file: StaticString = #filePath,
                         line: UInt = #line) {
         var receivedLocalTimerSets = [LocalTimerSet]()
