@@ -10,7 +10,7 @@ struct TimeCoachWidget: Widget {
     
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: root.provider) { entry in
-            WidgetEntryView(entry: entry)
+            TimeCoachWidgetEntryView(entry: entry)
         }
         .configurationDisplayName("TimeCoach Widget")
         .description("This widget shows you the current timer of TimeCoach")

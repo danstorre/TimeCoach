@@ -151,7 +151,6 @@
 		FBD8225E2A75B1EE002702F4 /* LocaTimerSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD8225D2A75B1EE002702F4 /* LocaTimerSpy.swift */; };
 		FBD822602A75B2FE002702F4 /* CommonHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD8225F2A75B2FE002702F4 /* CommonHelpers.swift */; };
 		FBD822642A75CABC002702F4 /* TimerNotificationsSchedulerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD822632A75CABC002702F4 /* TimerNotificationsSchedulerTests.swift */; };
-		FBD8F4E52B2A0C63008872B9 /* WidgetEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD8F4E42B2A0C63008872B9 /* WidgetEntryView.swift */; };
 		FBDBAC4629762AC7009E440A /* TimerSave.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDBAC4529762AC7009E440A /* TimerSave.swift */; };
 		FBDBAC4829762AD1009E440A /* TimerLoad.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDBAC4729762AD1009E440A /* TimerLoad.swift */; };
 		FBDBAC4A29762AE5009E440A /* FoundationTimerCountdown+TimerSave.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDBAC4929762AE5009E440A /* FoundationTimerCountdown+TimerSave.swift */; };
@@ -517,7 +516,6 @@
 		FBD8225D2A75B1EE002702F4 /* LocaTimerSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocaTimerSpy.swift; sourceTree = "<group>"; };
 		FBD8225F2A75B2FE002702F4 /* CommonHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonHelpers.swift; sourceTree = "<group>"; };
 		FBD822632A75CABC002702F4 /* TimerNotificationsSchedulerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerNotificationsSchedulerTests.swift; sourceTree = "<group>"; };
-		FBD8F4E42B2A0C63008872B9 /* WidgetEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetEntryView.swift; sourceTree = "<group>"; };
 		FBDBAC4529762AC7009E440A /* TimerSave.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerSave.swift; sourceTree = "<group>"; };
 		FBDBAC4729762AD1009E440A /* TimerLoad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerLoad.swift; sourceTree = "<group>"; };
 		FBDBAC4929762AE5009E440A /* FoundationTimerCountdown+TimerSave.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FoundationTimerCountdown+TimerSave.swift"; sourceTree = "<group>"; };
@@ -835,7 +833,6 @@
 		FB509E072A7C936B00AA9333 /* TimeCoachWatchExtension */ = {
 			isa = PBXGroup;
 			children = (
-				FBD8F4E32B2A0C5B008872B9 /* Helpers */,
 				FB118E6C2A872E0800474AC1 /* TimeCoachWatchExtensionRelease.entitlements */,
 				FBB0C7C42A7DBD7C005412CF /* TimeCoachWatchExtensionDebug.entitlements */,
 				FB155ECD2A9D53C900A4551D /* Combine+Helpers.swift */,
@@ -1143,14 +1140,6 @@
 				FBE593DD2A78269800069F1C /* TimerNoticationReceiverTests.swift */,
 			);
 			path = "Timer Notifications";
-			sourceTree = "<group>";
-		};
-		FBD8F4E32B2A0C5B008872B9 /* Helpers */ = {
-			isa = PBXGroup;
-			children = (
-				FBD8F4E42B2A0C63008872B9 /* WidgetEntryView.swift */,
-			);
-			path = Helpers;
 			sourceTree = "<group>";
 		};
 		FBDEE8062A7B0BB500D1120A /* Infrastructure */ = {
@@ -1907,7 +1896,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FBD8F4E52B2A0C63008872B9 /* WidgetEntryView.swift in Sources */,
 				FB509E092A7C936B00AA9333 /* TimeCoachWatchExtension.swift in Sources */,
 				FB155ED22A9D7C3300A4551D /* AdapterLoadTimerState.swift in Sources */,
 				FB155ECE2A9D53C900A4551D /* Combine+Helpers.swift in Sources */,
@@ -2196,7 +2184,7 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+				WATCHOS_DEPLOYMENT_TARGET = 9.6;
 			};
 			name = Debug;
 		};
@@ -2235,7 +2223,7 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				VALIDATE_PRODUCT = YES;
-				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+				WATCHOS_DEPLOYMENT_TARGET = 9.6;
 			};
 			name = Release;
 		};
@@ -2270,7 +2258,7 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+				WATCHOS_DEPLOYMENT_TARGET = 9.6;
 			};
 			name = Debug;
 		};
@@ -2306,7 +2294,7 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				VALIDATE_PRODUCT = YES;
-				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+				WATCHOS_DEPLOYMENT_TARGET = 9.6;
 			};
 			name = Release;
 		};
@@ -2472,7 +2460,7 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+				WATCHOS_DEPLOYMENT_TARGET = 9.6;
 			};
 			name = Debug;
 		};
@@ -2508,7 +2496,7 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				VALIDATE_PRODUCT = YES;
-				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+				WATCHOS_DEPLOYMENT_TARGET = 9.6;
 			};
 			name = Release;
 		};
@@ -2822,7 +2810,7 @@
 				SWIFT_PRECOMPILE_BRIDGING_HEADER = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,4,7";
-				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+				WATCHOS_DEPLOYMENT_TARGET = 9.6;
 			};
 			name = Debug;
 		};
@@ -2867,7 +2855,7 @@
 				SWIFT_PRECOMPILE_BRIDGING_HEADER = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,4,7";
-				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+				WATCHOS_DEPLOYMENT_TARGET = 9.6;
 			};
 			name = Release;
 		};
@@ -3005,7 +2993,7 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+				WATCHOS_DEPLOYMENT_TARGET = 9.6;
 			};
 			name = Debug;
 		};
@@ -3042,7 +3030,7 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				VALIDATE_PRODUCT = YES;
-				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+				WATCHOS_DEPLOYMENT_TARGET = 9.6;
 			};
 			name = Release;
 		};
