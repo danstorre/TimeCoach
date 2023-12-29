@@ -52,7 +52,6 @@ final class FoundationTimerCountdownTests: XCTestCase {
         let finishedStartSet = startSet.adding(0.001)
         
         expect(sut: sut, toDeliver: [startSet, finishedStartSet])
-        sut.commitFinishedTimer()
         
         assertTimerSet(finishedStartSet, state: .stop, from: sut)
     }
@@ -309,8 +308,3 @@ final class FoundationTimerCountdownTests: XCTestCase {
     }
 }
 
-extension TimerCountdown {
-    func commitFinishedTimer() {
-        startCountdown(completion: { _ in })
-    }
-}
