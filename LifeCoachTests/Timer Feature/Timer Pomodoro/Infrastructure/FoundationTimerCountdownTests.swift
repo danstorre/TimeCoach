@@ -45,7 +45,7 @@ final class FoundationTimerCountdownTests: XCTestCase {
         }
     }
     
-    func test_start_afterFinishTheFirstSetTimerDoesNotChangeState() {
+    func test_start_onSetFinishChangesStateToStop() {
         let fixedDate = Date()
         let startSet = createTimerSet(0, startDate: fixedDate, endDate: fixedDate.adding(seconds: 0.001))
         let sut = makeSUT(startingSet: startSet, nextSet: createAnyTimerSet())
