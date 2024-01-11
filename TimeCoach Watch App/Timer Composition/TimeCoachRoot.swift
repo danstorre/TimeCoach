@@ -153,8 +153,8 @@ class TimeCoachRoot {
     }
     
     private func getTimerState() -> TimerState? {
-        guard let timerSet = timerCountdown?.currentTimerSet.toModel,
-              let state = timerCountdown?.state.toModel else {
+        guard let timerSet = timerCountdown?.currentState.currentTimerSet.toModel,
+              let state = timerCountdown?.currentState.state.toModel else {
             return nil
         }
         return TimerState(timerSet: timerSet, state: state)

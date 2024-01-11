@@ -13,14 +13,14 @@ extension Publisher where Output == TimerState {
 
 extension Publisher where Output == TimerSet {
     func mapsTimerSetAndState(timerCountdown: TimerCountdown) -> AnyPublisher<(TimerSet, TimerState.State), Failure> {
-        self.map({ _ in (timerSet: timerCountdown.currentTimerSet.toModel, state: timerCountdown.state.toModel) })
+        self.map({ _ in (timerSet: timerCountdown.currentState.currentTimerSet.toModel, state: timerCountdown.currentState.state.toModel) })
             .eraseToAnyPublisher()
     }
 }
 
 extension Publisher where Output == Void {
     func mapsTimerSetAndState(timerCountdown: TimerCountdown, currentIsBreakMode: IsBreakMode) -> AnyPublisher<TimerState, Failure> {
-        self.map({ _ in (timerSet: timerCountdown.currentTimerSet.toModel, state: timerCountdown.state.toModel) })
+        self.map({ _ in (timerSet: timerCountdown.currentState.currentTimerSet.toModel, state: timerCountdown.currentState.state.toModel) })
             .map({ TimerState(timerSet: $0.0, state: $0.1, isBreak: currentIsBreakMode)})
             .eraseToAnyPublisher()
     }

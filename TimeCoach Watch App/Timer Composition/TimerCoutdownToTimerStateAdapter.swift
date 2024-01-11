@@ -3,31 +3,25 @@ import LifeCoach
 import Combine
 
 class TimerCountdownToTimerStateAdapter: TimerCountdown {
-    var currentTimerSet: LifeCoach.TimerCountdownSet
+    var currentState: LifeCoach.TimerCountDownState
+    var currentSetElapsedTime: TimeInterval {
+        timer.currentSetElapsedTime
+    }
     
+    private let currentDate: () -> Date
+    @Published var isRunning = false
+    private let timer: TimerCountdown
     var isPlaying: Bool {
-        switch timer.state {
+        switch timer.currentState.state {
         case .running: return true
         case .pause, .stop: return false
         }
     }
     
-    private let timer: TimerCountdown
-    var currentSetElapsedTime: TimeInterval {
-        timer.currentSetElapsedTime
-    }
-    var state: LifeCoach.TimerCountdownStateValues {
-        timer.state
-    }
-    
-    @Published var isRunning = false
-    
-    private let currentDate: () -> Date
-    
     init(timer: TimerCountdown, currentDate: @escaping () -> Date) {
         self.timer = timer
         self.currentDate = currentDate
-        self.currentTimerSet = .pomodoroSet(date: currentDate())
+        self.currentState = .init(state: timer.currentState.state, currentTimerSet: .pomodoroSet(date: currentDate()))
     }
     
     func startCountdown(completion: @escaping StartCoundownCompletion) {

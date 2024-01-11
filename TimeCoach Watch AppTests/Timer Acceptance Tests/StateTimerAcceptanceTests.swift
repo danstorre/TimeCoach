@@ -187,7 +187,7 @@ final class StateTimerAcceptanceTests: XCTestCase {
     
     // MARK: - Helpers
     private func expectedTimerState(from spy: Spy, state: TimerStateHelper) -> LocalTimerState {
-        makeAnyState(seconds: spy.currentTimerSet.elapsedSeconds, startDate: spy.currentTimerSet.startDate, endDate: spy.currentTimerSet.endDate, state: state).local
+        makeAnyState(seconds: spy.currentState.currentTimerSet.elapsedSeconds, startDate: spy.currentState.currentTimerSet.startDate, endDate: spy.currentState.currentTimerSet.endDate, state: state).local
     }
     
     private func makeSUT(currentDate: @escaping () -> Date = Date.init) -> (sut: TimeCoach_Watch_AppApp, spy: Spy) {
@@ -247,17 +247,20 @@ final class StateTimerAcceptanceTests: XCTestCase {
                 }
             }
         }
-        private let currenDate: Date
         
+        private let currenDate: Date
         private var currentSet: LifeCoach.TimerCountdownSet
-        var currentTimerSet: LifeCoach.TimerCountdownSet { currentSet }
+        private var state: LifeCoach.TimerCountdownStateValues = .stop
         
         var currentSetElapsedTime: TimeInterval = 0.0
-        var state: LifeCoach.TimerCountdownStateValues = .stop
         
         private(set) var receivedMessages = [AnyMessage]()
         private var receivedStartCompletions = [StartCoundownCompletion]()
         private var receivedSkipCompletions = [SkipCountdownCompletion]()
+        
+        var currentState: LifeCoach.TimerCountDownState {
+            .init(state: state, currentTimerSet: currentSet)
+        }
         
         init(currenDate: Date) {
             self.currenDate = currenDate
