@@ -1119,9 +1119,9 @@
 			children = (
 				FB4AA16B2937D7290076FED9 /* Infrastructure */,
 				FBD56F642A3BD489002736AD /* LocalTimerSet.swift */,
+				FB418F2A2B507E8C0026832F /* TimerCountDownState.swift */,
 				FBD56F752A3D0EFA002736AD /* TimerCoutdown.swift */,
 				FBD56F712A3D0E20002736AD /* PomodoroTimer.swift */,
-				FB418F2A2B507E8C0026832F /* TimerCountDownState.swift */,
 			);
 			path = "Timer Pomodoro";
 			sourceTree = "<group>";
