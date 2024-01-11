@@ -12,7 +12,7 @@ final class FoundationTimerCountdownTests: XCTestCase {
     
     func test_start_setsCorrectTimerValues() {
         let startSet = createAnyTimerSet()
-        let samples: [(deliveryCount: Int, expectedTimerValues: (state: TimerCountdownStateValues, set: LocalTimerSet))] = [
+        let samples: [(deliveryCount: Int, expectedTimerValues: (state: TimerCountdownStateValues, set: TimerCountdownSet))] = [
             (deliveryCount: 2, expectedTimerValues: (state: TimerCountdownStateValues.running,
                                                    set: startSet.adding(0.001))),
             (deliveryCount: 3, expectedTimerValues: (state: TimerCountdownStateValues.running,
@@ -33,7 +33,7 @@ final class FoundationTimerCountdownTests: XCTestCase {
         let startSet1 = createAnyTimerSet()
         let startSet2 = createTimerSet(0, startDate: fixedDate, endDate: fixedDate.adding(seconds: 0.002))
         
-        let samples: [(startSet: LocalTimerSet, expected: [LocalTimerSet])] = [
+        let samples: [(startSet: TimerCountdownSet, expected: [TimerCountdownSet])] = [
             (startSet: startSet1, expected: [startSet1, startSet1.adding(0.001)]),
             (startSet: startSet2, expected: [startSet2, startSet2.adding(0.001), startSet2.adding(0.002)])
         ]
@@ -105,10 +105,10 @@ final class FoundationTimerCountdownTests: XCTestCase {
     
     func test_stop_afterStartCountdown_deliversCurrentSet() {
         let fixedDate = Date()
-        let startSet = LocalTimerSet(0, startDate: fixedDate, endDate: fixedDate.adding(seconds: 0.002))
+        let startSet = TimerCountdownSet(0, startDate: fixedDate, endDate: fixedDate.adding(seconds: 0.002))
         let sut = makeSUT(startingSet: startSet, nextSet: createAnyTimerSet(), incrementing: 0.001)
         
-        var receivedLocalTimerSets = [LocalTimerSet]()
+        var receivedLocalTimerSets = [TimerCountdownSet]()
         
         sut.startCountdown() { result in
             if case let .success((timerSet, _)) = result {
@@ -210,14 +210,14 @@ final class FoundationTimerCountdownTests: XCTestCase {
         invalidatesTimer(on: sut)
     }
     
-    private func assertTimerSet(_ timerSet: LocalTimerSet, state expectedState: TimerCountdownStateValues, from sut: TimerCountdown, file: StaticString = #filePath, line: UInt = #line) {
+    private func assertTimerSet(_ timerSet: TimerCountdownSet, state expectedState: TimerCountdownStateValues, from sut: TimerCountdown, file: StaticString = #filePath, line: UInt = #line) {
         XCTAssertEqual(sut.currentState.state, expectedState, file: file, line: line)
         XCTAssertEqual(sut.currentSetElapsedTime, timerSet.elapsedSeconds, "should have expected \(timerSet.elapsedSeconds) but got \(sut.currentSetElapsedTime) current set.", file: file, line: line)
         XCTAssertEqual(sut.currentState.currentTimerSet, timerSet, file: file, line: line)
     }
     
-    private func receivedLocalTimerSetsOnSkip(from sut: TimerCountdown) -> [LocalTimerSet] {
-        var receivedLocalTimerSets = [LocalTimerSet]()
+    private func receivedLocalTimerSetsOnSkip(from sut: TimerCountdown) -> [TimerCountdownSet] {
+        var receivedLocalTimerSets = [TimerCountdownSet]()
         let expectation = expectation(description: "wait for skip countdown to deliver time.")
         sut.skipCountdown() { result in
             if case let .success((timerSet, _)) = result {
@@ -229,8 +229,8 @@ final class FoundationTimerCountdownTests: XCTestCase {
         return receivedLocalTimerSets
     }
     
-    private func receivedLocalTimerSetsOnRunningState(from sut: TimerCountdown, when action: () -> Void) -> [LocalTimerSet] {
-        var receivedLocalTimerSets = [LocalTimerSet]()
+    private func receivedLocalTimerSetsOnRunningState(from sut: TimerCountdown, when action: () -> Void) -> [TimerCountdownSet] {
+        var receivedLocalTimerSets = [TimerCountdownSet]()
         sut.startCountdown() { result in
             if case let .success((timerSet, _)) = result {
                 receivedLocalTimerSets.append(timerSet)
@@ -254,7 +254,7 @@ final class FoundationTimerCountdownTests: XCTestCase {
         XCTAssertEqual(sut.currentState.state, .running)
     }
     
-    private func makeSUT(startingSet: LocalTimerSet, nextSet: LocalTimerSet,
+    private func makeSUT(startingSet: TimerCountdownSet, nextSet: TimerCountdownSet,
                          incrementing: Double = 0.001,
                          file: StaticString = #filePath,
                          line: UInt = #line) -> TimerCountdown {
@@ -265,10 +265,10 @@ final class FoundationTimerCountdownTests: XCTestCase {
         return sut
     }
     
-    private func starts(sut: TimerCountdown, expectingToDeliver deliverExpectation: [LocalTimerSet],
+    private func starts(sut: TimerCountdown, expectingToDeliver deliverExpectation: [TimerCountdownSet],
                         file: StaticString = #filePath,
                         line: UInt = #line) {
-        var receivedLocalTimerSets = [LocalTimerSet]()
+        var receivedLocalTimerSets = [TimerCountdownSet]()
         let expectation = expectation(description: "wait for start countdown to deliver time.")
         expectation.expectedFulfillmentCount = deliverExpectation.count
         
@@ -285,11 +285,11 @@ final class FoundationTimerCountdownTests: XCTestCase {
         XCTAssertEqual(receivedLocalTimerSets, deliverExpectation, file: file, line: line)
     }
     
-    private func createAnyTimerSet(startingFrom startDate: Date = Date(), endDate: Date? = nil) -> LocalTimerSet {
+    private func createAnyTimerSet(startingFrom startDate: Date = Date(), endDate: Date? = nil) -> TimerCountdownSet {
         makeAnyTimerSet(startDate: startDate, endDate: endDate ?? startDate.adding(seconds: 1)).local
     }
     
-    private func createTimerSet(_ elapsedSeconds: TimeInterval, startDate: Date, endDate: Date) -> LocalTimerSet {
+    private func createTimerSet(_ elapsedSeconds: TimeInterval, startDate: Date, endDate: Date) -> TimerCountdownSet {
         makeAnyTimerSet(seconds: elapsedSeconds, startDate: startDate, endDate: endDate).local
     }
     

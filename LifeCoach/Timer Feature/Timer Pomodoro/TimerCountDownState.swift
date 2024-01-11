@@ -2,9 +2,9 @@ import Foundation
 
 public struct TimerCountDownState {
     public let state: TimerCountdownStateValues
-    public let currentTimerSet: LocalTimerSet
+    public let currentTimerSet: TimerCountdownSet
     
-    public init(state: TimerCountdownStateValues, currentTimerSet: LocalTimerSet) {
+    public init(state: TimerCountdownStateValues, currentTimerSet: TimerCountdownSet) {
         self.state = state
         self.currentTimerSet = currentTimerSet
     }

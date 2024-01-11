@@ -1,6 +1,6 @@
 import Foundation
 
-extension LocalTimerSet {
+extension TimerCountdownSet {
     public var toModel: TimerSet {
         TimerSet(elapsedSeconds, startDate: startDate, endDate: endDate)
     }

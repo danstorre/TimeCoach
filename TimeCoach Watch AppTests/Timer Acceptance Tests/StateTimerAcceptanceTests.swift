@@ -249,8 +249,8 @@ final class StateTimerAcceptanceTests: XCTestCase {
         }
         private let currenDate: Date
         
-        private var currentSet: LifeCoach.LocalTimerSet
-        var currentTimerSet: LifeCoach.LocalTimerSet { currentSet }
+        private var currentSet: LifeCoach.TimerCountdownSet
+        var currentTimerSet: LifeCoach.TimerCountdownSet { currentSet }
         
         var currentSetElapsedTime: TimeInterval = 0.0
         var state: LifeCoach.TimerCountdownStateValues = .stop
@@ -279,7 +279,7 @@ final class StateTimerAcceptanceTests: XCTestCase {
         func stopCountdown() {
             state = .stop
             receivedMessages.append(.stopTimer)
-            let startSet = LocalTimerSet(0, startDate: currentSet.startDate, endDate: currentSet.endDate)
+            let startSet = TimerCountdownSet(0, startDate: currentSet.startDate, endDate: currentSet.endDate)
             receivedStartCompletions.last?(.success((startSet, state)))
         }
         
@@ -294,16 +294,16 @@ final class StateTimerAcceptanceTests: XCTestCase {
             receivedSkipCompletions.append(completion)
         }
         
-        func deliversSetAfterSkip(_ timerState: (timerSet: LocalTimerSet, state: TimerCountdownStateValues), index: Int = 0) {
+        func deliversSetAfterSkip(_ timerState: (timerSet: TimerCountdownSet, state: TimerCountdownStateValues), index: Int = 0) {
             receivedSkipCompletions[index](.success((timerState.timerSet, timerState.state)))
         }
         
-        func deliversSetAfterStart(_ timerState: (timerSet: LocalTimerSet, state: TimerCountdownStateValues), index: Int = 0) {
+        func deliversSetAfterStart(_ timerState: (timerSet: TimerCountdownSet, state: TimerCountdownStateValues), index: Int = 0) {
             setsCurrentTimer(timerState.timerSet, state: timerState.state)
             receivedStartCompletions[index](.success((timerState.timerSet, timerState.state)))
         }
         
-        func setsCurrentTimer(_ timerSet: LocalTimerSet, state: TimerCountdownStateValues) {
+        func setsCurrentTimer(_ timerSet: TimerCountdownSet, state: TimerCountdownStateValues) {
             self.state = state
             self.currentSet = timerSet
         }

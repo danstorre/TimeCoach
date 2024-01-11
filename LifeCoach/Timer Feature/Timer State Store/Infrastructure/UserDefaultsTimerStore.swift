@@ -18,7 +18,7 @@ public final class UserDefaultsTimerStore: LocalTimerStore {
         
         var local: LocalTimerState? {
             guard let state = getLocalState(from: state) else { return nil}
-            let localTimerSet = LocalTimerSet(TimeInterval(elapsed), startDate: starDate, endDate: endDate)
+            let localTimerSet = TimerCountdownSet(TimeInterval(elapsed), startDate: starDate, endDate: endDate)
             let isBreak = isBreak == 1 ? true : false
             return LocalTimerState(localTimerSet: localTimerSet, state: state, isBreak: isBreak)
         }

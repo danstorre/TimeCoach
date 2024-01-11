@@ -18,8 +18,8 @@ public class LocalTimer: SaveTimerState, LoadTimerState {
 }
 
 private extension TimerSet {
-    var local: LocalTimerSet {
-        LocalTimerSet(elapsedSeconds, startDate: startDate, endDate: endDate)
+    var local: TimerCountdownSet {
+        TimerCountdownSet(elapsedSeconds, startDate: startDate, endDate: endDate)
     }
 }
 

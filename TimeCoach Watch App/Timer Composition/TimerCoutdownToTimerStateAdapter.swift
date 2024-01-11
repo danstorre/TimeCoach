@@ -3,7 +3,7 @@ import LifeCoach
 import Combine
 
 class TimerCountdownToTimerStateAdapter: TimerCountdown {
-    var currentTimerSet: LifeCoach.LocalTimerSet
+    var currentTimerSet: LifeCoach.TimerCountdownSet
     
     var isPlaying: Bool {
         switch timer.state {

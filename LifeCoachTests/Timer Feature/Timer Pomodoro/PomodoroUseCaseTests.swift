@@ -152,15 +152,15 @@ final class PomodoroUseCaseTests: XCTestCase {
         }
     }
     
-    private func createAnyLocalTimerSets() -> LocalTimerSet {
-        LocalTimerSet(1, startDate: Date(), endDate: Date())
+    private func createAnyLocalTimerSets() -> TimerCountdownSet {
+        TimerCountdownSet(1, startDate: Date(), endDate: Date())
     }
     
     private func makeDeliveredTime(_ elapsedSeconds: TimeInterval,
                                    startDate: Date,
-                                   endDate: Date) -> (model: TimerSet, local: LocalTimerSet) {
+                                   endDate: Date) -> (model: TimerSet, local: TimerCountdownSet) {
         let model = TimerSet(elapsedSeconds, startDate: startDate, endDate: endDate)
-        let local = LocalTimerSet(elapsedSeconds, startDate: startDate, endDate: endDate)
+        let local = TimerCountdownSet(elapsedSeconds, startDate: startDate, endDate: endDate)
         return (model, local)
     }
     
@@ -181,7 +181,7 @@ final class PomodoroUseCaseTests: XCTestCase {
             .init(state: .stop, currentTimerSet: currentTimerSet)
         }
         
-        var currentTimerSet: LifeCoach.LocalTimerSet { .init(0, startDate: Date(), endDate: Date())}
+        var currentTimerSet: LifeCoach.TimerCountdownSet { .init(0, startDate: Date(), endDate: Date())}
         var currentSetElapsedTime: TimeInterval { 0 }
         var state: LifeCoach.TimerCountdownStateValues { returningState }
         
@@ -213,7 +213,7 @@ final class PomodoroUseCaseTests: XCTestCase {
             startCountdownCompletions[index](.failure(error))
         }
         
-        func startDelivers(localState: (localSet: LifeCoach.LocalTimerSet, state: LifeCoach.TimerCountdownStateValues), at index: Int = 0) {
+        func startDelivers(localState: (localSet: LifeCoach.TimerCountdownSet, state: LifeCoach.TimerCountdownStateValues), at index: Int = 0) {
             startCountdownCompletions[index](.success((localState.localSet, localState.state)))
         }
         
@@ -241,7 +241,7 @@ final class PomodoroUseCaseTests: XCTestCase {
             skipCountdownCompletions[index](.failure(error))
         }
         
-        func skipDelivers(localState: (localSet: LifeCoach.LocalTimerSet, state: LifeCoach.TimerCountdownStateValues), at index: Int = 0) {
+        func skipDelivers(localState: (localSet: LifeCoach.TimerCountdownSet, state: LifeCoach.TimerCountdownStateValues), at index: Int = 0) {
             returningState = localState.state
             skipCountdownCompletions[index](.success((localState.localSet, localState.state)))
         }

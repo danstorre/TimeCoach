@@ -6,11 +6,11 @@ public struct LocalTimerState: Equatable {
         case running
         case stop
     }
-    public let localTimerSet: LocalTimerSet
+    public let localTimerSet: TimerCountdownSet
     public let state: State
     public let isBreak: Bool
     
-    public init(localTimerSet: LocalTimerSet, state: LocalTimerState.State, isBreak: Bool = false) {
+    public init(localTimerSet: TimerCountdownSet, state: LocalTimerState.State, isBreak: Bool = false) {
         self.localTimerSet = localTimerSet
         self.state = state
         self.isBreak = isBreak
