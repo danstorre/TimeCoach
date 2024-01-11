@@ -1,7 +1,11 @@
 import Foundation
 
 public final class FoundationTimerCountdown: TimerCountdown {
-    public private(set) var state: TimerCountdownState = .stop
+    public var currentState: TimerCountDownState {
+        return .init(state: state, currentTimerSet: currentSet)
+    }
+
+    private var state: TimerCountdownState = .stop
     private var setA: LocalTimerSet
     private var setB: LocalTimerSet
     var currentSet: LocalTimerSet

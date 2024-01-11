@@ -6,11 +6,20 @@ public enum TimerCountdownState {
     case stop
 }
 
+public struct TimerCountDownState {
+    public let state: TimerCountdownState
+    public let currentTimerSet: LocalTimerSet
+    
+    public init(state: TimerCountdownState, currentTimerSet: LocalTimerSet) {
+        self.state = state
+        self.currentTimerSet = currentTimerSet
+    }
+}
+
 public protocol TimerCountdown {
     
     var currentSetElapsedTime: TimeInterval { get }
-    var state: TimerCountdownState { get }
-    var currentTimerSet: LocalTimerSet { get }
+    var currentState: TimerCountDownState { get }
     
     typealias Result = Swift.Result<(LocalTimerSet, TimerCountdownState), Error>
     typealias StartCoundownCompletion = (Result) -> Void

@@ -211,9 +211,9 @@ final class FoundationTimerCountdownTests: XCTestCase {
     }
     
     private func assertTimerSet(_ timerSet: LocalTimerSet, state expectedState: TimerCountdownState, from sut: TimerCountdown, file: StaticString = #filePath, line: UInt = #line) {
-        XCTAssertEqual(sut.state, expectedState, file: file, line: line)
+        XCTAssertEqual(sut.currentState.state, expectedState, file: file, line: line)
         XCTAssertEqual(sut.currentSetElapsedTime, timerSet.elapsedSeconds, "should have expected \(timerSet.elapsedSeconds) but got \(sut.currentSetElapsedTime) current set.", file: file, line: line)
-        XCTAssertEqual(sut.currentTimerSet, timerSet, file: file, line: line)
+        XCTAssertEqual(sut.currentState.currentTimerSet, timerSet, file: file, line: line)
     }
     
     private func receivedLocalTimerSetsOnSkip(from sut: TimerCountdown) -> [LocalTimerSet] {
@@ -251,7 +251,7 @@ final class FoundationTimerCountdownTests: XCTestCase {
     private func assertsStartCountdownChangesStateToRunning(sut: TimerCountdown) {
         sut.startCountdown(completion: { _ in })
 
-        XCTAssertEqual(sut.state, .running)
+        XCTAssertEqual(sut.currentState.state, .running)
     }
     
     private func makeSUT(startingSet: LocalTimerSet, nextSet: LocalTimerSet,
