@@ -6,16 +6,6 @@ public enum TimerCountdownState {
     case stop
 }
 
-public struct TimerCountDownState {
-    public let state: TimerCountdownState
-    public let currentTimerSet: LocalTimerSet
-    
-    public init(state: TimerCountdownState, currentTimerSet: LocalTimerSet) {
-        self.state = state
-        self.currentTimerSet = currentTimerSet
-    }
-}
-
 public protocol TimerCountdown {
     
     var currentSetElapsedTime: TimeInterval { get }
