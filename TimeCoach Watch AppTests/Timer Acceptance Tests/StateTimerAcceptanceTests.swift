@@ -253,7 +253,7 @@ final class StateTimerAcceptanceTests: XCTestCase {
         var currentTimerSet: LifeCoach.LocalTimerSet { currentSet }
         
         var currentSetElapsedTime: TimeInterval = 0.0
-        var state: LifeCoach.TimerCountdownState = .stop
+        var state: LifeCoach.TimerCountdownStateValues = .stop
         
         private(set) var receivedMessages = [AnyMessage]()
         private var receivedStartCompletions = [StartCoundownCompletion]()
@@ -294,16 +294,16 @@ final class StateTimerAcceptanceTests: XCTestCase {
             receivedSkipCompletions.append(completion)
         }
         
-        func deliversSetAfterSkip(_ timerState: (timerSet: LocalTimerSet, state: TimerCountdownState), index: Int = 0) {
+        func deliversSetAfterSkip(_ timerState: (timerSet: LocalTimerSet, state: TimerCountdownStateValues), index: Int = 0) {
             receivedSkipCompletions[index](.success((timerState.timerSet, timerState.state)))
         }
         
-        func deliversSetAfterStart(_ timerState: (timerSet: LocalTimerSet, state: TimerCountdownState), index: Int = 0) {
+        func deliversSetAfterStart(_ timerState: (timerSet: LocalTimerSet, state: TimerCountdownStateValues), index: Int = 0) {
             setsCurrentTimer(timerState.timerSet, state: timerState.state)
             receivedStartCompletions[index](.success((timerState.timerSet, timerState.state)))
         }
         
-        func setsCurrentTimer(_ timerSet: LocalTimerSet, state: TimerCountdownState) {
+        func setsCurrentTimer(_ timerSet: LocalTimerSet, state: TimerCountdownStateValues) {
             self.state = state
             self.currentSet = timerSet
         }

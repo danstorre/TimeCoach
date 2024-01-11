@@ -56,7 +56,7 @@ public class PomodoroTimer: RegularTimer {
 }
 
 
-private extension TimerCountdownState {
+private extension TimerCountdownStateValues {
     var model: TimerState.State {
         switch self {
         case .pause: return .pause

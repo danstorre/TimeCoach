@@ -5,7 +5,7 @@ public final class FoundationTimerCountdown: TimerCountdown {
         return .init(state: state, currentTimerSet: currentSet)
     }
 
-    private var state: TimerCountdownState = .stop
+    private var state: TimerCountdownStateValues = .stop
     private var setA: LocalTimerSet
     private var setB: LocalTimerSet
     var currentSet: LocalTimerSet

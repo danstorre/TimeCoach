@@ -22,7 +22,7 @@ class TimerCountdownSpy: TimerCountdown {
     private(set) var stopCallCount = 0
     private(set) var pauseCallCount = 0
  
-    var state: LifeCoach.TimerCountdownState = .pause
+    var state: LifeCoach.TimerCountdownStateValues = .pause
     
     func startCountdown(completion: @escaping StartCoundownCompletion) {
         state = .running

@@ -87,7 +87,7 @@ extension Publisher where Output == TimerState {
     }
 }
 
-extension TimerCountdownState {
+extension TimerCountdownStateValues {
     var toModel: TimerState.State {
         switch self {
         case .pause: return .pause

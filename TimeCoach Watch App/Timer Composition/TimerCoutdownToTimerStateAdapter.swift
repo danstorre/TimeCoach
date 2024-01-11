@@ -16,7 +16,7 @@ class TimerCountdownToTimerStateAdapter: TimerCountdown {
     var currentSetElapsedTime: TimeInterval {
         timer.currentSetElapsedTime
     }
-    var state: LifeCoach.TimerCountdownState {
+    var state: LifeCoach.TimerCountdownStateValues {
         timer.state
     }
     

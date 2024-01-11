@@ -12,10 +12,10 @@ final class FoundationTimerCountdownTests: XCTestCase {
     
     func test_start_setsCorrectTimerValues() {
         let startSet = createAnyTimerSet()
-        let samples: [(deliveryCount: Int, expectedTimerValues: (state: TimerCountdownState, set: LocalTimerSet))] = [
-            (deliveryCount: 2, expectedTimerValues: (state: TimerCountdownState.running,
+        let samples: [(deliveryCount: Int, expectedTimerValues: (state: TimerCountdownStateValues, set: LocalTimerSet))] = [
+            (deliveryCount: 2, expectedTimerValues: (state: TimerCountdownStateValues.running,
                                                    set: startSet.adding(0.001))),
-            (deliveryCount: 3, expectedTimerValues: (state: TimerCountdownState.running,
+            (deliveryCount: 3, expectedTimerValues: (state: TimerCountdownStateValues.running,
                                                    set: startSet.adding(0.002)))
         ]
         
@@ -210,7 +210,7 @@ final class FoundationTimerCountdownTests: XCTestCase {
         invalidatesTimer(on: sut)
     }
     
-    private func assertTimerSet(_ timerSet: LocalTimerSet, state expectedState: TimerCountdownState, from sut: TimerCountdown, file: StaticString = #filePath, line: UInt = #line) {
+    private func assertTimerSet(_ timerSet: LocalTimerSet, state expectedState: TimerCountdownStateValues, from sut: TimerCountdown, file: StaticString = #filePath, line: UInt = #line) {
         XCTAssertEqual(sut.currentState.state, expectedState, file: file, line: line)
         XCTAssertEqual(sut.currentSetElapsedTime, timerSet.elapsedSeconds, "should have expected \(timerSet.elapsedSeconds) but got \(sut.currentSetElapsedTime) current set.", file: file, line: line)
         XCTAssertEqual(sut.currentState.currentTimerSet, timerSet, file: file, line: line)
