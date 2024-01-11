@@ -185,7 +185,7 @@ final class FoundationTimerCountdownTests: XCTestCase {
         assertTimerSet(nextSet, state: .stop, from: sut)
     }
     
-    func test_skip_onRunningState_sendsNextTimerSet() {
+    func test_skip_onRunningState_deliversNextTimerSet() {
         let fixedDate = Date()
         let startingSet = createAnyTimerSet()
         let nextSet = createTimerSet(0, startDate: fixedDate, endDate: fixedDate.adding(seconds: 0.002))
