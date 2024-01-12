@@ -22,14 +22,31 @@ final class SetableCountdownTimerTests: XCTestCase {
         }
     }
     
-    func test_setCustomStartEndDate_resetsTimersElapsecondsCorrectly() {
-        let inputSet = createAnyTimerSet()
+    func test_setCustomStartEndDate_resetsTimersElapsecondsCorrectly() throws {
+        let now = Date.now
+        let inputSet = createAnyTimerSet(startingFrom: now, endDate: now.adding(seconds: 1))
         let startSet = createAnyTimerSet().adding(1)
         let sut = makeSUT(startingSet: startSet, nextSet: createAnyTimerSet())
         
-        sut.set(startDate: inputSet.startDate, endDate: inputSet.endDate)
+        try sut.set(startDate: inputSet.startDate, endDate: inputSet.endDate)
         
         assertTimerSet(inputSet, state: .stop, from: sut)
+    }
+    
+    func test_setCustomStartEndDate_onSameStartEndDates_deliversSameDatesError() throws {
+        let now = Date.now
+        let sameSetDates = createAnyTimerSet(
+            startingFrom: now, endDate: now
+        )
+        let startSet = createAnyTimerSet(
+            startingFrom: now, endDate: now.adding(seconds: 1)
+        )
+        
+        let sut = makeSUT(startingSet: startSet, nextSet: createAnyTimerSet())
+        
+        XCTAssertThrowsError(try sut.set(startDate: sameSetDates.startDate, endDate: sameSetDates.endDate)) { error in
+            XCTAssertEqual(error as! TimerCountdownSetValueError, TimerCountdownSetValueError.sameDatesNonPermitted)
+        }
     }
     
     // MARK: - helpers
@@ -45,7 +62,7 @@ final class SetableCountdownTimerTests: XCTestCase {
     }
     
     private func createAnyTimerSet(startingFrom startDate: Date = Date(), endDate: Date = Date()) -> TimerCountdownSet {
-        return TimerCountdownSet(0, startDate: startDate, endDate: endDate.adding(seconds: 1))
+        return TimerCountdownSet(0, startDate: startDate, endDate: endDate)
     }
     
     private func assertTimerSet(_ timerSet: TimerCountdownSet, state expectedState: TimerCountdownStateValues, from sut: TimerCountdown, file: StaticString = #filePath, line: UInt = #line) {
