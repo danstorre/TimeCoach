@@ -49,6 +49,22 @@ final class SetableCountdownTimerTests: XCTestCase {
         }
     }
     
+    func test_setCustomStartEndDate_onEndDateOlderThanStartDate_deliversOlderEndDateThanStartDateError() throws {
+        let now = Date.now
+        let olderEndDateThanStartDateSet = createAnyTimerSet(
+            startingFrom: now, endDate: now.adding(seconds: -1)
+        )
+        let startSet = createAnyTimerSet(
+            startingFrom: now, endDate: now.adding(seconds: 1)
+        )
+        
+        let sut = makeSUT(startingSet: startSet, nextSet: createAnyTimerSet())
+        
+        XCTAssertThrowsError(try sut.set(startDate: olderEndDateThanStartDateSet.startDate, endDate: olderEndDateThanStartDateSet.endDate)) { error in
+            XCTAssertEqual(error as! TimerCountdownSetValueError, TimerCountdownSetValueError.endDateIsOlderThanStartDate)
+        }
+    }
+    
     // MARK: - helpers
     private func makeSUT(startingSet: TimerCountdownSet, nextSet: TimerCountdownSet,
                          incrementing: Double = 0.001,
