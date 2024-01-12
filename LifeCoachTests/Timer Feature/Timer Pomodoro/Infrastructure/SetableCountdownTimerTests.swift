@@ -62,6 +62,17 @@ final class SetableCountdownTimerTests: XCTestCase {
         failsWithOlderEndDateThanStartDateError(capturedError: capturedError)
     }
     
+    func test_setCustomStartEndDate_setsStartAndDateFromCurrentSetCorrectly() throws {
+        let now = Date.now
+        let inputSet = createAnyTimerSet(startingFrom: now, endDate: now.adding(seconds: 1))
+        let startSet = createAnyTimerSet(startingFrom: now, endDate: now.adding(seconds: 1))
+        let sut = makeSUT(startingSet: startSet, nextSet: createAnyTimerSet())
+        
+        try sut.set(startDate: inputSet.startDate, endDate: inputSet.endDate)
+        
+        assertTimerSet(inputSet, state: .stop, from: sut)
+    }
+    
     // MARK: - helpers
     private func failsWithSameDatesError(capturedError: Error) {
         XCTAssertEqual(capturedError as? TimerCountdownSetValueError, TimerCountdownSetValueError.sameDatesNonPermitted)
