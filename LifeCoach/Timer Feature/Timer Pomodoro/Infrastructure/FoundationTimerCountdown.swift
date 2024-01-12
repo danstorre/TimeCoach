@@ -129,6 +129,14 @@ extension FoundationTimerCountdown {
     }
     
     public func set(startDate: Date, endDate: Date) throws {
+        guard try validate(startDate: startDate, endDate: endDate) else {
+            return
+        }
+        
+        currentSet = TimerCountdownSet(0, startDate: startDate, endDate: endDate)
+    }
+        
+    private func validate(startDate: Date, endDate: Date) throws -> Bool {
         guard customDatesAreNotTheSame(startDate: startDate, endDate: endDate)
         else {
             throw TimerCountdownSetValueError.sameDatesNonPermitted
@@ -138,9 +146,9 @@ extension FoundationTimerCountdown {
             throw TimerCountdownSetValueError.endDateIsOlderThanStartDate
         }
         
-        currentSet = TimerCountdownSet(0, startDate: startDate, endDate: endDate)
+        return true
     }
-    
+        
     private func custom(endDate: Date, isNotOlderThan starDate: Date) -> Bool{
         guard endDate.compare(starDate) == .orderedDescending else {
             return false
