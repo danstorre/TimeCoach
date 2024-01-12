@@ -120,3 +120,11 @@ public extension TimerCountdownSet {
         TimerCountdownSet(elapsedSeconds + Double(seconds), startDate: startDate, endDate: endDate)
     }
 }
+
+
+// MARK: - Helper Method Setter
+extension FoundationTimerCountdown {
+    public func setElapsedSeconds(_ seconds: TimeInterval) {
+        currentSet = TimerCountdownSet(seconds, startDate: currentSet.startDate, endDate: currentSet.endDate)
+    }
+}
