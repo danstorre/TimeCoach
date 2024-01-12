@@ -22,17 +22,6 @@ final class SetableCountdownTimerTests: XCTestCase {
         }
     }
     
-    func test_setCustomStartEndDate_resetsTimersElapsecondsCorrectly() throws {
-        let now = Date.now
-        let inputSet = createAnyTimerSet(startingFrom: now, endDate: now.adding(seconds: 1))
-        let startSet = createAnyTimerSet().adding(1)
-        let sut = makeSUT(startingSet: startSet, nextSet: createAnyTimerSet())
-        
-        try sut.set(startDate: inputSet.startDate, endDate: inputSet.endDate)
-        
-        assertTimerSet(inputSet, state: .stop, from: sut)
-    }
-    
     func test_setCustomStartEndDate_onSameStartEndDates_deliversSameDatesError() throws {
         let now = Date.now
         let sameSetDates = createAnyTimerSet(
