@@ -127,4 +127,8 @@ extension FoundationTimerCountdown {
     public func setElapsedSeconds(_ seconds: TimeInterval) {
         currentSet = TimerCountdownSet(seconds, startDate: currentSet.startDate, endDate: currentSet.endDate)
     }
+    
+    public func set(startDate: Date, endDate: Date) {
+        currentSet = TimerCountdownSet(0, startDate: startDate, endDate: endDate)
+    }
 }
