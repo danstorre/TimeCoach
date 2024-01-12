@@ -788,8 +788,8 @@
 				FB4B895B2A3B96760088DB5B /* Timer State Store */,
 				FBE9A9A92939538200D8BF29 /* Timer Presentation */,
 				FBD56F702A3D0E0E002736AD /* Timer Pomodoro */,
-				FB5926072A76FA530011D53E /* TimerState.swift */,
 				FB4AA1632937CD000076FED9 /* TimerSet.swift */,
+				FB5926072A76FA530011D53E /* TimerState.swift */,
 				FBD56F732A3D0ECE002736AD /* RegularTimer.swift */,
 			);
 			path = "Timer Feature";
@@ -812,12 +812,12 @@
 				FB59260C2A76FAC40011D53E /* Legacy */,
 				FB5926092A76FA850011D53E /* Helpers */,
 				FBD822562A756704002702F4 /* LocalTimerStore.swift */,
+				FB5BF6A62A7BEF9F001B81CB /* StateMapper.swift */,
+				FBC8F1762B519821001531D2 /* LocalTimerSet.swift */,
 				FB5926052A76FA270011D53E /* LocalTimerState.swift */,
 				FBD822532A75667C002702F4 /* LocalTimer.swift */,
 				FB59260A2A76FAAB0011D53E /* LoadTimerState.swift */,
 				FBD822512A73406F002702F4 /* SaveTimerState.swift */,
-				FB5BF6A62A7BEF9F001B81CB /* StateMapper.swift */,
-				FBC8F1762B519821001531D2 /* LocalTimerSet.swift */,
 			);
 			path = "Timer State Store";
 			sourceTree = "<group>";
