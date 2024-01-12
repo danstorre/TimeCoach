@@ -51,21 +51,30 @@ final class SetableCountdownTimerTests: XCTestCase {
     
     func test_setCustomStartEndDate_onEndDateOlderThanStartDate_deliversOlderEndDateThanStartDateError() throws {
         let now = Date.now
-        let olderEndDateThanStartDateSet = createAnyTimerSet(
-            startingFrom: now, endDate: now.adding(seconds: -1)
-        )
-        let startSet = createAnyTimerSet(
-            startingFrom: now, endDate: now.adding(seconds: 1)
-        )
-        
+        let olderEndDateThanStartDateSet = createAnyTimerSet(startingFrom: now, endDate: now.adding(seconds: -1))
+        let startSet = createAnyTimerSet(startingFrom: now, endDate: now.adding(seconds: 1))
         let sut = makeSUT(startingSet: startSet, nextSet: createAnyTimerSet())
         
-        XCTAssertThrowsError(try sut.set(startDate: olderEndDateThanStartDateSet.startDate, endDate: olderEndDateThanStartDateSet.endDate)) { error in
-            XCTAssertEqual(error as! TimerCountdownSetValueError, TimerCountdownSetValueError.endDateIsOlderThanStartDate)
-        }
+        let capturedError = failureOnCustomDatesSet(startDate: olderEndDateThanStartDateSet.startDate,
+                                                    endDate: olderEndDateThanStartDateSet.endDate, sut: sut)
+        
+        failsWithOlderEndDateThanStartDateError(capturedError: capturedError)
     }
     
     // MARK: - helpers
+    private func failsWithOlderEndDateThanStartDateError(capturedError: Error) {
+        XCTAssertEqual(capturedError as? TimerCountdownSetValueError, TimerCountdownSetValueError.endDateIsOlderThanStartDate)
+    }
+    
+    private func failureOnCustomDatesSet(startDate: Date, endDate: Date, sut: FoundationTimerCountdown) -> TimerCountdownSetValueError {
+        var capturedError: Error? = nil
+        XCTAssertThrowsError(try sut.set(startDate: startDate, endDate: endDate)) { error in
+            capturedError = error
+        }
+        
+        return capturedError as! TimerCountdownSetValueError
+    }
+ 
     private func makeSUT(startingSet: TimerCountdownSet, nextSet: TimerCountdownSet,
                          incrementing: Double = 0.001,
                          file: StaticString = #filePath,
