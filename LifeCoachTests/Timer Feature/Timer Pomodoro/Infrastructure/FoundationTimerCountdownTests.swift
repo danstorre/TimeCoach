@@ -296,5 +296,20 @@ final class FoundationTimerCountdownTests: XCTestCase {
     private func invalidatesTimer(on sut: TimerCountdown) {
         (sut as? FoundationTimerCountdown)?.invalidatesTimer()
     }
+    
+    private func makeAnyTimerSet(seconds: TimeInterval = 0,
+                                 startDate: Date = Date(),
+                                 endDate: Date = Date()) -> (model: TimerSet, local: TimerCountdownSet) {
+        let timerSet = TimerSet(seconds, startDate: startDate, endDate: endDate)
+        let localTimerSet = TimerCountdownSet(seconds, startDate: startDate, endDate: endDate)
+        
+        return (timerSet, localTimerSet)
+    }
+}
+
+private extension TimerSet {
+    var local: TimerCountdownSet {
+        TimerCountdownSet(elapsedSeconds, startDate: startDate, endDate: endDate)
+    }
 }
 

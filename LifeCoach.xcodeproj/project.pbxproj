@@ -131,6 +131,8 @@
 		FBC41FE32B0E47DC008E4F20 /* DefaultBackgroundExtendedTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC41FE22B0E47DC008E4F20 /* DefaultBackgroundExtendedTime.swift */; };
 		FBC41FE52B0E4EE3008E4F20 /* BackgroundExtendedTimeNullObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC41FE42B0E4EE3008E4F20 /* BackgroundExtendedTimeNullObject.swift */; };
 		FBC612F3293AC2ED008D9EF8 /* TimerCountDownSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC612F2293AC2ED008D9EF8 /* TimerCountDownSpy.swift */; };
+		FBC8F1772B519821001531D2 /* LocalTimerSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC8F1762B519821001531D2 /* LocalTimerSet.swift */; };
+		FBC8F1792B519927001531D2 /* LocalTimerSet+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC8F1782B519927001531D2 /* LocalTimerSet+Extensions.swift */; };
 		FBC9ADAF2919E8B500E0BEFC /* XCTestCase+MemoryLeakTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC9ADAE2919E8B500E0BEFC /* XCTestCase+MemoryLeakTracking.swift */; };
 		FBC9CC002A806E4A001B5975 /* TimerStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC9CBFF2A806E4A001B5975 /* TimerStyle.swift */; };
 		FBC9CC032A806E84001B5975 /* CustomFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC9CC022A806E84001B5975 /* CustomFont.swift */; };
@@ -140,7 +142,7 @@
 		FBCD0A8F2A81E15900086476 /* DummyScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCD0A8E2A81E15900086476 /* DummyScheduler.swift */; };
 		FBCD0A912A81EC4500086476 /* Infrastructure.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCD0A902A81EC4500086476 /* Infrastructure.swift */; };
 		FBD56F652A3BD489002736AD /* TimerCountdownSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD56F642A3BD489002736AD /* TimerCountdownSet.swift */; };
-		FBD56F672A3CE66F002736AD /* LocalElapsedSeconds+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD56F662A3CE66F002736AD /* LocalElapsedSeconds+Extensions.swift */; };
+		FBD56F672A3CE66F002736AD /* TimerCountdownSet+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD56F662A3CE66F002736AD /* TimerCountdownSet+Extensions.swift */; };
 		FBD56F6B2A3CEF33002736AD /* PomodoroUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD56F6A2A3CEF33002736AD /* PomodoroUseCaseTests.swift */; };
 		FBD56F722A3D0E20002736AD /* PomodoroTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD56F712A3D0E20002736AD /* PomodoroTimer.swift */; };
 		FBD56F742A3D0ECE002736AD /* RegularTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD56F732A3D0ECE002736AD /* RegularTimer.swift */; };
@@ -494,6 +496,8 @@
 		FBC41FE22B0E47DC008E4F20 /* DefaultBackgroundExtendedTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultBackgroundExtendedTime.swift; sourceTree = "<group>"; };
 		FBC41FE42B0E4EE3008E4F20 /* BackgroundExtendedTimeNullObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundExtendedTimeNullObject.swift; sourceTree = "<group>"; };
 		FBC612F2293AC2ED008D9EF8 /* TimerCountDownSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerCountDownSpy.swift; sourceTree = "<group>"; };
+		FBC8F1762B519821001531D2 /* LocalTimerSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalTimerSet.swift; sourceTree = "<group>"; };
+		FBC8F1782B519927001531D2 /* LocalTimerSet+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LocalTimerSet+Extensions.swift"; sourceTree = "<group>"; };
 		FBC9ADAE2919E8B500E0BEFC /* XCTestCase+MemoryLeakTracking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+MemoryLeakTracking.swift"; sourceTree = "<group>"; };
 		FBC9CBFF2A806E4A001B5975 /* TimerStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerStyle.swift; sourceTree = "<group>"; };
 		FBC9CC022A806E84001B5975 /* CustomFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomFont.swift; sourceTree = "<group>"; };
@@ -504,7 +508,7 @@
 		FBCD0A902A81EC4500086476 /* Infrastructure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Infrastructure.swift; sourceTree = "<group>"; };
 		FBD1279C2A5703730081C69C /* TimerStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerStyle.swift; sourceTree = "<group>"; };
 		FBD56F642A3BD489002736AD /* TimerCountdownSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerCountdownSet.swift; sourceTree = "<group>"; };
-		FBD56F662A3CE66F002736AD /* LocalElapsedSeconds+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LocalElapsedSeconds+Extensions.swift"; sourceTree = "<group>"; };
+		FBD56F662A3CE66F002736AD /* TimerCountdownSet+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimerCountdownSet+Extensions.swift"; sourceTree = "<group>"; };
 		FBD56F6A2A3CEF33002736AD /* PomodoroUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PomodoroUseCaseTests.swift; sourceTree = "<group>"; };
 		FBD56F712A3D0E20002736AD /* PomodoroTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PomodoroTimer.swift; sourceTree = "<group>"; };
 		FBD56F732A3D0ECE002736AD /* RegularTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegularTimer.swift; sourceTree = "<group>"; };
@@ -813,6 +817,7 @@
 				FB59260A2A76FAAB0011D53E /* LoadTimerState.swift */,
 				FBD822512A73406F002702F4 /* SaveTimerState.swift */,
 				FB5BF6A62A7BEF9F001B81CB /* StateMapper.swift */,
+				FBC8F1762B519821001531D2 /* LocalTimerSet.swift */,
 			);
 			path = "Timer State Store";
 			sourceTree = "<group>";
@@ -934,7 +939,8 @@
 		FB5926092A76FA850011D53E /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				FBD56F662A3CE66F002736AD /* LocalElapsedSeconds+Extensions.swift */,
+				FBD56F662A3CE66F002736AD /* TimerCountdownSet+Extensions.swift */,
+				FBC8F1782B519927001531D2 /* LocalTimerSet+Extensions.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -1953,8 +1959,9 @@
 				FBD822572A756704002702F4 /* LocalTimerStore.swift in Sources */,
 				FBDEE8142A7B161100D1120A /* TimerStoreNotifier.swift in Sources */,
 				FB5BF6A92A7C034A001B81CB /* TimerGlanceViewModel.swift in Sources */,
-				FBD56F672A3CE66F002736AD /* LocalElapsedSeconds+Extensions.swift in Sources */,
+				FBD56F672A3CE66F002736AD /* TimerCountdownSet+Extensions.swift in Sources */,
 				FB59260B2A76FAAB0011D53E /* LoadTimerState.swift in Sources */,
+				FBC8F1792B519927001531D2 /* LocalTimerSet+Extensions.swift in Sources */,
 				FB960C77293D48D200ECBAD5 /* Timer+DefaultStrings.swift in Sources */,
 				FB960C76293D48CB00ECBAD5 /* TimerViewModel.swift in Sources */,
 				FBE593E02A78294600069F1C /* DefaultTimerNotificationReceiver.swift in Sources */,
@@ -1972,6 +1979,7 @@
 				FBE593E22A78296600069F1C /* TimerNotificationReceiver.swift in Sources */,
 				FBDEE8082A7B0BC200D1120A /* UserDefaultsTimerStore.swift in Sources */,
 				FB5926082A76FA530011D53E /* TimerState.swift in Sources */,
+				FBC8F1772B519821001531D2 /* LocalTimerSet.swift in Sources */,
 				FB5926062A76FA270011D53E /* LocalTimerState.swift in Sources */,
 				FBAD475528FC8BB0003D2F7A /* LifeCoach.docc in Sources */,
 				FBE336A72A3D6CC200735D74 /* FoundationTimerCountdown.swift in Sources */,

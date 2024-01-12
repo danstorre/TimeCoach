@@ -110,11 +110,11 @@ final class StateTimerAcceptanceTests: XCTestCase {
     func test_onPauseTimerState_onBackgroundAppStateChange_shouldSaveTimerStateOnNonExpiredTimeExtensionCompletion() {
         let currentDate = Date()
         let (sut, spy) = makeSUT(currentDate: { currentDate })
-        let expected = makeAnyState(seconds: 1,
+        let timerState = makeAnyState(seconds: 1,
                                     startDate: currentDate,
-                                    endDate: currentDate.adding(seconds: .pomodoroInSeconds), state: .pause).local
+                                    endDate: currentDate.adding(seconds: .pomodoroInSeconds), state: .pause)
         sut.simulateToggleTimerUserInteraction()
-        spy.deliversSetAfterStart((timerSet: expected.localTimerSet, state: .running))
+        spy.deliversSetAfterStart((timerSet: timerState.timerCountDownState.currentTimerSet, state: .running))
         spy.resetMessages()
         sut.simulateToggleTimerUserInteraction()
 
@@ -137,7 +137,7 @@ final class StateTimerAcceptanceTests: XCTestCase {
             .pauseTimer,
             .unregisterTimerNotification,
             .requestExtendedBackgroundTime(reason: "TimerSaveStateProcess"),
-            .insertStateTimer(value: expected),
+            .insertStateTimer(value: timerState.local),
             .notifySavedTimer
         ])
     }
@@ -145,11 +145,11 @@ final class StateTimerAcceptanceTests: XCTestCase {
     func test_onSkipUserInteraction_OnBackgroundAppStateChange_shouldSaveTimerStateOnNonExpiredTimeExtensionCompletion() {
         let currentDate = Date()
         let (sut, spy) = makeSUT(currentDate: { currentDate })
-        let expected = makeAnyState(seconds: 0,
+        let timerState = makeAnyState(seconds: 0,
                                     startDate: currentDate,
                                     endDate: currentDate.adding(seconds: .pomodoroInSeconds),
                                     isBreak: true,
-                                    state: .stop).local
+                                    state: .stop)
         sut.simulateSkipUserInteraction()
         
         XCTAssertEqual(spy.receivedMessages, [
@@ -157,7 +157,7 @@ final class StateTimerAcceptanceTests: XCTestCase {
             .unregisterTimerNotification
         ], "on user skip interaction should unregister timer notification.")
         
-        spy.deliversSetAfterSkip((timerSet: expected.localTimerSet, state: .stop))
+        spy.deliversSetAfterSkip((timerSet: timerState.timerCountDownState.currentTimerSet, state: .stop))
         sut.simulateGoToBackground()
         
         XCTAssertEqual(spy.receivedMessages, [
@@ -172,7 +172,7 @@ final class StateTimerAcceptanceTests: XCTestCase {
             .skipTimer,
             .unregisterTimerNotification,
             .requestExtendedBackgroundTime(reason: "TimerSaveStateProcess"),
-            .insertStateTimer(value: expected),
+            .insertStateTimer(value: timerState.local),
             .notifySavedTimer
         ])
     }
@@ -188,6 +188,40 @@ final class StateTimerAcceptanceTests: XCTestCase {
     // MARK: - Helpers
     private func expectedTimerState(from spy: Spy, state: TimerStateHelper) -> LocalTimerState {
         makeAnyState(seconds: spy.currentState.currentTimerSet.elapsedSeconds, startDate: spy.currentState.currentTimerSet.startDate, endDate: spy.currentState.currentTimerSet.endDate, state: state).local
+    }
+    
+    private func makeAnyState(seconds: TimeInterval = 1,
+                      startDate: Date = Date(),
+                      endDate: Date = Date(),
+                      isBreak: Bool = false,
+                              state helperState: TimerStateHelper = .pause)
+    -> (model: TimerState, local: LocalTimerState, timerCountDownState:  TimerCountDownState) {
+        let timerSet = makeAnyTimerSet(seconds: seconds, startDate: startDate, endDate: endDate)
+        
+        let model = TimerState(timerSet: timerSet.model,
+                               state: helperState.timerState,
+                               isBreak: isBreak)
+        let timerCountDownState = TimerCountDownState.init(
+            state: StateMapper.state(from: helperState.timerState),
+            currentTimerSet: timerSet.timerCountdownSet
+        )
+        
+        let local = LocalTimerState(localTimerSet: timerSet.local,
+                                    state: StateMapper.state(from: helperState.timerState),
+                                    isBreak: isBreak)
+        
+        return (model, local, timerCountDownState)
+    }
+    
+    private func makeAnyTimerSet(seconds: TimeInterval = 0,
+                                 startDate: Date = Date(),
+                                 endDate: Date = Date()) 
+    -> (model: TimerSet, local: LocalTimerSet, timerCountdownSet: TimerCountdownSet) {
+        let timerSet = TimerSet(seconds, startDate: startDate, endDate: endDate)
+        let localTimerSet = LocalTimerSet(seconds, startDate: startDate, endDate: endDate)
+        let timerCountdownSet = TimerCountdownSet(seconds, startDate: startDate, endDate: endDate)
+        
+        return (timerSet, localTimerSet, timerCountdownSet)
     }
     
     private func makeSUT(currentDate: @escaping () -> Date = Date.init) -> (sut: TimeCoach_Watch_AppApp, spy: Spy) {

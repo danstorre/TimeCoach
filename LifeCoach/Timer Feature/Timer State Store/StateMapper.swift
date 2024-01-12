@@ -16,4 +16,12 @@ public enum StateMapper {
         case .stop: return .stop
         }
     }
+    
+    public static func state(from state: TimerState.State) -> TimerCountdownStateValues {
+        switch state {
+        case .pause: return .pause
+        case .running: return .running
+        case .stop: return .stop
+        }
+    }
 }
