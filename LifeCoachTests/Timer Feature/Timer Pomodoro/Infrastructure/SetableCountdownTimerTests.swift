@@ -99,7 +99,7 @@ final class SetableCountdownTimerTests: XCTestCase {
         sut: FoundationTimerCountdown,
         on action: (() -> Void),
         file: StaticString = #filePath, line: UInt = #line) {
-            sut.stopCountdown()
+        action()
             
         sut.set(state: .stop)
         
