@@ -70,7 +70,7 @@ final class SetableCountdownTimerTests: XCTestCase {
         })
     }
     
-    func test_setStopTimerCountdownState_onStopState_setsPauseStateCorrectly() {
+    func test_setStopTimerCountdownState_onStopState_setsStopStateCorrectly() {
         let sut = makeSUT(startingSet: createAnyTimerSet(), nextSet: createAnyTimerSet())
         
         assertSetsStopCorrectly(sut: sut, on: {
@@ -86,7 +86,7 @@ final class SetableCountdownTimerTests: XCTestCase {
         })
     }
     
-    func test_setStopTimerCountdownState_onPauseState_setsPauseStateCorrectly() {
+    func test_setStopTimerCountdownState_onPauseState_setsStopStateCorrectly() {
         let sut = makeSUT(startingSet: createAnyTimerSet(), nextSet: createAnyTimerSet())
         
         assertSetsStopCorrectly(sut: sut, on: {
