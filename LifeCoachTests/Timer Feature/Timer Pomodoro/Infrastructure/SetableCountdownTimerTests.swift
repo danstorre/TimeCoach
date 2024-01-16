@@ -102,17 +102,3 @@ final class SetableCountdownTimerTests: XCTestCase {
         XCTAssertEqual(sut.currentState.currentTimerSet.endDate, timerSet.endDate, "expected endDate \(timerSet.endDate) but got \(sut.currentState.currentTimerSet.endDate) instead", file: file, line: line)
     }
 }
-
-fileprivate extension FoundationTimerCountdown {
-    var timerIsPaused: Bool {
-        currentState.state == .pause
-    }
-    
-    var timerIsStopped: Bool {
-        currentState.state == .stop
-    }
-    
-    var timerIsRunning: Bool {
-        currentState.state == .running
-    }
-}
