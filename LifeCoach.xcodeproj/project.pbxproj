@@ -1143,12 +1143,12 @@
 			children = (
 				FB4AA16B2937D7290076FED9 /* Infrastructure */,
 				FBD56F642A3BD489002736AD /* TimerCountdownSet.swift */,
-				FB418F2A2B507E8C0026832F /* TimerCountDownState.swift */,
-				FBD56F752A3D0EFA002736AD /* TimerCoutdown.swift */,
 				FBC8F17A2B51B23F001531D2 /* TimerCountdownStateValues.swift */,
+				FBD56F752A3D0EFA002736AD /* TimerCoutdown.swift */,
+				FB418F2A2B507E8C0026832F /* TimerCountDownState.swift */,
 				FBAA52A52B571F7800D373C6 /* TimerStateValues.swift */,
-				FBD56F712A3D0E20002736AD /* PomodoroTimer.swift */,
 				FBAA52A72B571FA400D373C6 /* TimerCustomStateValues.swift */,
+				FBD56F712A3D0E20002736AD /* PomodoroTimer.swift */,
 			);
 			path = "Timer Pomodoro";
 			sourceTree = "<group>";

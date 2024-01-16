@@ -121,6 +121,10 @@ public extension TimerCountdownSet {
     }
 }
 
+public enum TimerCountdownSetValueError: Swift.Error {
+    case sameDatesNonPermitted
+    case endDateIsOlderThanStartDate
+}
 
 // MARK: - Setable Timer Countdown
 extension FoundationTimerCountdown: TimerCustomStateValues {
