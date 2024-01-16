@@ -62,79 +62,7 @@ final class SetableCountdownTimerTests: XCTestCase {
         assertTimerSet(inputSet, state: .stop, from: sut)
     }
     
-    func test_setPauseTimerCountdownState_onStopState_setsPauseStateCorrectly() {
-        let sut = makeSUT(startingSet: createAnyTimerSet(), nextSet: createAnyTimerSet())
-        
-        assertSetsPauseCorrectly(sut: sut, on: {
-            sut.stopCountdown()
-        })
-    }
-    
-    func test_setStopTimerCountdownState_onStopState_setsStopStateCorrectly() {
-        let sut = makeSUT(startingSet: createAnyTimerSet(), nextSet: createAnyTimerSet())
-        
-        assertSetsStopCorrectly(sut: sut, on: {
-            sut.pauseCountdown()
-        })
-    }
-    
-    func test_setPauseTimerCountdownState_onPauseState_setsPauseStateCorrectly() {
-        let sut = makeSUT(startingSet: createAnyTimerSet(), nextSet: createAnyTimerSet())
-        
-        assertSetsPauseCorrectly(sut: sut, on: {
-            sut.pauseCountdown()
-        })
-    }
-    
-    func test_setStopTimerCountdownState_onPauseState_setsStopStateCorrectly() {
-        let sut = makeSUT(startingSet: createAnyTimerSet(), nextSet: createAnyTimerSet())
-        
-        assertSetsStopCorrectly(sut: sut, on: {
-            sut.pauseCountdown()
-        })
-    }
-    
-    func test_setPauseTimerCountdownState_onRunningState_setsPauseStateCorrectly() {
-        let now = Date.now
-        let sut = makeSUT(startingSet: createAnyTimerSet(startingFrom: now, endDate: now.adding(seconds: 1)), nextSet: createAnyTimerSet())
-        
-        assertSetsPauseCorrectly(sut: sut, on: {
-            sut.startCountdown { _ in }
-        })
-    }
-    
-    func test_setStopTimerCountdownState_onRunningState_setsStopStateCorrectly() {
-        let now = Date.now
-        let sut = makeSUT(startingSet: createAnyTimerSet(startingFrom: now, endDate: now.adding(seconds: 1)), nextSet: createAnyTimerSet())
-        
-        assertSetsStopCorrectly(sut: sut, on: {
-            sut.startCountdown(completion: { _ in })
-        })
-    }
-    
     // MARK: - helpers
-    private func assertSetsStopCorrectly(
-        sut: FoundationTimerCountdown,
-        on action: (() -> Void),
-        file: StaticString = #filePath, line: UInt = #line) {
-        action()
-            
-        sut.set(state: .stop)
-        
-        XCTAssertEqual(sut.timerIsStopped, true, "timer should be stopped", file: file, line: line)
-    }
-    
-    private func assertSetsPauseCorrectly(
-        sut: FoundationTimerCountdown,
-        on action: (() -> Void),
-        file: StaticString = #filePath, line: UInt = #line) {
-        action()
-        
-        sut.set(state: .pause)
-        
-        XCTAssertEqual(sut.timerIsPaused, true, "timer should be paused", file: file, line: line)
-    }
-
     private func failsWithSameDatesError(capturedError: Error) {
         XCTAssertEqual(capturedError as? TimerCountdownSetValueError, TimerCountdownSetValueError.sameDatesNonPermitted)
     }
@@ -189,5 +117,9 @@ fileprivate extension FoundationTimerCountdown {
     
     var timerIsStopped: Bool {
         currentState.state == .stop
+    }
+    
+    var timerIsRunning: Bool {
+        currentState.state == .running
     }
 }

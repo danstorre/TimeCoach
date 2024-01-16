@@ -124,14 +124,6 @@ public extension TimerCountdownSet {
 
 // MARK: - Setable Timer Countdown
 extension FoundationTimerCountdown {
-    public func set(state: TimerCountdownStateValues) {
-        if case .pause = state {
-            pauseCountdown()
-        } else {
-            stopCountdown()
-        }
-    }
-    
     public func setElapsedSeconds(_ seconds: TimeInterval) {
         currentSet = TimerCountdownSet(seconds, startDate: currentSet.startDate, endDate: currentSet.endDate)
     }
