@@ -100,6 +100,8 @@ final class SetableCountdownTimerTests: XCTestCase {
         assertSetsPauseCorrectly(sut: sut, on: {
             sut.startCountdown { _ in }
         })
+        
+        invalidatesTimer(on: sut)
     }
     
     // MARK: - helpers
