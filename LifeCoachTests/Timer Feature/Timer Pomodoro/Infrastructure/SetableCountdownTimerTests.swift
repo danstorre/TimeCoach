@@ -65,7 +65,9 @@ final class SetableCountdownTimerTests: XCTestCase {
     func test_setPauseTimerCountdownState_onStopState_setsPauseStateCorrectly() {
         let sut = makeSUT(startingSet: createAnyTimerSet(), nextSet: createAnyTimerSet())
         
-        assertSetsPauseCorrectly(on: sut)
+        assertSetsPauseCorrectly(on: sut, on: {
+            sut.stopCountdown()
+        })
     }
     
     func test_setStopTimerCountdownState_onStopState_setsPauseStateCorrectly() {
@@ -77,7 +79,7 @@ final class SetableCountdownTimerTests: XCTestCase {
     func test_setPauseTimerCountdownState_onPauseState_setsPauseStateCorrectly() {
         let sut = makeSUT(startingSet: createAnyTimerSet(), nextSet: createAnyTimerSet())
         
-        assertSetsPauseCorrectly(on: sut, when: {
+        assertSetsPauseCorrectly(on: sut, on: {
             sut.pauseCountdown()
         })
     }
@@ -93,24 +95,15 @@ final class SetableCountdownTimerTests: XCTestCase {
     
     private func assertSetsPauseCorrectly(
         on sut: FoundationTimerCountdown,
-        when action: (() -> Void),
+        on action: (() -> Void),
         file: StaticString = #filePath, line: UInt = #line) {
-        sut.stopCountdown()
         action()
         
         sut.set(state: .pause)
         
         XCTAssertEqual(sut.timerIsPaused, true, "timer should be paused", file: file, line: line)
     }
-    
-    private func assertSetsPauseCorrectly(on sut: FoundationTimerCountdown, file: StaticString = #filePath, line: UInt = #line) {
-        sut.stopCountdown()
-        
-        sut.set(state: .pause)
-        
-        XCTAssertEqual(sut.timerIsPaused, true, "timer should be paused", file: file, line: line)
-    }
-    
+
     private func failsWithSameDatesError(capturedError: Error) {
         XCTAssertEqual(capturedError as? TimerCountdownSetValueError, TimerCountdownSetValueError.sameDatesNonPermitted)
     }
