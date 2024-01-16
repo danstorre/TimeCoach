@@ -84,7 +84,26 @@ final class SetableCountdownTimerTests: XCTestCase {
         })
     }
     
+    func test_setStopTimerCountdownState_onPauseState_setsPauseStateCorrectly() {
+        let sut = makeSUT(startingSet: createAnyTimerSet(), nextSet: createAnyTimerSet())
+        
+        assertSetsStopCorrectly(sut: sut, on: {
+            sut.pauseCountdown()
+        })
+    }
+    
     // MARK: - helpers
+    private func assertSetsStopCorrectly(
+        sut: FoundationTimerCountdown,
+        on action: (() -> Void),
+        file: StaticString = #filePath, line: UInt = #line) {
+            sut.stopCountdown()
+            
+        sut.set(state: .stop)
+        
+        XCTAssertEqual(sut.timerIsStopped, true, "timer should be stopped", file: file, line: line)
+    }
+    
     private func assertSetsStopCorrectly(on sut: FoundationTimerCountdown, file: StaticString = #filePath, line: UInt = #line) {
         sut.stopCountdown()
         
