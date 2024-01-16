@@ -100,8 +100,6 @@ final class SetableCountdownTimerTests: XCTestCase {
         assertSetsPauseCorrectly(sut: sut, on: {
             sut.startCountdown { _ in }
         })
-        
-        invalidatesTimer(on: sut)
     }
     
     // MARK: - helpers
@@ -164,10 +162,6 @@ final class SetableCountdownTimerTests: XCTestCase {
         XCTAssertEqual(sut.currentSetElapsedTime, timerSet.elapsedSeconds, "expected elapsedSeconds \(timerSet.elapsedSeconds) but got \(sut.currentSetElapsedTime).", file: file, line: line)
         XCTAssertEqual(sut.currentState.currentTimerSet.startDate, timerSet.startDate, "expected startDate \(timerSet.startDate) but got \(sut.currentState.currentTimerSet.startDate) instead", file: file, line: line)
         XCTAssertEqual(sut.currentState.currentTimerSet.endDate, timerSet.endDate, "expected endDate \(timerSet.endDate) but got \(sut.currentState.currentTimerSet.endDate) instead", file: file, line: line)
-    }
-    
-    private func invalidatesTimer(on sut: FoundationTimerCountdown) {
-        sut.invalidatesTimer()
     }
 }
 
