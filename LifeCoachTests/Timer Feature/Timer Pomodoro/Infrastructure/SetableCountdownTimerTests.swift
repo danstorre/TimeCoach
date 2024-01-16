@@ -102,6 +102,15 @@ final class SetableCountdownTimerTests: XCTestCase {
         })
     }
     
+    func test_setStopTimerCountdownState_onRunningState_setsStopStateCorrectly() {
+        let now = Date.now
+        let sut = makeSUT(startingSet: createAnyTimerSet(startingFrom: now, endDate: now.adding(seconds: 1)), nextSet: createAnyTimerSet())
+        
+        assertSetsStopCorrectly(sut: sut, on: {
+            sut.startCountdown(completion: { _ in })
+        })
+    }
+    
     // MARK: - helpers
     private func assertSetsStopCorrectly(
         sut: FoundationTimerCountdown,
