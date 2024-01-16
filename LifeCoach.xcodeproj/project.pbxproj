@@ -113,6 +113,7 @@
 		FBA8DD7D2A4F10D9009E48D5 /* TimerCoutdownToTimerStateAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA8DD7C2A4F10D9009E48D5 /* TimerCoutdownToTimerStateAdapter.swift */; };
 		FBA8DD832A4F120E009E48D5 /* TimerStateAdapter+Publishers.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA8DD822A4F120E009E48D5 /* TimerStateAdapter+Publishers.swift */; };
 		FBA8DD852A4F13F0009E48D5 /* LocalElapsedSecondsSets+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA8DD842A4F13F0009E48D5 /* LocalElapsedSecondsSets+Extension.swift */; };
+		FBAA52A32B571B6C00D373C6 /* TimerCountdownSet+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBAA52A22B571B6C00D373C6 /* TimerCountdownSet+Helpers.swift */; };
 		FBAD475528FC8BB0003D2F7A /* LifeCoach.docc in Sources */ = {isa = PBXBuildFile; fileRef = FBAD475428FC8BB0003D2F7A /* LifeCoach.docc */; };
 		FBAD475B28FC8BB0003D2F7A /* LifeCoach.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBAD475028FC8BB0003D2F7A /* LifeCoach.framework */; };
 		FBB3D8822A770EBC00A8BBAD /* UserNotificationsScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBB3D8812A770EBC00A8BBAD /* UserNotificationsScheduler.swift */; };
@@ -484,6 +485,7 @@
 		FBA8DD802A4F11B0009E48D5 /* ColorSwiftUI+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ColorSwiftUI+Extension.swift"; sourceTree = "<group>"; };
 		FBA8DD822A4F120E009E48D5 /* TimerStateAdapter+Publishers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimerStateAdapter+Publishers.swift"; sourceTree = "<group>"; };
 		FBA8DD842A4F13F0009E48D5 /* LocalElapsedSecondsSets+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LocalElapsedSecondsSets+Extension.swift"; sourceTree = "<group>"; };
+		FBAA52A22B571B6C00D373C6 /* TimerCountdownSet+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimerCountdownSet+Helpers.swift"; sourceTree = "<group>"; };
 		FBAD475028FC8BB0003D2F7A /* LifeCoach.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LifeCoach.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FBAD475428FC8BB0003D2F7A /* LifeCoach.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = LifeCoach.docc; sourceTree = "<group>"; };
 		FBAD475A28FC8BB0003D2F7A /* LifeCoachTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LifeCoachTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1019,6 +1021,14 @@
 			path = Helpers;
 			sourceTree = "<group>";
 		};
+		FBAA52A42B571B9000D373C6 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				FBAA52A22B571B6C00D373C6 /* TimerCountdownSet+Helpers.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
 		FBAD474628FC8BB0003D2F7A = {
 			isa = PBXGroup;
 			children = (
@@ -1219,6 +1229,7 @@
 		FBDEE8242A7B2ADC00D1120A /* Infrastructure */ = {
 			isa = PBXGroup;
 			children = (
+				FBAA52A42B571B9000D373C6 /* Helpers */,
 				FBD56F772A3D184C002736AD /* FoundationTimerCountdownTests.swift */,
 				FBC8F17C2B51BCC1001531D2 /* SetableCountdownTimerTests.swift */,
 			);
@@ -2013,6 +2024,7 @@
 				FBC9ADAF2919E8B500E0BEFC /* XCTestCase+MemoryLeakTracking.swift in Sources */,
 				FBD8225E2A75B1EE002702F4 /* LocaTimerSpy.swift in Sources */,
 				FB5BF6A52A7BEADA001B81CB /* TimerGlancePresentationTests.swift in Sources */,
+				FBAA52A32B571B6C00D373C6 /* TimerCountdownSet+Helpers.swift in Sources */,
 				FBDEE8182A7B16EE00D1120A /* TimerStoreReceiverTests.swift in Sources */,
 				FB960C75293D484000ECBAD5 /* TimerPresentationTests.swift in Sources */,
 				FBBA19592A71EFA700240081 /* TimerSaveTests.swift in Sources */,
