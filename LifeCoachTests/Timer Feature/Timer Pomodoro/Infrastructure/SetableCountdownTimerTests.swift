@@ -71,7 +71,7 @@ final class SetableCountdownTimerTests: XCTestCase {
         XCTAssertEqual(capturedError as? TimerCountdownSetValueError, TimerCountdownSetValueError.endDateIsOlderThanStartDate)
     }
     
-    private func failureOnCustomDatesSet(startDate: Date, endDate: Date, sut: FoundationTimerCountdown) -> TimerCountdownSetValueError {
+    private func failureOnCustomDatesSet(startDate: Date, endDate: Date, sut: TimerCustomStateValues) -> TimerCountdownSetValueError {
         var capturedError: Error? = nil
         XCTAssertThrowsError(try sut.set(startDate: startDate, endDate: endDate)) { error in
             capturedError = error
@@ -83,7 +83,7 @@ final class SetableCountdownTimerTests: XCTestCase {
     private func makeSUT(startingSet: TimerCountdownSet, nextSet: TimerCountdownSet,
                          incrementing: Double = 0.001,
                          file: StaticString = #filePath,
-                         line: UInt = #line) -> FoundationTimerCountdown {
+                         line: UInt = #line) -> TimerCustomStateValues & TimerStateValues {
         let sut = FoundationTimerCountdown(startingSet: startingSet, nextSet: nextSet, incrementing: incrementing)
         
         trackForMemoryLeak(instance: sut, file: file, line: line)
@@ -95,7 +95,7 @@ final class SetableCountdownTimerTests: XCTestCase {
         return TimerCountdownSet(0, startDate: startDate, endDate: endDate)
     }
     
-    private func assertTimerSet(_ timerSet: TimerCountdownSet, state expectedState: TimerCountdownStateValues, from sut: TimerCountdown, file: StaticString = #filePath, line: UInt = #line) {
+    private func assertTimerSet(_ timerSet: TimerCountdownSet, state expectedState: TimerCountdownStateValues, from sut: TimerStateValues, file: StaticString = #filePath, line: UInt = #line) {
         XCTAssertEqual(sut.currentState.state, expectedState, file: file, line: line)
         XCTAssertEqual(sut.currentSetElapsedTime, timerSet.elapsedSeconds, "expected elapsedSeconds \(timerSet.elapsedSeconds) but got \(sut.currentSetElapsedTime).", file: file, line: line)
         XCTAssertEqual(sut.currentState.currentTimerSet.startDate, timerSet.startDate, "expected startDate \(timerSet.startDate) but got \(sut.currentState.currentTimerSet.startDate) instead", file: file, line: line)

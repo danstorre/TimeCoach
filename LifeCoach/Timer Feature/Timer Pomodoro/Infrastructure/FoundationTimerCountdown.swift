@@ -123,7 +123,7 @@ public extension TimerCountdownSet {
 
 
 // MARK: - Setable Timer Countdown
-extension FoundationTimerCountdown {
+extension FoundationTimerCountdown: TimerCustomStateValues {
     public func setElapsedSeconds(_ seconds: TimeInterval) {
         currentSet = TimerCountdownSet(seconds, startDate: currentSet.startDate, endDate: currentSet.endDate)
     }
@@ -166,7 +166,3 @@ extension FoundationTimerCountdown {
     }
 }
 
-public enum TimerCountdownSetValueError: Swift.Error {
-    case sameDatesNonPermitted
-    case endDateIsOlderThanStartDate
-}
