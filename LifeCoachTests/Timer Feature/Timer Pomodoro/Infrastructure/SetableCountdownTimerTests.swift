@@ -62,7 +62,21 @@ final class SetableCountdownTimerTests: XCTestCase {
         assertTimerSet(inputSet, state: .stop, from: sut)
     }
     
+    func test_setPauseTimerCountdownState_onStopState_setsPauseStateCorrectly() {
+        let sut = makeSUT(startingSet: createAnyTimerSet(), nextSet: createAnyTimerSet())
+        
+        assertSetsPauseCorrectly(on: sut)
+    }
+    
     // MARK: - helpers
+    private func assertSetsPauseCorrectly(on sut: FoundationTimerCountdown, file: StaticString = #filePath, line: UInt = #line) {
+        sut.stopCountdown()
+        
+        sut.set(state: .pause)
+        
+        XCTAssertEqual(sut.timerIsPaused, true, "timer should be paused", file: file, line: line)
+    }
+    
     private func failsWithSameDatesError(capturedError: Error) {
         XCTAssertEqual(capturedError as? TimerCountdownSetValueError, TimerCountdownSetValueError.sameDatesNonPermitted)
     }
@@ -101,10 +115,21 @@ final class SetableCountdownTimerTests: XCTestCase {
         XCTAssertEqual(sut.currentState.currentTimerSet.startDate, timerSet.startDate, "expected startDate \(timerSet.startDate) but got \(sut.currentState.currentTimerSet.startDate) instead", file: file, line: line)
         XCTAssertEqual(sut.currentState.currentTimerSet.endDate, timerSet.endDate, "expected endDate \(timerSet.endDate) but got \(sut.currentState.currentTimerSet.endDate) instead", file: file, line: line)
     }
+    
+    private func invalidatesTimer(on sut: FoundationTimerCountdown) {
+        sut.invalidatesTimer()
+    }
 }
 
 extension TimerCountdownSet {
     func adding(_ seconds: Double) -> TimerCountdownSet {
         TimerCountdownSet(elapsedSeconds + Double(seconds), startDate: startDate, endDate: endDate)
+    }
+}
+
+
+fileprivate extension FoundationTimerCountdown {
+    var timerIsPaused: Bool {
+        currentState.state == .pause
     }
 }
