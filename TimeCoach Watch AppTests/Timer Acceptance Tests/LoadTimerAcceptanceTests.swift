@@ -13,13 +13,13 @@ final class LoadTimerAcceptanceTests: XCTestCase {
     }
     
     // MARK: - Helpers
-    private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> (timerView: TimeCoach_Watch_AppApp, spy: TimerStateSpy) {
+    private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> (timerView: TimeCoach_Watch_AppApp, spy: LocalTimerStoreSpy) {
         let spy = TimerCountdownSpy.delivers(
             afterPomoroSeconds: 0.0...0.0,
             pomodoroStub: pomodoroResponse,
             afterBreakSeconds: 0.0...0.0,
             breakStub: breakResponse)
-        let spyTimeState = TimerStateSpy()
+        let spyTimeState = LocalTimerStoreSpy()
         
         let infra = Infrastructure(
             timerCountdown: spy,
