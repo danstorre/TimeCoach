@@ -9,7 +9,7 @@ final class LoadTimerAcceptanceTests: XCTestCase {
 
         sut.simulateGoToForeground()
         
-        XCTAssertEqual(spy.loadTimeCallCount, 1)
+        XCTAssertEqual(spy.loadTimerStateCallCount, 1)
     }
     
     // MARK: - Helpers
@@ -23,8 +23,8 @@ final class LoadTimerAcceptanceTests: XCTestCase {
         
         let infra = Infrastructure(
             timerCountdown: spy,
-            timerState: spyTimeState,
-            stateTimerStore: DummyLocalTimerStore(),
+            timerState: DummyTimerLoad(),
+            stateTimerStore: spyTimeState,
             scheduler: DummyScheduler(),
             backgroundTimeExtender: BackgroundExtendedTimeNullObject()
         )
@@ -35,4 +35,10 @@ final class LoadTimerAcceptanceTests: XCTestCase {
         
         return (sut, spyTimeState)
     }
+}
+
+fileprivate struct DummyTimerLoad: TimerLoad, TimerSave {
+    func saveTime(completion: @escaping (TimeInterval) -> Void) {}
+    
+    func loadTime() {}
 }

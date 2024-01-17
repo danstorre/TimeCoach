@@ -171,6 +171,8 @@ class TimeCoachRoot {
     
     func goToForeground() {
         timerLoad?.loadTime()
+        
+        _ = try? localTimer.load()
     }
     
     func gotoInactive() {}
