@@ -71,7 +71,7 @@ final class SetableCountdownTimerTests: XCTestCase {
         XCTAssertEqual(capturedError as? TimerCountdownSetValueError, TimerCountdownSetValueError.endDateIsOlderThanStartDate)
     }
     
-    private func failureOnCustomDatesSet(startDate: Date, endDate: Date, sut: TimerCustomStateValues) -> TimerCountdownSetValueError {
+    private func failureOnCustomDatesSet(startDate: Date, endDate: Date, sut: SetableTimer) -> TimerCountdownSetValueError {
         var capturedError: Error? = nil
         XCTAssertThrowsError(try sut.set(startDate: startDate, endDate: endDate)) { error in
             capturedError = error
@@ -83,7 +83,7 @@ final class SetableCountdownTimerTests: XCTestCase {
     private func makeSUT(startingSet: TimerCountdownSet, nextSet: TimerCountdownSet,
                          incrementing: Double = 0.001,
                          file: StaticString = #filePath,
-                         line: UInt = #line) -> TimerCustomStateValues & TimerStateValues {
+                         line: UInt = #line) -> SetableTimer & TimerStateValues {
         let sut = FoundationTimerCountdown(startingSet: startingSet, nextSet: nextSet, incrementing: incrementing)
         
         trackForMemoryLeak(instance: sut, file: file, line: line)

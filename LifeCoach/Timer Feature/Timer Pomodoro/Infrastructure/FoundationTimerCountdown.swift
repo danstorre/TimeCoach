@@ -127,7 +127,7 @@ public enum TimerCountdownSetValueError: Swift.Error {
 }
 
 // MARK: - Setable Timer Countdown
-extension FoundationTimerCountdown: TimerCustomStateValues {
+extension FoundationTimerCountdown: SetableTimer {
     public func setElapsedSeconds(_ seconds: TimeInterval) {
         currentSet = TimerCountdownSet(seconds, startDate: currentSet.startDate, endDate: currentSet.endDate)
     }
