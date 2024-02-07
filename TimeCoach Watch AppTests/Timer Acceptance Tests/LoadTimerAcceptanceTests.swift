@@ -12,28 +12,59 @@ final class LoadTimerAcceptanceTests: XCTestCase {
         XCTAssertEqual(spy.loadTimerStateCallCount, 1)
     }
     
+    func test_onForeground_shouldSetTimerElapsedSecondsLoadedFromInfrastructure() {
+        let (sut, spy) = makeSUT()
+        let expectedElapsedSeconds = anyElapsedSeconds()
+        let anyStarDate = Date.now
+        let anyEndDate = anyStarDate.adding(seconds: 1)
+        
+        let stubbedLocalTimerSet = LocalTimerSet(
+            expectedElapsedSeconds,
+            startDate: anyStarDate,
+            endDate: anyEndDate
+        )
+        
+        spy.stubbedLoadedLocalTimerState = LocalTimerState(
+            localTimerSet: stubbedLocalTimerSet,
+            state: anyState()
+        )
+        
+        sut.simulateGoToForeground()
+        
+        XCTAssertEqual(spy.elapsedSecondsSet, [expectedElapsedSeconds], "expected to set \([expectedElapsedSeconds]) elapsed seconds, got \(spy.elapsedSecondsSet) elapsed seconds instead.")
+    }
+    
     // MARK: - Helpers
-    private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> (timerView: TimeCoach_Watch_AppApp, spy: LocalTimerStoreSpy) {
+    private func anyElapsedSeconds() -> TimeInterval {
+        1
+    }
+    
+    private func anyState() -> LocalTimerState.State {
+        .pause
+    }
+    
+    private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> (timerView: TimeCoach_Watch_AppApp, spy: ForegroundSyncSpy) {
         let spy = TimerCountdownSpy.delivers(
             afterPomoroSeconds: 0.0...0.0,
             pomodoroStub: pomodoroResponse,
             afterBreakSeconds: 0.0...0.0,
             breakStub: breakResponse)
-        let spyTimeState = LocalTimerStoreSpy()
+        let foregroundSyncSpy = ForegroundSyncSpy()
         
         let infra = Infrastructure(
             timerCountdown: spy,
             timerState: DummyTimerLoad(),
-            stateTimerStore: spyTimeState,
+            stateTimerStore: foregroundSyncSpy,
             scheduler: DummyScheduler(),
-            backgroundTimeExtender: BackgroundExtendedTimeNullObject()
+            backgroundTimeExtender: BackgroundExtendedTimeNullObject(),
+            setabletimer: foregroundSyncSpy
         )
         
         let sut = TimeCoach_Watch_AppApp(infrastructure: infra)
         
         trackForMemoryLeak(instance: spy, file: file, line: line)
         
-        return (sut, spyTimeState)
+        return (sut, foregroundSyncSpy)
     }
 }
 

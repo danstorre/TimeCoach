@@ -83,6 +83,9 @@ class TimeCoachRoot {
         return checkingDependencyInstance(_toggleStrategy, description: String(describing: ToggleStrategy.self))
     }
     
+    // setable timer
+    var setabletimer: SetableTimer?
+    
     convenience init(infrastructure: Infrastructure) {
         self.init()
         self.timerSave = infrastructure.timerState
@@ -96,6 +99,7 @@ class TimeCoachRoot {
         self.mainScheduler = infrastructure.mainScheduler
         self.timerScheduler = infrastructure.mainScheduler
         self.backgroundTimeExtender = infrastructure.backgroundTimeExtender
+        self.setabletimer = infrastructure.setabletimer
     }
     
     func createTimer() {
@@ -172,7 +176,11 @@ class TimeCoachRoot {
     func goToForeground() {
         timerLoad?.loadTime()
         
-        _ = try? localTimer.load()
+        guard let loadedTimerSet = try? localTimer.load()?.timerSet else {
+            return
+        }
+        
+        setabletimer?.setElapsedSeconds(loadedTimerSet.elapsedSeconds)
     }
     
     func gotoInactive() {}
