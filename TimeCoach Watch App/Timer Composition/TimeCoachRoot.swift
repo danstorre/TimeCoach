@@ -180,7 +180,10 @@ class TimeCoachRoot {
             return
         }
         
-        setabletimer?.setElapsedSeconds(loadedTimerSet.elapsedSeconds)
+        do {
+            try setabletimer?.set(startDate: loadedTimerSet.startDate, endDate: loadedTimerSet.endDate)
+            setabletimer?.setElapsedSeconds(loadedTimerSet.elapsedSeconds)
+        } catch { }
     }
     
     func gotoInactive() {}

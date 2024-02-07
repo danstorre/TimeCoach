@@ -33,6 +33,29 @@ final class LoadTimerAcceptanceTests: XCTestCase {
         XCTAssertEqual(spy.elapsedSecondsSet, [expectedElapsedSeconds], "expected to set \([expectedElapsedSeconds]) elapsed seconds, got \(spy.elapsedSecondsSet) elapsed seconds instead.")
     }
     
+    func test_onForeground_shouldSetStartEndDateLoadedFromInfrastructure() {
+        let (sut, spy) = makeSUT()
+        let anyElapsedSeconds = anyElapsedSeconds()
+        let expectedStarEndDate = anyStartEndDate()
+        
+        let stubbedLocalTimerSet = LocalTimerSet(
+            anyElapsedSeconds,
+            startDate: expectedStarEndDate.startDate,
+            endDate: expectedStarEndDate.endDate
+        )
+        
+        spy.stubbedLoadedLocalTimerState = LocalTimerState(
+            localTimerSet: stubbedLocalTimerSet,
+            state: anyState()
+        )
+        
+        sut.simulateGoToForeground()
+        
+        XCTAssertEqual(spy.startDatesSet, [expectedStarEndDate.startDate], "expected to set \([expectedStarEndDate.startDate]) start date, got \(spy.startDatesSet) start dates instead.")
+        
+        XCTAssertEqual(spy.endDatesSet, [expectedStarEndDate.endDate], "expected to set \([expectedStarEndDate.endDate]) end date, got \(spy.endDatesSet) end dates instead.")
+    }
+    
     // MARK: - Helpers
     private func anyStartEndDate() -> (startDate: Date, endDate: Date) {
         let anyStarDate = Date.now

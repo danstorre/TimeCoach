@@ -17,10 +17,15 @@ class ForegroundSyncSpy: LocalTimerStore, SetableTimer {
     
     // MARK: - SetableTimer
     private(set) var elapsedSecondsSet: [TimeInterval] = []
+    private(set) var startDatesSet: [Date] = []
+    private(set) var endDatesSet: [Date] = []
     
     func setElapsedSeconds(_ seconds: TimeInterval) {
         elapsedSecondsSet.append(seconds)
     }
     
-    func set(startDate: Date, endDate: Date) throws {}
+    func set(startDate: Date, endDate: Date) throws {
+        startDatesSet.append(startDate)
+        endDatesSet.append(endDate)
+    }
 }
