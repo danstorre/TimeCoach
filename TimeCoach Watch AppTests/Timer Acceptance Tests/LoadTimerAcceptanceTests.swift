@@ -15,13 +15,12 @@ final class LoadTimerAcceptanceTests: XCTestCase {
     func test_onForeground_shouldSetTimerElapsedSecondsLoadedFromInfrastructure() {
         let (sut, spy) = makeSUT()
         let expectedElapsedSeconds = anyElapsedSeconds()
-        let anyStarDate = Date.now
-        let anyEndDate = anyStarDate.adding(seconds: 1)
+        let anyStarEndDate = anyStartEndDate()
         
         let stubbedLocalTimerSet = LocalTimerSet(
             expectedElapsedSeconds,
-            startDate: anyStarDate,
-            endDate: anyEndDate
+            startDate: anyStarEndDate.startDate,
+            endDate: anyStarEndDate.endDate
         )
         
         spy.stubbedLoadedLocalTimerState = LocalTimerState(
@@ -35,6 +34,12 @@ final class LoadTimerAcceptanceTests: XCTestCase {
     }
     
     // MARK: - Helpers
+    private func anyStartEndDate() -> (startDate: Date, endDate: Date) {
+        let anyStarDate = Date.now
+        let anyEndDate = anyStarDate.adding(seconds: 1)
+        return (anyStarDate, anyEndDate)
+    }
+    
     private func anyElapsedSeconds() -> TimeInterval {
         1
     }
