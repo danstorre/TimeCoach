@@ -176,6 +176,12 @@ class TimeCoachRoot {
     func goToForeground() {
         timerLoad?.loadTime()
         
+        syncTimerState()
+    }
+    
+    func gotoInactive() {}
+    
+    private func syncTimerState() {
         guard let loadedTimerSet = try? localTimer.load()?.timerSet else {
             return
         }
@@ -185,8 +191,6 @@ class TimeCoachRoot {
             setabletimer?.setElapsedSeconds(loadedTimerSet.elapsedSeconds)
         } catch { }
     }
-    
-    func gotoInactive() {}
     
     private func saveTimerProcess() {
         saveTimerProcessPublisher(timerCoachRoot: self)?
