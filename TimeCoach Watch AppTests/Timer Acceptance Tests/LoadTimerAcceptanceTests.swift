@@ -23,7 +23,7 @@ final class LoadTimerAcceptanceTests: XCTestCase {
             endDate: anyStarEndDate.endDate
         )
         
-        spy.stubbedLoadedLocalTimerState = LocalTimerState(
+        spy.stubbedInfrastructureLocalTimerState = LocalTimerState(
             localTimerSet: stubbedLocalTimerSet,
             state: anyState()
         )
@@ -44,7 +44,7 @@ final class LoadTimerAcceptanceTests: XCTestCase {
             endDate: expectedStarEndDate.endDate
         )
         
-        spy.stubbedLoadedLocalTimerState = LocalTimerState(
+        spy.stubbedInfrastructureLocalTimerState = LocalTimerState(
             localTimerSet: stubbedLocalTimerSet,
             state: anyState()
         )
@@ -58,7 +58,7 @@ final class LoadTimerAcceptanceTests: XCTestCase {
     
     func test_onForeground_shouldExecuteStartEndDateOperationFirst() {
         let (sut, spy) = makeSUT()
-        spy.stubbedLoadedLocalTimerState = anyLocalTimerState()
+        spy.stubbedInfrastructureLocalTimerState = anyLocalTimerState()
         
         sut.simulateGoToForeground()
         

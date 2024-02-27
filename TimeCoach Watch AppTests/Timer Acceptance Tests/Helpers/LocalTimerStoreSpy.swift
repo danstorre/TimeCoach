@@ -4,11 +4,11 @@ class ForegroundSyncSpy: LocalTimerStore, SetableTimer {
     // MARK: - LocalTimerStore
     private(set) var loadTimerStateCallCount: Int = 0
     
-    var stubbedLoadedLocalTimerState: LocalTimerState?
+    var stubbedInfrastructureLocalTimerState: LocalTimerState?
     
     func retrieve() throws -> LocalTimerState? {
         loadTimerStateCallCount += 1
-        return stubbedLoadedLocalTimerState
+        return stubbedInfrastructureLocalTimerState
     }
     
     func deleteState() throws {}
