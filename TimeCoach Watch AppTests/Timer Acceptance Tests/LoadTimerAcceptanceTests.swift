@@ -17,16 +17,13 @@ final class LoadTimerAcceptanceTests: XCTestCase {
         let expectedElapsedSeconds = anyElapsedSeconds()
         let anyStarEndDate = anyStartEndDate()
         
-        let stubbedLocalTimerSet = LocalTimerSet(
-            expectedElapsedSeconds,
+        let stubbedLocalTimerSet = createLocalTimerSet(
+            elapsedSeconds: expectedElapsedSeconds,
             startDate: anyStarEndDate.startDate,
             endDate: anyStarEndDate.endDate
         )
         
-        spy.stubbedInfrastructureLocalTimerState = LocalTimerState(
-            localTimerSet: stubbedLocalTimerSet,
-            state: anyState()
-        )
+        spy.stubbedInfrastructureLocalTimerState = createLocalTimerState(timerSet: stubbedLocalTimerSet)
         
         sut.simulateGoToForeground()
         
@@ -38,6 +35,7 @@ final class LoadTimerAcceptanceTests: XCTestCase {
         let expectedStarEndDate = anyStartEndDate()
         
         let stubbedLocalTimerSet = createLocalTimerSet(
+            elapsedSeconds: anyElapsedSeconds(),
             startDate: expectedStarEndDate.startDate,
             endDate: expectedStarEndDate.endDate
         )
@@ -64,9 +62,9 @@ final class LoadTimerAcceptanceTests: XCTestCase {
     }
     
     // MARK: - Helpers
-    private func createLocalTimerSet(startDate: Date, endDate: Date) -> LocalTimerSet {
+    private func createLocalTimerSet(elapsedSeconds: TimeInterval, startDate: Date, endDate: Date) -> LocalTimerSet {
         return LocalTimerSet(
-            anyElapsedSeconds(),
+            elapsedSeconds,
             startDate: startDate,
             endDate: endDate
         )
