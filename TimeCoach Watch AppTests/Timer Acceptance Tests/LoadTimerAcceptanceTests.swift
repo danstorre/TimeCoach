@@ -35,11 +35,9 @@ final class LoadTimerAcceptanceTests: XCTestCase {
     
     func test_onForeground_shouldSetStartEndDateLoadedFromInfrastructure() {
         let (sut, spy) = makeSUT()
-        let anyElapsedSeconds = anyElapsedSeconds()
         let expectedStarEndDate = anyStartEndDate()
         
-        let stubbedLocalTimerSet = LocalTimerSet(
-            anyElapsedSeconds,
+        let stubbedLocalTimerSet = createLocalTimerSet(
             startDate: expectedStarEndDate.startDate,
             endDate: expectedStarEndDate.endDate
         )
@@ -66,6 +64,14 @@ final class LoadTimerAcceptanceTests: XCTestCase {
     }
     
     // MARK: - Helpers
+    private func createLocalTimerSet(startDate: Date, endDate: Date) -> LocalTimerSet {
+        return LocalTimerSet(
+            anyElapsedSeconds(),
+            startDate: startDate,
+            endDate: endDate
+        )
+    }
+    
     private func createLocalTimerState(timerSet: LocalTimerSet) -> LocalTimerState {
         LocalTimerState(
             localTimerSet: timerSet,
