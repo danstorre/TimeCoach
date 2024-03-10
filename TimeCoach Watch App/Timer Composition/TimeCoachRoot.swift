@@ -188,6 +188,8 @@ class TimeCoachRoot {
             .getTimerSetPublisher()
             .settingStartEndDate(setableTimer: setabletimer)
             .settingElapsedSeconds(setableTimer: setabletimer)
+            .subscribe(on: mainScheduler)
+            .dispatchOnMainQueue()
             .subscribe(Subscribers.Sink(receiveCompletion: { _ in
             }, receiveValue: { _ in }))
     }
