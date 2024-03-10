@@ -182,14 +182,14 @@ class TimeCoachRoot {
     func gotoInactive() {}
     
     private func syncTimerState() {
-        guard let loadedTimerSet = try? localTimer.load()?.timerSet else {
-            return
-        }
+        guard let setabletimer = setabletimer else { return }
         
-        do {
-            try setabletimer?.set(startDate: loadedTimerSet.startDate, endDate: loadedTimerSet.endDate)
-            setabletimer?.setElapsedSeconds(loadedTimerSet.elapsedSeconds)
-        } catch { }
+        localTimer
+            .getTimerSetPublisher()
+            .settingStartEndDate(setableTimer: setabletimer)
+            .settingElapsedSeconds(setableTimer: setabletimer)
+            .subscribe(Subscribers.Sink(receiveCompletion: { _ in
+            }, receiveValue: { _ in }))
     }
     
     private func saveTimerProcess() {
