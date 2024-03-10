@@ -21,4 +21,11 @@ extension Publisher where Output == TimerSet {
         })
         .eraseToAnyPublisher()
     }
+    
+    func settingElapsedSeconds(setableTimer: SetableTimer) -> AnyPublisher<TimerSet, Failure> {
+        self.handleEvents(receiveOutput: { timerSet in
+            setableTimer.setElapsedSeconds(timerSet.elapsedSeconds)
+        })
+        .eraseToAnyPublisher()
+    }
 }
