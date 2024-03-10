@@ -12,3 +12,13 @@ extension LoadTimerState {
         .eraseToAnyPublisher()
     }
 }
+
+extension Publisher where Output == TimerSet {
+    func settingStartEndDate(setableTimer: SetableTimer) -> AnyPublisher<TimerSet, Failure> {
+        self.handleEvents(receiveOutput: { timerSet in
+            try? setableTimer.set(startDate: timerSet.startDate,
+                                  endDate: timerSet.endDate)
+        })
+        .eraseToAnyPublisher()
+    }
+}
