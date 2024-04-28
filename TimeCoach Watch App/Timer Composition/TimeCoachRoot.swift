@@ -68,7 +68,7 @@ class TimeCoachRoot {
 
     // Timer
     var currenDate: () -> Date = Date.init
-    var timerCountdown: TimerCountdown?
+    var timerCountdown: TimerCountdown? 
     private var regularTimer: RegularTimer?
     private lazy var currentSubject: RegularTimer.CurrentValuePublisher = .init(
         TimerState(timerSet: TimerSet.init(0, startDate: .init(), endDate: .init()),
@@ -127,8 +127,14 @@ class TimeCoachRoot {
     
     private func initializeDependencies() {
         let date = currenDate()
-        timerCountdown = createTimerCountDown(from: date, dispatchQueue: timerQueue)
+        let foundationTimer = createTimerCountDown(from: date, dispatchQueue: timerQueue)
         currentSubject = Self.createFirstValuePublisher(from: date)
+        if timerCountdown == nil {
+            timerCountdown = foundationTimer
+        }
+        if setabletimer == nil {
+            setabletimer = foundationTimer
+        }
         let timerCountdown = timerCountdown
         let currenDate = currenDate
         let timerPlayerAdapterState = TimerCountdownToTimerStateAdapter(timer: timerCountdown!, currentDate: currenDate)

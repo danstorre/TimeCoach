@@ -13,13 +13,13 @@ extension TimeCoachRoot {
     static let milisecondsPrecision = 0.1
     
     // MARK: Factory methods
-    func createTimerCountDown(from date: Date, dispatchQueue: DispatchQueue) -> TimerCountdown {
-        #if os(watchOS)
-        timerCountdown ?? FoundationTimerCountdown(startingSet: .pomodoroSet(date: date),
-                                                   dispatchQueue: dispatchQueue,
-                                                   nextSet: .breakSet(date: date),
-                                                   incrementing: Self.milisecondsPrecision)
-        #elseif os(xrOS)
+    func createTimerCountDown(from date: Date, dispatchQueue: DispatchQueue) -> FoundationTimerCountdown {
+#if os(watchOS)
+        FoundationTimerCountdown(startingSet: .pomodoroSet(date: date),
+                                 dispatchQueue: dispatchQueue,
+                                 nextSet: .breakSet(date: date),
+                                 incrementing: Self.milisecondsPrecision)
+#elseif os(xrOS)
         FoundationTimerCountdown(startingSet: .pomodoroSet(date: date),
                                  nextSet: .breakSet(date: date))
         #endif
