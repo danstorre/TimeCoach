@@ -193,8 +193,6 @@ class TimeCoachRoot {
     func gotoInactive() {}
     
     private func syncTimerState() {
-        guard let setabletimer = setabletimer else { return }
-        
         localTimer
             .getTimerSetPublisher()
             .subscribe(on: mainScheduler)
