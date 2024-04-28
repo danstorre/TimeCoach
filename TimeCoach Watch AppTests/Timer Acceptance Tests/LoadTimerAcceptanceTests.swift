@@ -13,7 +13,9 @@ final class LoadTimerAcceptanceTests: XCTestCase {
     }
     
     func test_onForeground_shouldSetTimerElapsedSecondsLoadedFromInfrastructure() {
-        let (sut, spy) = makeSUT()
+        let current = Date.now
+        let timeProvider = MockProviderDate(date: current)
+        let (sut, spy) = makeSUT(getCurrentTime: timeProvider.getCurrentTime)
         let expectedElapsedSeconds = anyElapsedSeconds()
         let anyStarEndDate = anyStartEndDate()
         
