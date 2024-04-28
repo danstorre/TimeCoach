@@ -191,17 +191,16 @@ class TimeCoachRoot {
         
         localTimer
             .getTimerSetPublisher()
-            .settingStartEndDate(setableTimer: setabletimer)
-            .map({ [unowned self] timerSet in
-                let elapsedTime: TimeInterval = self.currenDate().timeIntervalSince(self.timeAtSave)
-                let elapsedSecondsLoaded = timerSet.elapsedSeconds
-                return TimerSet(elapsedSecondsLoaded + elapsedTime, startDate: timerSet.startDate, endDate: timerSet.endDate)
-            })
-            .settingElapsedSeconds(setableTimer: setabletimer)
             .subscribe(on: mainScheduler)
             .dispatchOnMainQueue()
             .subscribe(Subscribers.Sink(receiveCompletion: { _ in
-            }, receiveValue: { _ in }))
+            }, receiveValue: { [unowned self] timerSet in
+                let elapsedTime: TimeInterval = self.currenDate().timeIntervalSince(self.timeAtSave)
+                let elapsedSecondsLoaded = timerSet.elapsedSeconds
+                try? setabletimer.set(startDate: timerSet.startDate,
+                                      endDate: timerSet.endDate)
+                setabletimer.setElapsedSeconds(elapsedSecondsLoaded + elapsedTime)
+            }))
     }
     
     private func saveTimerProcess() {
