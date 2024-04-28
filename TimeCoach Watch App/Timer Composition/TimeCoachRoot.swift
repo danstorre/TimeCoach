@@ -206,7 +206,9 @@ class TimeCoachRoot {
     private func saveTimerProcess() {
         saveTimerProcessPublisher(timerCoachRoot: self)?
         .subscribe(Subscribers.Sink(receiveCompletion: { _ in
-        }, receiveValue: { _ in }))
+        }, receiveValue: { [unowned self] _ in
+            self.timeAtSave = self.currenDate()
+        }))
     }
     
     private struct UnexpectedError: Error {}
@@ -307,7 +309,6 @@ class TimeCoachRoot {
             .saveTimerState(saver: localTimer)
             .subscribe(on: mainScheduler)
             .dispatchOnMainQueue()
-            .saveTime(using: self)
             .notifySavedTimer(notifier: timerSavedNofitier)
             .eraseToAnyPublisher()
     }
