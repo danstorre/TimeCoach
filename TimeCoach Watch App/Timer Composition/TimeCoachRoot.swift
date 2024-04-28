@@ -7,6 +7,11 @@ import UserNotifications
 import WidgetKit
 
 class TimeCoachRoot {
+    // Sync time values.
+    private lazy var timeAtSave: Date = { [unowned self] in
+        self.currenDate()
+    }()
+    
     // Background Activity
     private var backgroundTimeExtender: BackgroundExtendedTime?
     private lazy var defaultTimeExtender: DefaultBackgroundExtendedTime = DefaultBackgroundExtendedTime { [weak self] reason, completion in
@@ -187,6 +192,11 @@ class TimeCoachRoot {
         localTimer
             .getTimerSetPublisher()
             .settingStartEndDate(setableTimer: setabletimer)
+            .map({ [unowned self] timerSet in
+                let elapsedTime: TimeInterval = self.currenDate().timeIntervalSince(self.timeAtSave)
+                let elapsedSecondsLoaded = timerSet.elapsedSeconds
+                return TimerSet(elapsedSecondsLoaded + elapsedTime, startDate: timerSet.startDate, endDate: timerSet.endDate)
+            })
             .settingElapsedSeconds(setableTimer: setabletimer)
             .subscribe(on: mainScheduler)
             .dispatchOnMainQueue()
@@ -298,6 +308,9 @@ class TimeCoachRoot {
             .saveTimerState(saver: localTimer)
             .subscribe(on: mainScheduler)
             .dispatchOnMainQueue()
+            .handleEvents(receiveOutput: { [unowned self] _ in
+                self.timeAtSave = self.currenDate()
+            })
             .notifySavedTimer(notifier: timerSavedNofitier)
             .eraseToAnyPublisher()
     }

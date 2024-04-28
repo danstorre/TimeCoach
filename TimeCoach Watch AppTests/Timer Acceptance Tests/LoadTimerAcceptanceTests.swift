@@ -30,6 +30,38 @@ final class LoadTimerAcceptanceTests: XCTestCase {
         XCTAssertEqual(spy.elapsedSecondsSet, [expectedElapsedSeconds], "expected to set \([expectedElapsedSeconds]) elapsed seconds, got \(spy.elapsedSecondsSet) elapsed seconds instead.")
     }
     
+    class MockProviderDate {
+        var date: Date
+        
+        init(date: Date) {
+            self.date = date
+        }
+        
+        func getCurrentTime() -> Date {
+            date
+        }
+    }
+    
+    func test_onForeground_afterOneSecondOnBackground_timerShouldSetTimeCorrectly() {
+        let current = Date.now
+        let timeProvider = MockProviderDate(date: current)
+        let (sut, spy) = makeSUT(getCurrentTime: timeProvider.getCurrentTime)
+        let anyStarEndDate = anyStartEndDate(rangeInSecond: 2)
+        let stubbedLocalTimerSet = createLocalTimerSet(
+            elapsedSeconds: 0,
+            startDate: anyStarEndDate.startDate,
+            endDate: anyStarEndDate.endDate
+        )
+        spy.stubbedInfrastructureLocalTimerState = createLocalTimerState(timerSet: stubbedLocalTimerSet)
+        let expectedElapsedSeconds: TimeInterval = 1
+        
+        sut.simulateGoToBackground()
+        timeProvider.date = current.adding(seconds: expectedElapsedSeconds)
+        sut.simulateGoToForeground()
+        
+        XCTAssertEqual(spy.elapsedSecondsSet, [expectedElapsedSeconds], "expected to receive an array of \([expectedElapsedSeconds]) elapsed seconds, got an array of \(spy.elapsedSecondsSet) elapsed seconds instead.")
+    }
+    
     func test_onForeground_shouldSetStartEndDateLoadedFromInfrastructure() {
         let (sut, spy) = makeSUT()
         let expectedStarEndDate = anyStartEndDate()
@@ -90,21 +122,21 @@ final class LoadTimerAcceptanceTests: XCTestCase {
                              endDate: anyStartEndDate.endDate)
     }
     
-    private func anyStartEndDate() -> (startDate: Date, endDate: Date) {
+    private func anyStartEndDate(rangeInSecond: TimeInterval = 1) -> (startDate: Date, endDate: Date) {
         let anyStarDate = Date.now
-        let anyEndDate = anyStarDate.adding(seconds: 1)
+        let anyEndDate = anyStarDate.adding(seconds: rangeInSecond)
         return (anyStarDate, anyEndDate)
     }
     
     private func anyElapsedSeconds() -> TimeInterval {
-        1
+        0
     }
     
     private func anyState() -> LocalTimerState.State {
         .pause
     }
     
-    private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> (timerView: TimeCoach_Watch_AppApp, spy: ForegroundSyncSpy) {
+    private func makeSUT(getCurrentTime currentDate: @escaping () -> Date = Date.init, file: StaticString = #filePath, line: UInt = #line) -> (timerView: TimeCoach_Watch_AppApp, spy: ForegroundSyncSpy) {
         let spy = TimerCountdownSpy.delivers(
             afterPomoroSeconds: 0.0...0.0,
             pomodoroStub: pomodoroResponse,
@@ -117,6 +149,7 @@ final class LoadTimerAcceptanceTests: XCTestCase {
             timerState: DummyTimerLoad(),
             stateTimerStore: foregroundSyncSpy,
             scheduler: DummyScheduler(),
+            currentDate: currentDate,
             backgroundTimeExtender: BackgroundExtendedTimeNullObject(),
             setabletimer: foregroundSyncSpy
         )
