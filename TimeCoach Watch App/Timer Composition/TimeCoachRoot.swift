@@ -141,11 +141,6 @@ class TimeCoachRoot {
         let currentSubject = currentSubject
         regularTimer = Self.createPomodorTimer(with: timerPlayerAdapterState, and: currentSubject)
         
-        if let timerCountdown = timerCountdown as? FoundationTimerCountdown {
-            self.timerSave = timerCountdown
-            self.timerLoad = timerCountdown
-        }
-        
         let timerControlPublishers = TimerControlsPublishers(playPublisher: handlePlay(),
                                                              skipPublisher: handleSkip(),
                                                              stopPublisher: handleStop(),
