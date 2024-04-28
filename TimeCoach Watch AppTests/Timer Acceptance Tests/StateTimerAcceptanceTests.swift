@@ -3,8 +3,6 @@ import LifeCoach
 @testable import TimeCoach_Watch_App
 
 final class StateTimerAcceptanceTests: XCTestCase {
-    typealias TimerStore = TimerLoad & TimerSave
-    
     func test_onLaunch_onBackgroundAppStateShouldRequestExtendedTime() {
         let (sut, spy) = makeSUT()
         
@@ -228,7 +226,6 @@ final class StateTimerAcceptanceTests: XCTestCase {
         let spy = Spy(currenDate: currentDate())
         let infra = Infrastructure(
             timerCountdown: spy,
-            timerState: spy,
             stateTimerStore: spy,
             scheduler: spy,
             notifySavedTimer: spy.notifySavedTimer,
@@ -242,7 +239,7 @@ final class StateTimerAcceptanceTests: XCTestCase {
         return (sut, spy)
     }
     
-    private class Spy: TimerCountdown, TimerStore, LocalTimerStore, Scheduler, BackgroundExtendedTime {
+    private class Spy: TimerCountdown, LocalTimerStore, Scheduler, BackgroundExtendedTime {
         enum AnyMessage: Equatable, CustomStringConvertible {
             case startTimer
             case stopTimer
@@ -344,11 +341,6 @@ final class StateTimerAcceptanceTests: XCTestCase {
             self.state = state
             self.currentSet = timerSet
         }
-        
-        // MARK: - Timer Store
-        func loadTime() {}
-        
-        func saveTime(completion: @escaping (TimeInterval) -> Void) {}
         
         // MARK: - Local Timer State Store
         func retrieve() throws -> LifeCoach.LocalTimerState? {

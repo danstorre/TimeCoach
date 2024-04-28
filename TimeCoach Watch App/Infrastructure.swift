@@ -3,7 +3,6 @@ import LifeCoach
 
 public struct Infrastructure {
     let timerCountdown: TimerCountdown
-    let timerState: TimerSave & TimerLoad
     let stateTimerStore: LocalTimerStore
     let scheduler: LifeCoach.Scheduler
     let notifySavedTimer: (() -> Void)?
@@ -14,7 +13,6 @@ public struct Infrastructure {
     let setabletimer: SetableTimer?
     
     init(timerCountdown: TimerCountdown,
-         timerState: TimerSave & TimerLoad,
          stateTimerStore: LocalTimerStore,
          scheduler: LifeCoach.Scheduler,
          notifySavedTimer: (() -> Void)? = nil,
@@ -25,7 +23,6 @@ public struct Infrastructure {
          setabletimer: SetableTimer? = nil
     ) {
         self.timerCountdown = timerCountdown
-        self.timerState = timerState
         self.stateTimerStore = stateTimerStore
         self.scheduler = scheduler
         self.notifySavedTimer = notifySavedTimer

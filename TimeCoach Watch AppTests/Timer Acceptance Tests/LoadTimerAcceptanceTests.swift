@@ -153,7 +153,6 @@ final class LoadTimerAcceptanceTests: XCTestCase {
         
         let infra = Infrastructure(
             timerCountdown: spy,
-            timerState: DummyTimerLoad(),
             stateTimerStore: foregroundSyncSpy,
             scheduler: DummyScheduler(),
             currentDate: currentDate,
@@ -167,10 +166,4 @@ final class LoadTimerAcceptanceTests: XCTestCase {
         
         return (sut, foregroundSyncSpy)
     }
-}
-
-fileprivate struct DummyTimerLoad: TimerLoad, TimerSave {
-    func saveTime(completion: @escaping (TimeInterval) -> Void) {}
-    
-    func loadTime() {}
 }

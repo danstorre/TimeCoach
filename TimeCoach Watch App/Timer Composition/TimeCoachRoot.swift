@@ -18,10 +18,6 @@ class TimeCoachRoot {
         self?.backgroundTimeExtender?.requestTime(reason: reason, completion: completion) ?? ProcessInfo().performExpiringActivity(withReason: reason, using: completion)
     }
     
-    // Timer State
-    private var timerSave: TimerSave?
-    private var timerLoad: TimerLoad?
-    
     // Pomodoro State
     private lazy var currentIsBreakMode: CurrentValueSubject<IsBreakMode, Error> = .init(false)
     
@@ -93,8 +89,6 @@ class TimeCoachRoot {
     
     convenience init(infrastructure: Infrastructure) {
         self.init()
-        self.timerSave = infrastructure.timerState
-        self.timerLoad = infrastructure.timerState
         self.timerCountdown = infrastructure.timerCountdown
         self.stateTimerStore = infrastructure.stateTimerStore
         self.scheduler = infrastructure.scheduler
