@@ -46,3 +46,11 @@ extension TimeCoachRoot {
     }
 }
 
+extension Publisher where Output == TimerState {
+    func saveTime(using root: TimeCoachRoot) -> AnyPublisher<TimerState, Failure> {
+        self.handleEvents(receiveOutput: { _ in
+            root.timeAtSave = root.currenDate()
+        })
+        .eraseToAnyPublisher()
+    }
+}

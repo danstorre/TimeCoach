@@ -8,7 +8,7 @@ import WidgetKit
 
 class TimeCoachRoot {
     // Sync time values.
-    private lazy var timeAtSave: Date = { [unowned self] in
+    lazy var timeAtSave: Date = { [unowned self] in
         self.currenDate()
     }()
     
@@ -67,7 +67,7 @@ class TimeCoachRoot {
     }()
 
     // Timer
-    private var currenDate: () -> Date = Date.init
+    var currenDate: () -> Date = Date.init
     var timerCountdown: TimerCountdown?
     private var regularTimer: RegularTimer?
     private lazy var currentSubject: RegularTimer.CurrentValuePublisher = .init(
@@ -308,9 +308,7 @@ class TimeCoachRoot {
             .saveTimerState(saver: localTimer)
             .subscribe(on: mainScheduler)
             .dispatchOnMainQueue()
-            .handleEvents(receiveOutput: { [unowned self] _ in
-                self.timeAtSave = self.currenDate()
-            })
+            .saveTime(using: self)
             .notifySavedTimer(notifier: timerSavedNofitier)
             .eraseToAnyPublisher()
     }
@@ -322,3 +320,4 @@ class TimeCoachRoot {
         return instance
     }
 }
+
