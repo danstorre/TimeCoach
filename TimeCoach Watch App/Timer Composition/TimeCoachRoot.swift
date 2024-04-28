@@ -113,6 +113,14 @@ class TimeCoachRoot {
     }
     
     // MARK: - helpers
+    private func set(timerSet: TimerSet) {
+        let elapsedTime: TimeInterval = currenDate().timeIntervalSince(timeAtSave)
+        let elapsedSecondsLoaded = timerSet.elapsedSeconds
+        try? setabletimer?.set(startDate: timerSet.startDate,
+                              endDate: timerSet.endDate)
+        setabletimer?.setElapsedSeconds(elapsedSecondsLoaded + elapsedTime)
+    }
+    
     private func setNotificationDelegate() {
         UNUserNotificationCenter.current().delegate = UNUserNotificationdelegate
     }
@@ -195,11 +203,7 @@ class TimeCoachRoot {
             .dispatchOnMainQueue()
             .subscribe(Subscribers.Sink(receiveCompletion: { _ in
             }, receiveValue: { [unowned self] timerSet in
-                let elapsedTime: TimeInterval = self.currenDate().timeIntervalSince(self.timeAtSave)
-                let elapsedSecondsLoaded = timerSet.elapsedSeconds
-                try? setabletimer.set(startDate: timerSet.startDate,
-                                      endDate: timerSet.endDate)
-                setabletimer.setElapsedSeconds(elapsedSecondsLoaded + elapsedTime)
+                self.set(timerSet: timerSet)
             }))
     }
     
