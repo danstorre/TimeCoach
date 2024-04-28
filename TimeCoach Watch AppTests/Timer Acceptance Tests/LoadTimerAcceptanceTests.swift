@@ -45,6 +45,7 @@ final class LoadTimerAcceptanceTests: XCTestCase {
         spy.stubbedInfrastructureLocalTimerState = createLocalTimerState(timerSet: stubbedLocalTimerSet)
         let expectedElapsedSeconds: TimeInterval = 1
         
+        sut.simulatePlayUserInteraction()
         sut.simulateGoToBackground()
         timeProvider.passingSeconds(expectedElapsedSeconds)
         sut.simulateGoToForeground()

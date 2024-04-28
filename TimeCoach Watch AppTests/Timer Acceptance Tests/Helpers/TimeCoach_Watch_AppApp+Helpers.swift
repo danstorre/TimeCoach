@@ -28,4 +28,8 @@ extension TimeCoach_Watch_AppApp {
     func simulateSkipUserInteraction() {
         timerView.simulateSkipTimerUserInteraction()
     }
+    
+    func simulatePlayUserInteraction() {
+        timerView.simulateToggleTimerUserInteraction()
+    }
 }
