@@ -44,7 +44,7 @@ final class LoadTimerAcceptanceTests: XCTestCase {
         let expectedElapsedSeconds: TimeInterval = 1
         
         sut.simulateGoToBackground()
-        timeProvider.date = current.adding(seconds: expectedElapsedSeconds)
+        timeProvider.passingSeconds(expectedElapsedSeconds)
         sut.simulateGoToForeground()
         
         XCTAssertEqual(spy.elapsedSecondsSet, [expectedElapsedSeconds], "expected to receive an array of \([expectedElapsedSeconds]) elapsed seconds, got an array of \(spy.elapsedSecondsSet) elapsed seconds instead.")
@@ -83,7 +83,7 @@ final class LoadTimerAcceptanceTests: XCTestCase {
     
     // MARK: - Helpers
     private class MockProviderDate {
-        var date: Date
+        private var date: Date
         
         init(date: Date) {
             self.date = date
@@ -91,6 +91,10 @@ final class LoadTimerAcceptanceTests: XCTestCase {
         
         func getCurrentTime() -> Date {
             date
+        }
+        
+        func passingSeconds(_ seconds: TimeInterval) {
+            date = date.adding(seconds: seconds)
         }
     }
     
