@@ -30,18 +30,6 @@ final class LoadTimerAcceptanceTests: XCTestCase {
         XCTAssertEqual(spy.elapsedSecondsSet, [expectedElapsedSeconds], "expected to set \([expectedElapsedSeconds]) elapsed seconds, got \(spy.elapsedSecondsSet) elapsed seconds instead.")
     }
     
-    class MockProviderDate {
-        var date: Date
-        
-        init(date: Date) {
-            self.date = date
-        }
-        
-        func getCurrentTime() -> Date {
-            date
-        }
-    }
-    
     func test_onForeground_afterOneSecondOnBackground_timerShouldSetTimeCorrectly() {
         let current = Date.now
         let timeProvider = MockProviderDate(date: current)
@@ -94,6 +82,18 @@ final class LoadTimerAcceptanceTests: XCTestCase {
     }
     
     // MARK: - Helpers
+    private class MockProviderDate {
+        var date: Date
+        
+        init(date: Date) {
+            self.date = date
+        }
+        
+        func getCurrentTime() -> Date {
+            date
+        }
+    }
+    
     private func createLocalTimerSet(elapsedSeconds: TimeInterval, startDate: Date, endDate: Date) -> LocalTimerSet {
         return LocalTimerSet(
             elapsedSeconds,
