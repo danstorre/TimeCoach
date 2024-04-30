@@ -32,7 +32,7 @@ final class LoadTimerAcceptanceTests: XCTestCase {
         XCTAssertEqual(spy.elapsedSecondsSet, [expectedElapsedSeconds], "expected to set \([expectedElapsedSeconds]) elapsed seconds, got \(spy.elapsedSecondsSet) elapsed seconds instead.")
     }
     
-    func test_onForeground_afterOneSecondOnBackground_timerShouldSetTimeCorrectly() {
+    func test_onForeground_afterPlayUserInteractionAndOneSecondOnBackground_timerShouldSetTimeCorrectly() {
         let current = Date.now
         let timeProvider = MockProviderDate(date: current)
         let (sut, spy) = makeSUT(getCurrentTime: timeProvider.getCurrentTime)
