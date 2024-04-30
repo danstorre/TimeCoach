@@ -66,7 +66,7 @@ class TimeCoachRoot {
     var currenDate: () -> Date = Date.init
     var timerCountdown: TimerCountdown? 
     private var regularTimer: RegularTimer?
-    private lazy var currentSubject: RegularTimer.CurrentValuePublisher = .init(
+    public lazy var currentSubject: RegularTimer.CurrentValuePublisher = .init(
         TimerState(timerSet: TimerSet.init(0, startDate: .init(), endDate: .init()),
                    state: .stop))
     

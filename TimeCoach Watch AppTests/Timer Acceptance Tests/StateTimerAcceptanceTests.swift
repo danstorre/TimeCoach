@@ -1,8 +1,14 @@
 import XCTest
 import LifeCoach
 @testable import TimeCoach_Watch_App
-
+ 
 final class StateTimerAcceptanceTests: XCTestCase {
+    func test_onLaunch_timerShouldStartWithStopState() {
+        let (sut, _) = makeSUT()
+        
+        XCTAssertEqual(sut.timerState, .stop)
+    }
+    
     func test_onLaunch_onBackgroundAppStateShouldRequestExtendedTime() {
         let (sut, spy) = makeSUT()
         
@@ -386,5 +392,11 @@ final class StateTimerAcceptanceTests: XCTestCase {
 private extension TimeCoach_Watch_AppApp {
     func simulateToggleTimerUserInteraction() {
         timerView.simulateToggleTimerUserInteraction()
+    }
+}
+
+private extension TimeCoach_Watch_AppApp {
+    var timerState: TimerState.State {
+        root.currentSubject.value.state
     }
 }

@@ -11,7 +11,7 @@ import LifeCoachExtensions
 @main
 struct TimeCoach_Watch_AppApp: App {
     @Environment(\.scenePhase) private var scenePhase
-    private let root: TimeCoachRoot
+    public let root: TimeCoachRoot
     
     init() {
         let root = TimeCoachRoot()
