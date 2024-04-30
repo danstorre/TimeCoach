@@ -36,6 +36,7 @@ final class LoadTimerAcceptanceTests: XCTestCase {
         let current = Date.now
         let timeProvider = MockProviderDate(date: current)
         let (sut, spy) = makeSUT(getCurrentTime: timeProvider.getCurrentTime)
+        let expectedElapsedSeconds: TimeInterval = 1
         let anyStarEndDate = anyStartEndDate(rangeInSecond: 2)
         let stubbedLocalTimerSet = createLocalTimerSet(
             elapsedSeconds: 0,
@@ -43,7 +44,6 @@ final class LoadTimerAcceptanceTests: XCTestCase {
             endDate: anyStarEndDate.endDate
         )
         spy.stubbedInfrastructureLocalTimerState = createLocalTimerState(timerSet: stubbedLocalTimerSet)
-        let expectedElapsedSeconds: TimeInterval = 1
         
         sut.simulatePlayUserInteraction()
         sut.simulateGoToBackground()
