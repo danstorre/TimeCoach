@@ -4,18 +4,31 @@ import LifeCoach
 
 final class LoadTimerAcceptanceTests: XCTestCase {
     
-    func test_OnForeground_shouldSendMessageToTimeLoader() {
-        let (sut, spy) = makeSUT()
+    func test_onForeground_onStopTimerState_shouldNotSendLoadMessageToLocalTimer() {
+        let current = Date.now
+        let timeProvider = MockProviderDate(date: current)
+        let (sut, spy, _) = makeSUT(getCurrentTime: timeProvider.getCurrentTime)
+        
+        sut.simulateGoToBackground()
+        sut.simulateGoToForeground()
+        
+        XCTAssertEqual(spy.loadTimerStateCallCount, 0)
+    }
+    
+    func test_OnForeground_afterPlayUserInteraction_shouldSendMessageToTimeLoader() {
+        let (sut, spy, stub) = makeSUT()
 
+        sut.simulatePlayUserInteraction()
+        stub.flushPomodoroTimes(at: 0)
         sut.simulateGoToForeground()
         
         XCTAssertEqual(spy.loadTimerStateCallCount, 1)
     }
     
-    func test_onForeground_shouldSetTimerElapsedSecondsLoadedFromInfrastructure() {
+    func test_onForeground_afterPlayUserInteraction_shouldSetTimerElapsedSecondsLoadedFromInfrastructure() {
         let current = Date.now
         let timeProvider = MockProviderDate(date: current)
-        let (sut, spy) = makeSUT(getCurrentTime: timeProvider.getCurrentTime)
+        let (sut, spy, stub) = makeSUT(getCurrentTime: timeProvider.getCurrentTime)
         let expectedElapsedSeconds = anyElapsedSeconds()
         let anyStarEndDate = anyStartEndDate()
         
@@ -27,6 +40,8 @@ final class LoadTimerAcceptanceTests: XCTestCase {
         
         spy.stubbedInfrastructureLocalTimerState = createLocalTimerState(timerSet: stubbedLocalTimerSet)
         
+        sut.simulatePlayUserInteraction()
+        stub.flushPomodoroTimes(at: 0)
         sut.simulateGoToForeground()
         
         XCTAssertEqual(spy.elapsedSecondsSet, [expectedElapsedSeconds], "expected to set \([expectedElapsedSeconds]) elapsed seconds, got \(spy.elapsedSecondsSet) elapsed seconds instead.")
@@ -35,7 +50,7 @@ final class LoadTimerAcceptanceTests: XCTestCase {
     func test_onForeground_afterPlayUserInteractionAndOneSecondOnBackground_timerShouldSetTimeCorrectly() {
         let current = Date.now
         let timeProvider = MockProviderDate(date: current)
-        let (sut, spy) = makeSUT(getCurrentTime: timeProvider.getCurrentTime)
+        let (sut, spy, stub) = makeSUT(getCurrentTime: timeProvider.getCurrentTime)
         let expectedElapsedSeconds: TimeInterval = 1
         let anyStarEndDate = anyStartEndDate(rangeInSecond: 2)
         let stubbedLocalTimerSet = createLocalTimerSet(
@@ -46,6 +61,7 @@ final class LoadTimerAcceptanceTests: XCTestCase {
         spy.stubbedInfrastructureLocalTimerState = createLocalTimerState(timerSet: stubbedLocalTimerSet)
         
         sut.simulatePlayUserInteraction()
+        stub.flushPomodoroTimes(at: 0)
         sut.simulateGoToBackground()
         timeProvider.passingSeconds(expectedElapsedSeconds)
         sut.simulateGoToForeground()
@@ -53,8 +69,8 @@ final class LoadTimerAcceptanceTests: XCTestCase {
         XCTAssertEqual(spy.elapsedSecondsSet, [expectedElapsedSeconds], "expected to receive an array of \([expectedElapsedSeconds]) elapsed seconds, got an array of \(spy.elapsedSecondsSet) elapsed seconds instead.")
     }
     
-    func test_onForeground_shouldSetStartEndDateLoadedFromInfrastructure() {
-        let (sut, spy) = makeSUT()
+    func test_onForeground_afterPlayUserInteraction_shouldSetStartEndDateLoadedFromInfrastructure() {
+        let (sut, spy, stub) = makeSUT()
         let expectedStarEndDate = anyStartEndDate()
         
         let stubbedLocalTimerSet = createLocalTimerSet(
@@ -65,6 +81,8 @@ final class LoadTimerAcceptanceTests: XCTestCase {
         
         spy.stubbedInfrastructureLocalTimerState = createLocalTimerState(timerSet: stubbedLocalTimerSet)
         
+        sut.simulatePlayUserInteraction()
+        stub.flushPomodoroTimes(at: 0)
         sut.simulateGoToForeground()
         
         XCTAssertEqual(spy.startDatesSet, [expectedStarEndDate.startDate], "expected to set \([expectedStarEndDate.startDate]) start date, got \(spy.startDatesSet) start dates instead.")
@@ -72,10 +90,12 @@ final class LoadTimerAcceptanceTests: XCTestCase {
         XCTAssertEqual(spy.endDatesSet, [expectedStarEndDate.endDate], "expected to set \([expectedStarEndDate.endDate]) end date, got \(spy.endDatesSet) end dates instead.")
     }
     
-    func test_onForeground_shouldExecuteStartEndDateOperationFirst() {
-        let (sut, spy) = makeSUT()
+    func test_onForeground_afterPlayUserInteraction_shouldExecuteStartEndDateOperationFirst() {
+        let (sut, spy, stub) = makeSUT()
         spy.stubbedInfrastructureLocalTimerState = anyLocalTimerState()
         
+        sut.simulatePlayUserInteraction()
+        stub.flushPomodoroTimes(at: 0)
         sut.simulateGoToForeground()
         
         XCTAssertEqual(spy.messagesReceived, [
@@ -143,8 +163,8 @@ final class LoadTimerAcceptanceTests: XCTestCase {
         .pause
     }
     
-    private func makeSUT(getCurrentTime currentDate: @escaping () -> Date = Date.init, file: StaticString = #filePath, line: UInt = #line) -> (timerView: TimeCoach_Watch_AppApp, spy: ForegroundSyncSpy) {
-        let spy = TimerCountdownSpy.delivers(
+    private func makeSUT(getCurrentTime currentDate: @escaping () -> Date = Date.init, file: StaticString = #filePath, line: UInt = #line) -> (timerView: TimeCoach_Watch_AppApp, spy: ForegroundSyncSpy, stubbedTimer: TimerCountdownSpy) {
+        let stubbedTimer = TimerCountdownSpy.delivers(
             afterPomoroSeconds: 0.0...0.0,
             pomodoroStub: pomodoroResponse,
             afterBreakSeconds: 0.0...0.0,
@@ -152,7 +172,7 @@ final class LoadTimerAcceptanceTests: XCTestCase {
         let foregroundSyncSpy = ForegroundSyncSpy()
         
         let infra = Infrastructure(
-            timerCountdown: spy,
+            timerCountdown: stubbedTimer,
             stateTimerStore: foregroundSyncSpy,
             scheduler: DummyScheduler(),
             currentDate: currentDate,
@@ -162,8 +182,8 @@ final class LoadTimerAcceptanceTests: XCTestCase {
         
         let sut = TimeCoach_Watch_AppApp(infrastructure: infra)
         
-        trackForMemoryLeak(instance: spy, file: file, line: line)
+        trackForMemoryLeak(instance: stubbedTimer, file: file, line: line)
         
-        return (sut, foregroundSyncSpy)
+        return (sut, foregroundSyncSpy, stubbedTimer)
     }
 }
