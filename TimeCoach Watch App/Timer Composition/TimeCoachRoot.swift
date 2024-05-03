@@ -121,7 +121,7 @@ class TimeCoachRoot {
     
     private func initializeDependencies() {
         let date = currenDate()
-        let foundationTimer = createTimerCountDown(from: date, dispatchQueue: timerQueue)
+        let foundationTimer = Self.createTimerCountDown(from: date, dispatchQueue: timerQueue)
         currentSubject = Self.createFirstValuePublisher(from: date)
         if timerCountdown == nil {
             timerCountdown = foundationTimer
