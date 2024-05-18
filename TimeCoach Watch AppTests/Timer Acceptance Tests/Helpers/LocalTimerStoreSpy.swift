@@ -2,12 +2,12 @@ import LifeCoach
 
 class ForegroundSyncSpy: LocalTimerStore, SetableTimer {
     // MARK: - LocalTimerStore
-    private(set) var loadTimerStateCallCount: Int = 0
+    private(set) var retrieveLocalTimerStateCallCount: Int = 0
     
     var stubbedInfrastructureLocalTimerState: LocalTimerState?
     
     func retrieve() throws -> LocalTimerState? {
-        loadTimerStateCallCount += 1
+        retrieveLocalTimerStateCallCount += 1
         return stubbedInfrastructureLocalTimerState
     }
     

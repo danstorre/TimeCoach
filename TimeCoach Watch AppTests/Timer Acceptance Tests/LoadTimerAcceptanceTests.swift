@@ -12,7 +12,7 @@ final class LoadTimerAcceptanceTests: XCTestCase {
         sut.simulateGoToBackground()
         sut.simulateGoToForeground()
         
-        XCTAssertEqual(spy.loadTimerStateCallCount, 0)
+        XCTAssertEqual(spy.retrieveLocalTimerStateCallCount, 0)
     }
     
     func test_OnForeground_afterPlayUserInteraction_shouldSendMessageToTimeLoader() {
@@ -22,7 +22,7 @@ final class LoadTimerAcceptanceTests: XCTestCase {
         stub.flushPomodoroTimes(at: 0)
         sut.simulateGoToForeground()
         
-        XCTAssertEqual(spy.loadTimerStateCallCount, 1)
+        XCTAssertEqual(spy.retrieveLocalTimerStateCallCount, 1)
     }
     
     func test_onForeground_afterPlayUserInteraction_shouldSetTimerElapsedSecondsLoadedFromInfrastructure() {
