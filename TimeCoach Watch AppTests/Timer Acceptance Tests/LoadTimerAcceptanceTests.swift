@@ -31,10 +31,10 @@ final class LoadTimerAcceptanceTests: XCTestCase {
     }
     
     func test_onForegroundAndOnPlayState_afterGoingToBackground_shouldSendMessageToTimeLoader() {
-        let (sut, spy, stub) = makeSUT()
+        let (sut, spy, timerSpy) = makeSUT()
 
         sut.simulatePlayUserInteraction()
-        stub.flushPomodoroTimes(at: 0)
+        timerSpy.changeStateToPlay()
         sut.simulateGoToBackground()
         sut.simulateGoToForeground()
         
@@ -44,7 +44,7 @@ final class LoadTimerAcceptanceTests: XCTestCase {
     func test_onForegroundAndOnPlayState_afterGoingToBackground_shouldSetTimerCorrectly() {
         let current = Date.now
         let timeProvider = MockProviderDate(date: current)
-        let (sut, spy, stub) = makeSUT(getCurrentTime: timeProvider.getCurrentTime)
+        let (sut, spy, timerSpy) = makeSUT(getCurrentTime: timeProvider.getCurrentTime)
         let expectedStarEndDate = anyStartEndDate()
         let expectedElapsedSeconds = anyElapsedSeconds()
         
@@ -57,7 +57,7 @@ final class LoadTimerAcceptanceTests: XCTestCase {
         spy.stubbedInfrastructureLocalTimerState = createLocalTimerState(timerSet: stubbedLocalTimerSet)
         
         sut.simulatePlayUserInteraction()
-        stub.flushPomodoroTimes(at: 0)
+        timerSpy.changeStateToPlay()
         sut.simulateGoToBackground()
         sut.simulateGoToForeground()
         
@@ -73,7 +73,7 @@ final class LoadTimerAcceptanceTests: XCTestCase {
     func test_onForegroundAndOnPlayState_AfterOneSecondOnBackground_shouldSetTimerCorrectly() {
         let current = Date.now
         let timeProvider = MockProviderDate(date: current)
-        let (sut, spy, stub) = makeSUT(getCurrentTime: timeProvider.getCurrentTime)
+        let (sut, spy, timerSpy) = makeSUT(getCurrentTime: timeProvider.getCurrentTime)
         let expectedElapsedSeconds: TimeInterval = 1
         let anyStarEndDate = anyStartEndDate(rangeInSecond: 2)
         let stubbedLocalTimerSet = createLocalTimerSet(
@@ -84,7 +84,7 @@ final class LoadTimerAcceptanceTests: XCTestCase {
         spy.stubbedInfrastructureLocalTimerState = createLocalTimerState(timerSet: stubbedLocalTimerSet)
         
         sut.simulatePlayUserInteraction()
-        stub.flushPomodoroTimes(at: 0)
+        timerSpy.changeStateToPlay()
         sut.simulateGoToBackground()
         timeProvider.passingSeconds(expectedElapsedSeconds)
         sut.simulateGoToForeground()
@@ -97,7 +97,6 @@ final class LoadTimerAcceptanceTests: XCTestCase {
             ]
         )
     }
-    
     
     // MARK: - Helpers
     private class MockProviderDate {
