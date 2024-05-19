@@ -187,7 +187,7 @@ class TimeCoachRoot {
     func gotoInactive() {}
     
     private func syncTimerState() {
-        guard currentSubject.value.state != .stop, currentSubject.value.state != .pause else {
+        guard validateStateBeforeSync() else {
             return
         }
         
@@ -199,6 +199,10 @@ class TimeCoachRoot {
             }, receiveValue: { [unowned self] timerSet in
                 self.set(timerSet: timerSet)
             }))
+    }
+    
+    private func validateStateBeforeSync() -> Bool {
+        currentSubject.value.state != .stop && currentSubject.value.state != .pause
     }
     
     private func saveTimerProcess() {
