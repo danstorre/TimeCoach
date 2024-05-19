@@ -7,12 +7,12 @@ final class LoadTimerAcceptanceTests: XCTestCase {
     func test_onForegroundAndOnStopState_afterGoingToBackground_shouldNotSendLoadMessageToLocalTimer() {
         let current = Date.now
         let timeProvider = MockProviderDate(date: current)
-        let (sut, spy, _) = makeSUT(getCurrentTime: timeProvider.getCurrentTime)
+        let (sut, foregroundSyncSpy, _) = makeSUT(getCurrentTime: timeProvider.getCurrentTime)
         
         sut.simulateGoToBackground()
         sut.simulateGoToForeground()
         
-        XCTAssertEqual(spy.loadTimerStateCallCount, 0)
+        XCTAssertEqual(foregroundSyncSpy.loadTimerStateCallCount, 0)
     }
     
     func test_onForegroundAndOnPauseState_afterGoingToBackground_shouldNotSendMessagesToTimerLoader() {
@@ -31,24 +31,24 @@ final class LoadTimerAcceptanceTests: XCTestCase {
     }
     
     func test_onForegroundAndOnPlayState_afterGoingToBackground_shouldSendMessageToTimeLoader() {
-        let (sut, spy, timerSpy) = makeSUT()
+        let (sut, foregroundSyncSpy, timerSpy) = makeSUT()
 
         sut.simulatePlayUserInteraction()
         timerSpy.changeStateToPlay()
         sut.simulateGoToBackground()
         sut.simulateGoToForeground()
         
-        XCTAssertEqual(spy.loadTimerStateCallCount, 1)
+        XCTAssertEqual(foregroundSyncSpy.loadTimerStateCallCount, 1)
     }
     
     func test_onForegroundAndOnPlayState_afterGoingToBackground_shouldSetTimerCorrectly() {
         let current = Date.now
         let timeProvider = MockProviderDate(date: current)
-        let (sut, spy, timerSpy) = makeSUT(getCurrentTime: timeProvider.getCurrentTime)
+        let (sut, foregroundSyncSpy, timerSpy) = makeSUT(getCurrentTime: timeProvider.getCurrentTime)
         
         let expectedStarEndDate = anyStartEndDate()
         let expectedElapsedSeconds = anyElapsedSeconds()
-        stub(spy: spy,
+        stub(spy: foregroundSyncSpy,
              loadingElapsedSeconds: expectedElapsedSeconds,
              loadingStarEndDate: expectedStarEndDate)
         
@@ -58,7 +58,7 @@ final class LoadTimerAcceptanceTests: XCTestCase {
         sut.simulateGoToForeground()
         
         XCTAssertEqual(
-            spy.setableTimerMessagesReceived, [
+            foregroundSyncSpy.setableTimerMessagesReceived, [
                 .setStarEndDate(startDate: expectedStarEndDate.startDate,
                                 endDate: expectedStarEndDate.endDate),
                 .set(elapsedSeconds: expectedElapsedSeconds)
@@ -69,11 +69,11 @@ final class LoadTimerAcceptanceTests: XCTestCase {
     func test_onForegroundAndOnPlayState_AfterOneSecondOnBackground_shouldSetTimerCorrectly() {
         let current = Date.now
         let timeProvider = MockProviderDate(date: current)
-        let (sut, spy, timerSpy) = makeSUT(getCurrentTime: timeProvider.getCurrentTime)
+        let (sut, foregroundSyncSpy, timerSpy) = makeSUT(getCurrentTime: timeProvider.getCurrentTime)
         
         let expectedElapsedSeconds: TimeInterval = 1
         let expectedStarEndDate = anyStartEndDate(rangeInSecond: 2)
-        stub(spy: spy,
+        stub(spy: foregroundSyncSpy,
              loadingElapsedSeconds: 0,
              loadingStarEndDate: expectedStarEndDate)
         
@@ -84,7 +84,7 @@ final class LoadTimerAcceptanceTests: XCTestCase {
         sut.simulateGoToForeground()
         
         XCTAssertEqual(
-            spy.setableTimerMessagesReceived, [
+            foregroundSyncSpy.setableTimerMessagesReceived, [
                 .setStarEndDate(startDate: expectedStarEndDate.startDate,
                                 endDate: expectedStarEndDate.endDate),
                 .set(elapsedSeconds: expectedElapsedSeconds)
