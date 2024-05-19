@@ -4,7 +4,7 @@ import LifeCoach
 
 final class LoadTimerAcceptanceTests: XCTestCase {
     
-    func test_onForeground_onStopTimerState_shouldNotSendLoadMessageToLocalTimer() {
+    func test_onForegroundAndOnStopState_afterGoingToBackground_shouldNotSendLoadMessageToLocalTimer() {
         let current = Date.now
         let timeProvider = MockProviderDate(date: current)
         let (sut, spy, _) = makeSUT(getCurrentTime: timeProvider.getCurrentTime)
@@ -15,7 +15,7 @@ final class LoadTimerAcceptanceTests: XCTestCase {
         XCTAssertEqual(spy.loadTimerStateCallCount, 0)
     }
     
-    func test_onForeground_afterTimerIsPaused_shouldNotSendMessagesToTimerLoader() {
+    func test_onForegroundAndOnPauseState_afterGoingToBackground_shouldNotSendMessagesToTimerLoader() {
         let (sut, foregroundSyncSpy, timerSpy) = makeSUT()
         
         sut.simulatePlayUserInteraction()
@@ -30,17 +30,18 @@ final class LoadTimerAcceptanceTests: XCTestCase {
         XCTAssertEqual(foregroundSyncSpy.loadTimerStateCallCount, 0)
     }
     
-    func test_OnForeground_afterPlayUserInteraction_shouldSendMessageToTimeLoader() {
+    func test_onForegroundAndOnPlayState_afterGoingToBackground_shouldSendMessageToTimeLoader() {
         let (sut, spy, stub) = makeSUT()
 
         sut.simulatePlayUserInteraction()
         stub.flushPomodoroTimes(at: 0)
+        sut.simulateGoToBackground()
         sut.simulateGoToForeground()
         
         XCTAssertEqual(spy.loadTimerStateCallCount, 1)
     }
     
-    func test_onForeground_afterPlayUserInteraction_shouldSetTimerCorrectly() {
+    func test_onForegroundAndOnPlayState_afterGoingToBackground_shouldSetTimerCorrectly() {
         let current = Date.now
         let timeProvider = MockProviderDate(date: current)
         let (sut, spy, stub) = makeSUT(getCurrentTime: timeProvider.getCurrentTime)
@@ -69,7 +70,7 @@ final class LoadTimerAcceptanceTests: XCTestCase {
         )
     }
     
-    func test_onForegroundAndOnPlayState_AfterOneSecondOnBackground_timerShouldSetTimeCorrectly() {
+    func test_onForegroundAndOnPlayState_AfterOneSecondOnBackground_shouldSetTimerCorrectly() {
         let current = Date.now
         let timeProvider = MockProviderDate(date: current)
         let (sut, spy, stub) = makeSUT(getCurrentTime: timeProvider.getCurrentTime)
