@@ -45,16 +45,12 @@ final class LoadTimerAcceptanceTests: XCTestCase {
         let current = Date.now
         let timeProvider = MockProviderDate(date: current)
         let (sut, spy, timerSpy) = makeSUT(getCurrentTime: timeProvider.getCurrentTime)
+        
         let expectedStarEndDate = anyStartEndDate()
         let expectedElapsedSeconds = anyElapsedSeconds()
-        
-        let stubbedLocalTimerSet = createLocalTimerSet(
-            elapsedSeconds: expectedElapsedSeconds,
-            startDate: expectedStarEndDate.startDate,
-            endDate: expectedStarEndDate.endDate
-        )
-        
-        spy.stubbedInfrastructureLocalTimerState = createLocalTimerState(timerSet: stubbedLocalTimerSet)
+        stub(spy: spy,
+             loadingElapsedSeconds: expectedElapsedSeconds,
+             loadingStarEndDate: expectedStarEndDate)
         
         sut.simulatePlayUserInteraction()
         timerSpy.changeStateToPlay()
@@ -74,14 +70,12 @@ final class LoadTimerAcceptanceTests: XCTestCase {
         let current = Date.now
         let timeProvider = MockProviderDate(date: current)
         let (sut, spy, timerSpy) = makeSUT(getCurrentTime: timeProvider.getCurrentTime)
+        
         let expectedElapsedSeconds: TimeInterval = 1
-        let anyStarEndDate = anyStartEndDate(rangeInSecond: 2)
-        let stubbedLocalTimerSet = createLocalTimerSet(
-            elapsedSeconds: 0,
-            startDate: anyStarEndDate.startDate,
-            endDate: anyStarEndDate.endDate
-        )
-        spy.stubbedInfrastructureLocalTimerState = createLocalTimerState(timerSet: stubbedLocalTimerSet)
+        let expectedStarEndDate = anyStartEndDate(rangeInSecond: 2)
+        stub(spy: spy,
+             loadingElapsedSeconds: 0,
+             loadingStarEndDate: expectedStarEndDate)
         
         sut.simulatePlayUserInteraction()
         timerSpy.changeStateToPlay()
@@ -91,14 +85,26 @@ final class LoadTimerAcceptanceTests: XCTestCase {
         
         XCTAssertEqual(
             spy.setableTimerMessagesReceived, [
-                .setStarEndDate(startDate: anyStarEndDate.startDate,
-                                endDate: anyStarEndDate.endDate),
+                .setStarEndDate(startDate: expectedStarEndDate.startDate,
+                                endDate: expectedStarEndDate.endDate),
                 .set(elapsedSeconds: expectedElapsedSeconds)
             ]
         )
     }
     
     // MARK: - Helpers
+    private func stub(spy: ForegroundSyncSpy,
+                          loadingElapsedSeconds: TimeInterval,
+                          loadingStarEndDate: (startDate: Date, endDate: Date)) {
+        let stubbedLocalTimerSet = createLocalTimerSet(
+            elapsedSeconds: loadingElapsedSeconds,
+            startDate: loadingStarEndDate.startDate,
+            endDate: loadingStarEndDate.endDate
+        )
+        
+        spy.stubbedInfrastructureLocalTimerState = createLocalTimerState(timerSet: stubbedLocalTimerSet)
+    }
+    
     private class MockProviderDate {
         private var date: Date
         
