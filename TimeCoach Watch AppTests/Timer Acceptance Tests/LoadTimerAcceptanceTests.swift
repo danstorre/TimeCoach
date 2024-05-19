@@ -80,7 +80,7 @@ final class LoadTimerAcceptanceTests: XCTestCase {
         sut.simulatePlayUserInteraction()
         timerSpy.changeStateToPlay()
         sut.simulateGoToBackground()
-        timeProvider.passingSeconds(expectedElapsedSeconds)
+        timeProvider.passingSeconds(1)
         sut.simulateGoToForeground()
         
         XCTAssertEqual(
