@@ -107,14 +107,6 @@ class TimeCoachRoot {
     }
     
     // MARK: - helpers
-    private func set(timerSet: TimerSet) {
-        let elapsedTime: TimeInterval = currenDate().timeIntervalSince(timeAtSave)
-        let elapsedSecondsLoaded = timerSet.elapsedSeconds
-        setabletimer?.setElapsedSeconds(elapsedSecondsLoaded + elapsedTime)
-        try? setabletimer?.set(startDate: timerSet.startDate,
-                              endDate: timerSet.endDate)
-    }
-    
     private func setNotificationDelegate() {
         UNUserNotificationCenter.current().delegate = UNUserNotificationdelegate
     }
