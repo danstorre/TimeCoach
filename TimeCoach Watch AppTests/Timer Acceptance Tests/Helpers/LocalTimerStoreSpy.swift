@@ -16,17 +16,15 @@ class ForegroundSyncSpy: LocalTimerStore, SetableTimer {
     func insert(state: LocalTimerState) throws {}
     
     // MARK: - SetableTimer
-    private(set) var startDatesSet: [Date] = []
-    private(set) var endDatesSet: [Date] = []
     private(set) var setableTimerMessagesReceived: [AnyMessage] = []
     
     enum AnyMessage: Equatable, CustomStringConvertible {
-        case setStarEndDate
+        case setStarEndDate(startDate: Date, endDate: Date)
         case set(elapsedSeconds: TimeInterval)
         
         var description: String {
             switch self {
-            case .setStarEndDate: return "command setStarEndDate"
+            case .setStarEndDate(let startDate, let endDate): return "command set startDate: \(startDate), endDate: \(endDate)"
             case .set(elapsedSeconds: let elapsed): return "command set elapsedSeconds: \(elapsed)"
             }
         }
@@ -37,8 +35,6 @@ class ForegroundSyncSpy: LocalTimerStore, SetableTimer {
     }
     
     func set(startDate: Date, endDate: Date) throws {
-        startDatesSet.append(startDate)
-        endDatesSet.append(endDate)
-        setableTimerMessagesReceived.append(.setStarEndDate)
+        setableTimerMessagesReceived.append(.setStarEndDate(startDate: startDate, endDate: endDate))
     }
 }

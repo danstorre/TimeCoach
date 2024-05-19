@@ -40,34 +40,36 @@ final class LoadTimerAcceptanceTests: XCTestCase {
         XCTAssertEqual(spy.loadTimerStateCallCount, 1)
     }
     
-    func test_onForeground_afterPlayUserInteraction_shouldSetTimerElapsedSecondsLoadedFromInfrastructure() {
+    func test_onForeground_afterPlayUserInteraction_shouldSetTimerCorrectly() {
         let current = Date.now
         let timeProvider = MockProviderDate(date: current)
         let (sut, spy, stub) = makeSUT(getCurrentTime: timeProvider.getCurrentTime)
+        let expectedStarEndDate = anyStartEndDate()
         let expectedElapsedSeconds = anyElapsedSeconds()
-        let anyStarEndDate = anyStartEndDate()
         
         let stubbedLocalTimerSet = createLocalTimerSet(
             elapsedSeconds: expectedElapsedSeconds,
-            startDate: anyStarEndDate.startDate,
-            endDate: anyStarEndDate.endDate
+            startDate: expectedStarEndDate.startDate,
+            endDate: expectedStarEndDate.endDate
         )
         
         spy.stubbedInfrastructureLocalTimerState = createLocalTimerState(timerSet: stubbedLocalTimerSet)
         
         sut.simulatePlayUserInteraction()
         stub.flushPomodoroTimes(at: 0)
+        sut.simulateGoToBackground()
         sut.simulateGoToForeground()
         
         XCTAssertEqual(
             spy.setableTimerMessagesReceived, [
-                .setStarEndDate,
+                .setStarEndDate(startDate: expectedStarEndDate.startDate,
+                                endDate: expectedStarEndDate.endDate),
                 .set(elapsedSeconds: expectedElapsedSeconds)
             ]
         )
     }
     
-    func test_onForeground_afterPlayUserInteractionAndOneSecondOnBackground_timerShouldSetTimeCorrectly() {
+    func test_onForegroundAndOnPlayState_AfterOneSecondOnBackground_timerShouldSetTimeCorrectly() {
         let current = Date.now
         let timeProvider = MockProviderDate(date: current)
         let (sut, spy, stub) = makeSUT(getCurrentTime: timeProvider.getCurrentTime)
@@ -88,49 +90,13 @@ final class LoadTimerAcceptanceTests: XCTestCase {
         
         XCTAssertEqual(
             spy.setableTimerMessagesReceived, [
-                .setStarEndDate,
+                .setStarEndDate(startDate: anyStarEndDate.startDate,
+                                endDate: anyStarEndDate.endDate),
                 .set(elapsedSeconds: expectedElapsedSeconds)
             ]
         )
     }
     
-    func test_onForeground_afterPlayUserInteraction_shouldSetStartEndDateLoadedFromInfrastructure() {
-        let (sut, spy, stub) = makeSUT()
-        let expectedStarEndDate = anyStartEndDate()
-        
-        let stubbedLocalTimerSet = createLocalTimerSet(
-            elapsedSeconds: anyElapsedSeconds(),
-            startDate: expectedStarEndDate.startDate,
-            endDate: expectedStarEndDate.endDate
-        )
-        
-        spy.stubbedInfrastructureLocalTimerState = createLocalTimerState(timerSet: stubbedLocalTimerSet)
-        
-        sut.simulatePlayUserInteraction()
-        stub.flushPomodoroTimes(at: 0)
-        sut.simulateGoToForeground()
-        
-        XCTAssertEqual(spy.startDatesSet, [expectedStarEndDate.startDate], "expected to set \([expectedStarEndDate.startDate]) start date, got \(spy.startDatesSet) start dates instead.")
-        
-        XCTAssertEqual(spy.endDatesSet, [expectedStarEndDate.endDate], "expected to set \([expectedStarEndDate.endDate]) end date, got \(spy.endDatesSet) end dates instead.")
-    }
-    
-    func test_onForeground_afterPlayUserInteraction_shouldExecuteStartEndDateOperationFirst() {
-        let current = Date.now
-        let timeProvider = MockProviderDate(date: current)
-        let (sut, spy, stub) = makeSUT(getCurrentTime: timeProvider.getCurrentTime)
-        spy.stubbedInfrastructureLocalTimerState = anyLocalTimerState()
-        
-        sut.simulatePlayUserInteraction()
-        stub.flushPomodoroTimes(at: 0)
-        sut.simulateGoToBackground()
-        sut.simulateGoToForeground()
-        
-        XCTAssertEqual(spy.setableTimerMessagesReceived, [
-            .setStarEndDate,
-            .set(elapsedSeconds: anyElapsedSeconds())
-        ])
-    }
     
     // MARK: - Helpers
     private class MockProviderDate {
