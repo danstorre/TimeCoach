@@ -59,7 +59,12 @@ final class LoadTimerAcceptanceTests: XCTestCase {
         stub.flushPomodoroTimes(at: 0)
         sut.simulateGoToForeground()
         
-        XCTAssertEqual(spy.elapsedSecondsSet, [expectedElapsedSeconds], "expected to set \([expectedElapsedSeconds]) elapsed seconds, got \(spy.elapsedSecondsSet) elapsed seconds instead.")
+        XCTAssertEqual(
+            spy.setableTimerMessagesReceived, [
+                .setStarEndDate,
+                .set(elapsedSeconds: expectedElapsedSeconds)
+            ]
+        )
     }
     
     func test_onForeground_afterPlayUserInteractionAndOneSecondOnBackground_timerShouldSetTimeCorrectly() {
@@ -81,7 +86,12 @@ final class LoadTimerAcceptanceTests: XCTestCase {
         timeProvider.passingSeconds(expectedElapsedSeconds)
         sut.simulateGoToForeground()
         
-        XCTAssertEqual(spy.elapsedSecondsSet, [expectedElapsedSeconds], "expected to receive an array of \([expectedElapsedSeconds]) elapsed seconds, got an array of \(spy.elapsedSecondsSet) elapsed seconds instead.")
+        XCTAssertEqual(
+            spy.setableTimerMessagesReceived, [
+                .setStarEndDate,
+                .set(elapsedSeconds: expectedElapsedSeconds)
+            ]
+        )
     }
     
     func test_onForeground_afterPlayUserInteraction_shouldSetStartEndDateLoadedFromInfrastructure() {
@@ -106,16 +116,19 @@ final class LoadTimerAcceptanceTests: XCTestCase {
     }
     
     func test_onForeground_afterPlayUserInteraction_shouldExecuteStartEndDateOperationFirst() {
-        let (sut, spy, stub) = makeSUT()
+        let current = Date.now
+        let timeProvider = MockProviderDate(date: current)
+        let (sut, spy, stub) = makeSUT(getCurrentTime: timeProvider.getCurrentTime)
         spy.stubbedInfrastructureLocalTimerState = anyLocalTimerState()
         
         sut.simulatePlayUserInteraction()
         stub.flushPomodoroTimes(at: 0)
+        sut.simulateGoToBackground()
         sut.simulateGoToForeground()
         
         XCTAssertEqual(spy.setableTimerMessagesReceived, [
             .setStarEndDate,
-            .setElapsedSeconds
+            .set(elapsedSeconds: anyElapsedSeconds())
         ])
     }
     
