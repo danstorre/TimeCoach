@@ -15,6 +15,21 @@ final class LoadTimerAcceptanceTests: XCTestCase {
         XCTAssertEqual(spy.loadTimerStateCallCount, 0)
     }
     
+    func test_onForeground_afterTimerIsPaused_shouldNotSendMessagesToTimerLoader() {
+        let (sut, foregroundSyncSpy, timerSpy) = makeSUT()
+        
+        sut.simulatePlayUserInteraction()
+        timerSpy.changeStateToPlay()
+        
+        sut.simulatePauseUserInteraction()
+        timerSpy.changeStateToPause()
+        
+        sut.simulateGoToBackground()
+        sut.simulateGoToForeground()
+        
+        XCTAssertEqual(foregroundSyncSpy.loadTimerStateCallCount, 0)
+    }
+    
     func test_OnForeground_afterPlayUserInteraction_shouldSendMessageToTimeLoader() {
         let (sut, spy, stub) = makeSUT()
 
@@ -98,7 +113,7 @@ final class LoadTimerAcceptanceTests: XCTestCase {
         stub.flushPomodoroTimes(at: 0)
         sut.simulateGoToForeground()
         
-        XCTAssertEqual(spy.messagesReceived, [
+        XCTAssertEqual(spy.setableTimerMessagesReceived, [
             .setStarEndDate,
             .setElapsedSeconds
         ])

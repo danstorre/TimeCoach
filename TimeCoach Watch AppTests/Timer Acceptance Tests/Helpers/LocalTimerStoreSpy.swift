@@ -19,7 +19,7 @@ class ForegroundSyncSpy: LocalTimerStore, SetableTimer {
     private(set) var elapsedSecondsSet: [TimeInterval] = []
     private(set) var startDatesSet: [Date] = []
     private(set) var endDatesSet: [Date] = []
-    private(set) var messagesReceived: [AnyMessage] = []
+    private(set) var setableTimerMessagesReceived: [AnyMessage] = []
     
     enum AnyMessage: Equatable, CustomStringConvertible {
         case setStarEndDate
@@ -35,12 +35,12 @@ class ForegroundSyncSpy: LocalTimerStore, SetableTimer {
     
     func setElapsedSeconds(_ seconds: TimeInterval) {
         elapsedSecondsSet.append(seconds)
-        messagesReceived.append(.setElapsedSeconds)
+        setableTimerMessagesReceived.append(.setElapsedSeconds)
     }
     
     func set(startDate: Date, endDate: Date) throws {
         startDatesSet.append(startDate)
         endDatesSet.append(endDate)
-        messagesReceived.append(.setStarEndDate)
+        setableTimerMessagesReceived.append(.setStarEndDate)
     }
 }

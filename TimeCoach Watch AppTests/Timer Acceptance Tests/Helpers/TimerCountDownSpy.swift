@@ -61,6 +61,16 @@ class TimerCountdownSpy: TimerCountdown {
         self.breakStubs = breakStub
     }
     
+    func changeStateToPlay() {
+        let anyTimerSet = TimerCountdownSet(0, startDate: .now, endDate: .now.adding(seconds: 1))
+        receivedStartCountdownCompletions[0](.success((anyTimerSet, .running)))
+    }
+    
+    func changeStateToPause() {
+        let anyTimerSet = TimerCountdownSet(0, startDate: .now, endDate: .now.adding(seconds: 1))
+        receivedStartCountdownCompletions[0](.success((anyTimerSet, .pause)))
+    }
+    
     func flushPomodoroTimes(at index: Int) {
         pomodoroStubs.forEach { stub in
             receivedStartCountdownCompletions[index](.success((stub().toLocal(), .running)))

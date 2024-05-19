@@ -187,7 +187,7 @@ class TimeCoachRoot {
     func gotoInactive() {}
     
     private func syncTimerState() {
-        guard currentSubject.value.state != .stop else {
+        guard currentSubject.value.state != .stop, currentSubject.value.state != .pause else {
             return
         }
         
