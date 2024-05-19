@@ -187,22 +187,14 @@ class TimeCoachRoot {
     func gotoInactive() {}
     
     private func syncTimerState() {
-        guard validateStateBeforeSync() else {
-            return
-        }
-        
         localTimer
-            .getTimerSetPublisher()
+            .getTimerSetPublisher(timerState: currentSubject.value)
             .subscribe(on: mainScheduler)
             .dispatchOnMainQueue()
             .subscribe(Subscribers.Sink(receiveCompletion: { _ in
             }, receiveValue: { [unowned self] timerSet in
                 self.set(timerSet: timerSet)
             }))
-    }
-    
-    private func validateStateBeforeSync() -> Bool {
-        currentSubject.value.state != .stop && currentSubject.value.state != .pause
     }
     
     private func saveTimerProcess() {
