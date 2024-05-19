@@ -110,9 +110,9 @@ class TimeCoachRoot {
     private func set(timerSet: TimerSet) {
         let elapsedTime: TimeInterval = currenDate().timeIntervalSince(timeAtSave)
         let elapsedSecondsLoaded = timerSet.elapsedSeconds
+        setabletimer?.setElapsedSeconds(elapsedSecondsLoaded + elapsedTime)
         try? setabletimer?.set(startDate: timerSet.startDate,
                               endDate: timerSet.endDate)
-        setabletimer?.setElapsedSeconds(elapsedSecondsLoaded + elapsedTime)
     }
     
     private func setNotificationDelegate() {
@@ -191,10 +191,9 @@ class TimeCoachRoot {
             .getTimerSetPublisher(timerState: currentSubject.value)
             .subscribe(on: mainScheduler)
             .dispatchOnMainQueue()
+            .setTimerValues(using: currenDate, timeAtSave, setabletimer)
             .subscribe(Subscribers.Sink(receiveCompletion: { _ in
-            }, receiveValue: { [unowned self] timerSet in
-                self.set(timerSet: timerSet)
-            }))
+            }, receiveValue: { _ in }))
     }
     
     private func saveTimerProcess() {

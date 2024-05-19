@@ -14,3 +14,14 @@ extension LoadTimerState {
     }
 }
 
+extension Publisher where Output == TimerSet {
+    func setTimerValues(using currenDate: @escaping () -> Date, _ timeAtSave: Date, _ setabletimer: SetableTimer?) -> AnyPublisher<TimerSet, Failure> {
+        handleEvents(receiveOutput: { timerSet in
+                let elapsedTime: TimeInterval = currenDate().timeIntervalSince(timeAtSave)
+                let elapsedSecondsLoaded = timerSet.elapsedSeconds
+                try? setabletimer?.set(startDate: timerSet.startDate,
+                                       endDate: timerSet.endDate)
+                setabletimer?.setElapsedSeconds(elapsedSecondsLoaded + elapsedTime)
+        }).eraseToAnyPublisher()
+    }
+}
