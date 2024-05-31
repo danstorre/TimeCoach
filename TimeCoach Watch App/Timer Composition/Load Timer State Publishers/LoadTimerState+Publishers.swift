@@ -3,10 +3,9 @@ import LifeCoach
 import Combine
 
 extension LoadTimerState {
-    func getTimerSetPublisher(timerState: TimerState) -> AnyPublisher<TimerSet, Error> {
+    func getTimerSetPublisher() -> AnyPublisher<TimerSet, Error> {
         return Deferred {
             Just(())
-                .filter({ timerState.state != .stop && timerState.state != .pause })
                 .tryMap { try load() }
                 .compactMap { $0?.timerSet }
         }
@@ -23,5 +22,21 @@ extension Publisher where Output == TimerSet {
                                        endDate: timerSet.endDate)
                 setabletimer?.setElapsedSeconds(elapsedSecondsLoaded + elapsedTime)
         }).eraseToAnyPublisher()
+    }
+}
+
+extension Publisher where Output == TimerState, Failure == Never {
+    func filterPauseOrStopTimerState() -> AnyPublisher<TimerState, Never> {
+        self.filter({ timerState in timerState.state != .stop && timerState.state != .pause })
+            .eraseToAnyPublisher()
+    }
+}
+
+extension Publisher where Output == TimerState, Failure == Never {
+    func getTimerStatePublisher(using localTimer: LoadTimerState) -> AnyPublisher<TimerSet, Error> {
+        self.flatMap { _ in
+            localTimer.getTimerSetPublisher()
+        }
+        .eraseToAnyPublisher()
     }
 }

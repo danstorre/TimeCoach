@@ -179,8 +179,11 @@ class TimeCoachRoot {
     func gotoInactive() {}
     
     private func syncTimerState() {
-        localTimer
-            .getTimerSetPublisher(timerState: currentSubject.value)
+        let timerState = currentSubject.value
+        let localTimer = localTimer
+        Just(timerState)
+            .filterPauseOrStopTimerState()
+            .getTimerStatePublisher(using: localTimer)
             .subscribe(on: mainScheduler)
             .dispatchOnMainQueue()
             .setTimerValues(using: currenDate, timeAtSave, setabletimer)
