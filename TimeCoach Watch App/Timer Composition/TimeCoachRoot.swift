@@ -192,7 +192,14 @@ class TimeCoachRoot {
     }
     
     private func saveTimerProcess() {
-        saveTimerProcessPublisher(timerCoachRoot: self)?
+        guard let timerCountdown = timerCountdown else {
+            return
+        }
+        let currentIsBreakMode = currentIsBreakMode.value
+        
+        saveTimerProcessPublisher(
+            timerCountdown: timerCountdown,
+            currentIsBreakMode: currentIsBreakMode)
         .subscribe(Subscribers.Sink(receiveCompletion: { _ in
         }, receiveValue: { [unowned self] _ in
             self.timeAtSave = self.currenDate()
@@ -285,14 +292,10 @@ class TimeCoachRoot {
     }
     
     private func saveTimerProcessPublisher(
-        timerCoachRoot: TimeCoachRoot
-    ) -> AnyPublisher<TimerState, Never>? {
-        guard let timerCountdown = timerCoachRoot.timerCountdown else {
-            return nil
-        }
-        let currentIsBreakMode = timerCoachRoot.currentIsBreakMode.value
-        
-        return Just(())
+        timerCountdown: TimerCountdown,
+        currentIsBreakMode: IsBreakMode
+    ) -> AnyPublisher<TimerState, Never> {
+        Just(())
             .mapsTimerSetAndState(timerCountdown: timerCountdown, currentIsBreakMode: currentIsBreakMode)
             .saveTimerState(saver: localTimer)
             .subscribe(on: mainScheduler)
