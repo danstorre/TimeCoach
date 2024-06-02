@@ -7,25 +7,25 @@ import UserNotifications
 import WidgetKit
 
 class TimeCoachRoot {
-    // Sync time values.
+    // MARK: - Sync time values.
     lazy var timeAtSave: Date = { [unowned self] in
         self.currenDate()
     }()
     
-    // Background Activity
+    // MARK: - Background Activity
     private var backgroundTimeExtender: BackgroundExtendedTime?
     private lazy var defaultTimeExtender: DefaultBackgroundExtendedTime = DefaultBackgroundExtendedTime { [weak self] reason, completion in
         self?.backgroundTimeExtender?.requestTime(reason: reason, completion: completion) ?? ProcessInfo().performExpiringActivity(withReason: reason, using: completion)
     }
     
-    // Pomodoro State
+    // MARK: - Pomodoro State
     private lazy var currentIsBreakMode: CurrentValueSubject<IsBreakMode, Error> = .init(false)
     
-    // Local Timer
+    // MARK: - Local Timer
     private lazy var stateTimerStore: LocalTimerStore = UserDefaultsTimerStore(storeID: "group.timeCoach.timerState")
     private lazy var localTimer: LocalTimer = LocalTimer(store: stateTimerStore)
     
-    // Timer Notification Scheduler
+    // MARK: - Timer Notification Scheduler
     private lazy var scheduler: LifeCoach.Scheduler = UserNotificationsScheduler(with: UNUserNotificationCenter.current())
     private lazy var timerNotificationScheduler = DefaultTimerNotificationScheduler(scheduler: scheduler)
     
@@ -39,7 +39,7 @@ class TimeCoachRoot {
         UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
     }
     
-    // Timer Saved Notifications
+    // MARK: - Timer Saved Notifications
     private var notifySavedTimer: (() -> Void)?
     private lazy var timerSavedNofitier: LifeCoach.TimerStoreNotifier = DefaultTimerStoreNotifier(
         completion: notifySavedTimer ?? {
@@ -47,7 +47,7 @@ class TimeCoachRoot {
         }
     )
     
-    // Concurrency
+    // MARK: - Concurrency
     private lazy var mainScheduler: AnyDispatchQueueScheduler = DispatchQueue(
         label: "com.danstorre.timeCoach.watchkitapp",
         qos: .userInitiated
@@ -62,7 +62,7 @@ class TimeCoachRoot {
         timerQueue.eraseToAnyScheduler()
     }()
 
-    // Timer
+    // MARK: - Timer
     var currenDate: () -> Date = Date.init
     var timerCountdown: TimerCountdown? 
     private var regularTimer: RegularTimer?
@@ -70,6 +70,7 @@ class TimeCoachRoot {
         TimerState(timerSet: TimerSet.init(0, startDate: .init(), endDate: .init()),
                    state: .stop))
     
+    // MARK: - Timer Presentation
     private var _timerViewModel: TimerViewModel?
     private var _controlsViewModel: ControlsViewModel?
     private var _toggleStrategy: ToggleStrategy?
@@ -84,7 +85,7 @@ class TimeCoachRoot {
         return checkingDependencyInstance(_toggleStrategy, description: String(describing: ToggleStrategy.self))
     }
     
-    // setable timer
+    // MARK: - setable timer
     var setabletimer: SetableTimer?
     
     // MARK: - Timer Infrastructure
