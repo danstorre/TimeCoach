@@ -115,8 +115,6 @@ class TimeCoachRoot {
         UNUserNotificationCenter.current().delegate = UNUserNotificationdelegate
     }
     
-    private var foundationTimer: FoundationTimerCountdown?
-    
     private func initializeDependencies() {
         let date = currenDate()
         foundationTimer = Self.createTimerCountDown(from: date, dispatchQueue: timerQueue)
@@ -196,6 +194,9 @@ class TimeCoachRoot {
     private func syncTimerState() {
         let timerState = currentSubject.value
         let localTimer = localTimer
+        let currenDate = currenDate
+        let timeAtSave = timeAtSave
+        let setabletimer = setabletimer
         Just(timerState)
             .filterPauseOrStopTimerState()
             .getTimerStatePublisher(using: localTimer)
