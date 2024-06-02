@@ -87,6 +87,9 @@ class TimeCoachRoot {
     // setable timer
     var setabletimer: SetableTimer?
     
+    // MARK: - Timer Infrastructure
+    private var foundationTimer: FoundationTimerCountdown?
+    
     convenience init(infrastructure: Infrastructure) {
         self.init()
         self.timerCountdown = infrastructure.timerCountdown
@@ -111,9 +114,11 @@ class TimeCoachRoot {
         UNUserNotificationCenter.current().delegate = UNUserNotificationdelegate
     }
     
+    private var foundationTimer: FoundationTimerCountdown?
+    
     private func initializeDependencies() {
         let date = currenDate()
-        let foundationTimer = Self.createTimerCountDown(from: date, dispatchQueue: timerQueue)
+        foundationTimer = Self.createTimerCountDown(from: date, dispatchQueue: timerQueue)
         currentSubject = Self.createFirstValuePublisher(from: date)
         if timerCountdown == nil {
             timerCountdown = foundationTimer
@@ -165,10 +170,19 @@ class TimeCoachRoot {
     }
     
     func goToBackground() {
-        defaultTimeExtender.requestTime(reason: "TimerSaveStateProcess", completion: { [unowned self] expired in
-            guard !expired else { return }
-            
-            self.saveTimerProcess()
+        defaultTimeExtender.requestTime(reason: "TimerSaveStateProcess", completion: { [weak self] expired in
+            guard let self = self else { return }
+            let foundationTimer = self.foundationTimer
+            Just(())
+                .filter { _ in !expired }
+                .handleEvents(receiveOutput: { [foundationTimer] _ in
+                    foundationTimer?.suspedCurrentTimer()
+                })
+                .handleEvents(receiveOutput: { [weak self]_ in
+                    self?.saveTimerProcess()
+                })
+                .subscribe(Subscribers.Sink(receiveCompletion: { _ in
+                }, receiveValue: { _ in }))
         })
     }
     
@@ -187,6 +201,9 @@ class TimeCoachRoot {
             .subscribe(on: mainScheduler)
             .dispatchOnMainQueue()
             .setTimerValues(using: currenDate, timeAtSave, setabletimer)
+            .handleEvents(receiveOutput: { [foundationTimer] _ in
+                foundationTimer?.resumeCurrentTimer()
+            })
             .subscribe(Subscribers.Sink(receiveCompletion: { _ in
             }, receiveValue: { _ in }))
     }
