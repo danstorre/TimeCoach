@@ -49,7 +49,7 @@ class TimeCoachRoot {
     
     // MARK: - Concurrency
     private lazy var mainQueue: DispatchQueue = DispatchQueue(
-        label: "com.danstorre.timeCoach.watchkitapp.timer",
+        label: "com.danstorre.timeCoach.watchkitapp.main",
         qos: .default
     )
     
@@ -58,7 +58,10 @@ class TimeCoachRoot {
     }()
     
     private lazy var timerQueue: DispatchQueue = {
-        mainQueue
+        DispatchQueue(
+            label: "com.danstorre.timeCoach.watchkitapp.timer",
+            qos: .default
+        )
     }()
     
     private lazy var timerScheduler: AnyDispatchQueueScheduler = {
