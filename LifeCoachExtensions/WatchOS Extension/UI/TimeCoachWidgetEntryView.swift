@@ -9,11 +9,17 @@ public struct TimeCoachWidgetEntryView: View {
         self.entry = entry
     }
     
+    @ViewBuilder
     private var bodyAny: some View {
-        ZStack {
-            CircularTimerWidget(entry: entry).opacity(family == .accessoryCircular ? 1 : 0)
-            CornerTimerWidget(entry: entry).opacity(family == .accessoryCorner ? 1 : 0)
-            RectangularTimerWidget(entry: entry).opacity(family == .accessoryRectangular ? 1 : 0)
+        switch family {
+        case .accessoryCircular:
+            CircularTimerWidget(entry: entry)
+        case .accessoryCorner:
+            CornerTimerWidget(entry: entry)
+        case .accessoryRectangular, .accessoryInline:
+            RectangularTimerWidget(entry: entry)
+        @unknown default:
+            RectangularTimerWidget(entry: entry)
         }
     }
     
