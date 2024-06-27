@@ -45,14 +45,7 @@ struct TimeCoach_Watch_AppApp: App {
                 }
             }
             .onAppear {
-                UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { accepted, error in
-                    guard error == nil else {
-                        print("error while requesting authorization")
-                        return
-                    }
-                    
-                    accepted ? print("yeap") : print("nop")
-                }
+                askForNotificationPermissions()
             }
         }
     }
@@ -67,5 +60,17 @@ struct TimeCoach_Watch_AppApp: App {
     
     func gotoInactive() {
         root.gotoInactive()
+    }
+    
+    // MARK: - Notifications
+    private func askForNotificationPermissions() {
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { accepted, error in
+            guard error == nil else {
+                print("error while requesting authorization")
+                return
+            }
+            
+            accepted ? print("yeap") : print("nop")
+        }
     }
 }
