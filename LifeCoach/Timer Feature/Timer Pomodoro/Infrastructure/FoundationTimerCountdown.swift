@@ -107,6 +107,15 @@ public final class FoundationTimerCountdown: TimerCountdown {
         currentTimer = nil
     }
     
+    deinit {
+        currentTimer?.setEventHandler {}
+        currentTimer?.cancel()
+        currentTimer = nil
+    }
+}
+
+// MARK: - Timer Native Commands
+extension FoundationTimerCountdown: TimerNativeCommands {
     /// Suspends underlined currentTimer if set. a.k.a `DispatchSourceTimer`.
     public func suspedCurrentTimer() {
         currentTimer?.suspend()
@@ -114,14 +123,8 @@ public final class FoundationTimerCountdown: TimerCountdown {
     
     /// Resumes underlined currentTimer if set. a.k.a `DispatchSourceTimer`.
     public func resumeCurrentTimer() {
+        guard let cancelled = currentTimer?.isCancelled, cancelled else { return }
         currentTimer?.resume()
-    }
-    
-    deinit {
-        currentTimer?.setEventHandler {}
-        currentTimer?.cancel()
-        currentTimer?.resume()
-        currentTimer = nil
     }
 }
 

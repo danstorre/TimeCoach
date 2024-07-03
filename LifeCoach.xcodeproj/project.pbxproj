@@ -52,6 +52,7 @@
 		FB155ECE2A9D53C900A4551D /* Combine+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB155ECD2A9D53C900A4551D /* Combine+Helpers.swift */; };
 		FB155ED02A9D7BCA00A4551D /* Root.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB155ECF2A9D7BCA00A4551D /* Root.swift */; };
 		FB155ED22A9D7C3300A4551D /* AdapterLoadTimerState.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB155ED12A9D7C3300A4551D /* AdapterLoadTimerState.swift */; };
+		FB1E49E52C360CDB00EBBC96 /* TimerNativeCommandsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1E49E42C360CDB00EBBC96 /* TimerNativeCommandsTests.swift */; };
 		FB3B06EE2ABBA9EE00E54FAD /* TimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB3B06ED2ABBA9EE00E54FAD /* TimerView.swift */; };
 		FB40D18B2A79CDA5008D3A36 /* UserDefaultStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB40D18A2A79CDA5008D3A36 /* UserDefaultStoreTests.swift */; };
 		FB418F2B2B507E8C0026832F /* TimerCountDownState.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB418F2A2B507E8C0026832F /* TimerCountDownState.swift */; };
@@ -414,6 +415,7 @@
 		FB155ECD2A9D53C900A4551D /* Combine+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Combine+Helpers.swift"; sourceTree = "<group>"; };
 		FB155ECF2A9D7BCA00A4551D /* Root.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Root.swift; sourceTree = "<group>"; };
 		FB155ED12A9D7C3300A4551D /* AdapterLoadTimerState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdapterLoadTimerState.swift; sourceTree = "<group>"; };
+		FB1E49E42C360CDB00EBBC96 /* TimerNativeCommandsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerNativeCommandsTests.swift; sourceTree = "<group>"; };
 		FB2A10E62A6B1854004A1784 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		FB2A10E82A6B1854004A1784 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		FB3B06ED2ABBA9EE00E54FAD /* TimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerView.swift; sourceTree = "<group>"; };
@@ -1227,6 +1229,7 @@
 				FBAA52A42B571B9000D373C6 /* Helpers */,
 				FBD56F772A3D184C002736AD /* FoundationTimerCountdownTests.swift */,
 				FBC8F17C2B51BCC1001531D2 /* SetableCountdownTimerTests.swift */,
+				FB1E49E42C360CDB00EBBC96 /* TimerNativeCommandsTests.swift */,
 			);
 			path = Infrastructure;
 			sourceTree = "<group>";
@@ -2013,6 +2016,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FBD822642A75CABC002702F4 /* TimerNotificationsSchedulerTests.swift in Sources */,
+				FB1E49E52C360CDB00EBBC96 /* TimerNativeCommandsTests.swift in Sources */,
 				FBC9ADAF2919E8B500E0BEFC /* XCTestCase+MemoryLeakTracking.swift in Sources */,
 				FBD8225E2A75B1EE002702F4 /* LocaTimerSpy.swift in Sources */,
 				FB5BF6A52A7BEADA001B81CB /* TimerGlancePresentationTests.swift in Sources */,

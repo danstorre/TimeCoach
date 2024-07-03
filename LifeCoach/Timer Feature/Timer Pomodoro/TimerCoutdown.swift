@@ -11,3 +11,8 @@ public protocol TimerCommands {
 }
 
 public typealias TimerCountdown = TimerCommands & TimerStateValues
+
+public protocol TimerNativeCommands {
+    func suspedCurrentTimer()
+    func resumeCurrentTimer()
+}
