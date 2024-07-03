@@ -102,7 +102,9 @@ public final class FoundationTimerCountdown: TimerCountdown {
     }
     
     public func invalidatesTimer() {
+        currentTimer?.setEventHandler {}
         currentTimer?.cancel()
+        currentTimer = nil
     }
     
     /// Suspends underlined currentTimer if set. a.k.a `DispatchSourceTimer`.
@@ -116,7 +118,10 @@ public final class FoundationTimerCountdown: TimerCountdown {
     }
     
     deinit {
+        currentTimer?.setEventHandler {}
         currentTimer?.cancel()
+        currentTimer?.resume()
+        currentTimer = nil
     }
 }
 
