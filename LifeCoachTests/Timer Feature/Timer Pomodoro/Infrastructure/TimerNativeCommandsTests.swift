@@ -3,9 +3,7 @@ import XCTest
 
 class TimerNativeCommandsTests: XCTestCase {
     func test_resumeCurrentTimer_onStartedTimer_DoesNotCrash() {
-        let fixedDate = Date()
-        let startingSet = createAnyTimerSet()
-        let nextSet = createTimerSet(0, startDate: fixedDate, endDate: fixedDate.adding(seconds: 0.002))
+        let (startingSet, nextSet) = createDefaultTimerSets()
         let sut = makeSUT(startingSet: startingSet, nextSet: nextSet)
         
         sut.startCountdown(completion: { _ in })
@@ -13,6 +11,14 @@ class TimerNativeCommandsTests: XCTestCase {
     }
     
     // MARK: - Helpers
+    private func createDefaultTimerSets() -> (startingSet: TimerCountdownSet,
+                                              nextSet: TimerCountdownSet) {
+        let fixedDate = Date()
+        let startingSet = createAnyTimerSet()
+        let nextSet = createTimerSet(0, startDate: fixedDate, endDate: fixedDate.adding(seconds: 0.002))
+        return (startingSet, nextSet)
+    }
+    
     private func makeSUT(startingSet: TimerCountdownSet, nextSet: TimerCountdownSet,
                          incrementing: Double = 0.001,
                          file: StaticString = #filePath,
