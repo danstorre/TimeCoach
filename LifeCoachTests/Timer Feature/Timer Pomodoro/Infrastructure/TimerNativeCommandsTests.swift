@@ -26,6 +26,26 @@ class TimerNativeCommandsTests: XCTestCase {
         sut.resumeCurrentTimer()
     }
     
+    func test_pausedTimer_onSuspendedAfterTimerStarted_DoesNotCrash() {
+        let (startingSet, nextSet) = createDefaultTimerSets()
+        let anyQueue = DispatchQueue(label: "myTestQueue")
+        let sut = makeSUT(startingSet: startingSet,
+                          nextSet: nextSet, onQueue: anyQueue)
+        let expectation = expectation(description: "waiting for pause to finish")
+        
+        anyQueue.async {
+            sut.startCountdown { _ in}
+            sut.suspedCurrentTimer()
+        }
+        
+        anyQueue.async {
+            sut.pauseCountdown()
+            expectation.fulfill()
+        }
+        
+        wait(for: [expectation], timeout: 0.3)
+    }
+    
     func test_supendsCurrentTimer_twice_doesNotCrash() {
         let (startingSet, nextSet) = createDefaultTimerSets()
         let sut = makeSUT(startingSet: startingSet, nextSet: nextSet)
@@ -43,11 +63,16 @@ class TimerNativeCommandsTests: XCTestCase {
         return (startingSet, nextSet)
     }
     
-    private func makeSUT(startingSet: TimerCountdownSet, nextSet: TimerCountdownSet,
+    private func makeSUT(startingSet: TimerCountdownSet, 
+                         nextSet: TimerCountdownSet,
                          incrementing: Double = 0.001,
+                         onQueue: DispatchQueue = .main,
                          file: StaticString = #filePath,
                          line: UInt = #line) -> TimerCountdown & TimerNativeCommands {
-        let sut = FoundationTimerCountdown(startingSet: startingSet, nextSet: nextSet, incrementing: incrementing)
+        let sut = FoundationTimerCountdown(startingSet: startingSet,
+                                           dispatchQueue: onQueue,
+                                           nextSet: nextSet,
+                                           incrementing: incrementing)
         
         trackForMemoryLeak(instance: sut, file: file, line: line)
         

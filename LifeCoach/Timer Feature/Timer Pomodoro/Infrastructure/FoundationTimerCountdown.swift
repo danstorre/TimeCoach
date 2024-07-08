@@ -102,8 +102,12 @@ public final class FoundationTimerCountdown: TimerCountdown {
     }
     
     public func invalidatesTimer() {
-        currentTimer?.setEventHandler {}
-        currentTimer?.cancel()
+        if let currentTimer = currentTimer {
+            currentTimer.resume()
+            currentTimer.setEventHandler {}
+            currentTimer.cancel()
+        }
+        
         currentTimer = nil
     }
     
