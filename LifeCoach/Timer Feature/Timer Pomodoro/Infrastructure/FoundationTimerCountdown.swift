@@ -67,7 +67,6 @@ public final class FoundationTimerCountdown: TimerCountdown {
         currentTimer = DispatchSource.makeTimerSource(queue: dispatchQueue)
         currentTimer?.schedule(deadline: .now(), repeating: incrementing)
         currentTimer?.setEventHandler(handler: { [weak self] in
-            guard self?.currentTimer != nil else { return }
             self?.elapsedCompletion()
         })
         currentTimer?.activate()
@@ -75,6 +74,7 @@ public final class FoundationTimerCountdown: TimerCountdown {
     
     @objc
     private func elapsedCompletion() {
+        guard currentTimer != nil else { return }
         currentSet = TimerCountdownSet(currentSet.elapsedSeconds + incrementing, startDate: currentSet.startDate, endDate: currentSet.endDate)
         guard hasNotHitThreshold() else {
             invalidatesTimer()
