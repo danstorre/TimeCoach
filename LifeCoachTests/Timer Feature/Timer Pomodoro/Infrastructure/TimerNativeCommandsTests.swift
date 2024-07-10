@@ -26,7 +26,7 @@ class TimerNativeCommandsTests: XCTestCase {
         sut.resumeCurrentTimer()
     }
     
-    func test_pausedTimer_onSuspendedAfterTimerStarted_DoesNotCrash() {
+    func test_pausedTimer_onSuspendedTimerAfterTimerHasStarted_DoesNotCrash() {
         let (startingSet, nextSet) = createDefaultTimerSets()
         let anyQueue = DispatchQueue(label: "myTestQueue")
         let sut = makeSUT(startingSet: startingSet,
