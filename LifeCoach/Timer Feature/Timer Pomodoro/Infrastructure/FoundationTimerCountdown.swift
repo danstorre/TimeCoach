@@ -99,12 +99,7 @@ public final class FoundationTimerCountdown: TimerCountdown {
     }
     
     deinit {
-        if case timerState = .suspended {
-            currentTimer?.resume()
-        }
-        currentTimer?.setEventHandler {}
-        currentTimer?.cancel()
-        currentTimer = nil
+        invalidatesTimer()
     }
     
     // MARK: - Timer properties.
@@ -120,11 +115,11 @@ public final class FoundationTimerCountdown: TimerCountdown {
 extension FoundationTimerCountdown: TimerNativeCommands {
     /// Invalidates timer
     public func invalidatesTimer() {
-        if let currentTimer = currentTimer {
-            currentTimer.setEventHandler {}
-            currentTimer.cancel()
+        if case timerState = .suspended {
+            currentTimer?.resume()
         }
-        
+        currentTimer?.setEventHandler {}
+        currentTimer?.cancel()
         currentTimer = nil
     }
     
