@@ -11,10 +11,3 @@ public protocol TimerCommands {
 }
 
 public typealias TimerCountdown = TimerCommands & TimerStateValues
-
-public protocol TimerNativeCommands {
-    func startTimer(completion: @escaping () -> Void)
-    func invalidatesTimer()
-    func suspendCurrentTimer()
-    func resumeCurrentTimer()
-}
