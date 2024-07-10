@@ -30,8 +30,8 @@ class TimerNativeCommandsTests: XCTestCase {
         let (startingSet, nextSet) = createDefaultTimerSets()
         let sut = makeSUT(startingSet: startingSet, nextSet: nextSet)
         
-        sut.suspedCurrentTimer()
-        sut.suspedCurrentTimer()
+        sut.suspendCurrentTimer()
+        sut.suspendCurrentTimer()
     }
     
     // MARK: - Helpers

@@ -181,7 +181,7 @@ class TimeCoachRoot {
             Just(())
                 .filter { _ in !expired }
                 .handleEvents(receiveOutput: { [foundationTimer] _ in
-                    foundationTimer?.suspedCurrentTimer()
+                    foundationTimer?.suspendCurrentTimer()
                 })
                 .handleEvents(receiveOutput: { [weak self]_ in
                     self?.saveTimerProcess()

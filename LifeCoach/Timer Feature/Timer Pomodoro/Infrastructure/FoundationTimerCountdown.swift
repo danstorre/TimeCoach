@@ -128,7 +128,7 @@ extension FoundationTimerCountdown: TimerNativeCommands {
     }
     
     /// Suspends underlined currentTimer if set. a.k.a `DispatchSourceTimer`.
-    public func suspedCurrentTimer() {
+    public func suspendCurrentTimer() {
         currentTimer?.suspend()
     }
     
