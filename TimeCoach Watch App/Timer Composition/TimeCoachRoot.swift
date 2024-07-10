@@ -210,7 +210,7 @@ class TimeCoachRoot {
             .dispatchOnMainQueue()
             .setTimerValues(using: currenDate, timeAtSave, setabletimer)
             .handleEvents(receiveOutput: { [foundationTimer] _ in
-                foundationTimer?.resumeCurrentTimer()
+                foundationTimer?.resume()
             })
             .subscribe(Subscribers.Sink(receiveCompletion: { _ in
             }, receiveValue: { _ in }))

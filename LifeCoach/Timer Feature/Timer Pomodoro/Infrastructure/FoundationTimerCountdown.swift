@@ -141,7 +141,7 @@ extension FoundationTimerCountdown: TimerNativeCommands {
     }
     
     /// Resumes underlined currentTimer if set. a.k.a `DispatchSourceTimer`.
-    public func resumeCurrentTimer() {
+    public func resume() {
         if case timerState = .stopped {
             currentTimer?.resume()
         }
