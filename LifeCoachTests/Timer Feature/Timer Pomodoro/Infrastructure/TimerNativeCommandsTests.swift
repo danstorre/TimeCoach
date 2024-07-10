@@ -18,11 +18,11 @@ class TimerNativeCommandsTests: XCTestCase {
         sut.resumeCurrentTimer()
     }
     
-    func test_resumeCurrentTimer_onPausedTimer_DoesNotCrash() {
+    func test_resumeCurrentTimer_afterInvalidTimer_DoesNotCrash() {
         let (startingSet, nextSet) = createDefaultTimerSets()
         let sut = makeSUT(startingSet: startingSet, nextSet: nextSet)
         
-        sut.pauseCountdown()
+        sut.invalidatesTimer()
         sut.resumeCurrentTimer()
     }
     
