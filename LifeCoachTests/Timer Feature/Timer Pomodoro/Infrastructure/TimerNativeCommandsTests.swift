@@ -48,7 +48,7 @@ class TimerNativeCommandsTests: XCTestCase {
                          incrementing: Double = 0.001,
                          onQueue: DispatchQueue = .main,
                          file: StaticString = #filePath,
-                         line: UInt = #line) -> TimerCountdown & TimerNativeCommands {
+                         line: UInt = #line) -> TimerNativeCommands {
         let sut = FoundationTimerCountdown(startingSet: startingSet,
                                            dispatchQueue: onQueue,
                                            nextSet: nextSet,
