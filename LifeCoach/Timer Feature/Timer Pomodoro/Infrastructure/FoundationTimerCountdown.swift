@@ -128,8 +128,8 @@ extension FoundationTimerCountdown: TimerNativeCommands {
         timerState = .running
         currentTimer = DispatchSource.makeTimerSource(queue: dispatchQueue)
         currentTimer?.schedule(deadline: .now(), repeating: incrementing)
-        currentTimer?.setEventHandler(handler: { [weak self] in
-            self?.elapsedCompletion()
+        currentTimer?.setEventHandler(handler: {
+            completion()
         })
         currentTimer?.activate()
     }
