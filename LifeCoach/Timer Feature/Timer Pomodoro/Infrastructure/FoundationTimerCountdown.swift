@@ -38,7 +38,7 @@ public final class FoundationTimerCountdown: TimerCountdown {
     
     public func startCountdown(completion: @escaping StartCoundownCompletion) {
         guard hasNotHitThreshold() else { return }
-        invalidatesTimer()
+        invalidateTimer()
         state = .running
         timerDelivery = completion
         createTimer()
@@ -49,11 +49,11 @@ public final class FoundationTimerCountdown: TimerCountdown {
         currentSet = TimerCountdownSet(0, startDate: currentSet.startDate, endDate: currentSet.endDate)
         state = .stop
         timerDelivery?(.success((currentTimerSet, state)))
-        invalidatesTimer()
+        invalidateTimer()
     }
     
     public func pauseCountdown() {
-        invalidatesTimer()
+        invalidateTimer()
         state = .pause
         timerDelivery?(.success((currentTimerSet, state)))
     }
@@ -74,7 +74,7 @@ public final class FoundationTimerCountdown: TimerCountdown {
         guard currentTimer != nil else { return }
         currentSet = TimerCountdownSet(currentSet.elapsedSeconds + incrementing, startDate: currentSet.startDate, endDate: currentSet.endDate)
         guard hasNotHitThreshold() else {
-            invalidatesTimer()
+            invalidateTimer()
             state = .stop
             timerDelivery?(.success((currentTimerSet, state)))
             return
@@ -89,7 +89,7 @@ public final class FoundationTimerCountdown: TimerCountdown {
     }
     
     private func executeNextSet() {
-        invalidatesTimer()
+        invalidateTimer()
         currentSet = TimerCountdownSet(0, startDate: currentSet.startDate, endDate: currentSet.endDate)
         state = .stop
         setA = currentSet
@@ -99,7 +99,7 @@ public final class FoundationTimerCountdown: TimerCountdown {
     }
     
     deinit {
-        invalidatesTimer()
+        invalidateTimer()
     }
     
     // MARK: - Timer properties.
@@ -114,7 +114,7 @@ public final class FoundationTimerCountdown: TimerCountdown {
 // MARK: - Timer Native Commands
 extension FoundationTimerCountdown: TimerNativeCommands {
     /// Invalidates timer
-    public func invalidatesTimer() {
+    public func invalidateTimer() {
         if case timerState = .suspended {
             currentTimer?.resume()
         }

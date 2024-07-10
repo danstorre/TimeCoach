@@ -294,7 +294,7 @@ final class FoundationTimerCountdownTests: XCTestCase {
     }
     
     private func invalidatesTimer(on sut: TimerCountdown) {
-        (sut as? FoundationTimerCountdown)?.invalidatesTimer()
+        (sut as? FoundationTimerCountdown)?.invalidateTimer()
     }
     
     private func makeAnyTimerSet(seconds: TimeInterval = 0,

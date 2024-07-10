@@ -2,7 +2,7 @@ import Foundation
 
 public protocol TimerNativeCommands {
     func startTimer(completion: @escaping () -> Void)
-    func invalidatesTimer()
+    func invalidateTimer()
     func suspend()
     func resume()
 }
