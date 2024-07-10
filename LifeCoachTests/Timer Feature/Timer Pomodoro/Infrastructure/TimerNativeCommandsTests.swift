@@ -63,14 +63,11 @@ class TimerNativeCommandsTests: XCTestCase {
     
     private func makeSUT(startingSet: TimerCountdownSet, 
                          nextSet: TimerCountdownSet,
-                         incrementing: Double = 0.001,
-                         onQueue: DispatchQueue = .main,
                          file: StaticString = #filePath,
                          line: UInt = #line) -> TimerNativeCommands {
         let sut = FoundationTimerCountdown(startingSet: startingSet,
-                                           dispatchQueue: onQueue,
                                            nextSet: nextSet,
-                                           incrementing: incrementing)
+                                           incrementing: 0.1)
         
         trackForMemoryLeak(instance: sut, file: file, line: line)
         
