@@ -26,6 +26,14 @@ class TimerNativeCommandsTests: XCTestCase {
         sut.resumeCurrentTimer()
     }
     
+    func test_suspendTimer_onRunningTimer_DoesNotCrash() {
+        let (startingSet, nextSet) = createDefaultTimerSets()
+        let sut = makeSUT(startingSet: startingSet, nextSet: nextSet)
+        
+        sut.startTimer {}
+        sut.suspendCurrentTimer()
+    }
+    
     func test_supendsCurrentTimer_twice_doesNotCrash() {
         let (startingSet, nextSet) = createDefaultTimerSets()
         let sut = makeSUT(startingSet: startingSet, nextSet: nextSet)

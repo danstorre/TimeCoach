@@ -99,6 +99,9 @@ public final class FoundationTimerCountdown: TimerCountdown {
     }
     
     deinit {
+        if case timerState = .suspended {
+            currentTimer?.resume()
+        }
         currentTimer?.setEventHandler {}
         currentTimer?.cancel()
         currentTimer = nil
@@ -108,6 +111,7 @@ public final class FoundationTimerCountdown: TimerCountdown {
     private enum UnderlinedTimerState {
         case stopped
         case running
+        case suspended
     }
     private var timerState = UnderlinedTimerState.stopped
 }
@@ -137,6 +141,7 @@ extension FoundationTimerCountdown: TimerNativeCommands {
     
     /// Suspends underlined currentTimer if set. a.k.a `DispatchSourceTimer`.
     public func suspendCurrentTimer() {
+        timerState = .suspended
         currentTimer?.suspend()
     }
     
