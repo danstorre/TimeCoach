@@ -103,6 +103,13 @@ public final class FoundationTimerCountdown: TimerCountdown {
         currentTimer?.cancel()
         currentTimer = nil
     }
+    
+    // MARK: - Timer properties.
+    private enum UnderlinedTimerState {
+        case stopped
+        case running
+    }
+    private var timerState = UnderlinedTimerState.stopped
 }
 
 // MARK: - Timer Native Commands
@@ -119,6 +126,7 @@ extension FoundationTimerCountdown: TimerNativeCommands {
     
     /// Creates and starts timer
     public func startTimer(completion: @escaping () -> Void) {
+        timerState = .running
         currentTimer = DispatchSource.makeTimerSource(queue: dispatchQueue)
         currentTimer?.schedule(deadline: .now(), repeating: incrementing)
         currentTimer?.setEventHandler(handler: { [weak self] in
@@ -134,8 +142,9 @@ extension FoundationTimerCountdown: TimerNativeCommands {
     
     /// Resumes underlined currentTimer if set. a.k.a `DispatchSourceTimer`.
     public func resumeCurrentTimer() {
-        guard let cancelled = currentTimer?.isCancelled, cancelled else { return }
-        currentTimer?.resume()
+        if case timerState = .stopped {
+            currentTimer?.resume()
+        }
     }
 }
 
