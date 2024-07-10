@@ -31,7 +31,7 @@ class TimerNativeCommandsTests: XCTestCase {
         let sut = makeSUT(startingSet: startingSet, nextSet: nextSet)
         
         sut.startTimer {}
-        sut.suspendCurrentTimer()
+        sut.suspend()
     }
     
     func test_invalidateTimer_onSuspendedTimer_DoesNotCrash() {
@@ -39,7 +39,7 @@ class TimerNativeCommandsTests: XCTestCase {
         let sut = makeSUT(startingSet: startingSet, nextSet: nextSet)
         
         sut.startTimer {}
-        sut.suspendCurrentTimer()
+        sut.suspend()
         
         sut.invalidatesTimer()
     }
@@ -48,8 +48,8 @@ class TimerNativeCommandsTests: XCTestCase {
         let (startingSet, nextSet) = createDefaultTimerSets()
         let sut = makeSUT(startingSet: startingSet, nextSet: nextSet)
         
-        sut.suspendCurrentTimer()
-        sut.suspendCurrentTimer()
+        sut.suspend()
+        sut.suspend()
     }
     
     // MARK: - Helpers
