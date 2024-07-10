@@ -2,28 +2,28 @@ import LifeCoach
 import XCTest
 
 class TimerNativeCommandsTests: XCTestCase {
-    func test_resumeCurrentTimer_onStartedTimer_DoesNotCrash() {
+    func test_resume_onStartedTimer_DoesNotCrash() {
         let (startingSet, nextSet) = createDefaultTimerSets()
         let sut = makeSUT(startingSet: startingSet, nextSet: nextSet)
         
         sut.startTimer {}
-        sut.resumeCurrentTimer()
+        sut.resume()
     }
     
-    func test_resumeCurrentTimer_onStopTimer_twice_DoesNotCrash() {
+    func test_resume_onStopTimer_twice_DoesNotCrash() {
         let (startingSet, nextSet) = createDefaultTimerSets()
         let sut = makeSUT(startingSet: startingSet, nextSet: nextSet)
         
-        sut.resumeCurrentTimer()
-        sut.resumeCurrentTimer()
+        sut.resume()
+        sut.resume()
     }
     
-    func test_resumeCurrentTimer_afterInvalidTimer_DoesNotCrash() {
+    func test_resume_afterInvalidTimer_DoesNotCrash() {
         let (startingSet, nextSet) = createDefaultTimerSets()
         let sut = makeSUT(startingSet: startingSet, nextSet: nextSet)
         
         sut.invalidateTimer()
-        sut.resumeCurrentTimer()
+        sut.resume()
     }
     
     func test_suspendTimer_onRunningTimer_DoesNotCrash() {
@@ -40,6 +40,17 @@ class TimerNativeCommandsTests: XCTestCase {
         
         sut.startTimer {}
         sut.suspend()
+        
+        sut.invalidateTimer()
+    }
+    
+    func test_invalidateTimer_DoesNotCrash() {
+        let (startingSet, nextSet) = createDefaultTimerSets()
+        let sut = makeSUT(startingSet: startingSet, nextSet: nextSet)
+        
+        sut.startTimer {}
+        sut.suspend()
+        sut.resume()
         
         sut.invalidateTimer()
     }
