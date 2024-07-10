@@ -98,16 +98,6 @@ public final class FoundationTimerCountdown: TimerCountdown {
         setB = setA
     }
     
-    public func invalidatesTimer() {
-        if let currentTimer = currentTimer {
-            currentTimer.resume()
-            currentTimer.setEventHandler {}
-            currentTimer.cancel()
-        }
-        
-        currentTimer = nil
-    }
-    
     deinit {
         currentTimer?.setEventHandler {}
         currentTimer?.cancel()
@@ -117,6 +107,16 @@ public final class FoundationTimerCountdown: TimerCountdown {
 
 // MARK: - Timer Native Commands
 extension FoundationTimerCountdown: TimerNativeCommands {
+    /// Invalidates timer
+    public func invalidatesTimer() {
+        if let currentTimer = currentTimer {
+            currentTimer.setEventHandler {}
+            currentTimer.cancel()
+        }
+        
+        currentTimer = nil
+    }
+    
     /// Creates and starts timer
     public func startTimer(completion: @escaping () -> Void) {
         currentTimer = DispatchSource.makeTimerSource(queue: dispatchQueue)
