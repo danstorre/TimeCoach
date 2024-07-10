@@ -6,7 +6,7 @@ class TimerNativeCommandsTests: XCTestCase {
         let (startingSet, nextSet) = createDefaultTimerSets()
         let sut = makeSUT(startingSet: startingSet, nextSet: nextSet)
         
-        sut.startCountdown(completion: { _ in })
+        sut.startTimer {}
         sut.resumeCurrentTimer()
     }
     

@@ -64,12 +64,9 @@ public final class FoundationTimerCountdown: TimerCountdown {
     }
     
     private func createTimer() {
-        currentTimer = DispatchSource.makeTimerSource(queue: dispatchQueue)
-        currentTimer?.schedule(deadline: .now(), repeating: incrementing)
-        currentTimer?.setEventHandler(handler: { [weak self] in
+        startTimer(completion: { [weak self] in
             self?.elapsedCompletion()
         })
-        currentTimer?.activate()
     }
     
     @objc
@@ -120,6 +117,16 @@ public final class FoundationTimerCountdown: TimerCountdown {
 
 // MARK: - Timer Native Commands
 extension FoundationTimerCountdown: TimerNativeCommands {
+    /// Creates and starts timer
+    public func startTimer(completion: @escaping () -> Void) {
+        currentTimer = DispatchSource.makeTimerSource(queue: dispatchQueue)
+        currentTimer?.schedule(deadline: .now(), repeating: incrementing)
+        currentTimer?.setEventHandler(handler: { [weak self] in
+            self?.elapsedCompletion()
+        })
+        currentTimer?.activate()
+    }
+    
     /// Suspends underlined currentTimer if set. a.k.a `DispatchSourceTimer`.
     public func suspedCurrentTimer() {
         currentTimer?.suspend()
