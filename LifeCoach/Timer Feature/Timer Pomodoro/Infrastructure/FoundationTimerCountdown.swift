@@ -145,6 +145,12 @@ extension FoundationTimerCountdown: TimerNativeCommands {
         if case timerState = .stopped {
             currentTimer?.resume()
         }
+        
+        if case timerState = .suspended {
+            currentTimer?.resume()
+        }
+        
+        timerState = .running
     }
 }
 
