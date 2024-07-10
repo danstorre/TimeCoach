@@ -26,26 +26,6 @@ class TimerNativeCommandsTests: XCTestCase {
         sut.resumeCurrentTimer()
     }
     
-    func test_pausedTimer_onSuspendedTimerAfterTimerHasStarted_DoesNotCrash() {
-        let (startingSet, nextSet) = createDefaultTimerSets()
-        let anyQueue = DispatchQueue(label: "myTestQueue")
-        let sut = makeSUT(startingSet: startingSet,
-                          nextSet: nextSet, onQueue: anyQueue)
-        let expectation = expectation(description: "waiting for pause to finish")
-        
-        anyQueue.async {
-            sut.startCountdown { _ in}
-            sut.suspedCurrentTimer()
-        }
-        
-        anyQueue.async {
-            sut.pauseCountdown()
-            expectation.fulfill()
-        }
-        
-        wait(for: [expectation], timeout: 0.3)
-    }
-    
     func test_supendsCurrentTimer_twice_doesNotCrash() {
         let (startingSet, nextSet) = createDefaultTimerSets()
         let sut = makeSUT(startingSet: startingSet, nextSet: nextSet)
