@@ -26,6 +26,23 @@ class TimerNativeCommandsTests: XCTestCase {
         sut.resume()
     }
     
+    func test_resume_afterSuspended_DoesNotCrash() {
+        let (startingSet, nextSet) = createDefaultTimerSets()
+        let sut = makeSUT(startingSet: startingSet, nextSet: nextSet)
+        
+        sut.startTimer {}
+        sut.suspend()
+        sut.resume()
+    }
+    
+    func test_supendsCurrentTimer_twice_doesNotCrash() {
+        let (startingSet, nextSet) = createDefaultTimerSets()
+        let sut = makeSUT(startingSet: startingSet, nextSet: nextSet)
+        
+        sut.suspend()
+        sut.suspend()
+    }
+    
     func test_suspendTimer_onRunningTimer_DoesNotCrash() {
         let (startingSet, nextSet) = createDefaultTimerSets()
         let sut = makeSUT(startingSet: startingSet, nextSet: nextSet)
@@ -42,23 +59,6 @@ class TimerNativeCommandsTests: XCTestCase {
         sut.suspend()
         
         sut.invalidateTimer()
-    }
-    
-    func test_resume_afterSuspended_DoesNotCrash() {
-        let (startingSet, nextSet) = createDefaultTimerSets()
-        let sut = makeSUT(startingSet: startingSet, nextSet: nextSet)
-        
-        sut.startTimer {}
-        sut.suspend()
-        sut.resume()
-    }
-    
-    func test_supendsCurrentTimer_twice_doesNotCrash() {
-        let (startingSet, nextSet) = createDefaultTimerSets()
-        let sut = makeSUT(startingSet: startingSet, nextSet: nextSet)
-        
-        sut.suspend()
-        sut.suspend()
     }
     
     // MARK: - Helpers
