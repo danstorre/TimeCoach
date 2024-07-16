@@ -258,7 +258,7 @@ final class FoundationTimerCountdownTests: XCTestCase {
                          incrementing: Double = 0.001,
                          file: StaticString = #filePath,
                          line: UInt = #line) -> TimerCountdown {
-        let sut = FoundationTimerCountdown(startingSet: startingSet, nextSet: nextSet, incrementing: incrementing)
+        let sut = FactoryFoundationTimer.createTimer(startingSet: startingSet, nextSet: nextSet, incrementing: incrementing)
         
         trackForMemoryLeak(instance: sut, file: file, line: line)
         

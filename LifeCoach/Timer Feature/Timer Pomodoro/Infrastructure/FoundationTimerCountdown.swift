@@ -1,5 +1,16 @@
 import Foundation
 
+public enum FactoryFoundationTimer {
+    public static func createTimer(startingSet: TimerCountdownSet,
+                     dispatchQueue: DispatchQueue = DispatchQueue.main,
+                     nextSet: TimerCountdownSet,
+                     incrementing: Double = 1.0) -> FoundationTimerCountdown {
+        return FoundationTimerCountdown(startingSet: startingSet,
+                                        dispatchQueue: dispatchQueue,
+                                        nextSet: nextSet, incrementing: incrementing)
+    }
+}
+
 public final class FoundationTimerCountdown: TimerCountdown {
     public var currentState: TimerCountDownState {
         return .init(state: state, currentTimerSet: currentSet)
@@ -25,10 +36,10 @@ public final class FoundationTimerCountdown: TimerCountdown {
         currentSet.elapsedSeconds
     }
     
-    public init(startingSet: TimerCountdownSet,
-                dispatchQueue: DispatchQueue = DispatchQueue.main,
-                nextSet: TimerCountdownSet,
-                incrementing: Double = 1.0) {
+    fileprivate init(startingSet: TimerCountdownSet,
+                     dispatchQueue: DispatchQueue = DispatchQueue.main,
+                     nextSet: TimerCountdownSet,
+                     incrementing: Double = 1.0) {
         self.setA = startingSet
         self.setB = nextSet
         self.currentSet = startingSet
