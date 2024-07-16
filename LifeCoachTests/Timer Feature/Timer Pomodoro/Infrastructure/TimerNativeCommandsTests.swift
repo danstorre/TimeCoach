@@ -3,32 +3,28 @@ import XCTest
 
 class TimerNativeCommandsTests: XCTestCase {
     func test_resume_onStartedTimer_DoesNotCrash() {
-        let (startingSet, nextSet) = createDefaultTimerSets()
-        let sut = makeSUT(startingSet: startingSet, nextSet: nextSet)
+        let sut = makeSUT()
         
         sut.startTimer {}
         sut.resume()
     }
     
     func test_resume_onStopTimer_twice_DoesNotCrash() {
-        let (startingSet, nextSet) = createDefaultTimerSets()
-        let sut = makeSUT(startingSet: startingSet, nextSet: nextSet)
+        let sut = makeSUT()
         
         sut.resume()
         sut.resume()
     }
     
     func test_resume_afterInvalidTimer_DoesNotCrash() {
-        let (startingSet, nextSet) = createDefaultTimerSets()
-        let sut = makeSUT(startingSet: startingSet, nextSet: nextSet)
+        let sut = makeSUT()
         
         sut.invalidateTimer()
         sut.resume()
     }
     
     func test_resume_afterSuspended_DoesNotCrash() {
-        let (startingSet, nextSet) = createDefaultTimerSets()
-        let sut = makeSUT(startingSet: startingSet, nextSet: nextSet)
+        let sut = makeSUT()
         
         sut.startTimer {}
         sut.suspend()
@@ -36,24 +32,21 @@ class TimerNativeCommandsTests: XCTestCase {
     }
     
     func test_supendsCurrentTimer_twice_doesNotCrash() {
-        let (startingSet, nextSet) = createDefaultTimerSets()
-        let sut = makeSUT(startingSet: startingSet, nextSet: nextSet)
+        let sut = makeSUT()
         
         sut.suspend()
         sut.suspend()
     }
     
     func test_suspendTimer_onRunningTimer_DoesNotCrash() {
-        let (startingSet, nextSet) = createDefaultTimerSets()
-        let sut = makeSUT(startingSet: startingSet, nextSet: nextSet)
+        let sut = makeSUT()
         
         sut.startTimer {}
         sut.suspend()
     }
     
     func test_invalidateTimer_onSuspendedTimer_DoesNotCrash() {
-        let (startingSet, nextSet) = createDefaultTimerSets()
-        let sut = makeSUT(startingSet: startingSet, nextSet: nextSet)
+        let sut = makeSUT()
         
         sut.startTimer {}
         sut.suspend()
@@ -70,10 +63,10 @@ class TimerNativeCommandsTests: XCTestCase {
         return (startingSet, nextSet)
     }
     
-    private func makeSUT(startingSet: TimerCountdownSet, 
-                         nextSet: TimerCountdownSet,
-                         file: StaticString = #filePath,
+    private func makeSUT(file: StaticString = #filePath,
                          line: UInt = #line) -> TimerNativeCommands {
+        let (startingSet, nextSet) = createDefaultTimerSets()
+        
         let sut = FoundationTimerCountdown(startingSet: startingSet,
                                            nextSet: nextSet,
                                            incrementing: 0.1)
