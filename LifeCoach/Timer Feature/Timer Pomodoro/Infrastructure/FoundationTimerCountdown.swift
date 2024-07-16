@@ -5,9 +5,12 @@ public enum FactoryFoundationTimer {
                      dispatchQueue: DispatchQueue = DispatchQueue.main,
                      nextSet: TimerCountdownSet,
                      incrementing: Double = 1.0) -> FoundationTimerCountdown {
-        return FoundationTimerCountdown(startingSet: startingSet,
-                                        dispatchQueue: dispatchQueue,
-                                        nextSet: nextSet, incrementing: incrementing)
+        let timer = TimerNative(dispatchQueue: dispatchQueue, incrementing: incrementing)
+        return FoundationTimerCountdown(
+            startingSet: startingSet,
+            nextSet: nextSet,
+            timer: timer,
+            incrementing: incrementing)
     }
 }
 
@@ -32,17 +35,17 @@ public final class FoundationTimerCountdown: TimerCountdown {
         currentSet.elapsedSeconds
     }
     
-    let timerNative: TimerNative?
+    private let timer: TimerNative?
     
     fileprivate init(startingSet: TimerCountdownSet,
-                     dispatchQueue: DispatchQueue = DispatchQueue.main,
                      nextSet: TimerCountdownSet,
+                     timer: TimerNative,
                      incrementing: Double = 1.0) {
         self.setA = startingSet
         self.setB = nextSet
         self.currentSet = startingSet
         self.incrementing = incrementing
-        self.timerNative = TimerNative(dispatchQueue: dispatchQueue, incrementing: incrementing)
+        self.timer = timer
     }
     
     public func startCountdown(completion: @escaping StartCoundownCompletion) {
@@ -108,24 +111,24 @@ public final class FoundationTimerCountdown: TimerCountdown {
 
     /// Invalidates timer
     public func invalidateTimer() {
-        timerNative?.invalidateTimer()
+        timer?.invalidateTimer()
     }
     
     /// Creates and starts timer
     public func startTimer(completion: @escaping () -> Void) {
-        timerNative?.startTimer {
+        timer?.startTimer {
             completion()
         }
     }
     
     /// Suspends underlined currentTimer if set. a.k.a `DispatchSourceTimer`.
     public func suspend() {
-        timerNative?.suspend()
+        timer?.suspend()
     }
     
     /// Resumes underlined currentTimer if set. a.k.a `DispatchSourceTimer`.
     public func resume() {
-        timerNative?.resume()
+        timer?.resume()
     }
 }
 
