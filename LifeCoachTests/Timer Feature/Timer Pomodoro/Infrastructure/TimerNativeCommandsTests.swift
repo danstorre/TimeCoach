@@ -55,14 +55,6 @@ class TimerNativeCommandsTests: XCTestCase {
     }
     
     // MARK: - Helpers
-    private func createDefaultTimerSets() -> (startingSet: TimerCountdownSet,
-                                              nextSet: TimerCountdownSet) {
-        let fixedDate = Date()
-        let startingSet = createAnyTimerSet()
-        let nextSet = createTimerSet(0, startDate: fixedDate, endDate: fixedDate.adding(seconds: 0.002))
-        return (startingSet, nextSet)
-    }
-    
     private func makeSUT(file: StaticString = #filePath,
                          line: UInt = #line) -> TimerNativeCommands {
         let sut = TimerNative(incrementing: 0.1)
