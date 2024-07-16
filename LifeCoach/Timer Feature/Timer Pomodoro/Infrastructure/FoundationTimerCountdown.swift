@@ -22,10 +22,6 @@ public final class FoundationTimerCountdown: TimerCountdown {
     var currentSet: TimerCountdownSet
     private let incrementing: Double
     var timerDelivery: StartCoundownCompletion?
-    
-    private let dispatchQueue: DispatchQueue
-    
-    var currentTimer: DispatchSourceTimer?
     var timeAtSave: CFTimeInterval? = nil
     
     public var currentTimerSet: TimerCountdownSet {
@@ -36,6 +32,8 @@ public final class FoundationTimerCountdown: TimerCountdown {
         currentSet.elapsedSeconds
     }
     
+    let timerNative: TimerNative?
+    
     fileprivate init(startingSet: TimerCountdownSet,
                      dispatchQueue: DispatchQueue = DispatchQueue.main,
                      nextSet: TimerCountdownSet,
@@ -44,7 +42,7 @@ public final class FoundationTimerCountdown: TimerCountdown {
         self.setB = nextSet
         self.currentSet = startingSet
         self.incrementing = incrementing
-        self.dispatchQueue = dispatchQueue
+        self.timerNative = TimerNative(dispatchQueue: dispatchQueue, incrementing: incrementing)
     }
     
     public func startCountdown(completion: @escaping StartCoundownCompletion) {
@@ -82,7 +80,6 @@ public final class FoundationTimerCountdown: TimerCountdown {
     
     @objc
     private func elapsedCompletion() {
-        guard currentTimer != nil else { return }
         currentSet = TimerCountdownSet(currentSet.elapsedSeconds + incrementing, startDate: currentSet.startDate, endDate: currentSet.endDate)
         guard hasNotHitThreshold() else {
             invalidateTimer()
@@ -108,60 +105,27 @@ public final class FoundationTimerCountdown: TimerCountdown {
         timerDelivery?(.success((setB, state)))
         setB = setA
     }
-    
-    deinit {
-        invalidateTimer()
-    }
-    
-    // MARK: - Timer properties.
-    private enum UnderlinedTimerState {
-        case stopped
-        case running
-        case suspended
-    }
-    private var timerState = UnderlinedTimerState.stopped
-}
 
-// MARK: - Timer Native Commands
-extension FoundationTimerCountdown: TimerNativeCommands {
     /// Invalidates timer
     public func invalidateTimer() {
-        if case timerState = .suspended {
-            currentTimer?.resume()
-        }
-        currentTimer?.setEventHandler {}
-        currentTimer?.cancel()
-        currentTimer = nil
+        timerNative?.invalidateTimer()
     }
     
     /// Creates and starts timer
     public func startTimer(completion: @escaping () -> Void) {
-        timerState = .running
-        currentTimer = DispatchSource.makeTimerSource(queue: dispatchQueue)
-        currentTimer?.schedule(deadline: .now(), repeating: incrementing)
-        currentTimer?.setEventHandler(handler: {
+        timerNative?.startTimer {
             completion()
-        })
-        currentTimer?.activate()
+        }
     }
     
     /// Suspends underlined currentTimer if set. a.k.a `DispatchSourceTimer`.
     public func suspend() {
-        timerState = .suspended
-        currentTimer?.suspend()
+        timerNative?.suspend()
     }
     
     /// Resumes underlined currentTimer if set. a.k.a `DispatchSourceTimer`.
     public func resume() {
-        if case timerState = .stopped {
-            currentTimer?.resume()
-        }
-        
-        if case timerState = .suspended {
-            currentTimer?.resume()
-        }
-        
-        timerState = .running
+        timerNative?.resume()
     }
 }
 
