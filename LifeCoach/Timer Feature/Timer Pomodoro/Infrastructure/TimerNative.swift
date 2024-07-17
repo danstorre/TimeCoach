@@ -34,12 +34,12 @@ public class TimerNative: TimerNativeCommands {
     }
     
     /// Creates and starts timer
-    public func startTimer(completion: @escaping () -> Void) {
+    public func startTimer(completion: @escaping (TimeInterval) -> Void) {
         timerState = .running
         currentTimer = DispatchSource.makeTimerSource(queue: dispatchQueue)
         currentTimer?.schedule(deadline: .now(), repeating: incrementing)
-        currentTimer?.setEventHandler(handler: {
-            completion()
+        currentTimer?.setEventHandler(handler: { [incrementing] in
+            completion(incrementing)
         })
         currentTimer?.activate()
     }

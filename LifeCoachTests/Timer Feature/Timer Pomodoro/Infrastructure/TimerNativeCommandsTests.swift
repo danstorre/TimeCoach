@@ -5,7 +5,7 @@ class TimerNativeCommandsTests: XCTestCase {
     func test_resume_onStartedTimer_DoesNotCrash() {
         let sut = makeSUT()
         
-        sut.startTimer {}
+        sut.startTimer { _ in }
         sut.resume()
     }
     
@@ -26,7 +26,7 @@ class TimerNativeCommandsTests: XCTestCase {
     func test_resume_afterSuspended_DoesNotCrash() {
         let sut = makeSUT()
         
-        sut.startTimer {}
+        sut.startTimer { _ in }
         sut.suspend()
         sut.resume()
     }
@@ -41,23 +41,50 @@ class TimerNativeCommandsTests: XCTestCase {
     func test_suspendTimer_onRunningTimer_DoesNotCrash() {
         let sut = makeSUT()
         
-        sut.startTimer {}
+        sut.startTimer { _ in }
         sut.suspend()
     }
     
     func test_invalidateTimer_onSuspendedTimer_DoesNotCrash() {
         let sut = makeSUT()
         
-        sut.startTimer {}
+        sut.startTimer { _ in }
         sut.suspend()
         
         sut.invalidateTimer()
     }
     
+    func test_startTimer_onPulseCompletion_deliversIncrementingValue() {
+        let incrementing = 0.1
+        let sut = makeSUT(incrementing: incrementing)
+        
+        let receivedIncrementingValues = getReceivedIncrementingValues(from: sut, onPulseCount: 1)
+        
+        let expectedIncrementingValues = [incrementing]
+        XCTAssertEqual(receivedIncrementingValues, expectedIncrementingValues)
+    }
+    
     // MARK: - Helpers
-    private func makeSUT(file: StaticString = #filePath,
+    private func getReceivedIncrementingValues(from sut: TimerNativeCommands,
+                                               onPulseCount pulseCount: Int) -> [TimeInterval] {
+        let expectation = expectation(description: "wait for timer pulses.")
+        expectation.expectedFulfillmentCount = pulseCount
+        
+        var receivedIncrementingValues = [TimeInterval]()
+        sut.startTimer { incrementingValue in
+            receivedIncrementingValues.append(incrementingValue)
+            expectation.fulfill()
+        }
+        
+        wait(for: [expectation])
+        
+        return receivedIncrementingValues
+    }
+    
+    private func makeSUT(incrementing: TimeInterval = 0.001,
+                         file: StaticString = #filePath,
                          line: UInt = #line) -> TimerNativeCommands {
-        let sut = TimerNative(incrementing: 0.1)
+        let sut = TimerNative(incrementing: incrementing)
         
         trackForMemoryLeak(instance: sut, file: file, line: line)
         

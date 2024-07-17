@@ -127,7 +127,7 @@ public final class FoundationTimerCountdown: TimerCountdown {
     
     /// Creates and starts timer
     public func startTimer(completion: @escaping () -> Void) {
-        timer?.startTimer {
+        timer?.startTimer { _ in
             completion()
         }
     }

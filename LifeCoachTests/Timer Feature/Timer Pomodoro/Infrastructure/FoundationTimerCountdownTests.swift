@@ -280,7 +280,7 @@ final class FoundationTimerCountdownTests: XCTestCase {
     }
     
     private class TimerNativeCommandsSpy: TimerNativeCommands {
-        func startTimer(completion: @escaping () -> Void) {
+        func startTimer(completion: @escaping (TimeInterval) -> Void) {
         }
         
         func invalidateTimer() {
