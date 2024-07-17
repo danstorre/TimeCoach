@@ -1,7 +1,8 @@
 import Foundation
 
 public protocol TimerNativeCommands {
-    func startTimer(completion: @escaping (TimeInterval) -> Void)
+    typealias TimerPulse = (TimeInterval) -> Void
+    func startTimer(completion: @escaping TimerPulse)
     func invalidateTimer()
     func suspend()
     func resume()
