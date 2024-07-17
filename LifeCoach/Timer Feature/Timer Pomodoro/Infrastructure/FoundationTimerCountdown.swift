@@ -9,23 +9,22 @@ public enum FactoryFoundationTimer {
         return FoundationTimerCountdown(
             startingSet: startingSet,
             nextSet: nextSet,
-            timer: timer,
-            incrementing: incrementing)
+            timer: timer)
     }
     
     public static func createTimer2(startingSet: TimerCountdownSet,
                                    nextSet: TimerCountdownSet,
                                    timer: TimerNativeCommands,
                                    dispatchQueue: DispatchQueue = DispatchQueue.main)
-    -> FoundationTimerCountdown2 {
-        return FoundationTimerCountdown2(
+    -> FoundationTimerCountdown {
+        return FoundationTimerCountdown(
             startingSet: startingSet,
             nextSet: nextSet,
             timer: timer)
     }
 }
 
-public final class FoundationTimerCountdown2: TimerCountdown {
+public final class FoundationTimerCountdown: TimerCountdown {
     public var currentState: TimerCountDownState {
         return .init(state: state, currentTimerSet: currentSet)
     }
@@ -125,123 +124,6 @@ public final class FoundationTimerCountdown2: TimerCountdown {
     public func startTimer(completion: @escaping TimerNativeCommands.TimerPulse) {
         timer?.startTimer { incrementing in
             completion(incrementing)
-        }
-    }
-    
-    /// Suspends underlined currentTimer if set. a.k.a `DispatchSourceTimer`.
-    public func suspend() {
-        timer?.suspend()
-    }
-    
-    /// Resumes underlined currentTimer if set. a.k.a `DispatchSourceTimer`.
-    public func resume() {
-        timer?.resume()
-    }
-}
-
-public final class FoundationTimerCountdown: TimerCountdown {
-    public var currentState: TimerCountDownState {
-        return .init(state: state, currentTimerSet: currentSet)
-    }
-
-    private var state: TimerCountdownStateValues = .stop
-    private var setA: TimerCountdownSet
-    private var setB: TimerCountdownSet
-    private var currentSet: TimerCountdownSet
-    private let incrementing: Double
-    private var timerDelivery: StartCoundownCompletion?
-    
-    public var currentTimerSet: TimerCountdownSet {
-        currentSet
-    }
-    
-    public var currentSetElapsedTime: TimeInterval {
-        currentSet.elapsedSeconds
-    }
-    
-    private let timer: TimerNativeCommands?
-    
-    fileprivate init(startingSet: TimerCountdownSet,
-                     nextSet: TimerCountdownSet,
-                     timer: TimerNativeCommands,
-                     incrementing: Double = 1.0) {
-        self.setA = startingSet
-        self.setB = nextSet
-        self.currentSet = startingSet
-        self.incrementing = incrementing
-        self.timer = timer
-    }
-    
-    public func startCountdown(completion: @escaping StartCoundownCompletion) {
-        guard hasNotHitThreshold() else { return }
-        invalidateTimer()
-        state = .running
-        timerDelivery = completion
-        createTimer()
-        timerDelivery?(.success((currentTimerSet, state)))
-    }
-    
-    public func stopCountdown() {
-        currentSet = TimerCountdownSet(0, startDate: currentSet.startDate, endDate: currentSet.endDate)
-        state = .stop
-        timerDelivery?(.success((currentTimerSet, state)))
-        invalidateTimer()
-    }
-    
-    public func pauseCountdown() {
-        invalidateTimer()
-        state = .pause
-        timerDelivery?(.success((currentTimerSet, state)))
-    }
-    
-    public func skipCountdown(completion: @escaping SkipCountdownCompletion) {
-        timerDelivery = completion
-        executeNextSet()
-    }
-    
-    private func createTimer() {
-        startTimer(completion: { [weak self] in
-            self?.elapsedCompletion()
-        })
-    }
-    
-    @objc
-    private func elapsedCompletion() {
-        currentSet = TimerCountdownSet(currentSet.elapsedSeconds + incrementing, startDate: currentSet.startDate, endDate: currentSet.endDate)
-        guard hasNotHitThreshold() else {
-            invalidateTimer()
-            state = .stop
-            timerDelivery?(.success((currentTimerSet, state)))
-            return
-        }
-        
-        timerDelivery?(.success((currentTimerSet, state)))
-    }
-    
-    private func hasNotHitThreshold() -> Bool {
-        let endDate = currentSet.endDate.adding(seconds: -currentSet.elapsedSeconds)
-        return endDate.timeIntervalSince(currentSet.startDate) > 0
-    }
-    
-    private func executeNextSet() {
-        invalidateTimer()
-        currentSet = TimerCountdownSet(0, startDate: currentSet.startDate, endDate: currentSet.endDate)
-        state = .stop
-        setA = currentSet
-        currentSet = setB
-        timerDelivery?(.success((setB, state)))
-        setB = setA
-    }
-
-    /// Invalidates timer
-    public func invalidateTimer() {
-        timer?.invalidateTimer()
-    }
-    
-    /// Creates and starts timer
-    public func startTimer(completion: @escaping () -> Void) {
-        timer?.startTimer { _ in
-            completion()
         }
     }
     
