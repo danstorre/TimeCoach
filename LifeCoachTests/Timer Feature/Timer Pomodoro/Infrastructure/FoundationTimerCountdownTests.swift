@@ -274,6 +274,7 @@ final class FoundationTimerCountdownTests: XCTestCase {
             .createTimer(startingSet: startingSet, nextSet: nextSet, timer: spy)
         
         trackForMemoryLeak(instance: sut, file: file, line: line)
+        trackForMemoryLeak(instance: spy, file: file, line: line)
         
         return (sut, spy)
     }
