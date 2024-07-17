@@ -25,7 +25,6 @@ public final class FoundationTimerCountdown: TimerCountdown {
     var currentSet: TimerCountdownSet
     private let incrementing: Double
     var timerDelivery: StartCoundownCompletion?
-    var timeAtSave: CFTimeInterval? = nil
     
     public var currentTimerSet: TimerCountdownSet {
         currentSet
