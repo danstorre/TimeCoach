@@ -34,11 +34,11 @@ public final class FoundationTimerCountdown: TimerCountdown {
         currentSet.elapsedSeconds
     }
     
-    private let timer: TimerNative?
+    private let timer: TimerNativeCommands?
     
     fileprivate init(startingSet: TimerCountdownSet,
                      nextSet: TimerCountdownSet,
-                     timer: TimerNative,
+                     timer: TimerNativeCommands,
                      incrementing: Double = 1.0) {
         self.setA = startingSet
         self.setB = nextSet
