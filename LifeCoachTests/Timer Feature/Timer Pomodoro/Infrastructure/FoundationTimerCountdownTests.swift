@@ -5,7 +5,7 @@ final class FoundationTimerCountdownTests: XCTestCase {
     
     func test_init_stateIsStop() {
         let startSet = createAnyTimerSet()
-        let (sut, spy) = makeSUT2(startingSet: startSet, nextSet: createAnyTimerSet())
+        let (sut, _) = makeSUT2(startingSet: startSet, nextSet: createAnyTimerSet())
     
         assertTimerSet(startSet, state: .stop, from: sut)
     }
@@ -13,16 +13,20 @@ final class FoundationTimerCountdownTests: XCTestCase {
     func test_start_setsCorrectTimerValues() {
         let startSet = createAnyTimerSet()
         let samples: [(deliveryCount: Int, expectedTimerValues: (state: TimerCountdownStateValues, set: TimerCountdownSet))] = [
-            (deliveryCount: 2, expectedTimerValues: (state: TimerCountdownStateValues.running,
+            (deliveryCount: 1, expectedTimerValues: (state: TimerCountdownStateValues.running,
                                                    set: startSet.adding(0.001))),
-            (deliveryCount: 3, expectedTimerValues: (state: TimerCountdownStateValues.running,
+            (deliveryCount: 2, expectedTimerValues: (state: TimerCountdownStateValues.running,
                                                    set: startSet.adding(0.002)))
         ]
         
         samples.forEach { sample in
-            let sut = makeSUT(startingSet: startSet, nextSet: createAnyTimerSet())
+            let incrementing = 0.001
+            let (sut, spy) = makeSUT2(startingSet: startSet,
+                                      nextSet: createAnyTimerSet(),
+                                      incrementing: incrementing)
             
-            starts(sut: sut, waitUntilDeliveryCount: sample.deliveryCount)
+            starts(sut: sut, spy: spy, incrementingValue: incrementing,
+                   waitUntilDeliveryCount: sample.deliveryCount)
             
             assertTimerSet(sample.expectedTimerValues.set, state: sample.expectedTimerValues.state, from: sut)
         }
@@ -199,15 +203,11 @@ final class FoundationTimerCountdownTests: XCTestCase {
     }
     
     // MARK: - Helpers
-    private func starts(sut: TimerCountdown, waitUntilDeliveryCount count: Int) {
-        let expectation = expectation(description: "wait for start countdown to deliver time.")
-        expectation.expectedFulfillmentCount = count
-        
-        sut.startCountdown(completion: { _ in
-            expectation.fulfill()
-        })
-        wait(for: [expectation], timeout: 0.1)
-        invalidatesTimer(on: sut)
+    private func starts(sut: TimerCountdown, spy: TimerNativeCommandsSpy,
+                        incrementingValue: TimeInterval,
+                        waitUntilDeliveryCount count: Int) {
+        sut.startCountdown(completion: { _ in })
+        (0..<count).forEach { _ in spy.completePulse(withIncrementingValue: incrementingValue) }
     }
     
     private func assertTimerSet(_ timerSet: TimerCountdownSet, state expectedState: TimerCountdownStateValues, from sut: TimerCountdown, file: StaticString = #filePath, line: UInt = #line) {
@@ -271,7 +271,7 @@ final class FoundationTimerCountdownTests: XCTestCase {
                          line: UInt = #line) -> (sut: TimerCountdown, spy: TimerNativeCommandsSpy) {
         let spy = TimerNativeCommandsSpy()
         let sut = FactoryFoundationTimer
-            .createTimer(startingSet: startingSet, nextSet: nextSet, timer: spy)
+            .createTimer2(startingSet: startingSet, nextSet: nextSet, timer: spy)
         
         trackForMemoryLeak(instance: sut, file: file, line: line)
         trackForMemoryLeak(instance: spy, file: file, line: line)
@@ -280,7 +280,9 @@ final class FoundationTimerCountdownTests: XCTestCase {
     }
     
     private class TimerNativeCommandsSpy: TimerNativeCommands {
-        func startTimer(completion: @escaping (TimeInterval) -> Void) {
+        private var startCompletions = [TimerPulse]()
+        func startTimer(completion: @escaping TimerPulse) {
+            startCompletions.append(completion)
         }
         
         func invalidateTimer() {
@@ -290,6 +292,10 @@ final class FoundationTimerCountdownTests: XCTestCase {
         }
         
         func resume() {
+        }
+        
+        func completePulse(withIncrementingValue value: TimeInterval, at index: Int = 0) {
+            startCompletions[index](value)
         }
     }
     
