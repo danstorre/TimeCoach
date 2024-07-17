@@ -2,15 +2,27 @@ import Foundation
 
 public enum FactoryFoundationTimer {
     public static func createTimer(startingSet: TimerCountdownSet,
-                     dispatchQueue: DispatchQueue = DispatchQueue.main,
-                     nextSet: TimerCountdownSet,
-                     incrementing: Double = 1.0) -> FoundationTimerCountdown {
+                                   dispatchQueue: DispatchQueue = DispatchQueue.main,
+                                   nextSet: TimerCountdownSet,
+                                   incrementing: Double = 1.0) -> FoundationTimerCountdown {
         let timer = TimerNative(dispatchQueue: dispatchQueue, incrementing: incrementing)
         return FoundationTimerCountdown(
             startingSet: startingSet,
             nextSet: nextSet,
             timer: timer,
             incrementing: incrementing)
+    }
+    
+    public static func createTimer(startingSet: TimerCountdownSet,
+                                   nextSet: TimerCountdownSet,
+                                   timer: TimerNativeCommands,
+                                   dispatchQueue: DispatchQueue = DispatchQueue.main)
+    -> FoundationTimerCountdown {
+        return FoundationTimerCountdown(
+            startingSet: startingSet,
+            nextSet: nextSet,
+            timer: timer,
+            incrementing: 1)
     }
 }
 

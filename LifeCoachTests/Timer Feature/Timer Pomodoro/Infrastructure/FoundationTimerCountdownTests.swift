@@ -265,6 +265,33 @@ final class FoundationTimerCountdownTests: XCTestCase {
         return sut
     }
     
+    private func makeSUT2(startingSet: TimerCountdownSet, nextSet: TimerCountdownSet,
+                         incrementing: Double = 0.001,
+                         file: StaticString = #filePath,
+                         line: UInt = #line) -> (sut: TimerCountdown, spy: TimerNativeCommandsSpy) {
+        let spy = TimerNativeCommandsSpy()
+        let sut = FactoryFoundationTimer
+            .createTimer(startingSet: startingSet, nextSet: nextSet, timer: spy)
+        
+        trackForMemoryLeak(instance: sut, file: file, line: line)
+        
+        return (sut, spy)
+    }
+    
+    private class TimerNativeCommandsSpy: TimerNativeCommands {
+        func startTimer(completion: @escaping () -> Void) {
+        }
+        
+        func invalidateTimer() {
+        }
+        
+        func suspend() {
+        }
+        
+        func resume() {
+        }
+    }
+    
     private func starts(sut: TimerCountdown, expectingToDeliver deliverExpectation: [TimerCountdownSet],
                         file: StaticString = #filePath,
                         line: UInt = #line) {
