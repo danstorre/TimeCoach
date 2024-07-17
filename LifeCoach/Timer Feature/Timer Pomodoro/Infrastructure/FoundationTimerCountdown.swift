@@ -22,9 +22,9 @@ public final class FoundationTimerCountdown: TimerCountdown {
     private var state: TimerCountdownStateValues = .stop
     private var setA: TimerCountdownSet
     private var setB: TimerCountdownSet
-    var currentSet: TimerCountdownSet
+    private var currentSet: TimerCountdownSet
     private let incrementing: Double
-    var timerDelivery: StartCoundownCompletion?
+    private var timerDelivery: StartCoundownCompletion?
     
     public var currentTimerSet: TimerCountdownSet {
         currentSet
