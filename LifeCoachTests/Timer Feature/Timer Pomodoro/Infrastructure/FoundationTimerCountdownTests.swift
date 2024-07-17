@@ -11,22 +11,22 @@ final class FoundationTimerCountdownTests: XCTestCase {
     }
     
     func test_start_setsCorrectTimerValues() {
+        let incrementing = 0.001
         let startSet = createAnyTimerSet()
-        let samples: [(deliveryCount: Int, expectedTimerValues: (state: TimerCountdownStateValues, set: TimerCountdownSet))] = [
-            (deliveryCount: 1, expectedTimerValues: (state: TimerCountdownStateValues.running,
-                                                   set: startSet.adding(0.001))),
-            (deliveryCount: 2, expectedTimerValues: (state: TimerCountdownStateValues.running,
-                                                   set: startSet.adding(0.002)))
+        let samples: [(pulseCount: Int, expectedTimerValues: (state: TimerCountdownStateValues, set: TimerCountdownSet))] = [
+            (pulseCount: 1, expectedTimerValues: (state: TimerCountdownStateValues.running,
+                                                   set: startSet.adding(incrementing * 1))),
+            (pulseCount: 2, expectedTimerValues: (state: TimerCountdownStateValues.running,
+                                                   set: startSet.adding(incrementing * 2)))
         ]
         
         samples.forEach { sample in
-            let incrementing = 0.001
             let (sut, spy) = makeSUT2(startingSet: startSet,
                                       nextSet: createAnyTimerSet(),
                                       incrementing: incrementing)
             
             starts(sut: sut, spy: spy, incrementingValue: incrementing,
-                   waitUntilDeliveryCount: sample.deliveryCount)
+                   waitUntilPulseCount: sample.pulseCount)
             
             assertTimerSet(sample.expectedTimerValues.set, state: sample.expectedTimerValues.state, from: sut)
         }
@@ -205,7 +205,7 @@ final class FoundationTimerCountdownTests: XCTestCase {
     // MARK: - Helpers
     private func starts(sut: TimerCountdown, spy: TimerNativeCommandsSpy,
                         incrementingValue: TimeInterval,
-                        waitUntilDeliveryCount count: Int) {
+                        waitUntilPulseCount count: Int) {
         sut.startCountdown(completion: { _ in })
         (0..<count).forEach { _ in spy.completePulse(withIncrementingValue: incrementingValue) }
     }
