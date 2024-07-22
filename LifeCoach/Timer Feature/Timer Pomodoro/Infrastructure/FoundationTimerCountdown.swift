@@ -1,6 +1,7 @@
 import Foundation
 
 public enum FactoryFoundationTimer {
+    @available(watchOS, deprecated, message: "Use createTimer2() instead")
     public static func createTimer(startingSet: TimerCountdownSet,
                                    dispatchQueue: DispatchQueue = DispatchQueue.main,
                                    nextSet: TimerCountdownSet,
@@ -13,9 +14,9 @@ public enum FactoryFoundationTimer {
     }
     
     public static func createTimer2(startingSet: TimerCountdownSet,
-                                   nextSet: TimerCountdownSet,
-                                   timer: TimerNativeCommands,
-                                   dispatchQueue: DispatchQueue = DispatchQueue.main)
+                                    nextSet: TimerCountdownSet,
+                                    timer: TimerNativeCommands,
+                                    dispatchQueue: DispatchQueue = DispatchQueue.main)
     -> FoundationTimerCountdown {
         return FoundationTimerCountdown(
             startingSet: startingSet,

@@ -15,10 +15,11 @@ extension TimeCoachRoot {
     // MARK: Factory methods
     static func createTimerCountDown(from date: Date, dispatchQueue: DispatchQueue) -> FoundationTimerCountdown {
 #if os(watchOS)
-        FactoryFoundationTimer.createTimer(startingSet: .pomodoroSet(date: date),
-                                           dispatchQueue: dispatchQueue,
-                                           nextSet: .breakSet(date: date),
-                                           incrementing: Self.milisecondsPrecision)
+        let timer = TimerNative(dispatchQueue: dispatchQueue, incrementing: Self.milisecondsPrecision)
+        return FactoryFoundationTimer.createTimer2(startingSet: .pomodoroSet(date: date),
+                            nextSet: .breakSet(date: date),
+                            timer: timer,
+                            dispatchQueue: dispatchQueue)
 #elseif os(xrOS)
         FoundationTimerCountdown(startingSet: .pomodoroSet(date: date),
                                  nextSet: .breakSet(date: date))
