@@ -34,7 +34,7 @@ final class FoundationTimerCountdownTests: XCTestCase {
     
     func test_startTwice_doesNotChangeStateOfRunning() {
         let startSet = createAnyTimerSet()
-        let sut = makeSUT(startingSet: startSet, nextSet: createAnyTimerSet())
+        let (sut, _) = makeSUT2(startingSet: startSet, nextSet: createAnyTimerSet())
 
         assertsStartCountdownTwiceKeepsStateToRunning(sut: sut)
     }
@@ -228,7 +228,6 @@ final class FoundationTimerCountdownTests: XCTestCase {
     private func assertsStartCountdownTwiceKeepsStateToRunning(sut: TimerCountdown) {
         assertsStartCountdownChangesStateToRunning(sut: sut)
         assertsStartCountdownChangesStateToRunning(sut: sut)
-        invalidatesTimer(on: sut)
     }
     
     private func assertsStartCountdownChangesStateToRunning(sut: TimerCountdown) {
