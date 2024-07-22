@@ -5,7 +5,7 @@ final class FoundationTimerCountdownTests: XCTestCase {
     
     func test_init_stateIsStop() {
         let startSet = createAnyTimerSet()
-        let (sut, _) = makeSUT2(startingSet: startSet, nextSet: createAnyTimerSet())
+        let (sut, _) = makeSUT(startingSet: startSet, nextSet: createAnyTimerSet())
     
         assertTimerSet(startSet, state: .stop, from: sut)
     }
@@ -21,7 +21,7 @@ final class FoundationTimerCountdownTests: XCTestCase {
         ]
         
         samples.forEach { sample in
-            let (sut, spy) = makeSUT2(startingSet: startSet,
+            let (sut, spy) = makeSUT(startingSet: startSet,
                                       nextSet: createAnyTimerSet(),
                                       incrementing: incrementing)
             
@@ -34,7 +34,7 @@ final class FoundationTimerCountdownTests: XCTestCase {
     
     func test_startTwice_doesNotChangeStateOfRunning() {
         let startSet = createAnyTimerSet()
-        let (sut, _) = makeSUT2(startingSet: startSet, nextSet: createAnyTimerSet())
+        let (sut, _) = makeSUT(startingSet: startSet, nextSet: createAnyTimerSet())
 
         assertsStartCountdownTwiceKeepsStateToRunning(sut: sut)
     }
@@ -44,7 +44,7 @@ final class FoundationTimerCountdownTests: XCTestCase {
         let incrementing = 0.001
         let finishDate = startDate.adding(seconds: incrementing)
         let startSet = createTimerSet(0, startDate: startDate, endDate: finishDate)
-        let (sut, spy) = makeSUT2(startingSet: startSet, 
+        let (sut, spy) = makeSUT(startingSet: startSet, 
                                   nextSet: createAnyTimerSet(),
                                   incrementing: incrementing)
         
@@ -55,7 +55,7 @@ final class FoundationTimerCountdownTests: XCTestCase {
     
     func test_stop_onStopState_deliversCorrectState() {
         let startSet = createAnyTimerSet()
-        let (sut, _) = makeSUT2(startingSet: startSet, nextSet: createAnyTimerSet())
+        let (sut, _) = makeSUT(startingSet: startSet, nextSet: createAnyTimerSet())
         
         sut.stopCountdown()
         
@@ -64,7 +64,7 @@ final class FoundationTimerCountdownTests: XCTestCase {
     
     func test_stop_onRunningState_resetsTimerAndChangesStateToStop() {
         let startSet = createAnyTimerSet()
-        let (sut, _) = makeSUT2(startingSet: startSet, nextSet: createAnyTimerSet())
+        let (sut, _) = makeSUT(startingSet: startSet, nextSet: createAnyTimerSet())
 
         assertTimerSet(startSet, state: .stop, from: sut)
         
@@ -77,7 +77,7 @@ final class FoundationTimerCountdownTests: XCTestCase {
     
     func test_pause_twiceDoesNotChangeStateFromPause() {
         let startSet = createAnyTimerSet()
-        let (sut, _) = makeSUT2(startingSet: startSet, nextSet: createAnyTimerSet())
+        let (sut, _) = makeSUT(startingSet: startSet, nextSet: createAnyTimerSet())
         
         sut.pauseCountdown()
         sut.pauseCountdown()
@@ -87,7 +87,7 @@ final class FoundationTimerCountdownTests: XCTestCase {
     
     func test_pause_onRunningState_changesStateToPause() {
         let startSet = createAnyTimerSet()
-        let (sut, _) = makeSUT2(startingSet: startSet, nextSet: createAnyTimerSet())
+        let (sut, _) = makeSUT(startingSet: startSet, nextSet: createAnyTimerSet())
         sut.startCountdown() { _ in }
         
         sut.pauseCountdown()
@@ -97,7 +97,7 @@ final class FoundationTimerCountdownTests: XCTestCase {
     
     func test_pause_onRunningState_deliversCurrentState() {
         let startSet = createAnyTimerSet()
-        let (sut, _) = makeSUT2(startingSet: startSet, nextSet: createAnyTimerSet())
+        let (sut, _) = makeSUT(startingSet: startSet, nextSet: createAnyTimerSet())
         
         let receivedLocalTimerSets = receivedLocalTimerSetsOnRunningState(from: sut, when: {
             sut.pauseCountdown()
@@ -110,7 +110,7 @@ final class FoundationTimerCountdownTests: XCTestCase {
         let fixedDate = Date()
         let startingSet = createAnyTimerSet()
         let nextSet = createTimerSet(0, startDate: fixedDate, endDate: fixedDate.adding(seconds: 0.002))
-        let (sut, _) = makeSUT2(startingSet: startingSet, nextSet: nextSet)
+        let (sut, _) = makeSUT(startingSet: startingSet, nextSet: nextSet)
         
         let receivedLocalTimerSets = receivedLocalTimerSetsOnSkip(from: sut)
         
@@ -121,7 +121,7 @@ final class FoundationTimerCountdownTests: XCTestCase {
         let fixedDate = Date()
         let startingSet = createAnyTimerSet()
         let nextSet = createTimerSet(0, startDate: fixedDate, endDate: fixedDate.adding(seconds: 0.002))
-        let (sut, _) = makeSUT2(startingSet: startingSet, nextSet: nextSet)
+        let (sut, _) = makeSUT(startingSet: startingSet, nextSet: nextSet)
         
         sut.skipCountdown { _ in }
         
@@ -132,7 +132,7 @@ final class FoundationTimerCountdownTests: XCTestCase {
         let fixedDate = Date()
         let startingSet = createAnyTimerSet()
         let nextSet = createTimerSet(0, startDate: fixedDate, endDate: fixedDate.adding(seconds: 0.002))
-        let (sut, _) = makeSUT2(startingSet: startingSet, nextSet: nextSet)
+        let (sut, _) = makeSUT(startingSet: startingSet, nextSet: nextSet)
         sut.startCountdown { _ in }
         
         sut.skipCountdown { _ in }
@@ -144,7 +144,7 @@ final class FoundationTimerCountdownTests: XCTestCase {
         let fixedDate = Date()
         let startingSet = createAnyTimerSet()
         let nextSet = createTimerSet(0, startDate: fixedDate, endDate: fixedDate.adding(seconds: 0.002))
-        let (sut, _) = makeSUT2(startingSet: startingSet, nextSet: nextSet)
+        let (sut, _) = makeSUT(startingSet: startingSet, nextSet: nextSet)
         sut.startCountdown { _ in }
         
         let receivedLocalTimerSets = receivedLocalTimerSetsOnSkip(from: sut)
@@ -203,7 +203,7 @@ final class FoundationTimerCountdownTests: XCTestCase {
         XCTAssertEqual(sut.currentState.state, .running)
     }
     
-    private func makeSUT2(startingSet: TimerCountdownSet, nextSet: TimerCountdownSet,
+    private func makeSUT(startingSet: TimerCountdownSet, nextSet: TimerCountdownSet,
                          incrementing: Double = 0.001,
                          file: StaticString = #filePath,
                          line: UInt = #line) -> (sut: TimerCountdown, spy: TimerNativeCommandsSpy) {
