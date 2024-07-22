@@ -217,26 +217,6 @@ final class FoundationTimerCountdownTests: XCTestCase {
         return (sut, spy)
     }
     
-    private class TimerNativeCommandsSpy: TimerNativeCommands {
-        private var startCompletions = [TimerPulse]()
-        func startTimer(completion: @escaping TimerPulse) {
-            startCompletions.append(completion)
-        }
-        
-        func invalidateTimer() {
-        }
-        
-        func suspend() {
-        }
-        
-        func resume() {
-        }
-        
-        func completePulse(withIncrementingValue value: TimeInterval, at index: Int = 0) {
-            startCompletions[index](value)
-        }
-    }
-    
     private func createAnyTimerSet(startingFrom startDate: Date = Date(), endDate: Date? = nil) -> TimerCountdownSet {
         makeAnyTimerSet(startDate: startDate, endDate: endDate ?? startDate.adding(seconds: 1)).local
     }
@@ -260,4 +240,3 @@ private extension TimerSet {
         TimerCountdownSet(elapsedSeconds, startDate: startDate, endDate: endDate)
     }
 }
-

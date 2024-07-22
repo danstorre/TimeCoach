@@ -213,6 +213,7 @@
 		FBF182872A89927300DBAF7F /* WKInterfaceDevice+PlayNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF182862A89927300DBAF7F /* WKInterfaceDevice+PlayNotification.swift */; };
 		FBF182892A89928800DBAF7F /* PlayNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF182882A89928800DBAF7F /* PlayNotification.swift */; };
 		FBF1828A2A8995AD00DBAF7F /* CommonHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD8225F2A75B2FE002702F4 /* CommonHelpers.swift */; };
+		FBFD252D2C4F188E0002C461 /* TimerNativeCommandsSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBFD252C2C4F188E0002C461 /* TimerNativeCommandsSpy.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -578,6 +579,7 @@
 		FBF0209E2A7DBBFE005074CD /* TimeCoach Watch AppDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "TimeCoach Watch AppDebug.entitlements"; sourceTree = "<group>"; };
 		FBF182862A89927300DBAF7F /* WKInterfaceDevice+PlayNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WKInterfaceDevice+PlayNotification.swift"; sourceTree = "<group>"; };
 		FBF182882A89928800DBAF7F /* PlayNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayNotification.swift; sourceTree = "<group>"; };
+		FBFD252C2C4F188E0002C461 /* TimerNativeCommandsSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerNativeCommandsSpy.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1026,6 +1028,7 @@
 			isa = PBXGroup;
 			children = (
 				FBAA52A22B571B6C00D373C6 /* TimerCountdownSet+Helpers.swift */,
+				FBFD252C2C4F188E0002C461 /* TimerNativeCommandsSpy.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -2040,6 +2043,7 @@
 				FBDEE8102A7B134000D1120A /* TimerStoreNotifierTests.swift in Sources */,
 				FB594CA62A4E1E5100C4A32C /* TImerControlsPresentationTests.swift in Sources */,
 				FBE593DE2A78269800069F1C /* TimerNoticationReceiverTests.swift in Sources */,
+				FBFD252D2C4F188E0002C461 /* TimerNativeCommandsSpy.swift in Sources */,
 				FB40D18B2A79CDA5008D3A36 /* UserDefaultStoreTests.swift in Sources */,
 				FBD56F6B2A3CEF33002736AD /* PomodoroUseCaseTests.swift in Sources */,
 			);
