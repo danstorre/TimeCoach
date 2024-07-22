@@ -110,7 +110,7 @@ final class FoundationTimerCountdownTests: XCTestCase {
         let fixedDate = Date()
         let startingSet = createAnyTimerSet()
         let nextSet = createTimerSet(0, startDate: fixedDate, endDate: fixedDate.adding(seconds: 0.002))
-        let sut = makeSUT(startingSet: startingSet, nextSet: nextSet)
+        let (sut, _) = makeSUT2(startingSet: startingSet, nextSet: nextSet)
         
         let receivedLocalTimerSets = receivedLocalTimerSetsOnSkip(from: sut)
         
