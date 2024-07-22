@@ -215,6 +215,7 @@
 		FBF1828A2A8995AD00DBAF7F /* CommonHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD8225F2A75B2FE002702F4 /* CommonHelpers.swift */; };
 		FBFD252D2C4F188E0002C461 /* TimerNativeCommandsSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBFD252C2C4F188E0002C461 /* TimerNativeCommandsSpy.swift */; };
 		FBFD252F2C4F19530002C461 /* FoundationTimerCountdown+SeteableTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBFD252E2C4F19530002C461 /* FoundationTimerCountdown+SeteableTimer.swift */; };
+		FBFD25312C4F19960002C461 /* FactoryFoundationTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBFD25302C4F19960002C461 /* FactoryFoundationTimer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -582,6 +583,7 @@
 		FBF182882A89928800DBAF7F /* PlayNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayNotification.swift; sourceTree = "<group>"; };
 		FBFD252C2C4F188E0002C461 /* TimerNativeCommandsSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerNativeCommandsSpy.swift; sourceTree = "<group>"; };
 		FBFD252E2C4F19530002C461 /* FoundationTimerCountdown+SeteableTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FoundationTimerCountdown+SeteableTimer.swift"; sourceTree = "<group>"; };
+		FBFD25302C4F19960002C461 /* FactoryFoundationTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactoryFoundationTimer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -823,6 +825,7 @@
 				FB1E49E62C3F407600EBBC96 /* TimerNativeCommands.swift */,
 				FB9ADA302C472DB4009E6A54 /* TimerNative.swift */,
 				FBFD252E2C4F19530002C461 /* FoundationTimerCountdown+SeteableTimer.swift */,
+				FBFD25302C4F19960002C461 /* FactoryFoundationTimer.swift */,
 			);
 			path = Infrastructure;
 			sourceTree = "<group>";
@@ -1997,6 +2000,7 @@
 				FBD56F722A3D0E20002736AD /* PomodoroTimer.swift in Sources */,
 				FB5BF6A72A7BEF9F001B81CB /* StateMapper.swift in Sources */,
 				FBD56F762A3D0EFA002736AD /* TimerCoutdown.swift in Sources */,
+				FBFD25312C4F19960002C461 /* FactoryFoundationTimer.swift in Sources */,
 				FBDEE80A2A7B0C6400D1120A /* StoreJSONEncoder.swift in Sources */,
 				FB594CA82A4E213F00C4A32C /* ControlsViewModel.swift in Sources */,
 				FBDEE8162A7B162200D1120A /* DefaultTimerStoreNotifier.swift in Sources */,
