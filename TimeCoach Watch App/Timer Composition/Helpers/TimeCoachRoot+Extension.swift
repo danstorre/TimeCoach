@@ -16,7 +16,7 @@ extension TimeCoachRoot {
     static func createTimerCountDown(from date: Date, dispatchQueue: DispatchQueue) -> FoundationTimerCountdown {
 #if os(watchOS)
         let timer = TimerNative(dispatchQueue: dispatchQueue, incrementing: Self.milisecondsPrecision)
-        return FactoryFoundationTimer.createTimer2(startingSet: .pomodoroSet(date: date),
+        return FactoryFoundationTimer.createTimer(startingSet: .pomodoroSet(date: date),
                             nextSet: .breakSet(date: date),
                             timer: timer,
                             dispatchQueue: dispatchQueue)

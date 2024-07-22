@@ -85,7 +85,7 @@ final class SetableCountdownTimerTests: XCTestCase {
                          file: StaticString = #filePath,
                          line: UInt = #line) -> SetableTimer & TimerStateValues {
         let spy = TimerNativeCommandsSpy()
-        let sut = FactoryFoundationTimer.createTimer2(startingSet: startingSet, nextSet: nextSet, timer: spy)
+        let sut = FactoryFoundationTimer.createTimer(startingSet: startingSet, nextSet: nextSet, timer: spy)
         
         trackForMemoryLeak(instance: sut, file: file, line: line)
         

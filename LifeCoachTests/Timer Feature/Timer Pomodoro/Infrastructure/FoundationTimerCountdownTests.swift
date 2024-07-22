@@ -209,7 +209,7 @@ final class FoundationTimerCountdownTests: XCTestCase {
                          line: UInt = #line) -> (sut: TimerCountdown, spy: TimerNativeCommandsSpy) {
         let spy = TimerNativeCommandsSpy()
         let sut = FactoryFoundationTimer
-            .createTimer2(startingSet: startingSet, nextSet: nextSet, timer: spy)
+            .createTimer(startingSet: startingSet, nextSet: nextSet, timer: spy)
         
         trackForMemoryLeak(instance: sut, file: file, line: line)
         trackForMemoryLeak(instance: spy, file: file, line: line)
