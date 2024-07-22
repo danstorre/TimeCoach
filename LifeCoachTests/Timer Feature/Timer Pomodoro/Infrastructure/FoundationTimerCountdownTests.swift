@@ -41,12 +41,16 @@ final class FoundationTimerCountdownTests: XCTestCase {
     
     func test_start_onSetFinishChangesStateWithCorrectTimerValues() {
         let startDate = Date()
-        let finishDate = startDate.adding(seconds: 0.001)
+        let incrementing = 0.001
+        let finishDate = startDate.adding(seconds: incrementing)
         let startSet = createTimerSet(0, startDate: startDate, endDate: finishDate)
-        let sut = makeSUT(startingSet: startSet, nextSet: createAnyTimerSet())
+        let (sut, spy) = makeSUT2(startingSet: startSet, 
+                                  nextSet: createAnyTimerSet(),
+                                  incrementing: incrementing)
         
-        starts(sut: sut, expectingToDeliver: [startSet, startSet.adding(0.001)])
-        assertTimerSet(startSet.adding(0.001), state: .stop, from: sut)
+        starts(sut: sut, spy: spy, incrementingValue: incrementing, waitUntilPulseCount: 1)
+        
+        assertTimerSet(startSet.adding(incrementing), state: .stop, from: sut)
     }
     
     func test_stop_onStopState_deliversCurrentSet() {
@@ -279,6 +283,13 @@ final class FoundationTimerCountdownTests: XCTestCase {
         func completePulse(withIncrementingValue value: TimeInterval, at index: Int = 0) {
             startCompletions[index](value)
         }
+    }
+    
+    private func starts(sut: TimerCountdown, 
+                        expectingToDeliver deliverExpectation: [TimerCountdownSet],
+                        incrementing: Int,
+                        file: StaticString = #filePath,
+                        line: UInt = #line) {
     }
     
     private func starts(sut: TimerCountdown, expectingToDeliver deliverExpectation: [TimerCountdownSet],
