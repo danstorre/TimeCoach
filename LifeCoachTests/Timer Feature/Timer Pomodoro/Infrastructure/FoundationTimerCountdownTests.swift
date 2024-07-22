@@ -55,11 +55,11 @@ final class FoundationTimerCountdownTests: XCTestCase {
     
     func test_stop_onStopState_deliversCurrentSet() {
         let currentSet = createAnyTimerSet()
-        let sut = makeSUT(startingSet: currentSet, nextSet: createAnyTimerSet())
+        let (sut, _) = makeSUT2(startingSet: currentSet, nextSet: createAnyTimerSet())
         
         sut.stopCountdown()
         
-        starts(sut: sut, expectingToDeliver: [currentSet])
+        assertTimerSet(currentSet, state: .stop, from: sut)
     }
     
     func test_stop_onStopState_doesNotChangeStateFromStop() {
