@@ -87,7 +87,7 @@ final class FoundationTimerCountdownTests: XCTestCase {
     
     func test_pause_onRunningState_changesStateToPause() {
         let startSet = createAnyTimerSet()
-        let sut = makeSUT(startingSet: startSet, nextSet: createAnyTimerSet())
+        let (sut, _) = makeSUT2(startingSet: startSet, nextSet: createAnyTimerSet())
         sut.startCountdown() { _ in }
         
         sut.pauseCountdown()
