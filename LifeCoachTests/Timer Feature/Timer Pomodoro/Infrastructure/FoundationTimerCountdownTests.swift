@@ -128,11 +128,11 @@ final class FoundationTimerCountdownTests: XCTestCase {
         assertTimerSet(nextSet, state: .stop, from: sut)
     }
     
-    func test_skip_onRunningState_changesStateToStopResetsTimer() {
+    func test_skip_onRunningState_deliversCorrectSkipState() {
         let fixedDate = Date()
         let startingSet = createAnyTimerSet()
         let nextSet = createTimerSet(0, startDate: fixedDate, endDate: fixedDate.adding(seconds: 0.002))
-        let sut = makeSUT(startingSet: startingSet, nextSet: nextSet)
+        let (sut, _) = makeSUT2(startingSet: startingSet, nextSet: nextSet)
         sut.startCountdown { _ in }
         
         sut.skipCountdown { _ in }
