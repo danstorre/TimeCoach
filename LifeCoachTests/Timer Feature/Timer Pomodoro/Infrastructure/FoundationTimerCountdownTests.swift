@@ -203,17 +203,6 @@ final class FoundationTimerCountdownTests: XCTestCase {
         XCTAssertEqual(sut.currentState.state, .running)
     }
     
-    private func makeSUT(startingSet: TimerCountdownSet, nextSet: TimerCountdownSet,
-                         incrementing: Double = 0.001,
-                         file: StaticString = #filePath,
-                         line: UInt = #line) -> TimerCountdown {
-        let sut = FactoryFoundationTimer.createTimer(startingSet: startingSet, nextSet: nextSet, incrementing: incrementing)
-        
-        trackForMemoryLeak(instance: sut, file: file, line: line)
-        
-        return sut
-    }
-    
     private func makeSUT2(startingSet: TimerCountdownSet, nextSet: TimerCountdownSet,
                          incrementing: Double = 0.001,
                          file: StaticString = #filePath,
@@ -248,43 +237,12 @@ final class FoundationTimerCountdownTests: XCTestCase {
         }
     }
     
-    private func starts(sut: TimerCountdown, 
-                        expectingToDeliver deliverExpectation: [TimerCountdownSet],
-                        incrementing: Int,
-                        file: StaticString = #filePath,
-                        line: UInt = #line) {
-    }
-    
-    private func starts(sut: TimerCountdown, expectingToDeliver deliverExpectation: [TimerCountdownSet],
-                        file: StaticString = #filePath,
-                        line: UInt = #line) {
-        var receivedLocalTimerSets = [TimerCountdownSet]()
-        let expectation = expectation(description: "wait for start countdown to deliver time.")
-        expectation.expectedFulfillmentCount = deliverExpectation.count
-        
-        sut.startCountdown() { result in
-            if case let .success((timerSet, _)) = result {
-                receivedLocalTimerSets.append(timerSet)
-            }
-            expectation.fulfill()
-        }
-
-        wait(for: [expectation], timeout: 0.1)
-        invalidatesTimer(on: sut)
-
-        XCTAssertEqual(receivedLocalTimerSets, deliverExpectation, file: file, line: line)
-    }
-    
     private func createAnyTimerSet(startingFrom startDate: Date = Date(), endDate: Date? = nil) -> TimerCountdownSet {
         makeAnyTimerSet(startDate: startDate, endDate: endDate ?? startDate.adding(seconds: 1)).local
     }
     
     private func createTimerSet(_ elapsedSeconds: TimeInterval, startDate: Date, endDate: Date) -> TimerCountdownSet {
         makeAnyTimerSet(seconds: elapsedSeconds, startDate: startDate, endDate: endDate).local
-    }
-    
-    private func invalidatesTimer(on sut: TimerCountdown) {
-        (sut as? FoundationTimerCountdown)?.invalidateTimer()
     }
     
     private func makeAnyTimerSet(seconds: TimeInterval = 0,
