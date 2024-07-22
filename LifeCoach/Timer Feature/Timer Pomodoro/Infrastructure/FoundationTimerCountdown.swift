@@ -6,10 +6,10 @@ public enum FactoryFoundationTimer {
                                    nextSet: TimerCountdownSet,
                                    incrementing: Double = 1.0) -> FoundationTimerCountdown {
         let timer = TimerNative(dispatchQueue: dispatchQueue, incrementing: incrementing)
-        return FoundationTimerCountdown(
-            startingSet: startingSet,
-            nextSet: nextSet,
-            timer: timer)
+        return createTimer2(startingSet: startingSet,
+                            nextSet: nextSet,
+                            timer: timer,
+                            dispatchQueue: dispatchQueue)
     }
     
     public static func createTimer2(startingSet: TimerCountdownSet,
