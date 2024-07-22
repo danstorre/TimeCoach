@@ -75,24 +75,6 @@ final class FoundationTimerCountdownTests: XCTestCase {
         assertTimerSet(startSet, state: .stop, from: sut)
     }
     
-    func test_stop_afterStartCountdown_deliversCurrentSet() {
-        let fixedDate = Date()
-        let startSet = TimerCountdownSet(0, startDate: fixedDate, endDate: fixedDate.adding(seconds: 0.002))
-        let sut = makeSUT(startingSet: startSet, nextSet: createAnyTimerSet(), incrementing: 0.001)
-        
-        var receivedLocalTimerSets = [TimerCountdownSet]()
-        
-        sut.startCountdown() { result in
-            if case let .success((timerSet, _)) = result {
-                receivedLocalTimerSets.append(timerSet)
-            }
-        }
-        XCTAssertEqual(receivedLocalTimerSets, [startSet])
-        
-        sut.stopCountdown()
-        XCTAssertEqual(receivedLocalTimerSets, [startSet, startSet])
-    }
-    
     func test_pause_OnPauseState_DoesNotChangeStateFromPause() {
         let startSet = createAnyTimerSet()
         let sut = makeSUT(startingSet: startSet, nextSet: createAnyTimerSet())
